@@ -1,0 +1,87 @@
+{
+  "performed_at": "2026-11-09T21:04:34.896848+08:00",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "scripts/test_project_tool.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.073s\n\nOK\n"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0,
+      "stdout": " M .gitignore\n M REQUIREMENTS.md\n M STATUS.md\n M TASKS.md\n M docs/COMMANDS.md\n M evidence/GOV-07/setup_run.log\n M project/tasks.json\n?? ../AGENTS.md\n?? ../CLAUDE.md\n?? ../GEMINI.md\n?? CONTINUE_PROMPT.md\n?? evidence/GOV-02/2026-11-09-inventory-recheck.json\n?? evidence/GOV-07/2026-11-09-env-smoke.json\n?? evidence/GOV-07/gitignore_check.log\n?? evidence/GOV-07/smoke_run.log\n?? evidence/GOV-08/2026-11-09-pre-recheck-ledger.json\n?? reports/governance/environment_smoke.md\n?? scripts/env_smoke.py\n?? worklogs/GOV-07-claude-opus-5-5-2026-11-09.md\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "-2",
+        "--oneline"
+      ],
+      "exit_code": 0,
+      "stdout": "ae8c2f2 docs: define Git commit and remote sync rules\n433eefa Initial commit: retail decision system project and datasets\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "origin\thttps://github.com/xiaomozhongmogu/retail-decision-system.git (fetch)\norigin\thttps://github.com/xiaomozhongmogu/retail-decision-system.git (push)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sw_vers"
+      ],
+      "exit_code": 0,
+      "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "uname",
+        "-m"
+      ],
+      "exit_code": 0,
+      "stdout": "arm64\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/env_smoke.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"python\": \"3.12.14\",\n  \"executable\": \"/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/bin/python\",\n  \"platform\": \"macOS-27.2-arm64-arm-64bit\",\n  \"machine\": \"arm64\",\n  \"import:pandas\": \"3.1.1\",\n  \"import:pyarrow\": \"26.0.1\",\n  \"import:duckdb\": \"2.0.0\",\n  \"import:openpyxl\": \"3.1.5\",\n  \"import:sklearn\": \"1.9.1\",\n  \"import:lightgbm\": \"4.7.0\",\n  \"import:plotly\": \"7.1.0\",\n  \"import:streamlit\": \"1.67.0\",\n  \"import:openai\": \"3.46.0\",\n  \"import:pytest\": \"9.2.0\",\n  \"lightgbm_fit\": {\n    \"n_train\": 200,\n    \"proba_range\": [\n      0.066,\n      0.934\n    ]\n  },\n  \"sklearn_logistic_fit\": {\n    \"coef_shape\": [\n      1,\n      2\n    ]\n  },\n  \"duckdb_read_only\": {\n    \"rows\": 5,\n    \"write_blocked_on_read_only\": true\n  },\n  \"plotly_figure\": {\n    \"traces\": 1\n  },\n  \"failures\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "curl",
+        "--max-time",
+        "15",
+        "-sS",
+        "-o",
+        "/dev/null",
+        "-w",
+        "%{http_code}",
+        "https://github.com"
+      ],
+      "exit_code": 0,
+      "stdout": "200",
+      "stderr": ""
+    }
+  ]
+}

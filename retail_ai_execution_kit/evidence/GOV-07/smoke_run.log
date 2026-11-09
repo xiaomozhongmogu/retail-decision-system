@@ -1,0 +1,167 @@
+$ .venv/bin/python scripts/env_smoke.py
+# 2026-11-09T20:43:55+0800
+{
+  "python": "3.12.14",
+  "executable": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/bin/python",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "import:pandas": "3.1.1",
+  "import:pyarrow": "26.0.1",
+  "import:duckdb": "2.0.0",
+  "import:openpyxl": "3.1.5",
+  "import:sklearn": "1.9.1",
+  "import:lightgbm": "FAIL: OSError: dlopen(/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <59CCDAC2-EBAE-32F7-ADF4-469B834532C9> /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/lightgbm/lib/lib_lightgbm.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/Users/liqinyang/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/libomp.dylib' (no such file), '/Users/liqinyang/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/libomp.dylib' (no such file)",
+  "import:plotly": "7.1.0",
+  "import:streamlit": "1.67.0",
+  "import:openai": "3.46.0",
+  "import:pytest": "9.2.0",
+  "lightgbm_fit": "FAIL: OSError: dlopen(/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <59CCDAC2-EBAE-32F7-ADF4-469B834532C9> /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/lightgbm/lib/lib_lightgbm.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/Users/liqinyang/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/libomp.dylib' (no such file), '/Users/liqinyang/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/libomp.dylib' (no such file)",
+  "sklearn_logistic_fit": {
+    "coef_shape": [
+      1,
+      2
+    ]
+  },
+  "duckdb_read_only": {
+    "rows": 5,
+    "write_blocked_on_read_only": true
+  },
+  "plotly_figure": {
+    "traces": 1
+  },
+  "failures": [
+    "import:lightgbm",
+    "lightgbm_fit"
+  ]
+}
+[exit=1]
+$ .venv/bin/streamlit --version
+# 2026-11-09T20:44:01+0800
+Streamlit, version 1.67.0
+[exit=0]
+$ .venv/bin/python -c import duckdb,sys; print(duckdb.__version__); sys.exit(0)
+# 2026-11-09T20:44:01+0800
+2.0.0
+[exit=0]
+$ /Users/liqinyang/.local/bin/uv pip check --python .venv/bin/python
+# 2026-11-09T20:44:02+0800
+Checked 57 packages in 7ms
+All installed packages are compatible
+[exit=0]
+## 修复：第一次冒烟因 libomp 缺失失败（见上），按 LightGBM 官方 macOS 说明安装 Homebrew libomp 后重跑
+$ brew install libomp
+# 2026-11-09T20:46:11+0800
+==> Auto-updating Homebrew...
+Adjust how often this is run with `$HOMEBREW_AUTO_UPDATE_SECS` or disable with
+`$HOMEBREW_NO_AUTO_UPDATE=1`. Hide these hints with `$HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Auto-updated Homebrew!
+Updated 3 taps (tw93/tap, homebrew/core and homebrew/cask).
+==> New Formulae
+csound-plugins: Additional opcodes for Csound
+drydock: Dashboard for a fleet of Git repositories
+emeraldian: Terminal UI for Obsidian vaults, with a graph and an assistant
+gam: Command-line management for Google Workspace
+goda: Go dependency analysis toolkit
+knife: Reverse engineering toolkit for PE, ELF, and Mach-O binaries
+krunkit: CLI tool to start VMs with libkrun
+libkrun: Dynamic library providing KVM-based process isolation capabilities
+llamastash: Terminal-native local LLM orchestrator and proxy
+lsoff: List listening TCP and UDP ports
+otel-tui: Terminal OpenTelemetry viewer
+safe-chain: Malware protection for npm, yarn, pnpm, pip, uv and other package managers
+sping: Real-time connectivity monitor with network diagnostics
+sqlmux: Terminal database client with tmux-style panes and Vim keybindings
+tennis: Print stylish CSV tables in your terminal
+upmd: Run tasks and dependency-aware workflows from Markdown
+==> New Casks
+agent-orchestrator: Supervisor for coding agents running in parallel Git worktrees
+bytemail: Email client with an AI assistant
+emeet-studio: Companion app for EMEET webcams
+expose: Tunnel for sharing local web services
+image-optimizer: Tool to optimise images and vector graphics
+read-ai: Meeting recorder, transcriber and summariser
+tendedero: Screenshot and screen recording manager
+texpile: Desktop editor for LaTeX, Typst, and Markdown
+tinycast@beta: Application launcher and productivity tool
+tree-outliner: Text outliner
+wallpapermachine: Player for Wallpaper Engine live wallpapers
+xcasca: SSH terminal and SFTP file transfer client
+
+You have 5 outdated formulae and 1 outdated cask installed.
+
+Warning: The following taps are not trusted:
+  tw93/tap
+
+Homebrew is currently ignoring formulae, casks and commands
+from these taps because tap trust is required.
+Untap them with:
+  brew untap tw93/tap
+Trust specific formulae, casks and commands with:
+  brew trust --formula <user>/<tap>/<formula>
+  brew trust --cask <user>/<tap>/<cask>
+  brew trust --command <user>/<tap>/<command>
+Whole-tap trust is broader and includes all current and future formulae,
+casks and commands from the listed taps. Trust whole taps with:
+  brew trust tw93/tap
+For more information, see:
+  https://docs.brew.sh/Tap-Trust
+
+==> Downloading bottle manifests
+✔︎ Bottle Manifest libomp (23.1.5)
+==> Fetching downloads for: libomp
+✔︎ Bottle libomp (23.1.5)
+==> Pouring libomp--23.1.5.arm64_golden_gate.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libomp/23.1.5: 11 files, 1.8MB
+==> Caveats
+==> libomp
+libomp is keg-only, which means it was not symlinked into /opt/homebrew,
+because it can override GCC headers and result in broken builds.
+
+For compilers to find libomp you may need to set:
+  export LDFLAGS=-L/opt/homebrew/opt/libomp/lib
+  export CPPFLAGS=-I/opt/homebrew/opt/libomp/include
+[exit=0]
+$ brew list --versions libomp
+# 2026-11-09T20:47:34+0800
+libomp 23.1.5
+[exit=0]
+$ .venv/bin/python scripts/env_smoke.py
+# 2026-11-09T20:47:34+0800
+{
+  "python": "3.12.14",
+  "executable": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/bin/python",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "import:pandas": "3.1.1",
+  "import:pyarrow": "26.0.1",
+  "import:duckdb": "2.0.0",
+  "import:openpyxl": "3.1.5",
+  "import:sklearn": "1.9.1",
+  "import:lightgbm": "4.7.0",
+  "import:plotly": "7.1.0",
+  "import:streamlit": "1.67.0",
+  "import:openai": "3.46.0",
+  "import:pytest": "9.2.0",
+  "lightgbm_fit": {
+    "n_train": 200,
+    "proba_range": [
+      0.066,
+      0.934
+    ]
+  },
+  "sklearn_logistic_fit": {
+    "coef_shape": [
+      1,
+      2
+    ]
+  },
+  "duckdb_read_only": {
+    "rows": 5,
+    "write_blocked_on_read_only": true
+  },
+  "plotly_figure": {
+    "traces": 1
+  },
+  "failures": []
+}
+[exit=0]

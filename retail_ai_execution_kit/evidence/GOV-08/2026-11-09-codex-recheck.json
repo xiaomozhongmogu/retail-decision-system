@@ -1,0 +1,78 @@
+{
+  "task_id": "GOV-08",
+  "task_spec_sha256": "5428bd5927aea2915a78b0ad0307f4c39acd2c510ce75763c8681c9137672335",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "performed_at": "2026-11-09T21:04:34.896848+08:00",
+  "actor": "codex",
+  "reviewer": "codex",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv); governance system python3"
+  },
+  "command": "python3 scripts/test_project_tool.py; .venv/bin/python scripts/env_smoke.py; git status --short; git log -2 --oneline; git remote -v; sw_vers; uname -m; curl --max-time 15 https://github.com (status only)",
+  "exit_code": 0,
+  "summary": "实际复核 AGENTS Git 新规则的影响，补充当前 Git 与环境事实；旧历史证据不覆盖，不将他人执行声称本轮执行。",
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "aae0b167d65bc9b30cc054655cdb8fb4a4bd61e17b999e1fcc968329d0af0a0b"
+    },
+    {
+      "path": "CONTINUE_PROMPT.md",
+      "sha256": "4b63af79c1791eb32343f5bdee05fe2ecc2888ece743ec83bc82c12203741fcd"
+    },
+    {
+      "path": "scripts/project.py",
+      "sha256": "bb3618d364f76723656ff84697dc860a51a91079174413b5f8dff8e476cb2b4b"
+    },
+    {
+      "path": "scripts/test_project_tool.py",
+      "sha256": "ddd3dd42de599ccf96d49fc4ee63605c5ec3777b7c42ceaac4ba7a4252083e03"
+    },
+    {
+      "path": "worklogs/GOV-07-claude-opus-5-5-2026-11-09.md",
+      "sha256": "63d280179455003da484571c53e00543f9df64835bbe10704b7d279a3e4245dd"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/governance/collaboration_smoke.md",
+      "sha256": "de13dd8452ebca5f21f9e435aeb5d7b5c0fec61ae15168509d8f1c26025d6d1b"
+    },
+    {
+      "path": "reports/governance/2026-11-09-handoff-recheck.md",
+      "sha256": "3ab529b900c8ab828038db8180f0242bf0ad90ef59abd0742e833eb9e6022d97"
+    },
+    {
+      "path": "evidence/GOV-08/2026-11-09-codex-recheck-run.json",
+      "sha256": "42a436282092701f6276dec0a9a56ec27e0ad507b80aa51e4c8401417081f95d"
+    },
+    {
+      "path": "evidence/GOV-08/2026-11-09-codex-ledger-checks.json",
+      "sha256": "ddfadb2cece79a24302f765db6a0e9dbfa4518a1947a57c15b8603a9df729781"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "治理工具 13 自测通过，完成前另存真实台账 validate/next/gate 输出。 真实台账 validate/next 返回0；proposal-ready 为7/23、midterm-ready 为7/56，均预期阻断（返回2）；以 ledger-checks.json 实际统计为准。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "按前任释放记录串行认领，哈希比对保存台账；本轮交接记录明确释放与下一入口。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "自测明确拒绝无证据完成、过期输入、规格漂移和只有静态证据的运行任务；未把夹具当业务验收。"
+    }
+  ],
+  "limitations": [
+    "自审；夹具不是业务验证；未测试多写者并发、LLM、其他成员环境；旧报告的无 Git 结论已由补充报告纠正。"
+  ]
+}

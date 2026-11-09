@@ -19,9 +19,29 @@ python3 scripts/project.py gate final-submitted
 `render`重建TASKS.md、REQUIREMENTS.md、STATUS.md；其他代理不要直接编辑这些视图。
 `show <task_id>`输出该任务及相关要求，并给出验收证据所需的task_spec_sha256。规格或要求变化后旧哈希失效；重新核验后生成新的证据，不只替换哈希冒充重验。
 
+## 已实现：项目环境（GOV-07，2026-11-09 实际运行通过）
+
+工作目录：`retail_ai_execution_kit/`。在 macOS arm64（Apple M1 Pro，macOS 27.2）上验证过，其他平台没有验证。
+
+```bash
+# 1. 前置（只需一次）：uv，以及 LightGBM 在 macOS 上需要的 OpenMP 运行库
+brew install libomp
+# 2. 建立干净的虚拟环境并按锁文件安装（约 57 个包；本机耗时数分钟，取决于 PyPI 网速）
+uv venv --python 3.12 .venv
+uv pip sync --python .venv/bin/python requirements.lock
+# 3. 冒烟检查：退出码 0 表示核心依赖可导入，LightGBM、逻辑回归可训练，DuckDB 只读连接拒绝写入
+.venv/bin/python scripts/env_smoke.py
+.venv/bin/streamlit --version
+```
+
+- 锁文件来源：`requirements.lock` 文件头记录了生成命令 `uv pip compile pyproject.toml --extra dev --python-version 3.12 --python-platform aarch64-apple-darwin -o requirements.lock`。修改 `pyproject.toml` 后要重新生成锁文件，并重跑冒烟检查。
+- 没有 `brew install libomp` 时，`import lightgbm` 会报 `Library not loaded: @rpath/libomp.dylib`（2026-11-09 实际遇到过）。
+- LLM 凭据：复制 `.env.example` 为 `.env` 后填写；`.env` 已被 `.gitignore` 忽略。冒烟检查不读取凭据，也不联网。
+- 系统自带的 `python3`（3.9.6）只用于运行上面的治理脚本，不用于业务代码。
+
 ## 计划中：业务命令
 
-当前包不包含业务应用，以下入口需GOV-07及对应实现任务实际建立后才能登记为可用：
+以下入口要等对应实现任务实际建立后才能登记为可用（环境已由 GOV-07 建立）：
 
 | 目的 | 拟定形式 | 当前状态 |
 | --- | --- | --- |

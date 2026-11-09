@@ -1,0 +1,17 @@
+$ git check-ignore -v --no-index <paths>  (临时仓库，仅复制 .gitignore；匹配到以 ! 开头的否定规则 = 不忽略)
+# 2026-11-09T20:48:17+0800
+IGNORED  .env  <- .gitignore:1:.env	.env
+IGNORED  .env.local  <- .gitignore:2:.env.*	.env.local
+TRACKED  .env.example  (negation: .gitignore:3:!.env.example	.env.example)
+IGNORED  .venv/bin/python  <- .gitignore:5:.venv/	.venv/bin/python
+IGNORED  data/raw/x.csv  <- .gitignore:7:data/raw/	data/raw/x.csv
+IGNORED  data/processed/a.parquet  <- .gitignore:8:data/processed/	data/processed/a.parquet
+IGNORED  models/m.txt  <- .gitignore:10:models/	models/m.txt
+IGNORED  warehouse/releases/r1.duckdb  <- .gitignore:14:warehouse/	warehouse/releases/r1.duckdb
+IGNORED  app_state.duckdb  <- .gitignore:11:*.duckdb	app_state.duckdb
+IGNORED  logs/ai/a.json  <- .gitignore:15:logs/	logs/ai/a.json
+IGNORED  .intent-lens/words.json  <- .gitignore:18:.intent-lens/	.intent-lens/words.json
+TRACKED  sources/course_guide_2026.docx  
+TRACKED  contracts/interfaces.md  
+TRACKED  requirements.lock  
+[exit=0]

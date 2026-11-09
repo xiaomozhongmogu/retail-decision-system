@@ -21,7 +21,7 @@
 | GOV-04 | 解决数据时效及课程口径歧义 | proposal | blocked | GOV-01 |
 | GOV-05 | 冻结业务范围和可观测生命周期 | proposal | done | GOV-01 |
 | GOV-06 | 冻结轻量架构和公共接口草案 | proposal | done | GOV-05, GOV-02 |
-| GOV-07 | 建立环境、目录和命令入口 | proposal | todo | GOV-02, GOV-06 |
+| GOV-07 | 建立环境、目录和命令入口 | proposal | done | GOV-02, GOV-06 |
 | GOV-08 | 建立认领、证据和交接流程 | proposal | done | GOV-01, GOV-02 |
 | DATA-01 | 核验候选数据来源与许可 | proposal | done | GOV-05 |
 | DATA-02 | 实读候选文件并探查字段 | proposal | todo | DATA-01, GOV-07 |
@@ -142,7 +142,7 @@
 2. 记录OS、CPU架构、Python、联网、文件读写和执行能力，不能声称已验证用户M1机器。
 3. 说明可实际执行与只能提供待执行补丁的范围；不覆盖未知用户文件。
 
-证据：evidence/GOV-02/2026-11-09-inventory.json
+证据：evidence/GOV-02/2026-11-09-codex-recheck.json
 
 ### GOV-03 填写真实团队与责任矩阵
 
@@ -218,7 +218,7 @@
 
 ### GOV-07 建立环境、目录和命令入口
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C20, Q02, Q07。
 - 前置：GOV-02, GOV-06。
 - 允许修改：`docs`, `scripts`, `pyproject.toml`, `requirements.lock`, `.gitignore`, `.env.example`；另可写本任务证据/交接。
@@ -231,7 +231,7 @@
 2. Git忽略密钥和大数据，配置样例无真实秘钥；保留课程私有数据边界。
 3. 区分当前已实现命令与计划命令；干净环境最小导入或帮助命令实际成功。
 
-证据：尚无已登记验收证据。
+证据：evidence/GOV-07/2026-11-09-env-smoke.json
 
 ### GOV-08 建立认领、证据和交接流程
 
@@ -248,7 +248,7 @@
 2. 任务台账单写者明确，完成一次任务认领和交接示例；并行代理目录互斥。
 3. 检查done必须有真实证据，不能把生成文件或脚本退出0直接视为全部业务正确。
 
-证据：evidence/GOV-08/2026-11-09-smoke.json
+证据：evidence/GOV-08/2026-11-09-codex-recheck.json
 
 
 ## DATA — 数据准备

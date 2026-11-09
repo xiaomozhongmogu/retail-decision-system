@@ -1,0 +1,458 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/project.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "output": {
+      "result": "ledger_valid",
+      "tasks": 92,
+      "requirements": 49,
+      "selected": 85,
+      "accepted": 7,
+      "warnings": [
+        "机械检查不证明教师答复、原始结果或业务判断真实；必须复核证据内容。"
+      ]
+    }
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/project.py",
+      "next"
+    ],
+    "exit_code": 0,
+    "output": {
+      "result": "available_tasks",
+      "tasks": [
+        {
+          "id": "DATA-02",
+          "title": "实读候选文件并探查字段",
+          "phase": "proposal",
+          "depends_on": [
+            "DATA-01",
+            "GOV-07"
+          ],
+          "outputs": [
+            "reports/data/candidate_probe.json",
+            "reports/data/candidate_probe.md"
+          ]
+        },
+        {
+          "id": "AI-01",
+          "title": "实现LLM适配与配置边界",
+          "phase": "final",
+          "depends_on": [
+            "GOV-07",
+            "GOV-06"
+          ],
+          "outputs": [
+            "src/retail_bi/ai/client.py",
+            "reports/ai/client_smoke.json"
+          ]
+        },
+        {
+          "id": "UI-01",
+          "title": "建立Streamlit多页骨架",
+          "phase": "midterm",
+          "depends_on": [
+            "GOV-07",
+            "GOV-06"
+          ],
+          "outputs": [
+            "app.py",
+            "reports/ui/navigation_smoke.md"
+          ]
+        },
+        {
+          "id": "DOC-04",
+          "title": "核验学术文献与综述引用",
+          "phase": "proposal",
+          "depends_on": [
+            "GOV-05"
+          ],
+          "outputs": [
+            "docs/reference_registry.md",
+            "reports/references/reference_audit.md"
+          ]
+        }
+      ],
+      "active": [
+        "DOC-01"
+      ],
+      "blocked": [
+        {
+          "id": "GOV-03",
+          "reason": "已从用户提供的选题报告登记 5 名成员姓名、学号与组长（ops/TEAM.md）；仍缺：各模块负责人与复核者、可投入时间、文档章节与演示分工，以及孙卓班级的确认，均需团队提供。恢复条件：用户提供分工表。"
+        },
+        {
+          "id": "GOV-04",
+          "reason": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+        }
+      ]
+    }
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/project.py",
+      "gate",
+      "proposal-ready"
+    ],
+    "exit_code": 2,
+    "output": {
+      "result": "blocked",
+      "gate": "proposal-ready",
+      "required_tasks": 23,
+      "accepted_tasks": 7,
+      "unmet": [
+        {
+          "id": "GOV-03",
+          "status": "blocked",
+          "blocker": "已从用户提供的选题报告登记 5 名成员姓名、学号与组长（ops/TEAM.md）；仍缺：各模块负责人与复核者、可投入时间、文档章节与演示分工，以及孙卓班级的确认，均需团队提供。恢复条件：用户提供分工表。"
+        },
+        {
+          "id": "GOV-04",
+          "status": "blocked",
+          "blocker": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+        },
+        {
+          "id": "DATA-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-03",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-04",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-05",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-06",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-07",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-08",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-09",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-10",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-11",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-12",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-01",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DOC-01",
+          "status": "in_review",
+          "blocker": null
+        },
+        {
+          "id": "DOC-04",
+          "status": "todo",
+          "blocker": null
+        }
+      ],
+      "note": "完整证据记录仍需业务内容审阅；ready不等于已提交/答辩，也不保证教师评分。"
+    }
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/project.py",
+      "gate",
+      "midterm-ready"
+    ],
+    "exit_code": 2,
+    "output": {
+      "result": "blocked",
+      "gate": "midterm-ready",
+      "required_tasks": 56,
+      "accepted_tasks": 7,
+      "unmet": [
+        {
+          "id": "GOV-03",
+          "status": "blocked",
+          "blocker": "已从用户提供的选题报告登记 5 名成员姓名、学号与组长（ops/TEAM.md）；仍缺：各模块负责人与复核者、可投入时间、文档章节与演示分工，以及孙卓班级的确认，均需团队提供。恢复条件：用户提供分工表。"
+        },
+        {
+          "id": "GOV-04",
+          "status": "blocked",
+          "blocker": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+        },
+        {
+          "id": "DATA-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-03",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-04",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-05",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-06",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-07",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-08",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-09",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-10",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-11",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DATA-12",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-01",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-03",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-04",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-05",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-06",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-07",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-08",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-09",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DW-10",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-01",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-03",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-04",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-05",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "EDA-06",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-01",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-03",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-04",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-05",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-06",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-07",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-08",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-09",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-10",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-11",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "ML-12",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "UI-01",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "UI-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "UI-03",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "UI-04",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "UI-05",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DOC-01",
+          "status": "in_review",
+          "blocker": null
+        },
+        {
+          "id": "DOC-02",
+          "status": "todo",
+          "blocker": null
+        },
+        {
+          "id": "DOC-04",
+          "status": "todo",
+          "blocker": null
+        }
+      ],
+      "note": "完整证据记录仍需业务内容审阅；ready不等于已提交/答辩，也不保证教师评分。"
+    }
+  }
+]
