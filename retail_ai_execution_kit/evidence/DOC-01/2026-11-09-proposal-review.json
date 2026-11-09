@@ -1,0 +1,94 @@
+{
+  "task_id": "DOC-01",
+  "verification_status": "partial",
+  "method": "hybrid",
+  "performed_at": "2026-11-09T20:17:00+08:00",
+  "actor": "claude-opus-5-5（Claude Code 桌面端）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "tools": "python3 zipfile、pandoc、qlmanage（Quick Look）"
+  },
+  "command": "cp -p <源docx> deliverables/proposal.docx; python3 -I 抽取 word/document.xml; pandoc deliverables/proposal.docx -t plain; qlmanage -t -s 1400 deliverables/proposal.docx",
+  "exit_code": 0,
+  "summary": "用户提供的选题报告与项目规格基本一致：五部分齐全，12 篇参考文献，没有虚构结果。但阶段一的数据选择与预处理没有实际证据，也没有成员分工；只渲染了第 1 页；提交回执未知。本记录不是通过证据。",
+  "inputs": [
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "5b4c555ff55ae53cc7361f86bbfe3bae9358c78ff936347e328079be8af8431d"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "c9ee3002fd32da554f12d7d448bd9dd8a4e6663be56687fc07d09bc387ae2d16"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "c16ef365aa1a6a7887d8e10c709a0c542e2f1d077c489f5c65b1676ee321f46a"
+    },
+    {
+      "path": "docs/reference_registry.md",
+      "sha256": "04ea70665689e4d99c7e7b1231bb96ba6c05dfb49cd132f43774b643d6d889e2"
+    },
+    {
+      "path": "ACCEPTANCE.md",
+      "sha256": "a6be933ca56dba27686b878bd3b17becd28af93b2f82c6397d501b4b6a449eaa"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "deliverables/proposal.docx",
+      "sha256": "99fcd6b175d559d4017551e1ab7188fe31293e9e45237c7fd7e3c81b08f1c395"
+    },
+    {
+      "path": "reports/submission/proposal_manifest.json",
+      "sha256": "31ab4f2245f6c9265dd9e9e98c0f14102d6d5658861ee85a5afb4098c37c73ed"
+    },
+    {
+      "path": "reports/submission/proposal_review.md",
+      "sha256": "1d231db82f9b089c55629dfb7cf1ce5a8f11448abe377907f919e484ac80d958"
+    },
+    {
+      "path": "evidence/DOC-01/render_page1_quicklook.png",
+      "sha256": "0ba4c0700ddfc16718c8510fb0e97f31b0b4b1e379d176d693f1d889a5734b5b"
+    },
+    {
+      "path": "evidence/DOC-01/proposal_extracted_text.txt",
+      "sha256": "89179ea1b2432ba68206137c5fb5ade672efcd59265a76aaee3244a9974d4cdd"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "五部分（目的意义、背景综述与参考文献、研究内容、方法与主要问题、实习计划）及表头都齐全；12 篇参考文献，正文引用 [1]–[12] 全部出现。"
+    },
+    {
+      "criterion": 2,
+      "status": "failed",
+      "finding": "团队姓名、学号、班级已填，三个截止日完整，没有写未完成的模型结果；但缺少数据选择和预处理的实际证据（G1：DATA-01～12、EDA-01 未完成，D001 未解决），也没有成员分工和架构（G3），孙卓的班级待确认（G4）。"
+    },
+    {
+      "criterion": 3,
+      "status": "not_run",
+      "finding": "已做：docx 解析与 Quick Look 渲染第 1 页，版式正常；第 2～4 页没有逐页渲染（G6）。提交状态与回执未知，没有记录为已提交。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "没有核验参考文献原文，属于 DOC-04。",
+    "源文件位于项目之外，用字节相同的登记副本绑定哈希。"
+  ],
+  "steps": [
+    "比对源文件与副本哈希。",
+    "抽取全文并逐条对照规格（见 proposal_review.md）。",
+    "渲染第 1 页并目视检查。",
+    "把团队事实登记到 ops/TEAM.md（不分配职责）。"
+  ],
+  "task_spec_sha256": "96f34b278454fb817b42e2d5071dfa2f6fd78dfc993a9e4ce60b01a2ad0c6b4f"
+}

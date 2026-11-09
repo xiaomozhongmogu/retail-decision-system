@@ -1,0 +1,80 @@
+#PARTS ['[Content_Types].xml', '_rels/.rels', 'word/document.xml', 'word/_rels/document.xml.rels', 'word/theme/theme1.xml', 'word/settings.xml', 'word/styles.xml', 'word/webSettings.xml', 'word/fontTable.xml', 'docProps/core.xml', 'docProps/app.xml', 'docProps/custom.xml']
+#CORE  | 
+ |  |  |  |  |  | Windows 用户 |  |  |  |  |  | af9225@365mso.com |  | 15 |  | 2022-10-26T03:26:00Z |  | 2026-11-08T14:57:00Z |  | en-US |  | 
+##### word/document.xml
+华南农业大学
+智能决策综合实践选题报告
+题目
+ ‖ 基于用户全生命周期的电商零售智能决策与 AI 运营助手系统
+ ‖ 学生姓名
+ ‖ 李沁阳 
+李浩畅 
+黄思凯
+李仕仁
+孙卓
+
+
+ ‖ 班级学号
+ ‖ 202325710409
+202325710408
+202325710406
+202325710410
+202229210221
+
+
+
+
+ ‖ 专业班级
+ ‖ 23信管4班
+ ‖ 一、选题的目的和意义
+本课题面向电商零售企业的业务与市场部门，拟构建集交易数据管理、客户价值分层、复购风险预警和 AI 运营辅助于一体的智能决策支持系统，形成“数据准备—多维分析—预测建模—运营建议”的完整应用链路。研究重点是帮助运营人员识别不同客户群体的购买特征，在有限资源下确定维系与召回的优先顺序，并提高经营分析和报告编写效率。
+ ‖ 本课题将客户生命周期限定为从首次可观测购买开始的新客、活跃、预警和沉睡等阶段，分别刻画生命周期状态、历史价值与未来风险。通过统一指标口径、开展时间一致的模型评价、为 AI 输出附加证据和规则约束，探索传统商务智能与生成式人工智能的结合方式。实践成果可用于验证数据分析方法与辅助决策流程，不预设营销增收或真实挽回效果。
+ ‖ 二、选题背景分析（文献综述，要列出参考文献）
+客户分群与价值研究方面，Chen 等将 RFM 与 K-Means 等方法用于在线零售客户细分，为差异化运营提供了可解释的分析路径[1]。Fader 等研究了 RFM 与客户终身价值的联系，并提出适用于非契约型客户交易的 BG/NBD 模型[2-3]。这些研究说明交易历史能够支持客户分析，但历史消费额与未来终身价值应严格区分。本课题以 RFM 历史价值画像为主，将概率价值模型作为后续扩展。
+ ‖ 客户留存与预测研究方面，Burez 等讨论了流失预测中的类别不平衡问题[4]；Ascarza 的研究指出，高流失风险并不必然意味着较高的营销挽回收益[5]。XGBoost 与 LightGBM 为表格特征预测提供了成熟方法[6-7]。据此，本课题拟以规则和逻辑回归作为基线，比较 LightGBM 的实际表现；采用指定未来窗口内是否复购作为可观测标签，并结合排序、校准和固定触达容量评价，避免仅以准确率判断模型价值。
+ ‖ 智能查询与生成式辅助方面，RAG 通过引入外部检索知识为生成提供依据，ReAct 探索了语言模型与外部工具交互的方法[8-9]。BIRD 和 Spider 2.0 进一步将真实数据库内容、复杂结构与企业查询工作流纳入研究[10-11]。国内梁清源等从任务场景、数据集、模型与评价方法梳理了 SQL 生成研究[12]。这些成果为本课题设计指标知识库、受限查询工具和运营工作流提供了参考，也提示系统须同时核验查询语义、计算结果和生成依据。
+ ‖ 本课题拟解决各分析环节口径不统一、历史特征与未来标签混用、AI 建议难以追溯等实际问题。主要特色是将客户时点快照、统一指标词典、风险模型与三个 AI 模块集成到同一应用，并通过查询正确性、报告数字一致性和运营规则符合性进行验证。
+ ‖ 参考文献
+[1] CHEN D, SAIN S L, GUO K. Data mining for the online retail industry: A case study of RFM model-based customer segmentation using data mining[J]. Journal of Database Marketing & Customer Strategy Management, 2012, 19(3): 197-208. DOI: 10.1057/dbm.2012.17.
+ ‖ [2] FADER P S, HARDIE B G S, LEE K L. RFM and CLV: Using Iso-Value Curves for Customer Base Analysis[J]. Journal of Marketing Research, 2005, 42(4): 415-430. DOI: 10.1509/jmkr.2005.42.4.415.
+ ‖ [3] FADER P S, HARDIE B G S, LEE K L. “Counting Your Customers” the Easy Way: An Alternative to the Pareto/NBD Model[J]. Marketing Science, 2005, 24(2): 275-284. DOI: 10.1287/mksc.1040.0098.
+ ‖ [4] BUREZ J, VAN DEN POEL D. Handling class imbalance in customer churn prediction[J]. Expert Systems with Applications, 2009, 36(3): 4626-4636. DOI: 10.1016/j.eswa.2008.05.027.
+ ‖ [5] ASCARZA E. Retention Futility: Targeting High-Risk Customers Might be Ineffective[J]. Journal of Marketing Research, 2018, 55(1): 80-98. DOI: 10.1509/jmr.16.0163.
+ ‖ [6] CHEN T, GUESTRIN C. XGBoost: A Scalable Tree Boosting System[C]//Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 2016: 785-794. DOI: 10.1145/2939672.2939785.
+ ‖ [7] KE G, MENG Q, FINLEY T, et al. LightGBM: A Highly Efficient Gradient Boosting Decision Tree[C]//Advances in Neural Information Processing Systems. 2017, 30.
+ ‖ [8] LEWIS P, PEREZ E, PIKTUS A, et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks[C]//Advances in Neural Information Processing Systems. 2020, 33: 9459-9474.
+ ‖ [9] YAO S, ZHAO J, YU D, et al. ReAct: Synergizing Reasoning and Acting in Language Models[C]//The Eleventh International Conference on Learning Representations. 2023. https://arxiv.org/abs/2210.03629.
+ ‖ [10] LI J, HUI B, QU G, et al. Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs[C]//Advances in Neural Information Processing Systems. 2023, 36. https://arxiv.org/abs/2305.03111.
+ ‖ [11] LEI F, CHEN J, YE Y, et al. Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows[C]//The Thirteenth International Conference on Learning Representations. 2025. https://arxiv.org/abs/2411.07763.
+ ‖ [12] 梁清源, 朱琪豪, 孙泽宇, 等. 基于深度学习的 SQL 生成研究综述[J]. 中国科学: 信息科学, 2022, 52(8): 1363-1392. DOI: 10.1360/SSI-2021-0316.
+ ‖ 三、选题研究的内容
+1. 数据准备与研究边界。拟选择不少于 1 万条记录或 10 MB、至少 8 个有效业务字段且包含时间维度的真实零售数据。将 UCI Online Retail II 作为历史方法验证候选，字段包括发票号、商品编码、商品描述、数量、交易时间、单价、客户编号和国家；来源为 https://archive.ics.uci.edu/dataset/502/online+retail+ii 。该数据交易发生于 2009—2011 年，不能直接视为符合指导书“2026 年 1 月以后”的条件。正式数据源将在核验时效口径与实际文件后确定；如采用该历史数据，须取得教师对适用性的明确认可。
+ ‖ 2. 数据治理与数仓建设。制定数据字典与有效购买、订单、金额、退货等指标口径；处理缺失客户编号、取消交易、负数量、异常价格和疑似重复记录，记录清洗前后数量及金额变化。采用 Parquet 与 DuckDB 建立 ODS 原始层、DWD 明细层、DWS 汇总层和 ADS 应用层，以交易明细事实表关联日期、客户、商品及国家维度，支持可追溯的 ETL 和对账。
+ ‖ 3. 经营与生命周期分析。开展交易分布、销售趋势、客户贡献、商品结构和首次可观测购买 cohort 留存分析；实现切片、切块、下钻与旋转等 OLAP 操作。依据实际购买间隔确定生命周期规则，以 RFM 和 K-Means 分析客户价值群体，展示各群体的行为差异、消费贡献及阶段变化。交易数据未包含的浏览转化、获客成本和渠道归因不纳入研究结论。
+ ‖ 4. 复购预测与风险预警。以“客户×预测时点”为样本，使用过去 90 天内有有效购买且身份已知的客户构建模型母体；根据近 7、30、90 天购买特征，预测未来 30 天内是否发生有效购买。比较最近购买间隔规则、逻辑回归与 LightGBM，输出风险排序、适用范围及特征解释。长期无购买且不在模型母体内的客户按规则管理。
+ ‖ 5. AI 运营辅助与交互系统。规划自然语言经营查询、自动经营诊断周报、个性化挽回策略 Agent 三个模块，共享指标字典、数据字典、模型卡与运营规则知识库。利用 Streamlit 与 Plotly 实现数据质量、经营监控、客户生命周期、模型试算和 AI 工作台页面，支持筛选下钻、查询证据查看及策略草稿审阅。销量预测等功能视核心任务完成情况扩展。
+ ‖ 四、选题研究的研究方法和解决的主要问题
+1. 文献研究与业务建模。综合客户价值、非契约型购买行为、流失预警及数据库智能体文献，确定业务问题、指标定义与系统边界。以“客户价值分层—未来复购预警—经营诊断—运营建议”为技术路线，解决业务需求与模型输出脱节的问题。
+ ‖ 2. 统计分析与多维建模。使用 Python、pandas 完成质量审计、统计与特征处理；使用 SQL 实现分层汇总、留存和贡献拆解。订单按有效发票去重，客户数及比率按目标期间重算；将正向交易与退货取消分别处理并核对净额，解决粒度混淆、重复连接和聚合口径不一致的问题。
+ ‖ 3. 聚类与监督学习。RFM 特征经适当变换和缩放后进行聚类，结合轮廓系数、稳定性与业务可解释性选择群数。监督模型按时间顺序划分训练、验证和测试，确保特征仅使用预测前已知信息，标签具有完整的未来 30 天观察期，前阶段标签在下一阶段预测前已可观测。预处理参数、阈值与超参数仅在训练及验证阶段确定，最终测试集用于独立评价。
+ ‖ 4. 模型评价与运营解释。报告 ROC-AUC、PR-AUC、KS、F1、Recall@K 或 Lift@K，并结合 Brier 分数与校准曲线检查概率可靠性。根据实际验证结果选择模型，不预设复杂模型优于基线。“流失风险”仅表示未来 30 天未复购风险，不代表永久离开；不将风险排序解释为营销增量收益，真实策略效果需后续对照实验验证。
+ ‖ 5. 检索增强与受限工具调用。查询助手将自然语言转为结构化意图，经字段、指标和时间范围校验后由程序构造并执行受限 SQL，设置只读查询、外部访问限制、行数和超时控制。周报由程序计算指标与变化，再由 LLM 组织解释，校验数字、单位与证据；Agent 按“读取画像—检索规则—生成策略—校验预算和资格—保存草稿”执行。缺少的预算、优惠和触达规则仅以明确标注的演示配置使用。
+ ‖ 6. 系统验证与成果复现。拟建立不少于 40 道查询问题、20 个周报场景和30 个策略边界案例，评价结果正确性、证据一致性及规则符合性；对不可回答、缺失数据与异常输入提供明确反馈。保存数据版本、模型参数、SQL、真实评测与调用记录，完成端到端运行和独立环境复现。策略与文案保留人工审核，不连接真实营销发送接口。
+ ‖ 五、课程实习计划
+2026 年 10 月23 日至 2026 年 11 月 9 日：完成业务需求与文献调研，核验数据来源、许可、字段和时间范围；明确数据时效口径，确定正式数据，完成初步预处理、数据字典及质量摘要，提交选题报告和数据源说明。
+ ‖ 2026 年 11 月 10 日至 2026 年 11 月 30 日：完成分层数仓、星型模型、ETL 对账、EDA 与 OLAP；完成生命周期规则、RFM 分群、时点样本、基线与 LightGBM 评价，搭建交互页面；整理实际成果，提交中期检查报告并现场答辩。
+ ‖ 2026 年 12 月 1 日至 2026 年 12 月 22 日：完成三个 AI 模块与页面联调、边界案例评价和复现验收；计划 12 月 13 日完成核心功能，12 月 18 日前完成主要文档与演练，后续修复问题；提交课程报告正式稿、代码、数据说明、模型、演示材料和贡献记录，并现场答辩。
+ ‖ 组长签名：李浩畅
+ ‖ 日 期：2026 年 11 月 9 日
+ ‖ 指导
+教师
+批阅
+意见
+与评分
+ ‖ 
+
+
+
+评分：                 指导教师（签名）：                2026 年    月    日
+ ‖
+#IMAGES []

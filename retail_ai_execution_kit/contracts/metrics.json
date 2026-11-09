@@ -1,0 +1,74 @@
+{
+  "status": "draft_not_executed",
+  "applies_to": "UCI交易候选；路线变化须重审",
+  "metrics": [
+    {
+      "id": "positive_sales",
+      "name": "正向商品开票金额",
+      "unit": "GBP if UCI",
+      "definition": "符合商品与正向交易纳入规则的quantity*unit_price之和；可含未知客户",
+      "sql": null
+    },
+    {
+      "id": "net_sales",
+      "name": "商品净开票金额",
+      "unit": "GBP if UCI",
+      "definition": "按事件发生时点纳入正向与已分类冲销金额；排除/隔离差额须对账",
+      "sql": null
+    },
+    {
+      "id": "orders",
+      "name": "有效购买订单数",
+      "unit": "invoice count",
+      "definition": "至少包含一条有效正向商品明细的invoice_id去重数；客户级指标另要求customer_id已知",
+      "sql": null
+    },
+    {
+      "id": "customers",
+      "name": "已知购买客户数",
+      "unit": "distinct customer",
+      "definition": "指定期间有效购买的已知customer_id去重；不可跨日相加",
+      "sql": null
+    },
+    {
+      "id": "aov",
+      "name": "正向订单客单价",
+      "unit": "GBP/invoice if UCI",
+      "definition": "对应正向订单金额/对应有效订单数；分子分母同一范围，0分母为null",
+      "sql": null
+    },
+    {
+      "id": "repurchase_30d",
+      "name": "未来30天复购概率",
+      "unit": "probability",
+      "definition": "对观察窗符合母体的客户，P([t,t+30d)至少一次有效购买)",
+      "sql": null
+    },
+    {
+      "id": "non_repurchase_30d",
+      "name": "未来30天未复购风险",
+      "unit": "probability",
+      "definition": "1-repurchase_30d；不是永久流失，也不是营销增量响应",
+      "sql": null
+    },
+    {
+      "id": "rfm",
+      "name": "RFM画像",
+      "unit": "days/invoices/GBP if UCI",
+      "definition": "R距最近有效购买，F过去90天订单去重，M同窗正向金额；非严格CLV",
+      "sql": null
+    }
+  ],
+  "required_for_approval": [
+    "windows",
+    "population",
+    "inclusions",
+    "exclusions",
+    "numerator",
+    "denominator",
+    "zero_null_policy",
+    "supported_dimensions",
+    "sql_mapping",
+    "examples_and_checks"
+  ]
+}

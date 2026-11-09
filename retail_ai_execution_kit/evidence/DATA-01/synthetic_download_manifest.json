@@ -1,0 +1,73 @@
+{
+  "manifest_version": 1,
+  "project": "Synthetic Dataset Generator",
+  "repository": "https://github.com/ablancogcr/synthetic-dataset-generator",
+  "description": "Pre-generated synthetic ecommerce datasets for analytics practice, SQL projects, BI dashboards, data science experiments, and portfolio work.",
+  "synthetic_data_disclaimer": "These datasets are fully synthetic and do not represent real customers, sellers, orders, companies, or market activity. They must not be interpreted as real market data or used for operational business decisions.",
+  "datasets": [
+    {
+      "scenario": "baseline",
+      "label": "Baseline",
+      "filename": "baseline_10000_seed42.zip",
+      "url": "/downloads/synthetic-dataset-generator/baseline_10000_seed42.zip",
+      "format": "CSV ZIP",
+      "file_count": 14,
+      "orders": 10000,
+      "seed": 42,
+      "start_date": "2024-01-01",
+      "end_date": "2026-12-31",
+      "data_quality_mode": "clean",
+      "validation_status": "passed",
+      "size_bytes": 1262760,
+      "sha256": "068bd2d3e7780560a909293797c89e3575487d7f23c587f34d114c943f127fa3"
+    },
+    {
+      "scenario": "holiday_spike",
+      "label": "Holiday Spike",
+      "filename": "holiday_spike_10000_seed42.zip",
+      "url": "/downloads/synthetic-dataset-generator/holiday_spike_10000_seed42.zip",
+      "format": "CSV ZIP",
+      "file_count": 14,
+      "orders": 10000,
+      "seed": 42,
+      "start_date": "2024-01-01",
+      "end_date": "2026-12-31",
+      "data_quality_mode": "clean",
+      "validation_status": "passed",
+      "size_bytes": 1272680,
+      "sha256": "75548e7de58c6d6e1a4f2eabb4794a279fe24f0e4a6ab8489b417837ffd970ca"
+    },
+    {
+      "scenario": "logistics_improvement",
+      "label": "Logistics Improvement",
+      "filename": "logistics_improvement_10000_seed42.zip",
+      "url": "/downloads/synthetic-dataset-generator/logistics_improvement_10000_seed42.zip",
+      "format": "CSV ZIP",
+      "file_count": 14,
+      "orders": 10000,
+      "seed": 42,
+      "start_date": "2024-01-01",
+      "end_date": "2026-12-31",
+      "data_quality_mode": "clean",
+      "validation_status": "passed",
+      "size_bytes": 1273480,
+      "sha256": "44bdace649d156d1c1a38a9cb0c1c672893d611bf39b9d1edcb87ab9667e19a8"
+    },
+    {
+      "scenario": "seller_churn",
+      "label": "Seller Churn",
+      "filename": "seller_churn_10000_seed42.zip",
+      "url": "/downloads/synthetic-dataset-generator/seller_churn_10000_seed42.zip",
+      "format": "CSV ZIP",
+      "file_count": 14,
+      "orders": 10000,
+      "seed": 42,
+      "start_date": "2024-01-01",
+      "end_date": "2026-12-31",
+      "data_quality_mode": "clean",
+      "validation_status": "passed",
+      "size_bytes": 1272555,
+      "sha256": "0ecf78df3f92104acc744d3d96c5219055285cddf953aef7d79de2bd82a3a5bd"
+    }
+  ]
+}

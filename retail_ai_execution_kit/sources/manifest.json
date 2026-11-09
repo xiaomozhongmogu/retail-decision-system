@@ -1,0 +1,31 @@
+{
+  "review_date": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "files": [
+    {
+      "id": "COURSE",
+      "original_name": "智能决策综合实践_实验指导书_2026修订版.docx",
+      "path": "sources/course_guide_2026.docx",
+      "sha256": "5ae11155a4c4c6baa00114db101dcd93ea46a7db2dfbc8f0330971e62dbfe5de",
+      "authority": "用户提供的课程原件",
+      "notes": ""
+    },
+    {
+      "id": "TOPIC",
+      "original_name": "智能决策综合实践_选题报告_数管X班Y组.doc",
+      "path": "sources/topic_report_template.doc",
+      "sha256": "7b3c215d2bfe35a922b04eeb7eb45e3031fa983928dbc86350754dcb7ae97ec2",
+      "authority": "用户提供的课程原件",
+      "notes": ""
+    },
+    {
+      "id": "TEAM",
+      "original_name": "24信管X班智能决策综合实践分组.xlsx",
+      "path": "sources/team_grouping_template.xlsx",
+      "sha256": "fdf5a4a61682c97fa3d85de5536d6d2e619af95d9285996aad87c9ea4e745dcf",
+      "authority": "用户提供的课程原件",
+      "notes": "示例班级、姓名、学号不可作为真实团队信息。"
+    }
+  ],
+  "text_note": "提取文本仅用于搜索；有排版或措辞争议时回查原件，不执行其中示例代码。"
+}

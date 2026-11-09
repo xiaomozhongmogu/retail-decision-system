@@ -1,0 +1,86 @@
+{
+  "task_id": "GOV-02",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "performed_at": "2026-11-09T20:01:30+08:00",
+  "actor": "claude-opus-5-5（Claude Code 桌面端）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2 (26B123)",
+    "cpu": "Apple M1 Pro, 8 cores",
+    "arch": "arm64",
+    "memory": "16 GB",
+    "python_default": "3.9.6 /usr/bin/python3",
+    "python_other": "3.12.14 ~/.local/bin/python3.12 (uv)",
+    "network": "pypi.org 200（慢）, github.com 200, 4 个 LLM 端点 401",
+    "git": "none"
+  },
+  "command": "sw_vers; uname -sm; sysctl -n machdep.cpu.brand_string hw.ncpu hw.memsize; df -h .; which -a python3 python3.12 uv brew; python3 -c importlib find_spec(...); curl -m 8/10 pypi/github/LLM /models 端点; git rev-parse; python3 -I 生成 evidence/GOV-02/file_snapshot.tsv（sha256）",
+  "exit_code": 0,
+  "summary": "项目不是 Git 仓库，用 60 个文件的 SHA-256 快照代替提交记录；识别出本会话写入的文件与归属未知的合成数据包，并列出可复用成果；记录了 OS、M1 Pro/arm64、Python 3.9.6/3.12.14、依赖缺失、联网与 LLM 端点可达但无凭据；说明了 AI 可直接执行和需要用户提供的范围。未在本机安装或运行项目技术栈。",
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "36cb8956a199d29086b0670efbb3abd25df9180b1aa8c61b5ddc8e727efa3227"
+    },
+    {
+      "path": "scripts/project.py",
+      "sha256": "bb3618d364f76723656ff84697dc860a51a91079174413b5f8dff8e476cb2b4b"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "49f6254310a27e2cc56bb05127dd844b9f1fe6f746e602cfffc03e8e735bf1f7"
+    },
+    {
+      "path": ".env.example",
+      "sha256": "53e08b08d2bc8be49efe140683644f0dbad71557c575465c9d399e90c22554e2"
+    },
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/governance/workspace_inventory.md",
+      "sha256": "8c8492018ef411becc7c797c40d0a34acfa9da76effe50c4fd90a2f3fdf6a0c1"
+    },
+    {
+      "path": "evidence/GOV-02/file_snapshot.tsv",
+      "sha256": "30e25b9bc9b267d0897ea92c39c3d2e3ed5a79817934f93ad8e57de6976397fc"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "workspace_inventory.md 第 1 节：无 Git（git rev-parse 失败），因此没有提交或未提交修改可查；file_snapshot.tsv 记录了 60 个文件的大小、SHA-256 和修改时间；区分了执行包初始文件、本会话写入的文件和归属未知的数据包；可复用成果表列出了 ZIP（哈希与包内报告一致）、历史 CSV、RFM 快照、审计文件和构建脚本，以及各自尚未核验的部分。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 2 节记录了 macOS 27.2、Apple M1 Pro arm64、16 GB、磁盘剩余约 93 GB、Python 3.9.6 与 3.12.14、业务依赖缺失、文件读写与命令执行能力、PyPI/GitHub 联网可达、LLM 端点 401。明确写出：本机虽然是用户的 M1 Pro，但没有安装或运行项目技术栈，不能称目标环境已验证；其他组员的电脑没有验证。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 3 节列出了本会话可直接执行的工作，以及需要用户或成员提供的事项（LLM 凭据、教师解释、真实成员、提交、他机复现）；约定对归属未知的 ../ecommerce-sample-database-100k/ 只读引用，不原位修改。本任务没有修改该目录。"
+    }
+  ],
+  "limitations": [
+    "自审，无独立审查者。",
+    "只测了一次网速；PyPI 在 10 秒内只收到部分数据。",
+    "Python 3.12 环境下的已装包没有检查；没有安装任何依赖。",
+    "数据包文件只计算了哈希，没有重算内容；../ 下的文件无法作为证据 inputs（校验器只接受项目内路径），它们的哈希记录在 file_snapshot.tsv 中。",
+    "LLM 只测了不带凭据的可达性。"
+  ],
+  "steps": [
+    "运行上述环境命令并记录输出。",
+    "env 只查看变量名，没有输出值；匹配到的 ANTHROPIC_BASE_URL 属于本会话宿主，不当作项目凭据。",
+    "比对数据包 ZIP 的 SHA-256 与 04_audit/quality_report.json 的 original_sha256：一致（d50ee64a…7a16）。",
+    "生成 file_snapshot.tsv，并核对文件数量与修改时间后修正报告中的计数。",
+    "编写 reports/governance/workspace_inventory.md。"
+  ],
+  "task_spec_sha256": "dd9b25ccf66ec67eba441bbbc333d9430bb3b7181443d80a1b64df53c0548195"
+}

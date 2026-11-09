@@ -1,0 +1,497 @@
+$ python3 scripts/test_project_tool.py
+# 2026-11-09T20:04:45+0800
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.071s
+
+OK
+[exit=0]
+$ python3 scripts/project.py validate
+# 2026-11-09T20:04:45+0800
+{
+  "result": "ledger_valid",
+  "tasks": 92,
+  "requirements": 49,
+  "selected": 85,
+  "accepted": 2,
+  "warnings": [
+    "机械检查不证明教师答复、原始结果或业务判断真实；必须复核证据内容。"
+  ]
+}
+[exit=0]
+$ python3 scripts/project.py next
+# 2026-11-09T20:04:46+0800
+{
+  "result": "available_tasks",
+  "tasks": [
+    {
+      "id": "GOV-03",
+      "title": "填写真实团队与责任矩阵",
+      "phase": "proposal",
+      "depends_on": [
+        "GOV-01"
+      ],
+      "outputs": [
+        "ops/TEAM.md",
+        "reports/governance/team_review.md"
+      ]
+    },
+    {
+      "id": "GOV-05",
+      "title": "冻结业务范围和可观测生命周期",
+      "phase": "proposal",
+      "depends_on": [
+        "GOV-01"
+      ],
+      "outputs": [
+        "docs/business_scope.md"
+      ]
+    },
+    {
+      "id": "GOV-08",
+      "title": "建立认领、证据和交接流程",
+      "phase": "proposal",
+      "depends_on": [
+        "GOV-01",
+        "GOV-02"
+      ],
+      "outputs": [
+        "reports/governance/collaboration_smoke.md"
+      ]
+    }
+  ],
+  "active": [],
+  "blocked": [
+    {
+      "id": "GOV-04",
+      "reason": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+    }
+  ]
+}
+[exit=0]
+$ python3 scripts/project.py gate proposal-ready
+# 2026-11-09T20:04:46+0800
+{
+  "result": "blocked",
+  "gate": "proposal-ready",
+  "required_tasks": 23,
+  "accepted_tasks": 2,
+  "unmet": [
+    {
+      "id": "GOV-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-04",
+      "status": "blocked",
+      "blocker": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+    },
+    {
+      "id": "GOV-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-09",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-10",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-11",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-12",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DOC-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DOC-04",
+      "status": "todo",
+      "blocker": null
+    }
+  ],
+  "note": "完整证据记录仍需业务内容审阅；ready不等于已提交/答辩，也不保证教师评分。"
+}
+[exit=2]
+$ python3 scripts/project.py gate midterm-ready
+# 2026-11-09T20:04:46+0800
+{
+  "result": "blocked",
+  "gate": "midterm-ready",
+  "required_tasks": 56,
+  "accepted_tasks": 2,
+  "unmet": [
+    {
+      "id": "GOV-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-04",
+      "status": "blocked",
+      "blocker": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+    },
+    {
+      "id": "GOV-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "GOV-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-09",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-10",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-11",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-12",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-09",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DW-10",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-09",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-10",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-11",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "ML-12",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "UI-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "UI-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "UI-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "UI-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "UI-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DOC-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DOC-02",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DOC-04",
+      "status": "todo",
+      "blocker": null
+    }
+  ],
+  "note": "完整证据记录仍需业务内容审阅；ready不等于已提交/答辩，也不保证教师评分。"
+}
+[exit=2]
+$ python3 -I evidence/GOV-08/negative_tests.py /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit /private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/neg_root
+# 2026-11-09T20:04:46+0800
+## BASE 未修改的副本
+exit=0 result=ledger_valid errors=0
+## NEG1 GOV-05 标 done 但无产物、无证据
+exit=1 result=invalid errors=4
+  - GOV-05: 缺失或空产物 docs/business_scope.md
+  - GOV-05: done但无证据
+  - GOV-05: 缺少通过证据的验收条目 [1, 2, 3]
+  - GOV-05: 任务产物未被当前证据哈希绑定 docs/business_scope.md
+## NEG2 GOV-01 证据登记后篡改产物
+exit=1 result=invalid errors=2
+  - GOV-01: 证据失效，文件已变更 reports/governance/requirements_review.md；应审查并标stale
+  - GOV-01: 任务产物未被当前证据哈希绑定 reports/governance/requirements_review.md
+## NEG3 GOV-03 标 in_progress 但无 owner
+exit=1 result=invalid errors=1
+  - GOV-03: 活动/完成任务须记录owner
+## NEG4 GOV-08（execution_required）只用静态审阅证据标 done
+exit=1 result=invalid errors=1
+  - GOV-08: 该任务必须有实际运行/交互证据，静态审阅不足
+## NEG5 GOV-01 验收条件被修改，旧证据规格哈希失配
+exit=1 result=invalid errors=2
+  - GOV-01: 验收规格已变化或缺少task_spec_sha256，旧证据须重验 evidence/GOV-01/2026-11-09-review.json
+  - GOV-01: 缺少通过证据的验收条目 [4]
+{"BASE": 0, "NEG1": 1, "NEG2": 1, "NEG3": 1, "NEG4": 1, "NEG5": 1}
+ALL_EXPECTED
+[exit=0]

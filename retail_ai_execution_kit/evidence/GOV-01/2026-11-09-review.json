@@ -1,0 +1,108 @@
+{
+  "task_id": "GOV-01",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "performed_at": "2026-11-09T20:00:00+08:00",
+  "actor": "claude-opus-5-5（Claude Code 桌面端）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2 (26B123)",
+    "arch": "arm64",
+    "python": "3.9.6 (system /usr/bin/python3)",
+    "tools": "Python 标准库 zipfile/re/hashlib；macOS textutil",
+    "network_used": false,
+    "git": "项目不是 Git 仓库"
+  },
+  "command": "python3 -I evidence/GOV-01/check_clauses.py",
+  "exit_code": 0,
+  "summary": "三份课程原件 SHA-256 与 manifest 一致；48 条关键条款在原件（docx/doc 重新抽取）和提取文本中全部命中；正文与附录评分表、40/40/20、九项设计、封面与六章、选题五部分、三阶段日期均已映射到需求 ID 与任务；歧义登记为 D001 补充及 D006–D009；技术菜单与示例代码单列为非必做。",
+  "inputs": [
+    {
+      "path": "sources/manifest.json",
+      "sha256": "25ec3ae6098eee624f1c39d1dcd10e79e664b52f896f71fe83bd074fa696dbeb"
+    },
+    {
+      "path": "sources/course_guide_2026.docx",
+      "sha256": "5ae11155a4c4c6baa00114db101dcd93ea46a7db2dfbc8f0330971e62dbfe5de"
+    },
+    {
+      "path": "sources/topic_report_template.doc",
+      "sha256": "7b3c215d2bfe35a922b04eeb7eb45e3031fa983928dbc86350754dcb7ae97ec2"
+    },
+    {
+      "path": "sources/team_grouping_template.xlsx",
+      "sha256": "fdf5a4a61682c97fa3d85de5536d6d2e619af95d9285996aad87c9ea4e745dcf"
+    },
+    {
+      "path": "sources/course_guide_extracted.txt",
+      "sha256": "a975e2c65542da0d1f86620158c83ea64739caf93362b554109423769a260827"
+    },
+    {
+      "path": "sources/topic_report_extracted.txt",
+      "sha256": "83d4e0fd55899f91806977c3762b2a09157ded998882c9a1898956c915cfcd47"
+    },
+    {
+      "path": "project/requirements.json",
+      "sha256": "ac79e0b4359c11c6ba63457526b593f3dbabfabe6085ea8cefa5a72d56cb2389"
+    },
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "ACCEPTANCE.md",
+      "sha256": "a6be933ca56dba27686b878bd3b17becd28af93b2f82c6397d501b4b6a449eaa"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/governance/requirements_review.md",
+      "sha256": "1ec9be9c2c242fcdf9fadb1296d1305bd7297f86f123b71436963b56d644fc67"
+    },
+    {
+      "path": "evidence/GOV-01/check_clauses.py",
+      "sha256": "2a848746b0b5dae007a63c725b82ca0401a60513f817b8d8878f9135dfab29d7"
+    },
+    {
+      "path": "evidence/GOV-01/clause_check.log",
+      "sha256": "fc2fe94daa809b7ef0669737b11453daf9ac8694a602d807dda1d9d445e2b823"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "shasum -a 256 实测三份原件与 sources/manifest.json 记录一致（COURSE 5ae11155…、TOPIC 7b3c215d…、TEAM fdf5a4a6…）。报告第 1 节把原件、仅供搜索的提取文本（48/48 条款与原件一致）、既有规划（requirements/SPEC/ACCEPTANCE/TEAM 等）和项目外的合成数据包分开列出。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "requirements_review.md：第 2 节正文评分表 10 项、第 3 节附录评分表 10 项（含与正文的差异）、第 4 节 40/40/20、第 5 节九类设计内容、第 6 节封面与六章、第 7 节选题模板五部分、第 8 节三阶段日期，均逐项给出需求 ID 和承接任务。附录第 8 项“难度”只由 C30 间接覆盖，已写明证据由 DOC-08/DOC-03 承担。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "ops/DECISIONS.md 追加了 D001 补充（合成数据包事实，仍未解决）及 D006（合成数据作主数据，未解决）、D007（两表差异）、D008（角色人数）、D009（多源/湖仓）；没有写入任何教师认可。报告第 10 节把预处理/存储/算法/可视化/AI 技术菜单、代码示例 1–9 和加分项列为非必做，与 C08、C13 备注一致。"
+    }
+  ],
+  "limitations": [
+    "自审：只有一个 AI 执行和审阅，没有独立第二审查者。",
+    "只核对了文字层，没有比较 Word 渲染版式和表格样式；表格行条款只比对首个单元格文本（如正文评分第 10 项）。",
+    "没有联系教师或查看课程平台，D001/D002/D006–D009 都没有教师答复。",
+    "没有核验 ../ecommerce-sample-database-100k/ 数据的真实性、许可或质量（属 DATA-01/DATA-02）。",
+    "无法访问用户与其他 AI 早先的对话，U/Q 条目只检查了是否与原文混淆，没有检查是否与用户原话一致。",
+    "反例对照：在脚本副本中加入虚构条款“2030年1月以后”，正确报告 MISS（missing_in_original=1）；该次运行没有存入证据目录。",
+    "ops/DECISIONS.md 是本任务修改的共享文件，没有作为产物做哈希绑定，以免后续正常追加决定使本证据失效；本次写入后的快照哈希记在 steps 中。"
+  ],
+  "steps": [
+    "读取 AGENTS.md、README、project/tasks.json、requirements.json、PROJECT_SPEC.md、ACCEPTANCE.md、ops/DECISIONS.md、ops/TEAM.md、templates 与 scripts/project.py 校验逻辑。",
+    "运行 python3 scripts/project.py validate/next/show GOV-01；取得规格哈希 a8c0e388…0604。",
+    "shasum -a 256 sources/* 与 manifest 比对。",
+    "用 zipfile 抽取 docx 正文（另查 header/footer/footnotes/endnotes，只有标题和页码），用 textutil 转换 .doc；检查 xlsx 结构（Sheet1，A1:C8），未读取姓名。",
+    "运行 evidence/GOV-01/check_clauses.py：48 条条款在原件与提取文本中全部命中，退出码 0；做反例对照。",
+    "从 tasks.json 计算需求到任务的覆盖，编写 reports/governance/requirements_review.md。",
+    "在 ops/DECISIONS.md 追加 D001 补充与 D006–D009（写入后 SHA-256 见台账交接 worklogs/GOV-01-claude-opus-5-5-2026-11-09.md）。"
+  ],
+  "task_spec_sha256": "a8c0e388a2dc2529b0866efec8307b2ef00625c24bb5b88ff6c8726d907e0604"
+}

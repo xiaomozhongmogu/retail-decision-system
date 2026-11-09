@@ -1,0 +1,34 @@
+{
+  "task_id": "DOC-01",
+  "stage": "proposal",
+  "deadline": "2026-11-09",
+  "registered_at": "2026-11-09T20:20:00+08:00",
+  "registered_by": "claude-opus-5-5",
+  "source": {
+    "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/智能决策综合实践_选题报告_信管4班5组.docx",
+    "provided_by": "用户（2026-11-09 会话中告知该报告已编写完成）",
+    "sha256": "99fcd6b175d559d4017551e1ab7188fe31293e9e45237c7fd7e3c81b08f1c395",
+    "bytes": 23476,
+    "fs_mtime": "2026-11-08T22:57"
+  },
+  "files": [
+    {
+      "path": "deliverables/proposal.docx",
+      "sha256": "99fcd6b175d559d4017551e1ab7188fe31293e9e45237c7fd7e3c81b08f1c395",
+      "bytes": 23476,
+      "role": "选题报告正文（与源文件字节相同的登记副本）"
+    }
+  ],
+  "content_review": "reports/submission/proposal_review.md",
+  "readiness": "content_review_done_gaps_open",
+  "open_gaps": [
+    "G1 数据选择与预处理没有实际证据（DATA-01～12、EDA-01 未完成，D001 未解决）",
+    "G3 没有成员分工",
+    "G4 孙卓的班级待确认",
+    "G6 第 2～4 页没有逐页渲染",
+    "G5 参考文献待 DOC-04 核验"
+  ],
+  "submitted": null,
+  "submission_receipt": null,
+  "note": "submitted=null 表示本 AI 不知道是否已提交、也没有回执，不表示未提交。实际提交后补记时间、渠道与回执路径。"
+}

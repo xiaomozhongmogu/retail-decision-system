@@ -1,0 +1,424 @@
+
+智能决策综合实践
+实  验  指  导  书
+( 2 0 2 6 修 订 版 )
+
+华 南 农 业 大 学
+数 学 与 信 息 学 院(软件学院)
+2026 年 10 月
+
+目        录
+
+实验一  综合性、设计性实验
+实验题目:某行业商务智能与数据挖掘
+一、实验目的
+通过本次综合性、设计性实验,使学生达到以下目标:
+掌握商务智能与数据挖掘的完整技术流程,包括数据采集、数据预处理、数据仓库建模、数据分析、可视化展示以及 AI 智能处理等环节。
+能够独立或协作完成针对某一行业的大数据分析系统设计,具备解决实际行业决策问题的能力。
+熟练运用主流商务智能工具(如SPSS Modeler、PYCHARM、Visual Studio Code、FineBI、Tableau、Power BI 等)、机器学习框架(如 scikit-learn、PyTorch、TensorFlow)、深度学习与大语言模型技术,完成端到端的数据挖掘项目。
+理解并实践 2026 年最新的 AI 智能处理技术,包括大语言模型(LLM)、检索增强生成(RAG)、AI Agent、AutoML 等在商务智能领域的应用。
+培养团队协作能力、文档撰写能力和成果展示能力。
+二、实验要求
+假设您现在的身份是某行业的大数据智能决策分析人员,该行业市场部需要分析多年积累的行业业务数据,以应对市场变化时获取快速的响应。您需要使用这些行业业务数据,建立大数据相关数据集(包括多源数据库、数据仓库、数据湖以及湖仓一体等),并在此基础上完成相应行业的数据处理与数据分析。
+在数据处理与数据分析过程中,需要团队的协作合作。本次实习采用 4-6 人小组形式,角色分工如下:
+序号 | 角色 | 人数 | 主要职责
+1 | 数据采集与预处理人员 | 1人 | 负责数据来源调研、数据爬取、数据清洗、数据集成与规约
+2 | 数据处理人员 | 1人 | 负责数据仓库建模、ETL 流程设计、多维数据集构建
+3 | 数据分析人员 | 1-2人 | 负责机器学习/深度学习建模、特征工程、模型评估
+4 | AI 智能模块工程师 | 1人 | 负责 LLM 集成、RAG 系统构建、AI Agent 开发
+5 | 可视化与应用人员 | 1-2人 | 负责仪表盘设计、交互式图表、报告自动生成
+
+团队协作的主要目的是实现企业对内部/外部数据的数据收集、数据处理与数据分析,以实现资源共享,同时实现企业对市场的快速响应,在行业竞争中获取优势。因此要求组建一个大数据处理与分析系统,并实现统一集中管理与分析。采集符合智能决策处理与分析要求的原始数据。推荐使用以下几个数据集的数据：
+天池公共数据集：https://tianchi.aliyun.com/dataset/public 
+Hugging Face Datasets  https://huggingface.co/datasets
+③和本实习或竞赛相关的自行在网络上抓取或赛事方提供的数据集。
+以上数据集需选择2026年1月以后的数据集，可以验证学生身份下载数据集。
+💡 行业方向建议学生可自主选择以下行业方向之一(也可自定):①电商零售(用户行为、销售预测、商品推荐)②金融科技(风险评估、反欺诈、量化分析)③医疗健康(疾病预测、医疗影像、电子病历)④智慧农业(产量预测、病虫害识别、价格预测)⑤智能制造(设备预测性维护、质量检测)⑥智慧交通(交通流量预测、出行推荐)⑦旅游酒店(客流预测、个性化推荐)⑧教育行业(学习行为分析、个性化推荐)
+
+三、实验步骤
+(一) 数据采集
+采集符合智能决策处理与分析要求的原始数据。要求数据规模不少于1万条记录或 10MB 数据,数据维度不少于 8 个字段,且数据应具有时间维度。推荐使用以下几种数据来源:
+1. 公开数据集平台
+平台名称 | 网址 | 推荐理由
+天池数据集 | https://tianchi.aliyun.com/dataset/public | 中文数据集丰富,需 2025 年 6 月后的数据集
+Hugging Face Datasets | https://huggingface.co/datasets | AI/NLP 数据集首选
+国家统计局 | http://www.stats.gov.cn/ | 权威宏观经济数据
+和鲸社区 | https://www.heywhale.com/home | 国内数据科学社区
+
+2. 自行采集
+通过 Python 爬虫框架(Scrapy、Requests + BeautifulSoup、Selenium、Playwright)抓取相关网站数据,或通过 API 接口(如新浪财经、Tushare、聚合数据、高德地图开放平台等)调用数据。
+⚠️ 数据合规要求1. 必须遵守《数据安全法》《个人信息保护法》《网络安全法》。2. 不得爬取涉及个人隐私、敏感信息的数据。3. 遵守目标网站的 robots.txt 协议和服务条款。4. 实验数据仅限于教学使用,不得用于商业用途或对外发布。
+(二) 数据预处理
+对采集到的大数据集合进行预处理,以保证大数据分析与预测结果的准确性与价值性,一般包括以下几个步骤:
+1. 数据清理
+缺失值处理:删除、均值/中位数/众数填充、KNN 填充、多重插补、模型预测填充。
+异常值检测:3σ 准则、IQR 箱线图法、孤立森林(Isolation Forest)、DBSCAN 聚类、One-Class SVM。
+噪声数据处理:分箱(等宽/等频)、回归平滑、聚类去噪。
+重复数据去重:精确匹配去重、模糊匹配去重(如基于 Levenshtein 距离)。
+2. 数据集成
+将多个数据源的数据进行集成,形成集中、统一的数据库、数据立方体等。技术要点:
+实体识别与匹配:主键匹配、模糊匹配、机器学习匹配(如 Magellan、DeepER)。
+数据冲突解决:投票法、加权平均、置信度排序、人工审核。
+数据冗余处理:相关性分析(皮尔逊系数、卡方检验)、PCA 降维。
+3. 数据归约
+在不损害分析结果准确性的前提下降低数据集规模:
+维度归约:PCA、t-SNE、UMAP、LDA、自编码器(Autoencoder)。
+数据量归约:随机抽样、分层抽样、聚类抽样、Reservoir Sampling。
+数据立方体聚集:按时间、空间、类别维度进行聚集汇总。
+4. 数据转换
+通过转换实现数据统一:
+标准化/归一化:Z-Score 标准化、Min-Max 归一化、Robust Scaler、Log 变换。
+离散化:等宽分箱、等频分箱、决策树分箱、卡方分箱(ChiMerge)。
+编码转换:One-Hot Encoding、Label Encoding、Target Encoding、Embedding 编码。
+特征构造:时间窗口特征、滑动统计特征、交叉特征、自动特征工程(FeatureTools)。
+代码示例 1:数据预处理基础流程
+# 数据预处理示例代码 (Python)import pandas as pdimport numpy as npfrom sklearn.preprocessing import StandardScaler, OneHotEncoderfrom sklearn.impute import KNNImputerfrom sklearn.ensemble import IsolationForest # 1. 加载数据df = pd.read_csv('raw_data.csv') # 2. 缺失值处理 (KNN 填充)numeric_cols = df.select_dtypes(include=['number']).columnsimputer = KNNImputer(n_neighbors=5)df[numeric_cols] = imputer.fit_transform(df[numeric_cols]) # 3. 异常值检测 (孤立森林)iso = IsolationForest(contamination=0.05, random_state=42)df['outlier'] = iso.fit_predict(df[numeric_cols])df = df[df['outlier'] == 1].drop('outlier', axis=1) # 4. 标准化scaler = StandardScaler()df[numeric_cols] = scaler.fit_transform(df[numeric_cols]) # 5. 类别变量编码df_encoded = pd.get_dummies(df, columns=['category_col'], drop_first=True)print(df_encoded.head())
+(三) 数据处理
+数据的类型和存储形式决定了其所采用的数据处理系统,而数据处理系统的性能与优劣直接影响大数据质量的价值性、可用性、时效性和准确性。
+1. 数据存储架构选择
+架构类型 | 代表技术 | 适用场景
+关系型数据库 | MySQL、PostgreSQL、Oracle | 结构化数据、事务处理
+数据仓库 | Hive、ClickHouse、Snowflake、Doris | OLAP 分析、报表查询
+数据湖 | HDFS、Amazon S3、阿里 OSS、MinIO | 海量异构数据存储
+湖仓一体 | Apache Iceberg、Delta Lake、Hudi、Paimon | 新一代统一架构(2026 主流)
+向量数据库 | Milvus、ChromaDB、Qdrant、Pinecone | RAG/语义检索(AI 必备)
+图数据库 | Neo4j、JanusGraph、NebulaGraph | 知识图谱、关系网络
+
+2. 数据仓库建模（可选）
+包括数据仓库的物理模型、概念模型及逻辑模型的设计及分析。常用建模方法:
+维度建模(Kimball):星型模型(Star Schema)、雪花模型(Snowflake Schema)、星座模型(Galaxy Schema)。
+范式建模(Inmon):3NF 范式、企业级数据仓库(EDW)。
+Data Vault 2.0:Hub-Link-Satellite 三层结构,适合敏捷数仓建设。
+OneData 体系:阿里巴巴的方法论,包含 ODS-CDM(DWD/DWS)-ADS 分层。
+3. 多维分析(OLAP)（数据展示）
+在多维数据集上进行如下操作:
+切片(Slice):在某一维度上选定一个固定值。
+切块(Dice):在多个维度上选定区间。
+钻取(Drill Down/Up):从概要数据到细节数据,或反之。
+旋转(Pivot):交换维度位置,变换视图。
+(四) 数据分析
+数据分析是大数据处理与应用的关键环节,它决定了大数据集合的价值性和可用性,以及分析预测结果的准确性。在数据分析环节,应根据大数据应用情境与决策需求,选择合适的数据分析技术。
+1. 描述性分析
+回答"发生了什么?"——统计指标(均值、方差、分位数)、频率分析、可视化探索性数据分析(EDA)。
+2. 诊断性分析
+回答"为什么发生?"——关联性分析(相关系数、卡方检验)、因果分析(Granger 因果、DoWhy)、根因分析(RCA)。
+3. 预测性分析(传统机器学习)
+任务类型 | 代表算法 | 应用场景
+分类 | Logistic、SVM、随机森林、XGBoost、LightGBM、CatBoost | 客户流失预测、信用评分
+回归 | 线性回归、岭回归、Lasso、ElasticNet、XGBoost | 销售额预测、价格预测
+聚类 | K-Means、DBSCAN、HDBSCAN、层次聚类、Spectral Clustering | 用户分群、商品聚类
+关联规则 | Apriori、FP-Growth、ECLAT | 购物篮分析、商品推荐
+异常检测 | Isolation Forest、One-Class SVM、LOF、Autoencoder | 反欺诈、设备故障
+时间序列 | ARIMA、SARIMA、Prophet、ETS、状态空间模型 | 销量预测、趋势预测
+
+4. 预测性分析(深度学习)
+前馈神经网络(MLP):适用于结构化数据的非线性建模。
+卷积神经网络(CNN):图像识别、视觉商品分类、医疗影像分析。
+循环神经网络(RNN/LSTM/GRU):时间序列预测、文本序列建模。
+Transformer:新一代主流架构,包括 BERT、GPT 系列、时序模型 Informer/TimesNet/PatchTST。
+图神经网络(GNN):GCN、GAT、GraphSAGE,用于社交网络、推荐系统、知识图谱。
+表格深度学习:TabNet、TabTransformer、FT-Transformer,处理结构化数据。
+自编码器(Autoencoder):特征降维、异常检测、数据生成。
+5. 处方性分析(决策优化)
+回答"应该怎么做?"——运筹优化(线性规划、整数规划)、强化学习(Q-Learning、DQN、PPO)、A/B 测试、因果推断。
+(五) 数据可视化与应用
+数据可视化是指将数据分析与预测结果以计算机图形或图像的直观方式显示给用户的过程,并可与用户进行交互式处理。
+1. 可视化工具
+工具类型 | 代表工具 | 特点
+BI 平台 | FineBI、Tableau、Power BI、QuickBI、帆软 | 企业级仪表盘,拖拽式开发
+Python 可视化 | Matplotlib、Seaborn、Plotly、Bokeh、Altair | 灵活定制,适合数据分析师
+JavaScript 可视化 | ECharts、D3.js、AntV(G2/G6)、Chart.js | Web 端交互式图表
+大屏可视化 | DataV、阿里云 DataV、腾讯云图、SugarBI | 数据大屏、运营驾驶舱
+地理可视化 | Mapbox、Kepler.gl、folium、leaflet | 地图、空间数据可视化
+AI 可视化 | Streamlit、Gradio、Dash、Reflex | 快速构建 AI 应用界面
+
+2. 可视化设计原则
+准确性:图表必须准确反映数据,避免误导。
+简洁性:删除一切不必要的视觉元素(Tufte 的 Data-Ink Ratio)。
+可读性:合适的字体、颜色对比度、坐标轴标签。
+交互性:支持下钻、过滤、关联联动等交互操作。
+一致性:同一报告中的图表风格、配色、字体保持一致。
+3. 应用部署
+最终的分析结果应通过以下方式落地:
+Web 应用(Flask/FastAPI + Vue/React)
+移动应用(微信小程序、H5、App)
+数据大屏(投放到企业指挥中心或公开展示)
+API 服务(供其他系统调用)
+自动化报表(定时邮件、企业微信/钉钉推送)
+
+(六) AI 智能处理模块【选做，加分项】
+📌 模块定位AI 智能处理模块是 2026 版实习的核心创新点,要求学生必须完成至少 1 个 AI 智能子模块。本模块将传统数据挖掘流程与大语言模型(LLM)、AI Agent、RAG 等最新技术深度融合,使数据分析过程从"被动统计"升级为"主动智能决策"。完成 AI 智能模块的小组,总分加权 5 分,可超过 100 分上限计分(最高 110 分)。
+1. 大语言模型(LLM)在数据挖掘中的应用
+大语言模型已成为 2026 年商务智能领域的核心生产力工具。学生需选择至少一种 LLM 服务并集成到数据分析流程中:
+类别 | 代表模型/平台 | API 地址 / 调用方式 | 推荐用途
+国际闭源 | GPT-4o / GPT-5、Claude Opus 4.7、Gemini 2.5 Pro | OpenAI、Anthropic、Google API | 高复杂度推理、英文场景
+国产闭源 | DeepSeek V3/R1、文心 4.5、通义千问 Max、Kimi、豆包 | 各厂商 API 平台 | 中文场景、合规要求高
+国产开源 | DeepSeek、Qwen3、GLM-4.5、Yi、InternLM | 本地部署或 Hugging Face | 私有化部署、定制微调
+智能体平台 | Coze(扣子)、Dify、FastGPT、AutoGLM | 可视化拖拽式开发 | 快速原型、低代码场景
+国产开源(推理) | DeepSeek-R1、QwQ、GLM-Z1、文心 X1 | Ollama、vLLM 本地推理 | 复杂推理任务
+
+LLM 在数据挖掘中的典型应用场景如下:
+(1) 智能数据清洗
+利用 LLM 的语言理解能力处理传统规则难以解决的数据清洗任务:
+地址标准化:将"广州市天河区五山路 483 号"统一规范为标准结构。
+文本分类:对用户评论自动打标签(情感、主题、意图)。
+实体抽取:从非结构化文本中抽取产品名、价格、数量等结构化字段。
+数据匹配:解决跨数据源的实体对齐问题(如"苹果手机 12"与"iPhone 12")。
+代码示例 2:LLM 智能数据清洗
+# LLM 智能数据清洗示例 (使用 OpenAI / DeepSeek API)from openai import OpenAI client = OpenAI(    api_key="your_api_key",    base_url="https://api.deepseek.com/v1"  # 可换为其他兼容 OpenAI 协议的服务) def smart_address_normalize(raw_address: str) -> dict:    """利用 LLM 将原始地址标准化为结构化字段"""    prompt = f"""请将以下地址标准化为 JSON 格式,包含 province、city、district、street、detail 五个字段: 原始地址:{raw_address} 只输出 JSON,不要其他内容。"""        response = client.chat.completions.create(        model="deepseek-chat",        messages=[{"role": "user", "content": prompt}],        response_format={"type": "json_object"},        temperature=0.1    )    return response.choices[0].message.content # 批量处理addresses = ["广州天河五山", "深圳南山科技园", "上海浦东张江"]results = [smart_address_normalize(a) for a in addresses]print(results)
+(2) 自然语言转 SQL(NL2SQL)
+使非技术人员能够通过中文/英文自然语言直接查询数据库,极大降低数据使用门槛:
+代码示例 3:NL2SQL 自然语言查询
+# NL2SQL 实现示例from openai import OpenAIimport sqlite3 client = OpenAI(api_key="your_key", base_url="https://api.deepseek.com/v1") # 数据库表结构(schema)schema = """表名:sales字段:- order_id (订单ID, INT)- product_name (产品名, TEXT)  - category (类别, TEXT)- amount (金额, FLOAT)- order_date (订单日期, DATE)- customer_id (客户ID, INT)""" def nl_to_sql(question: str) -> str:    """将自然语言查询转为 SQL"""    prompt = f"""你是一个 SQL 专家。根据以下表结构,将用户的自然语言问题转换为 SQLite SQL 语句。 {schema} 用户问题:{question} 只输出 SQL 语句,不要解释。"""        resp = client.chat.completions.create(        model="deepseek-chat",        messages=[{"role": "user", "content": prompt}],        temperature=0.0    )    return resp.choices[0].message.content.strip().replace("```sql", "").replace("```", "") # 使用question = "2026年5月销售额最高的前10个产品是什么?"sql = nl_to_sql(question)print(f"生成的 SQL: {sql}") # 执行查询conn = sqlite3.connect('business.db')result = conn.execute(sql).fetchall()print(result)
+(3) 自动化数据分析报告生成
+根据数据分析结果,LLM 可自动生成专业的中文分析报告,包括趋势解读、洞察发现、建议措施等:
+代码示例 4:LLM 自动生成分析报告
+# 自动分析报告生成import pandas as pdfrom openai import OpenAI client = OpenAI(api_key="your_key", base_url="https://api.deepseek.com/v1") # 加载数据分析结果df = pd.read_csv('analysis_result.csv')stats = df.describe().to_string()top_products = df.nlargest(5, 'sales').to_string() prompt = f"""你是一位资深商业分析师。基于以下数据分析结果,为某零售企业生成一份月度销售分析报告。 报告应包含以下部分:1. 销售概况(总体描述)2. 主要发现(关键洞察 3-5 条)3. 趋势分析4. 业务建议(可执行的具体建议 3 条) 数据统计:{stats} 销售前 5 产品:{top_products} 请用专业、简洁的语言撰写报告。""" report = client.chat.completions.create(    model="deepseek-chat",    messages=[{"role": "user", "content": prompt}],    temperature=0.3).choices[0].message.content # 保存为 Markdown 报告with open('monthly_report.md', 'w', encoding='utf-8') as f:    f.write(report)
+2. 检索增强生成(RAG)系统构建
+RAG(Retrieval-Augmented Generation)是 2026 年企业数据问答系统的主流方案。它将企业私域数据与 LLM 结合,既利用 LLM 的语言能力,又确保答案基于真实业务数据,解决了 LLM 的"幻觉"和"知识截止"问题。
+(1) RAG 系统的核心组件
+组件 | 技术选型 | 作用
+文档加载 | LangChain Loaders、LlamaIndex Readers、Unstructured | 加载 PDF、Word、Excel、HTML、数据库等
+文本切分 | RecursiveCharacterTextSplitter、Semantic Chunker | 将长文本切分为合适粒度的 chunks
+嵌入模型 | BGE-M3、bge-large-zh-v1.5、text-embedding-3-large、Qwen-Embedding | 将文本转换为向量表示
+向量数据库 | Milvus、ChromaDB、Qdrant、Pinecone、Weaviate | 存储和检索文本向量
+检索器 | 向量检索 + BM25 混合检索 + Rerank | 从海量文档中找到最相关的内容
+重排序 | BGE-Reranker、Cohere Rerank、Qwen-Reranker | 对检索结果二次精排
+LLM 生成 | GPT、Claude、DeepSeek、Qwen 等 | 基于检索内容生成最终答案
+
+(2) RAG 系统实现(LangChain 框架)
+代码示例 5:RAG 知识问答系统完整流程
+# RAG 系统完整实现示例from langchain.document_loaders import DirectoryLoader, PyPDFLoaderfrom langchain.text_splitter import RecursiveCharacterTextSplitterfrom langchain.embeddings import HuggingFaceEmbeddingsfrom langchain.vectorstores import Chromafrom langchain.chains import RetrievalQAfrom langchain.llms import OpenAIfrom langchain.prompts import PromptTemplate # 1. 加载业务文档(可以是产品手册、销售数据说明、年报等)loader = DirectoryLoader('./company_docs/', glob="**/*.pdf", loader_cls=PyPDFLoader)documents = loader.load()print(f"加载了 {len(documents)} 份文档") # 2. 文本切分text_splitter = RecursiveCharacterTextSplitter(    chunk_size=500,    chunk_overlap=50,    separators=["\n\n", "\n", "。", "!", "?", ";"])chunks = text_splitter.split_documents(documents)print(f"切分为 {len(chunks)} 个块") # 3. 创建向量数据库(使用中文优化的 BGE 嵌入模型)embeddings = HuggingFaceEmbeddings(    model_name="BAAI/bge-large-zh-v1.5",    model_kwargs={'device': 'cuda'}  # 有 GPU 时使用)vectorstore = Chroma.from_documents(    documents=chunks,    embedding=embeddings,    persist_directory="./chroma_db") # 4. 构建检索 QA 链prompt_template = """请基于以下检索到的业务文档,回答用户的问题。如果文档中没有相关信息,请明确说明,不要编造答案。 参考文档:{context} 用户问题:{question} 回答:""" PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"]) qa_chain = RetrievalQA.from_chain_type(    llm=OpenAI(model="deepseek-chat", openai_api_base="https://api.deepseek.com/v1"),    chain_type="stuff",    retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),    chain_type_kwargs={"prompt": PROMPT},    return_source_documents=True) # 5. 提问query = "2025 年公司毛利率较前一年是否有提升?主要原因是什么?"result = qa_chain({"query": query})print(f"答案:{result['result']}")print(f"参考来源:{[doc.metadata for doc in result['source_documents']]}")
+(3) RAG 系统的进阶优化
+混合检索(Hybrid Retrieval):结合向量检索(语义)+ BM25(关键词)的混合检索,提升召回率。
+查询重写(Query Rewriting):用 LLM 改写用户问题,扩展同义词、补充上下文。
+HyDE(假设性文档嵌入):先让 LLM 生成假设答案,再用假设答案做向量检索。
+Self-RAG:让 LLM 自适应判断是否需要检索、检索结果是否相关。
+GraphRAG(微软提出):构建知识图谱,在图上做多跳检索。
+Agentic RAG:将 RAG 与 Agent 结合,实现复杂多步推理。
+3. AI Agent(智能体)开发
+AI Agent 是具备"感知-决策-行动"完整闭环能力的智能系统,2026 年已经从单 Agent 演进到多 Agent 协作的成熟阶段。
+(1) Agent 核心架构
+一个完整的 Agent 通常包含以下模块:
+LLM 大脑:核心推理引擎,负责理解、规划、决策。
+工具调用(Function Calling/Tool Use):Agent 可调用外部 API、数据库、计算工具。
+短期记忆与长期记忆:对话历史 + 向量化的长期记忆。
+规划(Planning):CoT、ToT、ReAct、Plan-and-Execute 等思考模式。
+反思(Reflection):Agent 评估自己的输出并改进。
+(2) 主流 Agent 开发框架
+框架 | 类型 | 特点
+LangChain / LangGraph | 通用 | 组件丰富,生态成熟
+LlamaIndex | 数据+Agent | 数据增强 LLM 应用首选
+AutoGen (微软) | 多 Agent 协作 | 对话式多 Agent 协作
+CrewAI | 多 Agent 协作 | 角色化协作,易上手
+MetaGPT | 软件开发 Agent | 模拟软件公司的多角色协作
+AutoGPT / AgentGPT | 自治 Agent | 自动规划和执行
+Dify / Coze / FastGPT | 低代码 | 可视化拖拽式开发
+Smolagents (HuggingFace) | 代码 Agent | Code-as-Action,新型范式
+
+(3) 数据分析 Agent 示例
+构建一个能够自动进行数据分析的 Agent,可以理解用户问题、自动选择工具、生成代码、执行分析、返回结果:
+代码示例 6:数据分析 AI Agent
+# 数据分析 AI Agent 示例 (基于 LangGraph)from langchain.agents import Tool, AgentExecutor, create_react_agentfrom langchain_openai import ChatOpenAIfrom langchain.tools import toolimport pandas as pd # 1. 定义工具@tooldef query_database(sql: str) -> str:    """执行 SQL 查询并返回结果"""    import sqlite3    conn = sqlite3.connect('business.db')    try:        df = pd.read_sql(sql, conn)        return df.head(20).to_string()    except Exception as e:        return f"查询出错: {e}" @tooldef calculate_statistics(column: str, table: str) -> str:    """计算指定列的统计指标(均值、中位数、标准差等)"""    import sqlite3    conn = sqlite3.connect('business.db')    df = pd.read_sql(f"SELECT {column} FROM {table}", conn)    return df[column].describe().to_string() @tooldef plot_chart(chart_type: str, data_query: str) -> str:    """根据数据生成图表(line/bar/pie/scatter)"""    import matplotlib.pyplot as plt    # ... 图表生成逻辑    return "chart_saved_to_chart.png" @tooldef search_web(query: str) -> str:    """搜索互联网获取最新信息"""    # 集成 SerpAPI、Tavily 等搜索 API    return "search_results_..." # 2. 创建 Agentllm = ChatOpenAI(    model="deepseek-chat",    base_url="https://api.deepseek.com/v1",    temperature=0) tools = [query_database, calculate_statistics, plot_chart, search_web] # 3. ReAct 范式from langchain import hubprompt = hub.pull("hwchase17/react") agent = create_react_agent(llm, tools, prompt)agent_executor = AgentExecutor(    agent=agent,     tools=tools,     verbose=True,    max_iterations=10) # 4. 运行 Agentresult = agent_executor.invoke({    "input": "分析 2026 年 Q1 各产品类别的销售情况,找出销量异常的产品,并生成柱状图。"}) print(result['output'])
+(4) 多 Agent 协作系统
+对于复杂分析任务,可以构建多 Agent 协作系统,模拟一个虚拟数据团队:
+代码示例 7:多 Agent 数据团队协作
+# 多 Agent 协作示例 (基于 CrewAI)from crewai import Agent, Task, Crew, Process # 1. 定义不同角色的 Agentdata_engineer = Agent(    role='数据工程师',    goal='高效地清洗和准备数据',    backstory='你是一位经验丰富的数据工程师,擅长 ETL 流程和数据质量控制。',    tools=[query_database, data_cleaning_tool],    verbose=True) data_scientist = Agent(    role='数据科学家',    goal='构建准确的预测模型',    backstory='你是一位顶尖的数据科学家,精通机器学习和统计建模。',    tools=[ml_modeling_tool, evaluation_tool],    verbose=True) business_analyst = Agent(    role='业务分析师',    goal='将技术结果转化为业务洞察',    backstory='你是一位资深业务分析师,擅长解读数据并提出商业建议。',    tools=[report_writer, chart_generator],    verbose=True) # 2. 定义任务流task1 = Task(    description='从数据库提取过去 12 个月的销售数据,清洗缺失值和异常值',    agent=data_engineer) task2 = Task(    description='构建销售预测模型,预测下季度各产品销量,评估模型准确性',    agent=data_scientist) task3 = Task(    description='基于预测结果,撰写商业分析报告,提出库存调整建议',    agent=business_analyst) # 3. 组建团队并执行crew = Crew(    agents=[data_engineer, data_scientist, business_analyst],    tasks=[task1, task2, task3],    process=Process.sequential) result = crew.kickoff()print(result)
+4. AutoML(自动化机器学习)
+AutoML 让没有深厚机器学习背景的学生也能快速构建高质量模型。它自动完成特征工程、模型选择、超参数调优、模型集成等环节。
+工具 | 特点 | 适用场景
+PyCaret | Python 低代码 ML,简单易用 | 快速建模、教学演示
+AutoGluon (亚马逊) | 支持表格、文本、图像、时序 | 全栈 AutoML 首选
+H2O AutoML | 工业级稳定,可解释性强 | 企业生产环境
+FLAML (微软) | 轻量级、快速 | 资源受限场景
+Optuna | 超参数自动调优 | 已有模型框架的调优
+Auto-sklearn | 基于 scikit-learn | 学术研究
+NNI (微软) | 神经网络架构搜索 | 深度学习模型搜索
+
+代码示例 8:AutoGluon 一键建模
+# AutoGluon 自动化建模示例from autogluon.tabular import TabularPredictorimport pandas as pd # 加载数据train_data = pd.read_csv('train.csv')test_data = pd.read_csv('test.csv') # 自动训练(指定目标列即可)predictor = TabularPredictor(    label='target_column',    eval_metric='accuracy',  # 或 'roc_auc'、'rmse' 等    path='./autogluon_models').fit(    train_data,    time_limit=3600,  # 1 小时训练时间    presets='best_quality'  # 最佳质量预设) # 自动选择最佳模型并预测predictions = predictor.predict(test_data) # 查看模型排行榜leaderboard = predictor.leaderboard(test_data, silent=True)print(leaderboard) # 特征重要性importance = predictor.feature_importance(test_data)print(importance)
+5. 多模态 AI 应用
+2026 年的商务智能已不再局限于结构化数据,多模态 AI 让系统能够处理图像、视频、语音、文档等多种数据形态:
+(1) 视觉理解(VLM)
+代表模型:GPT-4o、Claude Vision、Gemini 2.5、Qwen-VL-Max、InternVL3、GLM-4V
+典型应用:图表自动解读、商品图像识别、文档版式分析、监控视频分析
+代码示例 9:多模态图表解读
+# 多模态 AI:让 LLM 看懂图表from openai import OpenAIimport base64 client = OpenAI(api_key="your_key") def analyze_chart(image_path: str) -> str:    """让 LLM 解读图表"""    with open(image_path, "rb") as f:        image_data = base64.b64encode(f.read()).decode('utf-8')        response = client.chat.completions.create(        model="gpt-4o",  # 或 claude-opus-4-7、qwen-vl-max        messages=[{            "role": "user",            "content": [                {"type": "text", "text": "请分析这张销售图表,描述主要趋势、异常点,并给出业务建议。"},                {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image_data}"}}            ]        }]    )    return response.choices[0].message.content # 使用insight = analyze_chart("sales_chart_2026Q1.png")print(insight)
+(2) OCR 与文档智能
+代表工具:PaddleOCR、TextIn、Mistral OCR、Tencent OCR、UmiOCR、MinerU
+应用场景:发票识别、合同提取、报表数字化、扫描档案数字化
+(3) 语音与音频
+ASR(语音转文字):Whisper、SenseVoice、Paraformer、字节豆包语音
+TTS(文字转语音):ChatTTS、CosyVoice、火山引擎语音合成
+应用场景:客服录音分析、会议纪要自动生成、语音搜索
+6. 合成数据生成
+当真实数据不足或涉及隐私时,可以使用 AI 生成合成数据用于训练和测试。这是 2026 年的一个重要研究方向。
+SDV (Synthetic Data Vault):开源合成表格数据库。
+CTGAN / TVAE:基于 GAN 和 VAE 的表格数据合成。
+LLM 数据增强:用 LLM 生成多样化的训练样本。
+Diffusion Models:扩散模型用于图像/视频合成。
+7. AI 系统评估与监控
+AI 系统的评估是工业级应用的必要环节,不能仅看准确率:
+评估维度 | 代表指标 / 工具 | 说明
+LLM 质量 | BLEU、ROUGE、BERTScore、LLM-as-Judge | 评估生成文本质量
+RAG 评估 | RAGAS、TruLens、Faithfulness、Answer Relevancy | 评估检索质量与答案相关性
+Agent 评估 | TaskBench、AgentBench、ToolBench | 评估 Agent 完成任务的能力
+对齐评估 | Helpfulness、Harmlessness、Honesty(3H) | 评估 AI 是否符合人类价值观
+业务指标 | 用户满意度、转化率、降本增效金额 | 最终业务价值的体现
+可观测性 | LangSmith、Arize Phoenix、LangFuse、Helicone | AI 应用监控和调试
+
+8. AI 智能处理模块的综合应用方向(选做要求)
+各小组从以下方向中至少选择 1-2 个完整实现:
+🎯 综合应用方向(从中选 1-2 个)①【智能数据分析助手】基于 LLM + Tool Use,构建一个对话式的数据分析助手,  用户用自然语言提问,系统自动查询数据、生成图表、输出分析报告。②【企业知识问答系统(RAG)】构建覆盖公司年报、产品手册、内部文档的 RAG 系统,  实现"问什么答什么"的智能客服或业务咨询助手。③【智能预测与决策 Agent】结合 AutoML + LLM,实现自动化的销售预测、  库存优化、价格定价、用户分群等业务决策。④【多模态商务分析平台】将文本、图表、表格、视频等多模态数据统一接入,  实现跨模态的商业分析(如商品图像 + 销售数据综合分析)。⑤【自动化报告生成系统】定时(每日/每周)自动从数据仓库提取数据、  调用 LLM 生成专业分析报告、通过企业微信/邮件推送给业务方。⑥【AI 营销文案生成】根据商品属性、目标用户、营销场景,  自动生成多渠道营销文案(短信、推送、海报文案等)。⑦【智能合同审核 / 发票识别】结合 OCR + LLM,  自动提取合同/发票的关键字段,识别风险条款。⑧【多 Agent 协作的数据团队】构建虚拟数据团队,  让数据工程师 Agent、数据科学家 Agent、业务分析师 Agent 协作完成端到端分析任务。
+
+四、推荐技术栈与开发环境
+(一) 编程语言
+Python 3.10+(主力语言,推荐 Anaconda / Miniconda 管理环境/PYCHARM/VSS)
+R 4.x(统计分析、可视化)
+SQL(MySQL / PostgreSQL / SparkSQL / HiveQL)
+JavaScript / TypeScript(前端可视化)
+(二) 核心 Python 库
+类别 | 推荐库
+数据处理 | pandas、polars、numpy、modin
+机器学习 | scikit-learn、XGBoost、LightGBM、CatBoost、AutoGluon
+深度学习 | PyTorch、PyTorch Lightning、TensorFlow / Keras
+LLM 应用 | openai、anthropic、langchain、llama-index、transformers
+RAG / 向量 | chromadb、qdrant-client、faiss、pymilvus、sentence-transformers
+Agent 框架 | langgraph、crewai、autogen、smolagents
+可视化 | matplotlib、seaborn、plotly、altair、pyecharts
+Web 框架 | FastAPI、Flask、Streamlit、Gradio、Reflex
+爬虫工具 | Scrapy、requests、httpx、playwright、selenium
+
+(三) 开发与部署工具
+IDE:VS Code(推荐 Claude Code / GitHub Copilot / Cursor 等 AI 辅助编码工具)、PyCharm、Jupyter Lab。
+版本控制:Git + GitHub / Gitee / GitLab。
+容器化:Docker、Docker Compose,生产环境可用 Kubernetes。
+云平台:阿里云 PAI、腾讯云 TI-ONE、华为云 ModelArts、AWS SageMaker、Google Vertex AI。
+本地 LLM:Ollama(推荐入门)、vLLM(高性能)、LM Studio(图形界面)。
+
+五、实验考核内容
+(一) 商务智能与数据挖掘设计方案(占 40%)
+提交完整的设计方案文档(Word 或 PDF),包含以下内容:
+某行业的决策支持需求分析
+数据采集方案(可选)
+数据预处理方案
+数据处理方案
+数据分析方案
+数据可视化与应用方案
+AI 智能处理模块
+②-⑦方案的具体实现步骤(可附关键代码)
+设计体会与反思
+(二) 系统实现与演示(占 40%)
+提交可运行的代码、数据、模型文件,并进行 10 分钟现场演示:
+数据采集、预处理、建模、可视化的端到端流程演示
+AI 智能模块的实际效果展示
+回答评委提问(每人 1-2 个问题)
+(三) 团队协作与个人贡献(占 20%)
+基于团队协作过程记录、Git 提交历史、文档分工等综合评估每个学生的实际贡献。
+(四) 评分标准
+序号 | 评分项(每项 10 分,总分 100 分) | 得分要求
+1 | 综合实习内容与主题贴切 | 选题明确,符合实际业务场景
+2 | 选题与设计的创新性,前期调研充分 | 查阅 10 篇以上文献,有创新点
+3 | 课程设计文档结构完整、表述清晰 | 包含全部要求章节,语言专业
+4 | 数据分析流程详细、清晰 | 流程图、数据流明确
+5 | 系统功能健全、运行稳定,无明显 BUG | 现场演示无重大故障
+6 | AI 智能模块完整性与创新性 | 至少 2 个 AI 子模块,有实际应用价值
+7 | 具有一定的应用前景和发展前景 | 可商业化、可推广
+8 | 数据分析内容合理恰当 | 结论有数据支撑、合理
+9 | 数据可视化合理美观 | 图表清晰、交互流畅
+10 | 综合总体印象分 | 项目完成度、汇报表现
+
+🎁 加分项(最高加 10 分,超过 100 分上限)1. 完成 3 个以上 AI 子模块,且全部达到生产可用水平:+3 分2. 自训练 / 微调 LLM 模型(如 LoRA 微调 Qwen/Llama):+3 分3. 构建端到端可商用的产品级 Demo(含 Web/小程序 UI):+2 分4. 公开发表或开源(GitHub Star ≥ 10,或参加 Kaggle/天池竞赛):+2 分5. 撰写技术博客或制作教学视频:+1 分
+
+六、实验进度安排
+本次综合实习建议按以下时间节点开展(总计 4 周):
+周次 | 时间节点 | 主要任务 | 交付物
+第 1 周 | 选题与调研 | 确定行业方向、查阅文献、确定数据源 | 选题报告 + 数据源说明
+第 2 周 | 数据采集与预处理 | 完成数据采集、清洗、集成、转换 | 数据集 + 预处理代码
+第 3 周(上) | 数据建模与分析 | 完成数仓建模 + 传统 ML / DL 分析 | 模型代码 + 分析报告
+第 3 周(下) | AI 智能模块开发（选做） | 完成至少 1-2 个 AI 子模块 | AI 模块代码 + Demo
+第 4 周(上) | 可视化与应用 | 完成仪表盘 / Web 应用 / 大屏 | 可视化系统
+第 4 周(下) | 整理文档与答辩 | 撰写完整实验报告、准备演示 | 实验报告 + PPT 演示
+
+📚 学习资源推荐1. 慕课网、B 站、Coursera 的商务智能与数据挖掘课程2. 《数据挖掘:概念与技术》(韩家炜)、《Python 数据分析》(McKinney)3. LangChain 官方文档:https://python.langchain.com/4. LlamaIndex 文档:https://docs.llamaindex.ai/5. Hugging Face 教程:https://huggingface.co/learn6. 阿里云天池学习赛:https://tianchi.aliyun.com/competition/7. Kaggle Learn:https://www.kaggle.com/learn8. DeepLearning.AI 短课程(Andrew Ng):https://learn.deeplearning.ai/9. Anthropic Cookbook:https://github.com/anthropics/anthropic-cookbook10. 《动手学深度学习》(李沐):https://zh.d2l.ai/
+
+附录 1:实验报告封面
+华 南 农 业 大 学
+数 学 与 信 息 学 院
+《智能决策综合实践》
+实  验  报  告
+实 验 名 称:                                                
+班    级:                            
+小  组  名:                            
+姓    名:                            
+学    号:                            
+组员姓名:                                                
+指 导 教 师:                            
+实验日期:                            
+实验成绩:                            
+
+评 分 表
+评分项(每项 10 分,总分 100 分) | 分数
+1、综合实习内容与主题贴切 | 
+2、选题与设计具有一定的创新性,并且有在前期做了一定的调研和资料收集工作 | 
+3、课程设计文档能够简明扼要的反映主要的综合实践模块,包括数据采集、数据处理、数据分析等 | 
+4、数据分析流程,详细、清晰 | 
+5、数据分析功能健全,能正常运行,没有明显 BUG | 
+6、AI 智能处理模块完整性与创新性(至少 2 个子模块) | 
+7、该综合实习具有一定的应用前景和发展前景 | 
+8、综合实习有一定的设计和实现难度,并且需要一定的时间来积累技术和专业知识 | 
+9、数据分析的内容合理恰当,方便用户使用理解主题 | 
+10、数据分析结果可视化合理,综合实习的综合总体印象分 | 
+总分 | 
+加分项(最高 10 分) | 
+最终得分 | 
+评语: | 
+
+实验报告内容(填写模板)
+一、实验目的
+(简述本次综合实习要达到的目标)
+
+
+
+
+
+
+二、实验设备和环境
+(列出本次实习所用到的硬件设备、操作系统、编程语言、开发框架、第三方服务等。)
+
+
+
+
+
+
+三、实验内容及要求
+(根据实验指导书,描述本组要完成的具体内容,包括行业选题、AI 模块选择等)
+
+
+
+
+
+
+四、实验步骤
+(详细记录完成的步骤,包括数据采集、预处理、数据处理、数据分析、AI 智能模块开发、可视化展示等。每个步骤要有截图或代码片段佐证。)
+
+
+
+
+
+
+五、实验中的问题处理及分析
+(描述实验中遇到的关键问题,如何动脑思考并找到解决方法。重点突出 AI 智能模块开发中的技术难点及解决方案。)
+
+
+
+
+
+
+六、实验总结
+(通过本次实验,有何收获和建议?可包括对所选技术栈的评价、对 AI 时代下商务智能发展趋势的思考、对自己未来学习方向的规划等。)
+
+
+
+
+

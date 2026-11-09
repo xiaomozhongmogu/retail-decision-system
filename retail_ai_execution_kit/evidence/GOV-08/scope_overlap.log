@@ -1,0 +1,5 @@
+selected_tasks 85 unordered_pairs_with_overlap 150
+most_shared_scopes [('reports/ai', 51), ('docs', 34), ('src/retail_bi/ai', 29), ('src/retail_bi', 17), ('reports/ui', 10), ('src/retail_bi/ui', 10), ('reports/analysis', 7), ('ops', 6), ('eval', 6), ('reports/governance', 5), ('docs/COMMANDS.md', 5), ('tests/ai', 5)]
+currently_available ['GOV-03', 'GOV-05', 'GOV-08']
+ overlap GOV-03 GOV-08 ['ops', 'reports/governance']
+[exit=0]

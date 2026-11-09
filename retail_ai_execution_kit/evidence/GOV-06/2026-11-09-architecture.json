@@ -1,0 +1,93 @@
+{
+  "task_id": "GOV-06",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "performed_at": "2026-11-09T20:40:00+08:00",
+  "actor": "claude-opus-5-5（Claude Code 桌面端）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64 (Apple M1 Pro)",
+    "uv": "0.12.7",
+    "target_python": "3.12"
+  },
+  "command": "uv pip compile evidence/GOV-06/requirements.in --python-version 3.12 --python-platform aarch64-apple-darwin",
+  "exit_code": 0,
+  "summary": "编写 docs/architecture.md：离线 ETL/训练 → 发布只读 DuckDB 快照 → service 层 → AI 工具与 Streamlit 的数据流，含 15 张表/日志的行粒度与主键、目录与安全降级边界；技术栈候选为 Python 3.12 + DuckDB/Parquet + pandas + scikit-learn/LightGBM + Plotly/Streamlit + OpenAI 兼容 SDK + BM25 检索，并通过 uv 在 3.12/arm64 上解析成功（没有安装）。contracts/interfaces.md 升级为 v0.2：结果信封含 as_of、window、各类版本、units、mode、evidence_ids、warnings、error，补充 empty/unsupported/error 语义和 11 个错误码，以及每个接口的输出粒度；明确是草案，没有实现。",
+  "inputs": [
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "5b4c555ff55ae53cc7361f86bbfe3bae9358c78ff936347e328079be8af8431d"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "c9ee3002fd32da554f12d7d448bd9dd8a4e6663be56687fc07d09bc387ae2d16"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "c16ef365aa1a6a7887d8e10c709a0c542e2f1d077c489f5c65b1676ee321f46a"
+    },
+    {
+      "path": "reports/governance/workspace_inventory.md",
+      "sha256": "8c8492018ef411becc7c797c40d0a34acfa9da76effe50c4fd90a2f3fdf6a0c1"
+    },
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/architecture.md",
+      "sha256": "e064898441aef08a42e3410859cc124a3195c9d4cad611a1b91f4076dde291a1"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "evidence/GOV-06/requirements.in",
+      "sha256": "758b7d5443ec08550e73f7c6ee783ea875e546d3daf732a24e75ecff37f2b122"
+    },
+    {
+      "path": "evidence/GOV-06/resolve.txt",
+      "sha256": "bc570b9318641370fedf53951e9e72f9ce16e4d7d29356557b6db8eb489acc11"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "architecture.md §1 画出了离线（raw→ODS→DWD→DWS→ADS、features/labels→train→score、knowledge）与在线（只读快照→service→AI 工具/Streamlit，以及唯一可写的草稿库）的数据流；§3 逐表给出“一行代表什么”和主键，覆盖两条路线；interfaces.md §3 给出每个接口的输出粒度。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "§2 选择单机轻量栈，不引入 Spark、Kafka、向量库集群或微服务；版本只是 uv 的解析结果（resolve.txt，退出码 0），明确写明“GOV-07 安装验证后锁定”，并列出 LightGBM/libomp 风险。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "interfaces.md v0.2 §1 的信封包含 as_of、window、dataset/metric/model_version、units、mode、空结果（empty）、unsupported、error 结构；§2 列出错误码；文件开头写明“没有实现任何业务接口”；architecture.md 标注为设计草案。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "只做了依赖解析，没有安装或导入任何包。",
+    "表结构没有写成 DDL，字段级定义待 DATA-04。",
+    "LLM 厂商未定。",
+    "修改 interfaces.md 使 GOV-05 旧证据失效，已复核并另存 GOV-05 新证据。"
+  ],
+  "steps": [
+    "读取 PROJECT_SPEC、business_scope、contracts 与环境盘点。",
+    "用 uv 解析候选依赖（Python 3.12、arm64）。",
+    "编写 architecture.md，扩充 interfaces.md 到 v0.2（保留 v0.1 语义）。",
+    "运行 validate，发现 GOV-05 证据输入变更，复核后登记新证据。"
+  ],
+  "task_spec_sha256": "be5703bac6955cf9c3089b9cc7aab1fbc2de099229ad1301a5b4453b8502280d"
+}

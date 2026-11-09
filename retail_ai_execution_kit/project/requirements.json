@@ -1,0 +1,398 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-11-05",
+  "requirements": [
+    {
+      "id": "C01",
+      "title": "主题与行业决策需求一致",
+      "kind": "teacher_required",
+      "source": "COURSE 二、五(四)第1项",
+      "rule": "明确电商零售运营决策问题、使用者、决策动作与数据范围。",
+      "notes": ""
+    },
+    {
+      "id": "C02",
+      "title": "4至6人团队及真实分工",
+      "kind": "teacher_required",
+      "source": "COURSE 二、五(三)",
+      "rule": "真实成员4至6人，覆盖采集、处理、分析、AI、可视化职责；保存贡献证据。",
+      "notes": ""
+    },
+    {
+      "id": "C03",
+      "title": "数据规模",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)",
+      "rule": "实际数据记录数不少于10000或文件大小不少于10MB；记录原始与清洗后规模。",
+      "notes": "工程检查保守以10000000字节记录10MB，同时披露字节数；不能用测试夹具或重复扩充凑数。"
+    },
+    {
+      "id": "C04",
+      "title": "至少8个有效字段",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)",
+      "rule": "有至少8个真实、业务有意义、可解释的字段，披露来源与缺失情况。",
+      "notes": "不以拆日期、导入批次、随机价格补足原始业务维度；关联补充字段需可验证主键与覆盖。"
+    },
+    {
+      "id": "C05",
+      "title": "明确时间维度",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)",
+      "rule": "存在真实时间字段，说明含义、粒度、范围、时区或未知状态、时间覆盖。",
+      "notes": ""
+    },
+    {
+      "id": "C06",
+      "title": "数据时效口径",
+      "kind": "teacher_ambiguous",
+      "source": "COURSE 二 与 三(一)平台表",
+      "rule": "二写2026年1月以后；天池表写2025年6月以后。用真实来源证明满足较严格条款，或记录教师对采集/发布/更新及历史数据例外的明确解释。",
+      "notes": "用户允许使用历史数据不自动等于教师已认可；未确认不得标课程符合。"
+    },
+    {
+      "id": "C07",
+      "title": "课程数据使用限制",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)数据合规要求",
+      "rule": "核对来源授权、隐私与访问条款；课程数据限教学，不对外发布原始数据。",
+      "notes": "开源加分与数据不外发须同时满足；代码公开或竞赛提交另核对范围，不从开源要求推导数据可公开。"
+    },
+    {
+      "id": "C08",
+      "title": "预处理覆盖与理由",
+      "kind": "teacher_required",
+      "source": "COURSE 三(二)",
+      "rule": "清理、集成、归约、转换均有处理或适用性说明，保留前后对比。",
+      "notes": "方法列表为选择菜单，不要求同时实现KNN、PCA、DBSCAN等全部方法。"
+    },
+    {
+      "id": "C09",
+      "title": "集中存储与ETL",
+      "kind": "teacher_required",
+      "source": "COURSE 二、三(三)",
+      "rule": "数据集中管理，存储与处理选型有依据，ETL可执行、可追溯。",
+      "notes": ""
+    },
+    {
+      "id": "C10",
+      "title": "多维OLAP",
+      "kind": "teacher_required",
+      "source": "COURSE 三(三)3",
+      "rule": "实现切片、切块、上下钻和旋转，维度与聚合粒度正确。",
+      "notes": ""
+    },
+    {
+      "id": "C11",
+      "title": "描述性分析",
+      "kind": "teacher_framework",
+      "source": "COURSE 三(四)1",
+      "rule": "实现基础统计、频率/分布与EDA，结论由实际数据支持。",
+      "notes": ""
+    },
+    {
+      "id": "C12",
+      "title": "诊断与决策分析",
+      "kind": "teacher_framework",
+      "source": "COURSE 三(四)2、5",
+      "rule": "依据业务场景选择诊断与建议方法，区分贡献分解、相关性、因果和情景假设。",
+      "notes": "不要求强行实现因果推断或强化学习；本项目承诺实际完成贡献拆解及可执行建议。"
+    },
+    {
+      "id": "C13",
+      "title": "合适的分析模型",
+      "kind": "teacher_required",
+      "source": "COURSE 三(四)、六",
+      "rule": "选择合适的传统ML或DL方法，做特征、模型与评估，解释选择。",
+      "notes": "列举的分类、回归、关联规则、时序、DL不是全部必做；本项目选择RFM聚类与复购分类。"
+    },
+    {
+      "id": "C14",
+      "title": "可视化准确可读可交互",
+      "kind": "teacher_required",
+      "source": "COURSE 三(五)、五评分表",
+      "rule": "图表准确，单位坐标清楚，支持过滤和下钻，视觉风格一致。",
+      "notes": ""
+    },
+    {
+      "id": "C15",
+      "title": "可运行应用",
+      "kind": "teacher_required",
+      "source": "COURSE 三(五)3、五(二)",
+      "rule": "分析结果通过可运行应用落地，可完成端到端流程演示。",
+      "notes": "未规定必须公网部署；本项目采用Streamlit。"
+    },
+    {
+      "id": "C16",
+      "title": "AI模块数量与实际效果",
+      "kind": "teacher_ambiguous",
+      "source": "COURSE 三(六)、五(四)第6项、附录评分表",
+      "rule": "标题称选做，正文至少1，方向选择1至2，评分表至少2；本项目按3个完整模块实现并评测。",
+      "notes": "不是三个按钮共用一段生成文本；真实LLM集成、业务输入输出和证据分别可验。"
+    },
+    {
+      "id": "C17",
+      "title": "10篇以上学术文献",
+      "kind": "teacher_required",
+      "source": "COURSE 五(四)第2项",
+      "rule": "教师原文：查阅10篇以上文献。本项目采用至少11篇可核验学术文献，建议12至14篇，综述有正文引用。",
+      "notes": "官方文档和数据卡单列，不冒充全部学术论文。"
+    },
+    {
+      "id": "C18",
+      "title": "设计方案九类内容",
+      "kind": "teacher_required",
+      "source": "COURSE 五(一)",
+      "rule": "含需求、采集方案(可选)、预处理、处理、分析、可视化应用、AI、具体实现步骤、体会反思。",
+      "notes": ""
+    },
+    {
+      "id": "C19",
+      "title": "正式报告封面与六章模板",
+      "kind": "teacher_required",
+      "source": "COURSE 附录1",
+      "rule": "真实封面；实验目的、设备环境、内容要求、实验步骤、问题处理分析、总结；步骤有截图或关键代码。",
+      "notes": ""
+    },
+    {
+      "id": "C20",
+      "title": "代码数据模型交付",
+      "kind": "teacher_required",
+      "source": "COURSE 五(二)",
+      "rule": "提交可运行代码、允许提交的数据、模型文件及复现说明。",
+      "notes": "数据不能提交时须取得教师认可的替代交付方式，仅留链接不自动满足要求。"
+    },
+    {
+      "id": "C21",
+      "title": "10分钟端到端演示",
+      "kind": "teacher_required",
+      "source": "COURSE 五(二)",
+      "rule": "演示采集/导入、预处理、建模、可视化、AI真实效果，约10分钟。",
+      "notes": ""
+    },
+    {
+      "id": "C22",
+      "title": "每人1至2问",
+      "kind": "teacher_required",
+      "source": "COURSE 五(二)",
+      "rule": "成员能解释自己工作和关键设计，准备每人1至2个以上问题。",
+      "notes": ""
+    },
+    {
+      "id": "C23",
+      "title": "团队与个人贡献证据",
+      "kind": "teacher_required",
+      "source": "COURSE 五(三)",
+      "rule": "保留过程记录、真实Git提交和文档分工，不伪造历史或成员贡献。",
+      "notes": ""
+    },
+    {
+      "id": "C24",
+      "title": "11月9日阶段交付",
+      "kind": "teacher_required",
+      "source": "TOPIC 五",
+      "rule": "2026-11-09前完成数据选择、数据预处理与选题报告；按模板五部分组织。",
+      "notes": ""
+    },
+    {
+      "id": "C25",
+      "title": "11月30日阶段交付",
+      "kind": "teacher_required",
+      "source": "TOPIC 五",
+      "rule": "2026-11-30前完成模型设计与数据分析、中期检查报告、现场答辩。",
+      "notes": ""
+    },
+    {
+      "id": "C26",
+      "title": "12月22日阶段交付",
+      "kind": "teacher_required",
+      "source": "TOPIC 五",
+      "rule": "2026-12-22前完成应用、正式课程报告和现场答辩。",
+      "notes": ""
+    },
+    {
+      "id": "C27",
+      "title": "创新与应用前景",
+      "kind": "teacher_rubric",
+      "source": "COURSE 五(四)第2、7项",
+      "rule": "说明创新、适用对象、实际使用流程、商业扩展与限制，不虚构ROI。",
+      "notes": ""
+    },
+    {
+      "id": "C28",
+      "title": "流程图与数据流",
+      "kind": "teacher_rubric",
+      "source": "COURSE 五(四)第4项",
+      "rule": "流程图、系统架构、数据血缘及关键实现步骤与代码一致。",
+      "notes": ""
+    },
+    {
+      "id": "C29",
+      "title": "稳定性与交互",
+      "kind": "teacher_rubric",
+      "source": "COURSE 五(四)第5、9、10项",
+      "rule": "系统主要路径稳定，异常可理解，现场演示无重大故障。",
+      "notes": ""
+    },
+    {
+      "id": "C30",
+      "title": "两处评分表覆盖",
+      "kind": "teacher_rubric",
+      "source": "COURSE 五(四)与附录评分表",
+      "rule": "逐项映射正文和附录两处评分表；附录还强调难度、技术积累与便于理解。",
+      "notes": "自查只能证明证据覆盖，不预测教师分数。40/40/20与十分制表按教师评定，不自行另造总分。"
+    },
+    {
+      "id": "U01",
+      "title": "既定项目主题",
+      "kind": "user_commitment",
+      "source": "用户选题与前轮规划",
+      "rule": "围绕可观测客户生命周期，包含价值、留存、高风险与沉睡运营支持。",
+      "notes": ""
+    },
+    {
+      "id": "U02",
+      "title": "分层数仓与星型",
+      "kind": "user_commitment",
+      "source": "用户核心约束2",
+      "rule": "实现ODS-DWD-DWS-ADS及星型模型。",
+      "notes": "课程标数仓可选，但用户已经明确要求，不能自行降级删除。"
+    },
+    {
+      "id": "U03",
+      "title": "RFM与复购预测",
+      "kind": "user_commitment",
+      "source": "用户核心约束3及规划",
+      "rule": "完成RFM/聚类、规则与逻辑回归基线、LightGBM或合理替代模型、时间外评估。",
+      "notes": ""
+    },
+    {
+      "id": "U04",
+      "title": "三个AI子模块",
+      "kind": "user_commitment",
+      "source": "用户模块四及前轮规划",
+      "rule": "完成查询助手、经营周报、受约束挽回策略Agent。",
+      "notes": "属于项目承诺；不自动等于生产可用加分。"
+    },
+    {
+      "id": "U05",
+      "title": "Streamlit端到端Web",
+      "kind": "user_commitment",
+      "source": "用户核心约束5",
+      "rule": "采用Python Streamlit展示数据、经营、客户、模型和AI工作台。",
+      "notes": ""
+    },
+    {
+      "id": "Q01",
+      "title": "统一数据指标接口",
+      "kind": "project_quality",
+      "source": "本执行包工程约定",
+      "rule": "数据契约、指标词典、公共接口有唯一维护位置与变更记录。",
+      "notes": ""
+    },
+    {
+      "id": "Q02",
+      "title": "证据与可复现",
+      "kind": "project_quality",
+      "source": "本执行包工程约定",
+      "rule": "完成状态有命令或审阅证据、输入输出身份、版本和运行结果。",
+      "notes": ""
+    },
+    {
+      "id": "Q03",
+      "title": "时间与信息泄漏检查",
+      "kind": "project_quality",
+      "source": "模型验收规则",
+      "rule": "特征只取as_of之前，标签成熟，训练验证测试按时间，预处理只拟合允许阶段。",
+      "notes": ""
+    },
+    {
+      "id": "Q04",
+      "title": "模型评估诚实",
+      "kind": "project_quality",
+      "source": "模型验收规则",
+      "rule": "固定比较口径、报告基线与最终测试，不承诺AUC或重复调试测试集。",
+      "notes": ""
+    },
+    {
+      "id": "Q05",
+      "title": "AI结果评测",
+      "kind": "project_quality",
+      "source": "AI验收规则",
+      "rule": "NL2SQL按结果语义，报告按证据数字，Agent按工具和规则评价，保留真实调用证据。",
+      "notes": ""
+    },
+    {
+      "id": "Q06",
+      "title": "失败、预算与权限边界",
+      "kind": "project_quality",
+      "source": "AI及发布验收规则",
+      "rule": "限制SQL、工具、调用次数和成本；无数据/外部失败可降级，回放明确标识。",
+      "notes": ""
+    },
+    {
+      "id": "Q07",
+      "title": "跨AI可接力协作",
+      "kind": "user_commitment",
+      "source": "本次用户请求",
+      "rule": "统一AGENTS、初始化、任务台账、认领、交接、证据和变更协议，减少重复询问。",
+      "notes": ""
+    },
+    {
+      "id": "B01",
+      "title": "3个以上生产可用AI模块",
+      "kind": "optional_bonus",
+      "source": "COURSE 五加分项1",
+      "rule": "原文+3分，须满足教师对数量及生产可用的评定。",
+      "notes": ""
+    },
+    {
+      "id": "B02",
+      "title": "自训练或微调LLM",
+      "kind": "optional_bonus",
+      "source": "COURSE 五加分项2",
+      "rule": "原文+3分，可选；不作为核心系统依赖。",
+      "notes": ""
+    },
+    {
+      "id": "B03",
+      "title": "产品级Demo",
+      "kind": "optional_bonus",
+      "source": "COURSE 五加分项3",
+      "rule": "原文+2分，端到端可商用产品级Demo；普通Web演示不自动满足。",
+      "notes": ""
+    },
+    {
+      "id": "B04",
+      "title": "公开发表开源或竞赛",
+      "kind": "optional_bonus",
+      "source": "COURSE 五加分项4",
+      "rule": "原文+2分；GitHub Star≥10或参赛等由教师解释，不能伪造或购买证据。",
+      "notes": ""
+    },
+    {
+      "id": "B05",
+      "title": "博客或教学视频",
+      "kind": "optional_bonus",
+      "source": "COURSE 五加分项5",
+      "rule": "原文+1分；选择后制作，发布须有授权。",
+      "notes": "五项标称和为11但总加分封顶10；总分最高110及AI加权5分口径交教师确认，禁止保证满分。"
+    },
+    {
+      "id": "X01",
+      "title": "销量预测扩展",
+      "kind": "optional_extension",
+      "source": "前轮规划扩展项",
+      "rule": "季节朴素基线、ETS或滞后特征模型，滚动回测MAE/WAPE。",
+      "notes": ""
+    },
+    {
+      "id": "X02",
+      "title": "关联规则扩展",
+      "kind": "optional_extension",
+      "source": "COURSE 三(四)算法菜单",
+      "rule": "仅有真实订单篮子时实施，计算支持度、置信度和提升度，避免将规则等同因果。",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+ "answers": [
+  {
+   "answer": "数据源或数据集下载站（如 Kaggle）",
+   "question": "“登录”具体指哪一个服务或账号？"
+  }
+ ],
+ "droppedWords": [],
+ "extraReqs": [],
+ "ignored": [
+  "R9｜没有记录针对登录或权限状态的专门重检命令，Kaggle 的账号要求只写了“可能”。"
+ ],
+ "pickedPrompt": null,
+ "readingId": "",
+ "readingText": "",
+ "version": 4,
+ "updatedAt": "2026-11-09T12:37:22.967913+00:00"
+}

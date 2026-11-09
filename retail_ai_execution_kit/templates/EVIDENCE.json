@@ -1,0 +1,36 @@
+{
+  "note": "模板，不是已执行证据。复制后按实际填写；show命令提供规格哈希，artifacts须覆盖任务每个输出；历史失败不删除但不列为当前通过证据。",
+  "task_id": "REPLACE_TASK_ID",
+  "verification_status": "not_run",
+  "method": "inspection",
+  "performed_at": null,
+  "actor": null,
+  "reviewer": null,
+  "review_mode": null,
+  "environment": {},
+  "command": null,
+  "exit_code": null,
+  "summary": null,
+  "inputs": [
+    {
+      "path": "REPLACE_RELEVANT_INPUT",
+      "sha256": "REPLACE_ACTUAL_SHA256"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "REPLACE_OUTPUT_OR_LOG",
+      "sha256": "REPLACE_ACTUAL_SHA256"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "not_run",
+      "finding": null
+    }
+  ],
+  "limitations": [],
+  "steps": [],
+  "task_spec_sha256": null
+}

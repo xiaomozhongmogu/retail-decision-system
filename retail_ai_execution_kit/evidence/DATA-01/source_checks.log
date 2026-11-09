@@ -1,0 +1,91 @@
+$ curl -sS -m 15 "https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip" | head -c 4 | xxd
+# 2026-11-09T20:22:52+0800
+00000000: 504b 0304                                PK..
+curl: (23) Failure writing output to destination, passed 4096 returned 0
+[exit=0]
+$ curl -sS -m 15 -o /dev/null -w "%{http_code}
+" "https://archive.ics.uci.edu/dataset/502/online+retail+ii"
+# 2026-11-09T20:22:54+0800
+200
+[exit=0]
+$ curl -sS -m 20 https://api.github.com/repos/ablancogcr/synthetic-dataset-generator | python3 -c "import json,sys;d=json.load(sys.stdin);print({k:d.get(k) for k in [\"created_at\",\"pushed_at\"]},d[\"license\"][\"spdx_id\"])"
+# 2026-11-09T20:22:57+0800
+{'created_at': '2026-07-14T23:08:35Z', 'pushed_at': '2026-07-17T22:20:57Z'} MIT
+[exit=0]
+$ curl -sS -m 30 -D - -o /dev/null https://www.andresblancog.com/downloads/synthetic-dataset-generator/baseline_10000_seed42.zip | grep -iE "^HTTP|last-modified|content-length"
+# 2026-11-09T20:22:58+0800
+HTTP/1.1 200 Connection established
+HTTP/2 200 
+last-modified: Tue, 29 Sep 2026 02:42:08 GMT
+content-length: 1262760
+[exit=0]
+$ shasum -a 256 /private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/data01/dl/baseline_10000_seed42.zip ../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip
+# 2026-11-09T20:23:00+0800
+068bd2d3e7780560a909293797c89e3575487d7f23c587f34d114c943f127fa3  /private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/data01/dl/baseline_10000_seed42.zip
+d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16  ../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip
+[exit=0]
+$ python3 -I /private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/data01/cmpzip.py ../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip /private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/data01/dl/baseline_10000_seed42.zip
+# 2026-11-09T20:23:00+0800
+official files 14 local files 14
+calendar.csv                 local=6c19b29d0e96 official=6c19b29d0e96 SAME lines local=1097 official=1097
+customers.csv                local=c23597d14788 official=c23597d14788 SAME lines local=3648 official=3648
+data_dictionary.csv          local=9007e2ddfabd official=9007e2ddfabd SAME lines local=125 official=125
+order_items.csv              local=e0b81b60507e official=e0b81b60507e SAME lines local=16785 official=16785
+orders.csv                   local=21998ec72e26 official=21998ec72e26 SAME lines local=10001 official=10001
+payments.csv                 local=1f5869b8c23b official=1f5869b8c23b SAME lines local=10751 official=10751
+products.csv                 local=296a7325f96f official=296a7325f96f SAME lines local=8001 official=8001
+reviews.csv                  local=5e388d40ddd2 official=5e388d40ddd2 SAME lines local=6529 official=6529
+seller_products.csv          local=7f515adb6685 official=7f515adb6685 SAME lines local=13967 official=13967
+sellers.csv                  local=a912497c953c official=a912497c953c SAME lines local=801 official=801
+shipping.csv                 local=db5c0731d985 official=db5c0731d985 SAME lines local=10001 official=10001
+simulation_metadata.csv      local=aac5939db914 official=aac5939db914 SAME lines local=2 official=2
+validation_summary.json      local=cb03bf96ec33 official=cb03bf96ec33 SAME lines local=471 official=471
+validation_summary.md        local=d81d5bc82e8a official=d81d5bc82e8a SAME lines local=76 official=76
+local {'simulation_run_id': 'simulation_run_20260721_003414_baseline_seed42', 'generated_at': '2026-07-21T00:34:14+0000', 'start_date': '2024-01-01', 'end_date': '2026-12-31', 'number_of_orders': '10000', 'number_of_customers': '3647'}
+official {'simulation_run_id': 'simulation_run_20260721_003414_baseline_seed42', 'generated_at': '2026-07-21T00:34:14+0000', 'start_date': '2024-01-01', 'end_date': '2026-12-31', 'number_of_orders': '10000', 'number_of_customers': '3647'}
+[exit=0]
+$ python3 -I -c "import json;d=json.load(open('/private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/data01/dl/manifest.json'));b=d['datasets'][0];print(b['filename'],b['sha256'],b['size_bytes'],b['start_date'],b['end_date']);print(d['synthetic_data_disclaimer'])"
+# 2026-11-09T20:23:01+0800
+baseline_10000_seed42.zip 068bd2d3e7780560a909293797c89e3575487d7f23c587f34d114c943f127fa3 1262760 2024-01-01 2026-12-31
+These datasets are fully synthetic and do not represent real customers, sellers, orders, companies, or market activity. They must not be interpreted as real market data or used for operational business decisions.
+[exit=0]
+$ sed -n 197,207p /private/tmp/claude-501/-Users-liqinyang--claude-spares-spare-wlj1uv/f11ca7e2-c7bf-4c52-afa1-e8b6e366fe94/scratchpad/data01/dl/readme.md
+# 2026-11-09T20:23:01+0800
+## License
+
+The Python source code and project documentation are available under the
+[MIT License](LICENSE).
+
+The bundled synthetic sample dataset is dedicated to the public domain under
+[CC0 1.0 Universal](data/sample_output/LICENSE-DATA). It may be copied, modified,
+redistributed, and used commercially without requesting permission.
+
+The project does not impose a license on datasets you generate yourself. You are
+responsible for choosing appropriate terms for your generated outputs and for any
+[exit=0]
+$ curl -sS -m 20 -H "Accept: application/vnd.github.raw" https://api.github.com/repos/ablancogcr/synthetic-dataset-generator/contents/data/sample_output/ecommerce_baseline_10000_seed42/simulation_metadata.csv | cut -d, -f1,6,11,12
+# 2026-11-09T20:23:01+0800
+simulation_run_id,generated_at,number_of_customers,number_of_sellers
+simulation_run_20260717_155231_baseline_seed42,2026-07-17T15:52:31+0000,20000,1200
+[exit=0]
+$ curl -sS -m 20 -o /dev/null -w "%{http_code} redirect_host=%{redirect_url}
+" "https://www.kaggle.com/api/v1/datasets/download/mkechinov/ecommerce-events-history-in-cosmetics-shop" | sed -E "s#(https://[^/]+/).*#\1...#"
+# 2026-11-09T20:23:03+0800
+302 redirect_host=https://storage.googleapis.com:443/...
+[exit=0]
+$ curl -sS -m 20 https://huggingface.co/api/datasets/t-tech/T-ECD | python3 -c "import json,sys;d=json.load(sys.stdin);print({k:d.get(k) for k in [\"gated\",\"createdAt\",\"lastModified\"]},(d.get(\"cardData\") or {}).get(\"license\"))"
+# 2026-11-09T20:23:04+0800
+{'gated': False, 'createdAt': '2025-09-22T17:44:13.000Z', 'lastModified': '2026-10-05T21:29:24.000Z'} cc-by-nc-sa-4.0
+[exit=0]
+$ curl -sS -m 20 -L "https://huggingface.co/datasets/t-tech/T-ECD/resolve/main/README.md" | grep -nE "perturbation|day_begin|12-hour|License\)|price|count —"
+# 2026-11-09T20:23:06+0800
+115:  - `price` —  represents the monetary value of the interaction.
+134:  Some transactions include detailed receipts with purchased items, their quantities, and prices.  
+147:3. **Controlled perturbation**: sampled chains were transformed with calibrated noise — timestamp jitter, perturbation of numerical attributes, generalization of rare values, and a small amount of event deletion paired with synthetic event injection — preserving structural properties such as sparsity, heavy tails, cross-domain overlaps, and behavioral contexts.  
+166:The dataset contains temporal noise that requires maintaining a minimum 12-hour gap between the timestamp of the most recent user event and the prediction timestamp.
+201:    day_begin=1300,
+[exit=0]
+$ curl -sS -m 20 -r 0-3 -L "https://huggingface.co/datasets/t-tech/T-ECD/resolve/main/dataset/full/brands.pq" | xxd
+# 2026-11-09T20:23:09+0800
+00000000: 5041 5231                                PAR1
+[exit=0]

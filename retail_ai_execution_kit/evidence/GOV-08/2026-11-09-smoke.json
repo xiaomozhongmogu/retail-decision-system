@@ -1,0 +1,108 @@
+{
+  "task_id": "GOV-08",
+  "verification_status": "passed",
+  "method": "command",
+  "performed_at": "2026-11-09T20:04:29+08:00",
+  "actor": "claude-opus-5-5（Claude Code 桌面端）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64 (Apple M1 Pro)",
+    "python": "3.9.6 /usr/bin/python3",
+    "git": "none"
+  },
+  "command": "python3 scripts/test_project_tool.py; python3 scripts/project.py validate; python3 scripts/project.py next; python3 scripts/project.py gate proposal-ready; python3 scripts/project.py gate midterm-ready; python3 -I evidence/GOV-08/negative_tests.py \"$PWD\" \"$SCRATCH/neg_root\"",
+  "exit_code": 0,
+  "summary": "治理自测 13 项通过；validate/next 退出码 0；proposal-ready 和 midterm-ready 关卡按预期返回 2（阻断）；在台账副本上制造的 5 种违规（无证据 done、产物篡改、无 owner 活动、执行型任务只有静态证据、验收规格变化）全部被 validate 拒绝；记录了单写者与哈希比对写入、GOV-01/02 的真实认领与交接，以及 allowed_scope 重叠分析（150 对）与并行规则。",
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "36cb8956a199d29086b0670efbb3abd25df9180b1aa8c61b5ddc8e727efa3227"
+    },
+    {
+      "path": "scripts/project.py",
+      "sha256": "bb3618d364f76723656ff84697dc860a51a91079174413b5f8dff8e476cb2b4b"
+    },
+    {
+      "path": "scripts/test_project_tool.py",
+      "sha256": "ddd3dd42de599ccf96d49fc4ee63605c5ec3777b7c42ceaac4ba7a4252083e03"
+    },
+    {
+      "path": "templates/HANDOFF.md",
+      "sha256": "5b6414f6cb30cf4fb7c7ba39ac180399d7b7d5324ab3a96f78445c1fa54d83a4"
+    },
+    {
+      "path": "templates/EVIDENCE.json",
+      "sha256": "65b35e64467aae9a10686bde72302148e2dcdd0fc149686dec392666543f2471"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/governance/collaboration_smoke.md",
+      "sha256": "de13dd8452ebca5f21f9e435aeb5d7b5c0fec61ae15168509d8f1c26025d6d1b"
+    },
+    {
+      "path": "evidence/GOV-08/smoke_run.log",
+      "sha256": "cb920735108e5c78ebcd49c8d1249e0aced42f94f69f8994fb3f76e69a6fe895"
+    },
+    {
+      "path": "evidence/GOV-08/negative_tests.py",
+      "sha256": "52025a0450799ad4bd472c257ef6404a3e3de37988f82757d2e83b59bad9531d"
+    },
+    {
+      "path": "evidence/GOV-08/scope_overlap.py",
+      "sha256": "4c92a647cd40bd9f2bda6de5e9ba082386154d6399d7a1b20c30ee2a26fe6e48"
+    },
+    {
+      "path": "evidence/GOV-08/scope_overlap.log",
+      "sha256": "fcdd63feb6d13d6b1e6f97b1ce5251a55b3e71a23a27dd26b646a4859d81ec20"
+    },
+    {
+      "path": "evidence/GOV-08/smoke_run_attempt1_failed_quoting.log",
+      "sha256": "5f4bca2c1df23e12a6d026ad2e3c1696e9ad9c81327960fa94acc470abbab0de"
+    },
+    {
+      "path": "worklogs/GOV-01-claude-opus-5-5-2026-11-09.md",
+      "sha256": "baf6f4100a89c7132814b3f54bf126388e499959bf378b956a214dea6d409eb4"
+    },
+    {
+      "path": "worklogs/GOV-02-claude-opus-5-5-2026-11-09.md",
+      "sha256": "32a057ba85d971659d00e0e02f840f99e8a44a90be5269afd2585a6decf6398b"
+    },
+    {
+      "path": "worklogs/GOV-08-claude-opus-5-5-2026-11-09.md",
+      "sha256": "aaa2b4eebe2ad3a46ce7014f896376162a94652f3b7688904b81908450454d94"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "smoke_run.log：test_project_tool 13 个测试通过（退出码 0），validate 返回 ledger_valid（0），next 列出 GOV-03/05/08（0），gate proposal-ready 与 midterm-ready 返回 blocked（退出码 2）。报告第 1 节说明这是预期的阻断，不需要修复。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "台账 coordinator 字段已写入，只有协调者写台账，每次写入前比对基线哈希（版本链见报告 2.1）；GOV-01/GOV-02 完成了认领→证据→done→render→worklogs 交接的真实流程；scope_overlap 列出 150 对可能冲突的任务，并给出互斥并行规则；当前 GOV-03 与 GOV-08 重叠，已串行处理。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "negative_tests.py 在副本上运行：BASE 返回 0；NEG1–NEG5 都返回 1，拒绝原因与预期一致（ALL_EXPECTED）。报告第 3 节说明校验器只做机械检查，无法判断 finding 的真伪，退出码 0 或生成了文件都不等于业务正确。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次运行因路径中的空格失败，已保留日志后重跑。",
+    "台账认领晚于第一轮冒烟运行。",
+    "没有测试多代理并发、Git 合并和 stale 流转。",
+    "命令中的 $SCRATCH 指本会话的临时目录 /private/tmp/claude-501/.../scratchpad，副本运行后已删除。"
+  ],
+  "steps": [
+    "运行命令并记录到 smoke_run.log。",
+    "运行 scope_overlap.py。",
+    "编写报告与 3 份交接记录。"
+  ],
+  "task_spec_sha256": "5428bd5927aea2915a78b0ad0307f4c39acd2c510ce75763c8681c9137672335"
+}

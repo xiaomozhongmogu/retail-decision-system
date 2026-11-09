@@ -1,0 +1,70 @@
+{
+  "scope": "治理包检查，不是业务系统验收",
+  "review_date": "2026-11-05",
+  "environment": {
+    "python": "3.12.14",
+    "system": "Linux",
+    "machine": "x86_64"
+  },
+  "commands": [
+    {
+      "command": "python3 scripts/project.py validate",
+      "exit_code": 0,
+      "stdout": "{\n  \"result\": \"ledger_valid\",\n  \"tasks\": 92,\n  \"requirements\": 49,\n  \"selected\": 85,\n  \"accepted\": 0,\n  \"warnings\": [\n    \"当前没有已验收业务任务；计划结构有效不表示课程或系统已完成。\",\n    \"机械检查不证明教师答复、原始结果或业务判断真实；必须复核证据内容。\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 scripts/test_project_tool.py",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.057s\n\nOK\n"
+    }
+  ],
+  "initial_gate_checks": [
+    {
+      "gate": "proposal-ready",
+      "exit_code": 2,
+      "required_tasks": 23,
+      "accepted_tasks": 0,
+      "result": "blocked"
+    },
+    {
+      "gate": "midterm-ready",
+      "exit_code": 2,
+      "required_tasks": 56,
+      "accepted_tasks": 0,
+      "result": "blocked"
+    },
+    {
+      "gate": "final-ready",
+      "exit_code": 2,
+      "required_tasks": 84,
+      "accepted_tasks": 0,
+      "result": "blocked"
+    },
+    {
+      "gate": "final-submitted",
+      "exit_code": 2,
+      "required_tasks": 85,
+      "accepted_tasks": 0,
+      "result": "blocked"
+    }
+  ],
+  "requirements": 49,
+  "tasks": 92,
+  "selected": 85,
+  "optional": 7,
+  "accepted_business_tasks": 0,
+  "groups": {
+    "GOV": 8,
+    "DATA": 12,
+    "DW": 10,
+    "EDA": 6,
+    "ML": 12,
+    "AI": 15,
+    "UI": 7,
+    "DOC": 8,
+    "REL": 7,
+    "BON": 7
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "package": "retail_ai_execution_kit",
+  "baseline_date": "2026-11-05",
+  "purpose": "跨AI项目执行与验收基线，不是已完成的业务系统",
+  "files": [
+    {
+      "path": ".env.example",
+      "size_bytes": 122,
+      "sha256": "53e08b08d2bc8be49efe140683644f0dbad71557c575465c9d399e90c22554e2"
+    },
+    {
+      "path": ".gitignore",
+      "size_bytes": 129,
+      "sha256": "49f6254310a27e2cc56bb05127dd844b9f1fe6f746e602cfffc03e8e735bf1f7"
+    },
+    {
+      "path": "ACCEPTANCE.md",
+      "size_bytes": 14985,
+      "sha256": "a6be933ca56dba27686b878bd3b17becd28af93b2f82c6397d501b4b6a449eaa"
+    },
+    {
+      "path": "AGENTS.md",
+      "size_bytes": 10358,
+      "sha256": "36cb8956a199d29086b0670efbb3abd25df9180b1aa8c61b5ddc8e727efa3227"
+    },
+    {
+      "path": "INIT_PROMPT.md",
+      "size_bytes": 4636,
+      "sha256": "78fe8aa1e8af0ec30c941b2ccdbca5dc8efe967a0579f117af7280f83601696b"
+    },
+    {
+      "path": "PACKAGE_VALIDATION.md",
+      "size_bytes": 900,
+      "sha256": "78d098da4a59a12784e64efece435a35c7bb39d4f0cbf31ade0f66e21e34e9de"
+    },
+    {
+      "path": "PROJECT_SPEC.md",
+      "size_bytes": 4767,
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 8356,
+      "sha256": "92b0663945acbeb8e4fbde1004861ac5364de147b9ac04f350c12a1baedc2a17"
+    },
+    {
+      "path": "REQUIREMENTS.md",
+      "size_bytes": 17747,
+      "sha256": "68fa75b4af9cababc34d17c27615816c0adb6c8fd0bde502ac84e97410614321"
+    },
+    {
+      "path": "STATUS.md",
+      "size_bytes": 1076,
+      "sha256": "692aa99c1f181cf5da688ae83d2bb088fb0557b29231174eefcab2a408dcd458"
+    },
+    {
+      "path": "TASKS.md",
+      "size_bytes": 79082,
+      "sha256": "76480f6e13ea284eb0905fa3b1e970ad22135754f8778fdba00874a94981b826"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "size_bytes": 2781,
+      "sha256": "c9ee3002fd32da554f12d7d448bd9dd8a4e6663be56687fc07d09bc387ae2d16"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "size_bytes": 2254,
+      "sha256": "18f9b1dc8ff0e2633e56380234947e7c0b8d4affdc6994684925d87db432bb27"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "size_bytes": 2233,
+      "sha256": "c16ef365aa1a6a7887d8e10c709a0c542e2f1d077c489f5c65b1676ee321f46a"
+    },
+    {
+      "path": "docs/COMMANDS.md",
+      "size_bytes": 1715,
+      "sha256": "c397d06caa2e54cd30d26dd50f8cbedb407eb400f93bcc14f5367e2cc937b2e2"
+    },
+    {
+      "path": "docs/reference_registry.md",
+      "size_bytes": 5897,
+      "sha256": "04ea70665689e4d99c7e7b1231bb96ba6c05dfb49cd132f43774b643d6d889e2"
+    },
+    {
+      "path": "evidence/README.md",
+      "size_bytes": 829,
+      "sha256": "a87e3d5063859f01f4c255e16596dc00f7192f6ef28e3c735f866f51bee16367"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "size_bytes": 2439,
+      "sha256": "48983c83e8957291e5f952b2f85e9d8f38b899bf651a20c6d3f0ef5d51ad936b"
+    },
+    {
+      "path": "ops/TEAM.md",
+      "size_bytes": 10850,
+      "sha256": "c10aed3a99c7163f7fd0810597b80052499b0f1b7ed90a47fba4ccfb02e4b812"
+    },
+    {
+      "path": "project/requirements.json",
+      "size_bytes": 14947,
+      "sha256": "ac79e0b4359c11c6ba63457526b593f3dbabfabe6085ea8cefa5a72d56cb2389"
+    },
+    {
+      "path": "project/tasks.json",
+      "size_bytes": 100356,
+      "sha256": "8520f5d740582c90e8efce1922b131f5b3f1e68e0e363aa800cad12aee537652"
+    },
+    {
+      "path": "reports/package/validation.json",
+      "size_bytes": 1825,
+      "sha256": "a9b127750c931215099d5cb02fa1148b60beeb243ff3f732591d48ac40472acb"
+    },
+    {
+      "path": "scripts/project.py",
+      "size_bytes": 21700,
+      "sha256": "bb3618d364f76723656ff84697dc860a51a91079174413b5f8dff8e476cb2b4b"
+    },
+    {
+      "path": "scripts/test_project_tool.py",
+      "size_bytes": 5929,
+      "sha256": "ddd3dd42de599ccf96d49fc4ee63605c5ec3777b7c42ceaac4ba7a4252083e03"
+    },
+    {
+      "path": "sources/course_guide_2026.docx",
+      "size_bytes": 71910,
+      "sha256": "5ae11155a4c4c6baa00114db101dcd93ea46a7db2dfbc8f0330971e62dbfe5de"
+    },
+    {
+      "path": "sources/course_guide_extracted.txt",
+      "size_bytes": 39261,
+      "sha256": "a975e2c65542da0d1f86620158c83ea64739caf93362b554109423769a260827"
+    },
+    {
+      "path": "sources/manifest.json",
+      "size_bytes": 1219,
+      "sha256": "25ec3ae6098eee624f1c39d1dcd10e79e664b52f896f71fe83bd074fa696dbeb"
+    },
+    {
+      "path": "sources/team_grouping_template.xlsx",
+      "size_bytes": 9604,
+      "sha256": "fdf5a4a61682c97fa3d85de5536d6d2e619af95d9285996aad87c9ea4e745dcf"
+    },
+    {
+      "path": "sources/topic_report_extracted.txt",
+      "size_bytes": 1168,
+      "sha256": "83d4e0fd55899f91806977c3762b2a09157ded998882c9a1898956c915cfcd47"
+    },
+    {
+      "path": "sources/topic_report_template.doc",
+      "size_bytes": 36352,
+      "sha256": "7b3c215d2bfe35a922b04eeb7eb45e3031fa983928dbc86350754dcb7ae97ec2"
+    },
+    {
+      "path": "templates/CHANGE_REQUEST.md",
+      "size_bytes": 4009,
+      "sha256": "2ea903757d82ac9772142a028e62e0e962f4105802ba5586b43a93d38b213a3f"
+    },
+    {
+      "path": "templates/EVIDENCE.json",
+      "size_bytes": 861,
+      "sha256": "65b35e64467aae9a10686bde72302148e2dcdd0fc149686dec392666543f2471"
+    },
+    {
+      "path": "templates/EXPERIMENT.md",
+      "size_bytes": 703,
+      "sha256": "1c31d6cf9bedacb0176334cac88bee197e890793491d75ac1d202a81dc38f35b"
+    },
+    {
+      "path": "templates/HANDOFF.md",
+      "size_bytes": 3679,
+      "sha256": "5b6414f6cb30cf4fb7c7ba39ac180399d7b7d5324ab3a96f78445c1fa54d83a4"
+    },
+    {
+      "path": "templates/REPORT_OUTLINE.md",
+      "size_bytes": 18117,
+      "sha256": "bcbcdc885eddf4707ad8e7df7fa337a6dcee98584935459ac4752012ebed70a5"
+    },
+    {
+      "path": "templates/TASK_REQUEST.md",
+      "size_bytes": 3801,
+      "sha256": "69d5e696264776b0c10302ebf4e65000c339b7323e6a1200b64eec972d1bdc09"
+    },
+    {
+      "path": "worklogs/README.md",
+      "size_bytes": 304,
+      "sha256": "6b8045b688aebe7bf09df43965fd2cb3f107b521c3cf3c326b9ef0e28c1f49e5"
+    }
+  ]
+}

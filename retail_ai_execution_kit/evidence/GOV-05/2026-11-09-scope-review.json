@@ -1,0 +1,79 @@
+{
+  "task_id": "GOV-05",
+  "verification_status": "passed",
+  "method": "inspection",
+  "performed_at": "2026-11-09T20:12:00+08:00",
+  "actor": "claude-opus-5-5（Claude Code 桌面端）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64 (Apple M1 Pro)",
+    "mode": "文档审阅与编写，没有运行业务代码"
+  },
+  "command": null,
+  "exit_code": null,
+  "summary": "编写 docs/business_scope.md：两条候选数据路线的能力对照；四个阶段（获客/首购、留存、价值维系、沉睡召回）各自的使用者、问题、决策、所需数据和边界；交易数据从首次可观测购买开始，不编造漏斗和归因；生命周期规则、价值分群、未来 30 天未复购风险、营销增量四个概念分开定义。正式数据路线待 DATA-03，阈值待 EDA-05 校准。",
+  "inputs": [
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "c9ee3002fd32da554f12d7d448bd9dd8a4e6663be56687fc07d09bc387ae2d16"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "c16ef365aa1a6a7887d8e10c709a0c542e2f1d077c489f5c65b1676ee321f46a"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "18f9b1dc8ff0e2633e56380234947e7c0b8d4affdc6994684925d87db432bb27"
+    },
+    {
+      "path": "project/requirements.json",
+      "sha256": "ac79e0b4359c11c6ba63457526b593f3dbabfabe6085ea8cefa5a72d56cb2389"
+    },
+    {
+      "path": "reports/governance/requirements_review.md",
+      "sha256": "1ec9be9c2c242fcdf9fadb1296d1305bd7297f86f123b71436963b56d644fc67"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "5b4c555ff55ae53cc7361f86bbfe3bae9358c78ff936347e328079be8af8431d"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "第 1 节列出了四类使用者及其决策动作；第 2 节为获客/首购、留存、价值维系、沉睡召回四个阶段分别给出业务问题、决策、所需数据，以及路线 A、路线 B 各自的可支持边界。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 2 节“起点规则”和第 0 节说明：两条候选路线都只有交易数据，生命周期从首次可观测购买开始；路线 A 有历史截断，需要预热期；不编造浏览漏斗、真实首购或渠道归因；路线 B 的建档日期只作合成演示。第 4 节重申了这些限制。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 3 节表格分别定义了：① 生命周期规则状态（确定性、互斥、给出默认阈值）、② RFM/K-Means 价值分群、③ 1−P(30 天复购)（核心母体为过去 90 天有购买的已知客户）、④ 营销增量（无实验无法估计，只做情景测算），并写明各自“不是”什么、由哪个任务负责；③ 的母体与 PROJECT_SPEC 第 5 节一致。"
+    }
+  ],
+  "limitations": [
+    "自审，没有业务方或教师复核。",
+    "正式数据路线没有选定（D001/D006），文中与数据有关的部分按两条路线分别书写，DATA-03 之后需要复核。",
+    "生命周期阈值（30/90/180 天）是默认初值，没有用实际数据校准。",
+    "路线 B 的字段来自上级目录数据包的字典（../ecommerce-sample-database-100k/04_audit/data_dictionary.csv，哈希见 evidence/GOV-02/file_snapshot.tsv），校验器不允许项目外路径作为 inputs；路线 A 的字段没有实读。",
+    "order_status 的实际取值、M 是否含运费，都留给 DATA-02 和契约冻结。"
+  ],
+  "steps": [
+    "读取 PROJECT_SPEC 第 3、5、6 节，contracts 中的数据、指标与接口草案，以及 requirements 中的 C01/C12/C27/U01/Q01。",
+    "读取合成数据包的字段字典与 simulation_metadata（只看字段与声明，没有读取客户明细）。",
+    "编写 docs/business_scope.md，并逐条对照三项验收条件和 PROJECT_SPEC 的母体定义。"
+  ],
+  "task_spec_sha256": "ca79d4299a9aeffa04e8bccb9134eaea3be533e206de8523caa7aabaee296170"
+}

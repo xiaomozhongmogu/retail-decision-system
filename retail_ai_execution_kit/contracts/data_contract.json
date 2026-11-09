@@ -1,0 +1,104 @@
+{
+  "status": "candidate_not_approved",
+  "selected_dataset": null,
+  "candidate_baseline": "Online Retail II; 仅在教师认可历史交易时正式采用",
+  "source_manifest": "reports/data/source_manifest.json",
+  "freshness_decision": "ops/DECISIONS.md#d001",
+  "event_timezone": null,
+  "size_rule": {
+    "min_records": 10000,
+    "or_min_bytes": 10000000
+  },
+  "grain": "invoice line; 候选路线，实际读取后验证",
+  "business_currency": "GBP for UCI route only",
+  "fields": [
+    {
+      "name": "invoice_id",
+      "source_aliases": [
+        "Invoice",
+        "InvoiceNo"
+      ],
+      "type": "string",
+      "meaning": "发票交易标识，保留取消前缀"
+    },
+    {
+      "name": "product_id",
+      "source_aliases": [
+        "StockCode"
+      ],
+      "type": "string",
+      "meaning": "商品编码"
+    },
+    {
+      "name": "product_name",
+      "source_aliases": [
+        "Description"
+      ],
+      "type": "string",
+      "nullable": true,
+      "meaning": "商品描述"
+    },
+    {
+      "name": "quantity",
+      "source_aliases": [
+        "Quantity"
+      ],
+      "type": "integer",
+      "meaning": "明细数量，负值单独分类"
+    },
+    {
+      "name": "invoice_time",
+      "source_aliases": [
+        "InvoiceDate"
+      ],
+      "type": "timestamp",
+      "meaning": "发票发生时间，源时区待核"
+    },
+    {
+      "name": "unit_price",
+      "source_aliases": [
+        "Price",
+        "UnitPrice"
+      ],
+      "type": "decimal(18,4)",
+      "meaning": "源币种单价"
+    },
+    {
+      "name": "customer_id",
+      "source_aliases": [
+        "Customer ID",
+        "CustomerID"
+      ],
+      "type": "string",
+      "nullable": true,
+      "meaning": "客户标识，不均值填充"
+    },
+    {
+      "name": "country",
+      "source_aliases": [
+        "Country"
+      ],
+      "type": "string",
+      "meaning": "源国家字段"
+    }
+  ],
+  "forbidden_assumptions": [
+    "没有数据支持的渠道/毛利/年龄/同意/投诉/库存",
+    "将更新日当交易日",
+    "将无关数据集用户ID合并",
+    "金额代理冒充实际净销售额"
+  ],
+  "required_after_selection": [
+    "actual_headers",
+    "source_versions_and_hashes",
+    "actual_time_coverage",
+    "key_validation",
+    "field_nullability",
+    "scope_rules",
+    "freshness_evidence"
+  ],
+  "effective_business_field_min": 8,
+  "field_counting_policy": "区分真实源字段、可验证关联字段与派生/模拟字段；至少8个有效业务字段，不能拆日期或加导入元数据凑数。",
+  "course_material_manifest": "sources/manifest.json",
+  "research_scope": "尚未冻结；全量指满足规模及窗口要求的正式研究范围，不要求无差别下载发布者全部文件。"
+}

@@ -1,0 +1,24 @@
+[project]
+name = "retail-bi"
+version = "0.1.0"
+description = "基于用户全生命周期的电商零售智能决策与 AI 运营助手系统（课程项目）"
+requires-python = ">=3.10"
+# 直接依赖只写下限；实际版本以 requirements.lock 为准（GOV-07）。
+dependencies = [
+    "pandas>=2.2",
+    "pyarrow>=15",
+    "duckdb>=1.1",
+    "openpyxl>=3.1",
+    "scikit-learn>=1.5",
+    "lightgbm>=4.3",
+    "plotly>=5.20",
+    "streamlit>=1.40",
+    "openai>=1.40",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.uv]
+# 目前还没有 src/retail_bi 包（由 DATA-02、UI-01 等任务建立），先不构建项目本身。
+package = false
