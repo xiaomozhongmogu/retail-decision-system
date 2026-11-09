@@ -1,0 +1,35 @@
+{
+  "assertions": {
+    "zip_crc_passed": true,
+    "history_matches_declared_order_cutoff": false,
+    "raw_keys_links_amounts_temporal_order_checks_zero": true,
+    "historical_keys_links_amounts_temporal_order_checks_zero": true,
+    "source_unchanged": true
+  },
+  "raw_rows": {
+    "raw:customers": 3647,
+    "raw:products": 8000,
+    "raw:reviews": 6528,
+    "raw:orders": 10000,
+    "raw:simulation_metadata": 1,
+    "raw:calendar": 1096,
+    "raw:payments": 10750,
+    "raw:sellers": 800,
+    "raw:order_items": 16784,
+    "raw:data_dictionary": 124,
+    "raw:seller_products": 13966,
+    "raw:shipping": 10000
+  },
+  "historical_rows": {
+    "historical:customers": 3647,
+    "historical:products": 8000,
+    "historical:reviews": 6190,
+    "historical:orders": 9311,
+    "historical:calendar": 1042,
+    "historical:payments": 10010,
+    "historical:sellers": 800,
+    "historical:order_items": 15639,
+    "historical:seller_products": 13966,
+    "historical:shipping": 9311
+  }
+}

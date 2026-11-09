@@ -1,0 +1,162 @@
+{
+  "task_id": "DATA-02",
+  "task_spec_sha256": "a4fe39f7a4094d948c2da2eb67a219462b8b81c8b6f62f839178a454b73397a8",
+  "verification_status": "passed",
+  "method": "command",
+  "performed_at": "2026-11-09T21:15:44.913448+08:00",
+  "actor": "codex",
+  "reviewer": "codex",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic_local_files"
+  },
+  "command": ".venv/bin/python src/retail_bi/data/candidate_probe.py --source ../ecommerce-sample-database-100k --out reports/data; .venv/bin/python evidence/DATA-02/verify_probe.py",
+  "exit_code": 0,
+  "summary": "Full local candidate probe completed, not data-cleaning approval. Detected 334 customer and 75 seller postal codes losing leading zeros in historical CSVs, post-cutoff actual outcome timestamps and absence of quantity. Preserved source files unchanged.",
+  "inputs": [
+    {
+      "path": "src/retail_bi/data/candidate_probe.py",
+      "sha256": "df20e3ca38ea8415692fc34bf2c00a359d769363540a9129769d8bf59755b740"
+    },
+    {
+      "path": "evidence/DATA-02/verify_probe.py",
+      "sha256": "792c4b16d6ebe05ba13d8f90170ebd873bc95f0614f4905f95de798b41312295"
+    },
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/.DS_Store",
+      "sha256": "8fe679b3b8b4822d39981a3a21ec11fcffbb6830c5ac81ac92b950b0d8971556"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/01_source/baseline_10000_seed42.zip",
+      "sha256": "d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/calendar.csv",
+      "sha256": "cf2bdf52a6fe3e33a795e4db8cd0503b360e64b624188c63538e0ec251e7f8f8"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/customers.csv",
+      "sha256": "8a3c39c6a952caba9de79e290e0d087eb5e3cc1ad21d05756e2fa41451081a1d"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/order_items.csv",
+      "sha256": "f102c7eed9794c269d1612e98dce75ce998cbd8d441bc3df21fa384044037e58"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/orders.csv",
+      "sha256": "e645d2f7bf76ab62891ca563dde12496d6bc4579767e7024295b63182c88a38b"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/payments.csv",
+      "sha256": "1493dc289e95ed19c744eebfbdab4411201aae6134c20957eb6629a114bf6c6f"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/products.csv",
+      "sha256": "6f669e9fe16a9d03fcb584d14196ed815c93b2abc2039ab9928774bf2cbd2ab4"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/reviews.csv",
+      "sha256": "b90274a58fa8a60903436a2ef5f81cdb2e376a0ae2bc9758acbda44dd8d72651"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/seller_products.csv",
+      "sha256": "68a25acfae66d920a8e33ef96edfbdac6c5e0a043385b31cdec265b64880beef"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/sellers.csv",
+      "sha256": "c97db4893e0989b43007f999841ccc9dc5e055cbeb7a024d198667f041a3be06"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/02_historical_utf8/shipping.csv",
+      "sha256": "d8dd8dc9becd8ef447c0d996366c105ef43f47e2c6e6e259ab4302d4807bd762"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/03_derived_demo/customer_rfm_snapshot_asof_2026-11-08.csv",
+      "sha256": "2d2ff0a6c59d08943db055159cf0e18b0ac8ce85bc8821308347c2c47bfdfbbd"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/04_audit/data_dictionary.csv",
+      "sha256": "ab9413bfb5f2c1e33c97db935acb3c1b4c4f39fd62918acee7b5ad7c7476645f"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/04_audit/quality_report.json",
+      "sha256": "300bd5324b0bfa5145e00ed4414d6bc198dda6be1824dc62facb3fd535bb7033"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/04_audit/simulation_metadata.csv",
+      "sha256": "0e15b1484b1756b840c20dfebccb9b21d060b40a7cf4dff5eff1a384c682679b"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/DATA_SOURCE.md",
+      "sha256": "189fc54fc0e51da4d5937713e842aa8ffd09fcb4b6f7df8b7b6780de3fb16586"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/README.md",
+      "sha256": "8fe3f6c90c2a185ef2af41613b6ebe765dfb427930764865dbd07e12bdd266a9"
+    },
+    {
+      "path": "data/raw/data02-input-snapshot/build_retail_verified.py",
+      "sha256": "756dd9748cb52e09151564b8c9c03a12f1d19dbf0f1485f10c487e0843d8f789"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/data/candidate_probe.json",
+      "sha256": "c789f146234861e507c1f0d534d0068223b637db1dd5e5b1b0885444e2625459"
+    },
+    {
+      "path": "reports/data/candidate_probe.md",
+      "sha256": "cf48cc501844152983fcca37c5e1d954ba4f4ff8c28d269e8e27a1934373adb2"
+    },
+    {
+      "path": "evidence/DATA-02/probe_run.log",
+      "sha256": "48725b857cb05012bc8a9155d8dbfbf681efc0379e7e78b5f27107ee3e1e912e"
+    },
+    {
+      "path": "evidence/DATA-02/verification_run.log",
+      "sha256": "fa3351ae479c5102287e814cf12186b8780b6656010eb86ea8ef0d702bb9d7bf"
+    },
+    {
+      "path": "evidence/DATA-02/verify_probe.py",
+      "sha256": "792c4b16d6ebe05ba13d8f90170ebd873bc95f0614f4905f95de798b41312295"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "Read all 12 ZIP CSVs and 10 historical CSVs: bytes, hashes, rows, per-column declared/load types, missing/invalid values, date samples/ranges recorded. Raw 10000 orders, 16784 items; historical 9311 orders, 15639 items and 77916 total rows. Independent csv/Decimal/date controls agree."
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "Complete specified local candidate only; no UCI/other candidate or derived RFM validation claimed. Recorded 19-file inventory, source unchanged, per-member hashes and history reconstruction with duplicate multiplicities. A byte-identical ignored snapshot is bound in inputs."
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "Checked primary/composite keys, foreign keys, listing/product/seller consistency, exact Decimal item/payment reconciliation and creation-before-purchase constraints: inspected exception counts zero. Explicitly detected postal loss and future outcome dates; USD amount fields exist but independent quantity does not. No fabricated fields or quantity=1 assumption."
+    }
+  ],
+  "limitations": [
+    "Self-review. Synthetic data does not prove real business patterns or course eligibility; D001/D006 remain pending.",
+    "Default exit 0 means report generation completed, not every data assertion passed. --strict returns 1 for the detected historical postal loss; independent checker asserts this.",
+    "Naive source timestamps interpreted as UTC under existing preparation convention, not a verified publisher timezone. Planned future delivery is not automatically unavailable information.",
+    "No source fixes, warehouse, business training, derived RFM audit or installed retail_bi public package. Environment lock unchanged.",
+    "Input snapshot is ignored by Git; another machine must recreate it from the existing same-hash local pack."
+  ],
+  "steps": [
+    "Refreshed shared instructions, ledger and release record; claimed DATA-02 from ledger b194a32001d40d136a0c49c65ecadafd658924881ec15e8f5d04cf2c8b5ce275.",
+    "Preserved initial strict-failure outputs. Added datetime handling; actual postal-loss findings persisted. Separate report-generation success from strict data-quality assessment, keeping strict exit 1.",
+    "Ran independent counts, fact-row equality, postal-loss detection, exact amounts and cutoff controls plus ID/date fixtures and missing-input/source-output failure paths.",
+    "System Python could not import pandas for one attempted report re-render; no output changed, full .venv probe and verification subsequently passed. One evidence-finalization shell snippet failed to decode stdin before executing; rerun as ASCII using .venv.",
+    "Created and hash-verified 19-file ignored input snapshot; original directory unchanged. Recorded D010 authorization; locally reviewed its impact on historical DATA-01 source evidence without claiming new network checks."
+  ]
+}

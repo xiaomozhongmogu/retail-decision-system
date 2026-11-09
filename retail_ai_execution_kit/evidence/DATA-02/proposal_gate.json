@@ -1,0 +1,84 @@
+{
+  "result": "blocked",
+  "gate": "proposal-ready",
+  "required_tasks": 23,
+  "accepted_tasks": 8,
+  "unmet": [
+    {
+      "id": "GOV-03",
+      "status": "blocked",
+      "blocker": "已从用户提供的选题报告登记 5 名成员姓名、学号与组长（ops/TEAM.md）；仍缺：各模块负责人与复核者、可投入时间、文档章节与演示分工，以及孙卓班级的确认，均需团队提供。恢复条件：用户提供分工表。"
+    },
+    {
+      "id": "GOV-04",
+      "status": "blocked",
+      "blocker": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。"
+    },
+    {
+      "id": "DATA-03",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-04",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-05",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-06",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-07",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-08",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-09",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-10",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-11",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DATA-12",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "EDA-01",
+      "status": "todo",
+      "blocker": null
+    },
+    {
+      "id": "DOC-01",
+      "status": "in_review",
+      "blocker": null
+    },
+    {
+      "id": "DOC-04",
+      "status": "todo",
+      "blocker": null
+    }
+  ],
+  "note": "完整证据记录仍需业务内容审阅；ready不等于已提交/答辩，也不保证教师评分。"
+}

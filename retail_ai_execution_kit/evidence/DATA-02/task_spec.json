@@ -1,0 +1,76 @@
+{
+  "task": {
+    "id": "DATA-02",
+    "title": "实读候选文件并探查字段",
+    "phase": "proposal",
+    "category": "DATA",
+    "selected": true,
+    "priority": "core",
+    "status": "in_progress",
+    "owner": "codex",
+    "reviewer": null,
+    "review_mode": null,
+    "requirements": [
+      "C03",
+      "C04",
+      "C05",
+      "Q02"
+    ],
+    "depends_on": [
+      "DATA-01",
+      "GOV-07"
+    ],
+    "allowed_scope": [
+      "src/retail_bi/data",
+      "reports/data"
+    ],
+    "outputs": [
+      "reports/data/candidate_probe.json",
+      "reports/data/candidate_probe.md"
+    ],
+    "acceptance": [
+      "对真实文件记录行数、列名、类型、时间样本、文件字节数和哈希。",
+      "明确读取的是单分片、样本还是全量，不能由单分片推断全期质量。",
+      "核验客户、商品、交易或事件标识，金额与数量是否真实存在；不凑字段。"
+    ],
+    "evidence": [],
+    "blocker": null,
+    "skip_reason": null,
+    "execution_required": true
+  },
+  "task_spec_sha256": "a4fe39f7a4094d948c2da2eb67a219462b8b81c8b6f62f839178a454b73397a8",
+  "requirements": [
+    {
+      "id": "C03",
+      "title": "数据规模",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)",
+      "rule": "实际数据记录数不少于10000或文件大小不少于10MB；记录原始与清洗后规模。",
+      "notes": "工程检查保守以10000000字节记录10MB，同时披露字节数；不能用测试夹具或重复扩充凑数。"
+    },
+    {
+      "id": "C04",
+      "title": "至少8个有效字段",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)",
+      "rule": "有至少8个真实、业务有意义、可解释的字段，披露来源与缺失情况。",
+      "notes": "不以拆日期、导入批次、随机价格补足原始业务维度；关联补充字段需可验证主键与覆盖。"
+    },
+    {
+      "id": "C05",
+      "title": "明确时间维度",
+      "kind": "teacher_required",
+      "source": "COURSE 三(一)",
+      "rule": "存在真实时间字段，说明含义、粒度、范围、时区或未知状态、时间覆盖。",
+      "notes": ""
+    },
+    {
+      "id": "Q02",
+      "title": "证据与可复现",
+      "kind": "project_quality",
+      "source": "本执行包工程约定",
+      "rule": "完成状态有命令或审阅证据、输入输出身份、版本和运行结果。",
+      "notes": ""
+    }
+  ]
+}

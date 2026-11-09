@@ -24,7 +24,7 @@
 | GOV-07 | 建立环境、目录和命令入口 | proposal | done | GOV-02, GOV-06 |
 | GOV-08 | 建立认领、证据和交接流程 | proposal | done | GOV-01, GOV-02 |
 | DATA-01 | 核验候选数据来源与许可 | proposal | done | GOV-05 |
-| DATA-02 | 实读候选文件并探查字段 | proposal | todo | DATA-01, GOV-07 |
+| DATA-02 | 实读候选文件并探查字段 | proposal | done | DATA-01, GOV-07 |
 | DATA-03 | 确认唯一主数据路线 | proposal | todo | DATA-02, GOV-04 |
 | DATA-04 | 完成正式数据契约和字典 | proposal | todo | DATA-03 |
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | todo | DATA-04 |
@@ -268,11 +268,11 @@
 2. 至少核验主候选和备选的可下载性；账号或权限需求明确记录，不绕过访问控制。
 3. UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。
 
-证据：evidence/DATA-01/2026-11-09-source-review.json
+证据：evidence/DATA-01/2026-11-09-d010-recheck.json
 
 ### DATA-02 实读候选文件并探查字段
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C03, C04, C05, Q02。
 - 前置：DATA-01, GOV-07。
 - 允许修改：`src/retail_bi/data`, `reports/data`；另可写本任务证据/交接。
@@ -285,7 +285,7 @@
 2. 明确读取的是单分片、样本还是全量，不能由单分片推断全期质量。
 3. 核验客户、商品、交易或事件标识，金额与数量是否真实存在；不凑字段。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-02/2026-11-09-probe.json
 
 ### DATA-03 确认唯一主数据路线
 

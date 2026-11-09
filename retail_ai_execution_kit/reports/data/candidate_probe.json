@@ -1,0 +1,2504 @@
+{
+  "dataset": "Synthetic Dataset Generator baseline_10000_seed42",
+  "source_is_synthetic": true,
+  "formal_course_approval": "pending_D001_D006",
+  "currency": "USD",
+  "scope": "complete_local_ZIP_12_CSV_and_historical_10_CSV; no UCI download or audit of other candidates; derived RFM and publisher validation prose not substantively verified",
+  "cutoff_exclusive_assumed_utc": "2026-11-08T00:00:00+00:00",
+  "source_timezone": "timestamps lack offset; UTC is preparation convention, not verified publisher timezone",
+  "source_inventory_sha256": {
+    ".DS_Store": "8fe679b3b8b4822d39981a3a21ec11fcffbb6830c5ac81ac92b950b0d8971556",
+    "01_source/baseline_10000_seed42.zip": "d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16",
+    "02_historical_utf8/calendar.csv": "cf2bdf52a6fe3e33a795e4db8cd0503b360e64b624188c63538e0ec251e7f8f8",
+    "02_historical_utf8/customers.csv": "8a3c39c6a952caba9de79e290e0d087eb5e3cc1ad21d05756e2fa41451081a1d",
+    "02_historical_utf8/order_items.csv": "f102c7eed9794c269d1612e98dce75ce998cbd8d441bc3df21fa384044037e58",
+    "02_historical_utf8/orders.csv": "e645d2f7bf76ab62891ca563dde12496d6bc4579767e7024295b63182c88a38b",
+    "02_historical_utf8/payments.csv": "1493dc289e95ed19c744eebfbdab4411201aae6134c20957eb6629a114bf6c6f",
+    "02_historical_utf8/products.csv": "6f669e9fe16a9d03fcb584d14196ed815c93b2abc2039ab9928774bf2cbd2ab4",
+    "02_historical_utf8/reviews.csv": "b90274a58fa8a60903436a2ef5f81cdb2e376a0ae2bc9758acbda44dd8d72651",
+    "02_historical_utf8/seller_products.csv": "68a25acfae66d920a8e33ef96edfbdac6c5e0a043385b31cdec265b64880beef",
+    "02_historical_utf8/sellers.csv": "c97db4893e0989b43007f999841ccc9dc5e055cbeb7a024d198667f041a3be06",
+    "02_historical_utf8/shipping.csv": "d8dd8dc9becd8ef447c0d996366c105ef43f47e2c6e6e259ab4302d4807bd762",
+    "03_derived_demo/customer_rfm_snapshot_asof_2026-11-08.csv": "2d2ff0a6c59d08943db055159cf0e18b0ac8ce85bc8821308347c2c47bfdfbbd",
+    "04_audit/data_dictionary.csv": "ab9413bfb5f2c1e33c97db935acb3c1b4c4f39fd62918acee7b5ad7c7476645f",
+    "04_audit/quality_report.json": "300bd5324b0bfa5145e00ed4414d6bc198dda6be1824dc62facb3fd535bb7033",
+    "04_audit/simulation_metadata.csv": "0e15b1484b1756b840c20dfebccb9b21d060b40a7cf4dff5eff1a384c682679b",
+    "DATA_SOURCE.md": "189fc54fc0e51da4d5937713e842aa8ffd09fcb4b6f7df8b7b6780de3fb16586",
+    "README.md": "8fe3f6c90c2a185ef2af41613b6ebe765dfb427930764865dbd07e12bdd266a9",
+    "build_retail_verified.py": "756dd9748cb52e09151564b8c9c03a12f1d19dbf0f1485f10c487e0843d8f789"
+  },
+  "zip": {
+    "bytes": 1310750,
+    "sha256": "d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16"
+  },
+  "metadata": [
+    {
+      "simulation_run_id": "simulation_run_20260721_003414_baseline_seed42",
+      "dataset_name": "Synthetic Ecommerce Dataset",
+      "domain": "ecommerce_marketplace",
+      "scenario_name": "baseline",
+      "random_seed": "42",
+      "generated_at": "2026-07-21T00:34:14+0000",
+      "start_date": "2024-01-01",
+      "end_date": "2026-12-31",
+      "requested_number_of_orders": "10000",
+      "number_of_orders": "10000",
+      "number_of_customers": "3647",
+      "number_of_sellers": "800",
+      "number_of_products": "8000",
+      "number_of_seller_products": "13966",
+      "currency": "USD",
+      "data_quality_mode": "clean",
+      "disclaimer": "Fully synthetic data for education, analytics practice, portfolio projects, SQL modeling, dashboard development, and machine learning experiments. It contains no real customers, sellers, orders, companies, or performance and must not be used as real market data or for operational decisions."
+    }
+  ],
+  "profiles": {
+    "raw:customers": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/customers.csv",
+      "bytes": 398346,
+      "sha256": "c23597d1478822fe24301c83a5c1c2b6499f0a48920eb92ed59e2fa48b22304c",
+      "encoding": "utf-8-sig",
+      "rows": 3647,
+      "columns": [
+        {
+          "name": "customer_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3647,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_unique_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3647,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_city",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 103,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_zip_prefix",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3589,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_segment",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_lifecycle_stage",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 181,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-06-29T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-03-05T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:products": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/products.csv",
+      "bytes": 745442,
+      "sha256": "296a7325f96f89cdf37d1057296e384a2a65f55a1934ce09eda8a006c4413569",
+      "encoding": "utf-8-sig",
+      "rows": 8000,
+      "columns": [
+        {
+          "name": "product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_category",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 16,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_weight_g",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3668,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_length_cm",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 156,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_height_cm",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 108,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_width_cm",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 129,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_price_base_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6236,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:reviews": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/reviews.csv",
+      "bytes": 625200,
+      "sha256": "5e388d40ddd2473c5c3d63da17899fb20a5b440ef346c9ed913b9c3c544893d3",
+      "encoding": "utf-8-sig",
+      "rows": 6528,
+      "columns": [
+        {
+          "name": "review_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6528,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6528,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_score",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_creation_date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1082,
+          "minimum": "2024-01-11T00:00:00+00:00",
+          "maximum": "2026-12-31T00:00:00+00:00",
+          "samples": [
+            "2025-09-17T00:00:00",
+            "2026-06-05T00:00:00",
+            "2024-05-06T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 432,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_answer_timestamp",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5732,
+          "minimum": "2024-01-11T09:00:00+00:00",
+          "maximum": "2026-12-31T23:59:00+00:00",
+          "samples": [
+            "2025-09-18T22:00:00",
+            "2026-06-05T15:00:00",
+            "2024-05-06T12:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 439,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_sentiment_label",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "satisfaction_risk_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:orders": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/orders.csv",
+      "bytes": 1785510,
+      "sha256": "21998ec72e26c692fe6a8e6f14aeab2f22f94cfcee15bb43a85727e001e465f2",
+      "encoding": "utf-8-sig",
+      "rows": 10000,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3400,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_status",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_purchase_timestamp",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9999,
+          "minimum": "2024-01-01T09:06:48+00:00",
+          "maximum": "2026-12-31T22:17:16+00:00",
+          "samples": [
+            "2025-07-30T16:10:36",
+            "2025-09-05T18:13:18",
+            "2026-05-24T18:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 689,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_approved_at",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 219,
+          "distinct_nonnull": 9768,
+          "minimum": "2024-01-01T12:24:55+00:00",
+          "maximum": "2026-12-31T23:59:00+00:00",
+          "samples": [
+            "2025-07-30T23:10:36",
+            "2025-09-06T18:13:18",
+            "2026-05-25T12:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 668,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_estimated_delivery_date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1089,
+          "minimum": "2024-01-08T00:00:00+00:00",
+          "maximum": "2026-12-31T00:00:00+00:00",
+          "samples": [
+            "2025-08-07T00:00:00",
+            "2025-09-12T00:00:00",
+            "2026-05-28T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 785,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_delivered_carrier_date",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 544,
+          "distinct_nonnull": 9426,
+          "minimum": "2024-01-03T12:24:55+00:00",
+          "maximum": "2026-12-31T23:59:00+00:00",
+          "samples": [
+            "2025-08-01T23:10:36",
+            "2025-09-08T18:13:18",
+            "2026-05-27T12:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 650,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_delivered_customer_date",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 837,
+          "distinct_nonnull": 9163,
+          "minimum": "2024-01-08T11:33:00+00:00",
+          "maximum": "2026-12-31T23:36:58+00:00",
+          "samples": [
+            "2025-08-08T02:10:36",
+            "2025-09-12T03:13:18",
+            "2026-05-29T11:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 602,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_year",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_quarter",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_month",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 53,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_day_of_week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_weekend",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_holiday_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_promotion_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:simulation_metadata": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/simulation_metadata.csv",
+      "bytes": 756,
+      "sha256": "aac5939db91400ba356d9370e5331e87c892f1d2ecbf851e2b1f37f932113c71",
+      "encoding": "utf-8-sig",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "simulation_run_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "dataset_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "domain",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "random_seed",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "generated_at",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2026-07-21T00:34:14+00:00",
+          "maximum": "2026-07-21T00:34:14+00:00",
+          "samples": [
+            "2026-07-21T00:34:14+0000"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "start_date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "end_date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2026-12-31T00:00:00+00:00",
+          "maximum": "2026-12-31T00:00:00+00:00",
+          "samples": [
+            "2026-12-31"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "requested_number_of_orders",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "number_of_orders",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "number_of_customers",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "number_of_sellers",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "number_of_products",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "number_of_seller_products",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "currency",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "data_quality_mode",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "disclaimer",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:calendar": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/calendar.csv",
+      "bytes": 81641,
+      "sha256": "6c19b29d0e965f0164fc2667d8ac2061705a9790263c490f1bb66137f68d41cc",
+      "encoding": "utf-8-sig",
+      "rows": 1096,
+      "columns": [
+        {
+          "name": "date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1096,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2026-12-31T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-02T00:00:00",
+            "2024-01-03T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 54,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "year",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "quarter",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "month",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "month_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 53,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "day_of_week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "day_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_weekend",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_holiday_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_promotion_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "season",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:payments": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/payments.csv",
+      "bytes": 507572,
+      "sha256": "1f5869b8c23b060aa09e03ade6d08b760d22ed77662f75aeafcf0b88fc4a2e83",
+      "encoding": "utf-8-sig",
+      "rows": 10750,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_sequential",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_type",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_installments",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_value_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8996,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:sellers": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/sellers.csv",
+      "bytes": 72250,
+      "sha256": "a912497c953c33cd3473b175bffd3916828691944e64ed04d72e3e86ae8bb80b",
+      "encoding": "utf-8-sig",
+      "rows": 800,
+      "columns": [
+        {
+          "name": "seller_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 800,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_city",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 102,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_zip_prefix",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 795,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_segment",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_quality_score",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 711,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_fulfillment_capacity",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 686,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_active_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "deactivated_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 800,
+          "distinct_nonnull": 0,
+          "minimum": null,
+          "maximum": null,
+          "samples": [],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:order_items": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/order_items.csv",
+      "bytes": 1602694,
+      "sha256": "e0b81b60507e2c78086d7d084e3da24b422e2827235202146f1ad54fe8e24314",
+      "encoding": "utf-8-sig",
+      "rows": 16784,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_item_id",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8102,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5553,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 769,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "item_price_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10608,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_cost_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1452,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "item_total_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10678,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:data_dictionary": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/data_dictionary.csv",
+      "bytes": 10073,
+      "sha256": "9007e2ddfabd0c7d5a4cb2a35fdf0a14280d0b5caad0c39996a8a0e0ebf33668",
+      "encoding": "utf-8-sig",
+      "rows": 124,
+      "columns": [
+        {
+          "name": "table_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "column_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 98,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "data_type",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "description",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 124,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "example_value",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 7,
+          "distinct_nonnull": 88,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "nullable",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:seller_products": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/seller_products.csv",
+      "bytes": 1301577,
+      "sha256": "7f515adb6685e2189258edb7d3c60fb3db98369fb8d9bcbe45b0f60d71d98dc8",
+      "encoding": "utf-8-sig",
+      "rows": 13966,
+      "columns": [
+        {
+          "name": "seller_product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 13966,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 800,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_price_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9431,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "listing_created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "listing_active_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "raw:shipping": {
+      "location": "../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip::baseline_10000_seed42/shipping.csv",
+      "bytes": 843570,
+      "sha256": "db5c0731d98542e1817dcc3c1ec03c125150f9279a9fc35b6b6b7c2dd02b8bf1",
+      "encoding": "utf-8-sig",
+      "rows": 10000,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_distance_band",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_zone",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "estimated_delivery_days",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "actual_delivery_days",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 837,
+          "distinct_nonnull": 15,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "delivery_delay_days",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 837,
+          "distinct_nonnull": 6,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "late_delivery_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_cost_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2801,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:customers": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/customers.csv",
+      "bytes": 394355,
+      "sha256": "8a3c39c6a952caba9de79e290e0d087eb5e3cc1ad21d05756e2fa41451081a1d",
+      "encoding": "utf-8-sig",
+      "rows": 3647,
+      "columns": [
+        {
+          "name": "customer_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3647,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_unique_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3647,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_city",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 103,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_zip_prefix",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3589,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_segment",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_lifecycle_stage",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 181,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-06-29T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-03-05T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:products": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/products.csv",
+      "bytes": 737444,
+      "sha256": "6f669e9fe16a9d03fcb584d14196ed815c93b2abc2039ab9928774bf2cbd2ab4",
+      "encoding": "utf-8-sig",
+      "rows": 8000,
+      "columns": [
+        {
+          "name": "product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_category",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 16,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_weight_g",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3668,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_length_cm",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 156,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_height_cm",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 108,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_width_cm",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 129,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_price_base_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6236,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:reviews": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/reviews.csv",
+      "bytes": 586661,
+      "sha256": "b90274a58fa8a60903436a2ef5f81cdb2e376a0ae2bc9758acbda44dd8d72651",
+      "encoding": "utf-8-sig",
+      "rows": 6190,
+      "columns": [
+        {
+          "name": "review_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6190,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 6190,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_score",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_creation_date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1046,
+          "minimum": "2024-01-11T00:00:00+00:00",
+          "maximum": "2026-11-26T00:00:00+00:00",
+          "samples": [
+            "2025-09-17T00:00:00",
+            "2026-06-05T00:00:00",
+            "2024-05-06T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 94,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_answer_timestamp",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5465,
+          "minimum": "2024-01-11T09:00:00+00:00",
+          "maximum": "2026-11-27T04:00:00+00:00",
+          "samples": [
+            "2025-09-18T22:00:00",
+            "2026-06-05T15:00:00",
+            "2024-05-06T12:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 101,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "review_sentiment_label",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "satisfaction_risk_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:orders": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/orders.csv",
+      "bytes": 1656607,
+      "sha256": "e645d2f7bf76ab62891ca563dde12496d6bc4579767e7024295b63182c88a38b",
+      "encoding": "utf-8-sig",
+      "rows": 9311,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9311,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3356,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_status",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_purchase_timestamp",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9310,
+          "minimum": "2024-01-01T09:06:48+00:00",
+          "maximum": "2026-11-07T22:15:48+00:00",
+          "samples": [
+            "2025-07-30T16:10:36",
+            "2025-09-05T18:13:18",
+            "2026-05-24T18:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_approved_at",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 194,
+          "distinct_nonnull": 9116,
+          "minimum": "2024-01-01T12:24:55+00:00",
+          "maximum": "2026-11-08T21:05:07+00:00",
+          "samples": [
+            "2025-07-30T23:10:36",
+            "2025-09-06T18:13:18",
+            "2026-05-25T12:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_estimated_delivery_date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1044,
+          "minimum": "2024-01-08T00:00:00+00:00",
+          "maximum": "2026-11-16T00:00:00+00:00",
+          "samples": [
+            "2025-08-07T00:00:00",
+            "2025-09-12T00:00:00",
+            "2026-05-28T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 96,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_delivered_carrier_date",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 477,
+          "distinct_nonnull": 8833,
+          "minimum": "2024-01-03T12:24:55+00:00",
+          "maximum": "2026-11-11T15:03:52+00:00",
+          "samples": [
+            "2025-08-01T23:10:36",
+            "2025-09-08T18:13:18",
+            "2026-05-27T12:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 28,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_delivered_customer_date",
+          "declared_type": "datetime",
+          "loaded_dtype": "string",
+          "null_count": 656,
+          "distinct_nonnull": 8655,
+          "minimum": "2024-01-08T11:33:00+00:00",
+          "maximum": "2026-11-21T14:05:07+00:00",
+          "samples": [
+            "2025-08-08T02:10:36",
+            "2025-09-12T03:13:18",
+            "2026-05-29T11:05:42"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 94,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_year",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_quarter",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_month",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 52,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_day_of_week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_weekend",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_holiday_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_promotion_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:calendar": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/calendar.csv",
+      "bytes": 76511,
+      "sha256": "cf2bdf52a6fe3e33a795e4db8cd0503b360e64b624188c63538e0ec251e7f8f8",
+      "encoding": "utf-8-sig",
+      "rows": 1042,
+      "columns": [
+        {
+          "name": "date",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1042,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2026-11-07T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-02T00:00:00",
+            "2024-01-03T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "year",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 3,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "quarter",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "month",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "month_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 52,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "day_of_week",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "day_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_weekend",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_holiday_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "is_promotion_period",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "season",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:payments": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/payments.csv",
+      "bytes": 462766,
+      "sha256": "1493dc289e95ed19c744eebfbdab4411201aae6134c20957eb6629a114bf6c6f",
+      "encoding": "utf-8-sig",
+      "rows": 10010,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9311,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_sequential",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_type",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_installments",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 12,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "payment_value_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8489,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:sellers": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/sellers.csv",
+      "bytes": 71371,
+      "sha256": "c97db4893e0989b43007f999841ccc9dc5e055cbeb7a024d198667f041a3be06",
+      "encoding": "utf-8-sig",
+      "rows": 800,
+      "columns": [
+        {
+          "name": "seller_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 800,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_city",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 102,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_zip_prefix",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 795,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_segment",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_quality_score",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 711,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_fulfillment_capacity",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 686,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_active_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "deactivated_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 800,
+          "distinct_nonnull": 0,
+          "minimum": null,
+          "maximum": null,
+          "samples": [],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:order_items": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/order_items.csv",
+      "bytes": 1477711,
+      "sha256": "f102c7eed9794c269d1612e98dce75ce998cbd8d441bc3df21fa384044037e58",
+      "encoding": "utf-8-sig",
+      "rows": 15639,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9311,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "order_item_id",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 7808,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 5418,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 766,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "item_price_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10133,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_cost_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1431,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "item_total_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10208,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:seller_products": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/seller_products.csv",
+      "bytes": 1287613,
+      "sha256": "68a25acfae66d920a8e33ef96edfbdac6c5e0a043385b31cdec265b64880beef",
+      "encoding": "utf-8-sig",
+      "rows": 13966,
+      "columns": [
+        {
+          "name": "seller_product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 13966,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 800,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "product_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 8000,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_price_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9431,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "listing_created_at",
+          "declared_type": "date",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "minimum": "2024-01-01T00:00:00+00:00",
+          "maximum": "2024-01-01T00:00:00+00:00",
+          "samples": [
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00",
+            "2024-01-01T00:00:00"
+          ],
+          "timezone_in_source": "naive_or_unspecified",
+          "at_or_after_cutoff": 0,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "listing_active_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    },
+    "historical:shipping": {
+      "location": "../ecommerce-sample-database-100k/02_historical_utf8/shipping.csv",
+      "bytes": 776529,
+      "sha256": "d8dd8dc9becd8ef447c0d996366c105ef43f47e2c6e6e259ab4302d4807bd762",
+      "encoding": "utf-8-sig",
+      "rows": 9311,
+      "columns": [
+        {
+          "name": "order_id",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 9311,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_state",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 51,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "seller_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "customer_region",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_distance_band",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_zone",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 4,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "estimated_delivery_days",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 10,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "actual_delivery_days",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 656,
+          "distinct_nonnull": 15,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "delivery_delay_days",
+          "declared_type": "integer",
+          "loaded_dtype": "string",
+          "null_count": 656,
+          "distinct_nonnull": 6,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "late_delivery_flag",
+          "declared_type": "boolean",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "shipping_cost_usd",
+          "declared_type": "float",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 2719,
+          "invalid_declared_type_count": 0
+        },
+        {
+          "name": "scenario_name",
+          "declared_type": "string",
+          "loaded_dtype": "string",
+          "null_count": 0,
+          "distinct_nonnull": 1,
+          "invalid_declared_type_count": 0
+        }
+      ],
+      "scope": "all_rows_all_columns"
+    }
+  },
+  "historical_source_differences": {
+    "customers": {
+      "customer_zip_prefix": {
+        "changed_rows": 334,
+        "leading_zero_loss_rows": 334
+      }
+    },
+    "sellers": {
+      "seller_zip_prefix": {
+        "changed_rows": 75,
+        "leading_zero_loss_rows": 75
+      }
+    }
+  },
+  "history_reconstruction": {
+    "customers": {
+      "expected_rows": 3647,
+      "actual_rows": 3647,
+      "missing_rows": 334,
+      "unexpected_rows": 334
+    },
+    "products": {
+      "expected_rows": 8000,
+      "actual_rows": 8000,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "reviews": {
+      "expected_rows": 6190,
+      "actual_rows": 6190,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "orders": {
+      "expected_rows": 9311,
+      "actual_rows": 9311,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "calendar": {
+      "expected_rows": 1042,
+      "actual_rows": 1042,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "payments": {
+      "expected_rows": 10010,
+      "actual_rows": 10010,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "sellers": {
+      "expected_rows": 800,
+      "actual_rows": 800,
+      "missing_rows": 75,
+      "unexpected_rows": 75
+    },
+    "order_items": {
+      "expected_rows": 15639,
+      "actual_rows": 15639,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "seller_products": {
+      "expected_rows": 13966,
+      "actual_rows": 13966,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    },
+    "shipping": {
+      "expected_rows": 9311,
+      "actual_rows": 9311,
+      "missing_rows": 0,
+      "unexpected_rows": 0
+    }
+  },
+  "raw_checks": {
+    "duplicate_key:customers": 0,
+    "null_key:customers": 0,
+    "duplicate_key:products": 0,
+    "null_key:products": 0,
+    "duplicate_key:orders": 0,
+    "null_key:orders": 0,
+    "duplicate_key:sellers": 0,
+    "null_key:sellers": 0,
+    "duplicate_key:seller_products": 0,
+    "null_key:seller_products": 0,
+    "duplicate_key:order_items": 0,
+    "null_key:order_items": 0,
+    "duplicate_key:payments": 0,
+    "null_key:payments": 0,
+    "duplicate_key:shipping": 0,
+    "null_key:shipping": 0,
+    "duplicate_key:reviews": 0,
+    "null_key:reviews": 0,
+    "duplicate_key:calendar": 0,
+    "null_key:calendar": 0,
+    "orphan:orders.customer_id": 0,
+    "orphan:order_items.order_id": 0,
+    "orphan:order_items.product_id": 0,
+    "orphan:order_items.seller_id": 0,
+    "orphan:order_items.seller_product_id": 0,
+    "orphan:seller_products.seller_id": 0,
+    "orphan:seller_products.product_id": 0,
+    "orphan:payments.order_id": 0,
+    "orphan:shipping.order_id": 0,
+    "orphan:reviews.order_id": 0,
+    "orders_without_items": 0,
+    "orders_without_payments": 0,
+    "negative:item_price_usd": 0,
+    "negative:shipping_cost_usd": 0,
+    "negative:item_total_usd": 0,
+    "item_total_mismatch_exact_decimal": 0,
+    "payment_total_mismatch_exact_decimal": 0,
+    "listing_link_mismatch:seller_id": 0,
+    "listing_link_mismatch:product_id": 0,
+    "purchase_before_customer_created": 0,
+    "purchase_before:products": 0,
+    "purchase_before:seller_products": 0
+  },
+  "historical_checks": {
+    "duplicate_key:customers": 0,
+    "null_key:customers": 0,
+    "duplicate_key:products": 0,
+    "null_key:products": 0,
+    "duplicate_key:orders": 0,
+    "null_key:orders": 0,
+    "duplicate_key:sellers": 0,
+    "null_key:sellers": 0,
+    "duplicate_key:seller_products": 0,
+    "null_key:seller_products": 0,
+    "duplicate_key:order_items": 0,
+    "null_key:order_items": 0,
+    "duplicate_key:payments": 0,
+    "null_key:payments": 0,
+    "duplicate_key:shipping": 0,
+    "null_key:shipping": 0,
+    "duplicate_key:reviews": 0,
+    "null_key:reviews": 0,
+    "duplicate_key:calendar": 0,
+    "null_key:calendar": 0,
+    "orphan:orders.customer_id": 0,
+    "orphan:order_items.order_id": 0,
+    "orphan:order_items.product_id": 0,
+    "orphan:order_items.seller_id": 0,
+    "orphan:order_items.seller_product_id": 0,
+    "orphan:seller_products.seller_id": 0,
+    "orphan:seller_products.product_id": 0,
+    "orphan:payments.order_id": 0,
+    "orphan:shipping.order_id": 0,
+    "orphan:reviews.order_id": 0,
+    "orders_without_items": 0,
+    "orders_without_payments": 0,
+    "negative:item_price_usd": 0,
+    "negative:shipping_cost_usd": 0,
+    "negative:item_total_usd": 0,
+    "item_total_mismatch_exact_decimal": 0,
+    "payment_total_mismatch_exact_decimal": 0,
+    "listing_link_mismatch:seller_id": 0,
+    "listing_link_mismatch:product_id": 0,
+    "purchase_before_customer_created": 0,
+    "purchase_before:products": 0,
+    "purchase_before:seller_products": 0
+  },
+  "assertions": {
+    "zip_crc_passed": true,
+    "history_matches_declared_order_cutoff": false,
+    "raw_keys_links_amounts_temporal_order_checks_zero": true,
+    "historical_keys_links_amounts_temporal_order_checks_zero": true,
+    "source_unchanged": true
+  },
+  "quantity_field_present": false,
+  "quantity_policy": "order_item_id is line sequence, not quantity; do not assume quantity=1 or compute unit-price sales without frozen contract",
+  "limitations": [
+    "Synthetic fields do not prove real industry data or real model performance.",
+    "Historical order cutoff does not censor later approvals/deliveries/reviews or end-of-period customer/listing attributes; must enforce as_of availability downstream.",
+    "No clickstream/cart/ad attribution; preassigned lifecycle/segment labels cannot be prediction truth.",
+    "Website ZIP license remains unconfirmed per DATA-01.",
+    "Type checks apply generator dictionary to actual values; all values loaded as strings to preserve IDs and precision."
+  ]
+}

@@ -3,16 +3,16 @@
   "project_title": "基于用户全生命周期的电商零售智能决策与AI运营助手系统",
   "baseline_date": "2026-11-05",
   "timezone": "Asia/Shanghai",
-  "project_state": "planning_package_ready_no_business_task_accepted",
+  "project_state": "local_synthetic_candidate_probed_formal_dataset_pending",
   "active_dataset": null,
-  "coordinator": "未指定：Codex 已完成治理证据复核并释放协调权（2026-11-09）；用户下一次“继续”指定接力者",
+  "coordinator": "未指定: Codex released after DATA-02 (2026-11-09); next user continue selects successor",
   "milestones": {
     "proposal": "2026-11-09",
     "midterm": "2026-11-30",
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "治理文件和候选规划已提供。原始正式数据、业务代码、训练、AI集成、提交尚未在本台账验收；可核验并复用已有成果，不要求从零重写。",
+  "state_note": "Local synthetic data authorized for engineering under D010; DATA-02 full probe complete. Postal loss and post-cutoff information need downstream handling. D001/D006 formal eligibility pending; cleaning, warehouse, models and AI not accepted.",
   "tasks": [
     {
       "id": "GOV-01",
@@ -347,7 +347,7 @@
       "priority": "core",
       "status": "done",
       "owner": "claude-opus-5-5",
-      "reviewer": "claude-opus-5-5（自审）",
+      "reviewer": "codex（D010影响复核）",
       "review_mode": "self_review",
       "requirements": [
         "C03",
@@ -371,7 +371,7 @@
         "UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。"
       ],
       "evidence": [
-        "evidence/DATA-01/2026-11-09-source-review.json"
+        "evidence/DATA-01/2026-11-09-d010-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -384,10 +384,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "codex",
+      "reviewer": "codex (self-review)",
+      "review_mode": "self_review",
       "requirements": [
         "C03",
         "C04",
@@ -411,7 +411,9 @@
         "明确读取的是单分片、样本还是全量，不能由单分片推断全期质量。",
         "核验客户、商品、交易或事件标识，金额与数量是否真实存在；不凑字段。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-02/2026-11-09-probe.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
@@ -3555,5 +3557,11 @@
       "execution_required": false
     }
   ],
-  "dependency_semantics": "depends_on是最终完成验收的前置条件；next优先推荐前置已完成任务。稳定契约允许不受阻的离线部分先行，必须明确draft/未集成，不能提前done。"
+  "dependency_semantics": "depends_on是最终完成验收的前置条件；next优先推荐前置已完成任务。稳定契约允许不受阻的离线部分先行，必须明确draft/未集成，不能提前done。",
+  "working_dataset": {
+    "path": "../ecommerce-sample-database-100k",
+    "nature": "fully_synthetic",
+    "authorization": "ops/DECISIONS.md#d010",
+    "status": "engineering_use_authorized_formal_course_approval_pending"
+  }
 }
