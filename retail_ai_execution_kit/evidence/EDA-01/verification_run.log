@@ -1,0 +1,35 @@
+$ .venv/bin/python evidence/EDA-01/verify_eda.py
+2026-11-10T15:29:18+08:00
+PASS scope states synthetic and not live operations 
+PASS monthly valid orders equal pandas for all months 
+PASS top-10% customer share close to pandas (ntile vs ceil boundary) 0.2729
+PASS repeat share equals pandas 0.7742
+PASS share of gaps within 30 days equals pandas 0.1140
+PASS new buyers by half-year sum to all buyers 
+PASS claim: mean order value above median (right skew) 151.45 > 104.79
+FAIL claim: every category share is in single-digit percent 0.016..0.150
+PASS review score by lateness equals pandas {np.False_: 4.141, np.True_: 2.907}
+PASS association wording, not causation 
+PASS region merchandise equals pandas 
+PASS closed-population caveat for new buyers stated 
+11/12 passed
+exit=1
+--- run 2 (run 1: 11/12 — caught the wrong category wording in the report)
+PASS scope states synthetic and not live operations 
+PASS monthly valid orders equal pandas for all months 
+PASS top-10% customer share close to pandas (ntile vs ceil boundary) 0.2729
+PASS repeat share equals pandas 0.7742
+PASS share of gaps within 30 days equals pandas 0.1140
+PASS new buyers by half-year sum to all buyers 
+PASS claim: mean order value above median (right skew) 151.45 > 104.79
+PASS claim: category shares differ mainly through average line amount (line counts similar) lines 803..1094, avg 23.9..214.3, share 0.016..0.150
+PASS claim: region differences come mainly from buyer counts (AOV similar) aov 149.8..152.9, buyers 610..1262
+PASS review score by lateness equals pandas {np.False_: 4.141, np.True_: 2.907}
+PASS association wording, not causation 
+PASS region merchandise equals pandas 
+PASS closed-population caveat for new buyers stated 
+13/13 passed
+exit=0
+--- run 3 after AOV range wording fix
+13/13 passed
+exit=0

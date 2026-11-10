@@ -1230,10 +1230,10 @@
       "category": "EDA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C11",
         "C24"
@@ -1254,7 +1254,9 @@
         "至少展示有业务意义的分布/趋势/异常，不能只有describe截图。",
         "报告数字由可重跑程序产生，不把历史数据写成2026实时经营。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/EDA-01/2026-11-10-eda.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

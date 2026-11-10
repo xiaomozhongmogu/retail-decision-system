@@ -1,0 +1,9 @@
+$ .venv/bin/python src/retail_bi/analysis/eda_initial.py
+2026-11-10T15:28:54+08:00
+{"volume": {"orders_all": 9311, "valid_orders": 9113, "cancelled_orders": 194, "lines_all": 15639, "customers_master": 3647, "buyers": 3339, "products_sold": 5418, "merch_usd": 1380161.23, "shipping_usd": 129459.18}, "by_year": {"2024": {"orders": 3242, "merch_usd": 489722.5199999999, "months": 12, "orders_per_month": 270.2}, "2025": {"orders": 3306, "merch_usd": 494692.48000000004, "months": 12, "orders_per_month": 275.5}, "2026": {"orders": 2487, "merch_usd": 384561.63, "months": 10, "orders_per_month": 248.7}}}
+exit=0
+--- run 2: the report's category wording was wrong (claimed single-digit shares; actual 1.6%..15.0%); category and region sentences are now generated from the data
+2026-11-10T15:29:39+08:00
+exit=0
+--- run 3: AOV range now min..max over all regions
+exit=0

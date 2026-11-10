@@ -1,0 +1,913 @@
+{
+  "task_id": "EDA-01",
+  "release": "wh-db316daf8021",
+  "release_sha256": "207ead6b6cbcb9dc6b90243bbd8a35bfe00b4d510601df33f62a259af51be0ec",
+  "scope": {
+    "data": "完全合成（D012/D013），不是真实企业或顾客",
+    "period": "下单时间 2024-01-01 至 2026-11-07（截止 2026-11-08，不含）",
+    "valid_purchase": "截止前已审批的订单（transaction-rules-v1）",
+    "money": "USD 商品金额，运费单列",
+    "sample": "全量，未抽样",
+    "timezone": "UTC 工程假设",
+    "not_live": "这是模拟的历史区间，不代表 2026 年实时经营"
+  },
+  "volume": {
+    "orders_all": 9311,
+    "valid_orders": 9113,
+    "cancelled_orders": 194,
+    "lines_all": 15639,
+    "customers_master": 3647,
+    "buyers": 3339,
+    "products_sold": 5418,
+    "merch_usd": 1380161.23,
+    "shipping_usd": 129459.18
+  },
+  "monthly": [
+    {
+      "month": "2024-01",
+      "valid_orders": 229,
+      "merch_usd": 33874.18,
+      "buyers": 216,
+      "aov_usd": 147.92,
+      "cancelled_orders": 5,
+      "partial_period": false
+    },
+    {
+      "month": "2024-02",
+      "valid_orders": 258,
+      "merch_usd": 38346.81,
+      "buyers": 242,
+      "aov_usd": 148.63,
+      "cancelled_orders": 3,
+      "partial_period": false
+    },
+    {
+      "month": "2024-03",
+      "valid_orders": 247,
+      "merch_usd": 37035.53,
+      "buyers": 236,
+      "aov_usd": 149.94,
+      "cancelled_orders": 5,
+      "partial_period": false
+    },
+    {
+      "month": "2024-04",
+      "valid_orders": 236,
+      "merch_usd": 39378.27,
+      "buyers": 226,
+      "aov_usd": 166.86,
+      "cancelled_orders": 1,
+      "partial_period": false
+    },
+    {
+      "month": "2024-05",
+      "valid_orders": 250,
+      "merch_usd": 38521.8,
+      "buyers": 242,
+      "aov_usd": 154.09,
+      "cancelled_orders": 5,
+      "partial_period": false
+    },
+    {
+      "month": "2024-06",
+      "valid_orders": 226,
+      "merch_usd": 33066.72,
+      "buyers": 218,
+      "aov_usd": 146.31,
+      "cancelled_orders": 7,
+      "partial_period": false
+    },
+    {
+      "month": "2024-07",
+      "valid_orders": 240,
+      "merch_usd": 36689.91,
+      "buyers": 234,
+      "aov_usd": 152.87,
+      "cancelled_orders": 5,
+      "partial_period": false
+    },
+    {
+      "month": "2024-08",
+      "valid_orders": 269,
+      "merch_usd": 43490.56,
+      "buyers": 256,
+      "aov_usd": 161.67,
+      "cancelled_orders": 9,
+      "partial_period": false
+    },
+    {
+      "month": "2024-09",
+      "valid_orders": 258,
+      "merch_usd": 40635.62,
+      "buyers": 249,
+      "aov_usd": 157.5,
+      "cancelled_orders": 4,
+      "partial_period": false
+    },
+    {
+      "month": "2024-10",
+      "valid_orders": 340,
+      "merch_usd": 50806.86,
+      "buyers": 328,
+      "aov_usd": 149.43,
+      "cancelled_orders": 19,
+      "partial_period": false
+    },
+    {
+      "month": "2024-11",
+      "valid_orders": 322,
+      "merch_usd": 49376.41,
+      "buyers": 308,
+      "aov_usd": 153.34,
+      "cancelled_orders": 5,
+      "partial_period": false
+    },
+    {
+      "month": "2024-12",
+      "valid_orders": 367,
+      "merch_usd": 48499.85,
+      "buyers": 343,
+      "aov_usd": 132.15,
+      "cancelled_orders": 4,
+      "partial_period": false
+    },
+    {
+      "month": "2025-01",
+      "valid_orders": 260,
+      "merch_usd": 40616.33,
+      "buyers": 253,
+      "aov_usd": 156.22,
+      "cancelled_orders": 3,
+      "partial_period": false
+    },
+    {
+      "month": "2025-02",
+      "valid_orders": 226,
+      "merch_usd": 31363.42,
+      "buyers": 220,
+      "aov_usd": 138.78,
+      "cancelled_orders": 8,
+      "partial_period": false
+    },
+    {
+      "month": "2025-03",
+      "valid_orders": 272,
+      "merch_usd": 38588.44,
+      "buyers": 262,
+      "aov_usd": 141.87,
+      "cancelled_orders": 7,
+      "partial_period": false
+    },
+    {
+      "month": "2025-04",
+      "valid_orders": 224,
+      "merch_usd": 36221.21,
+      "buyers": 216,
+      "aov_usd": 161.7,
+      "cancelled_orders": 3,
+      "partial_period": false
+    },
+    {
+      "month": "2025-05",
+      "valid_orders": 233,
+      "merch_usd": 36936.24,
+      "buyers": 224,
+      "aov_usd": 158.52,
+      "cancelled_orders": 7,
+      "partial_period": false
+    },
+    {
+      "month": "2025-06",
+      "valid_orders": 250,
+      "merch_usd": 35505.84,
+      "buyers": 239,
+      "aov_usd": 142.02,
+      "cancelled_orders": 1,
+      "partial_period": false
+    },
+    {
+      "month": "2025-07",
+      "valid_orders": 272,
+      "merch_usd": 41459.91,
+      "buyers": 261,
+      "aov_usd": 152.43,
+      "cancelled_orders": 4,
+      "partial_period": false
+    },
+    {
+      "month": "2025-08",
+      "valid_orders": 272,
+      "merch_usd": 40635.35,
+      "buyers": 259,
+      "aov_usd": 149.39,
+      "cancelled_orders": 8,
+      "partial_period": false
+    },
+    {
+      "month": "2025-09",
+      "valid_orders": 233,
+      "merch_usd": 34936.66,
+      "buyers": 227,
+      "aov_usd": 149.94,
+      "cancelled_orders": 6,
+      "partial_period": false
+    },
+    {
+      "month": "2025-10",
+      "valid_orders": 329,
+      "merch_usd": 49547.36,
+      "buyers": 321,
+      "aov_usd": 150.6,
+      "cancelled_orders": 6,
+      "partial_period": false
+    },
+    {
+      "month": "2025-11",
+      "valid_orders": 360,
+      "merch_usd": 54130.65,
+      "buyers": 334,
+      "aov_usd": 150.36,
+      "cancelled_orders": 7,
+      "partial_period": false
+    },
+    {
+      "month": "2025-12",
+      "valid_orders": 375,
+      "merch_usd": 54751.07,
+      "buyers": 352,
+      "aov_usd": 146.0,
+      "cancelled_orders": 8,
+      "partial_period": false
+    },
+    {
+      "month": "2026-01",
+      "valid_orders": 255,
+      "merch_usd": 43190.91,
+      "buyers": 249,
+      "aov_usd": 169.38,
+      "cancelled_orders": 2,
+      "partial_period": false
+    },
+    {
+      "month": "2026-02",
+      "valid_orders": 187,
+      "merch_usd": 28811.61,
+      "buyers": 179,
+      "aov_usd": 154.07,
+      "cancelled_orders": 6,
+      "partial_period": false
+    },
+    {
+      "month": "2026-03",
+      "valid_orders": 260,
+      "merch_usd": 39615.72,
+      "buyers": 256,
+      "aov_usd": 152.37,
+      "cancelled_orders": 4,
+      "partial_period": false
+    },
+    {
+      "month": "2026-04",
+      "valid_orders": 230,
+      "merch_usd": 37536.29,
+      "buyers": 223,
+      "aov_usd": 163.2,
+      "cancelled_orders": 3,
+      "partial_period": false
+    },
+    {
+      "month": "2026-05",
+      "valid_orders": 240,
+      "merch_usd": 36344.11,
+      "buyers": 232,
+      "aov_usd": 151.43,
+      "cancelled_orders": 9,
+      "partial_period": false
+    },
+    {
+      "month": "2026-06",
+      "valid_orders": 245,
+      "merch_usd": 38602.1,
+      "buyers": 238,
+      "aov_usd": 157.56,
+      "cancelled_orders": 5,
+      "partial_period": false
+    },
+    {
+      "month": "2026-07",
+      "valid_orders": 251,
+      "merch_usd": 36431.77,
+      "buyers": 242,
+      "aov_usd": 145.15,
+      "cancelled_orders": 7,
+      "partial_period": false
+    },
+    {
+      "month": "2026-08",
+      "valid_orders": 243,
+      "merch_usd": 37247.83,
+      "buyers": 233,
+      "aov_usd": 153.28,
+      "cancelled_orders": 4,
+      "partial_period": false
+    },
+    {
+      "month": "2026-09",
+      "valid_orders": 240,
+      "merch_usd": 39190.7,
+      "buyers": 232,
+      "aov_usd": 163.29,
+      "cancelled_orders": 6,
+      "partial_period": false
+    },
+    {
+      "month": "2026-10",
+      "valid_orders": 336,
+      "merch_usd": 47590.59,
+      "buyers": 326,
+      "aov_usd": 141.64,
+      "cancelled_orders": 6,
+      "partial_period": false
+    },
+    {
+      "month": "2026-11",
+      "valid_orders": 78,
+      "merch_usd": 11184.6,
+      "buyers": 76,
+      "aov_usd": 143.39,
+      "cancelled_orders": 2,
+      "partial_period": true
+    }
+  ],
+  "by_year": {
+    "2024": {
+      "orders": 3242,
+      "merch_usd": 489722.5199999999,
+      "months": 12,
+      "orders_per_month": 270.2
+    },
+    "2025": {
+      "orders": 3306,
+      "merch_usd": 494692.48000000004,
+      "months": 12,
+      "orders_per_month": 275.5
+    },
+    "2026": {
+      "orders": 2487,
+      "merch_usd": 384561.63,
+      "months": 10,
+      "orders_per_month": 248.7
+    }
+  },
+  "calendar_month_profile": [
+    {
+      "month_of_year": 1,
+      "orders": 744,
+      "years": 3,
+      "orders_per_year": 248.0
+    },
+    {
+      "month_of_year": 2,
+      "orders": 671,
+      "years": 3,
+      "orders_per_year": 223.7
+    },
+    {
+      "month_of_year": 3,
+      "orders": 779,
+      "years": 3,
+      "orders_per_year": 259.7
+    },
+    {
+      "month_of_year": 4,
+      "orders": 690,
+      "years": 3,
+      "orders_per_year": 230.0
+    },
+    {
+      "month_of_year": 5,
+      "orders": 723,
+      "years": 3,
+      "orders_per_year": 241.0
+    },
+    {
+      "month_of_year": 6,
+      "orders": 721,
+      "years": 3,
+      "orders_per_year": 240.3
+    },
+    {
+      "month_of_year": 7,
+      "orders": 763,
+      "years": 3,
+      "orders_per_year": 254.3
+    },
+    {
+      "month_of_year": 8,
+      "orders": 784,
+      "years": 3,
+      "orders_per_year": 261.3
+    },
+    {
+      "month_of_year": 9,
+      "orders": 731,
+      "years": 3,
+      "orders_per_year": 243.7
+    },
+    {
+      "month_of_year": 10,
+      "orders": 1005,
+      "years": 3,
+      "orders_per_year": 335.0
+    },
+    {
+      "month_of_year": 11,
+      "orders": 682,
+      "years": 2,
+      "orders_per_year": 341.0
+    },
+    {
+      "month_of_year": 12,
+      "orders": 742,
+      "years": 2,
+      "orders_per_year": 371.0
+    }
+  ],
+  "order_value": {
+    "p10": 29.96,
+    "p50": 104.79,
+    "p90": 330.01,
+    "p99": 714.99,
+    "max": 1632.37,
+    "lines_per_order": 1.6801272906836389
+  },
+  "concentration": {
+    "top10pct_customers_share": 0.27289981910301886,
+    "top20pct_customers_share": 0.4541386661035247
+  },
+  "customers": {
+    "orders_per_customer": [
+      {
+        "orders": 1,
+        "customers": 754
+      },
+      {
+        "orders": 2,
+        "customers": 936
+      },
+      {
+        "orders": 3,
+        "customers": 768
+      },
+      {
+        "orders": 4,
+        "customers": 464
+      },
+      {
+        "orders": 5,
+        "customers": 253
+      },
+      {
+        "orders": 6,
+        "customers": 106
+      },
+      {
+        "orders": 7,
+        "customers": 40
+      },
+      {
+        "orders": 8,
+        "customers": 16
+      },
+      {
+        "orders": 9,
+        "customers": 2
+      }
+    ],
+    "repeat": {
+      "buyers": 3339,
+      "repeat_buyers": 2585,
+      "repeat_share": 0.7741838873914345
+    },
+    "gap_days": {
+      "gaps": 5774,
+      "p25": 70.11580150462963,
+      "p50": 172.1203125,
+      "p75": 322.57064236111114,
+      "share_within_30d": 0.11395912712157949
+    },
+    "new_buyers_by_half_year": [
+      {
+        "half": "2024-H1",
+        "new_buyers": 1158
+      },
+      {
+        "half": "2024-H2",
+        "new_buyers": 944
+      },
+      {
+        "half": "2025-H1",
+        "new_buyers": 502
+      },
+      {
+        "half": "2025-H2",
+        "new_buyers": 419
+      },
+      {
+        "half": "2026-H1",
+        "new_buyers": 225
+      },
+      {
+        "half": "2026-H2",
+        "new_buyers": 91
+      }
+    ],
+    "customer_created_range": {
+      "first": "2024-01-01",
+      "last": "2024-06-29"
+    },
+    "never_bought": {
+      "customers": 308
+    }
+  },
+  "category": [
+    {
+      "product_category": "Furniture & Decor",
+      "lines": 965,
+      "merch_usd": 206787.03,
+      "share": 0.1498281689886333,
+      "avg_line_usd": 214.28707772020726
+    },
+    {
+      "product_category": "Electronics & Accessories",
+      "lines": 999,
+      "merch_usd": 168983.23,
+      "share": 0.12243731118283914,
+      "avg_line_usd": 169.1523823823824
+    },
+    {
+      "product_category": "Mobile & Telecom",
+      "lines": 1050,
+      "merch_usd": 167647.91,
+      "share": 0.1214698010318693,
+      "avg_line_usd": 159.6646761904762
+    },
+    {
+      "product_category": "Watches & Gifts",
+      "lines": 1094,
+      "merch_usd": 124807.43,
+      "share": 0.09042960147489434,
+      "avg_line_usd": 114.08357404021937
+    },
+    {
+      "product_category": "Automotive",
+      "lines": 956,
+      "merch_usd": 101222.85,
+      "share": 0.0733413225931582,
+      "avg_line_usd": 105.88164225941424
+    },
+    {
+      "product_category": "Garden & Outdoor",
+      "lines": 965,
+      "merch_usd": 86143.52,
+      "share": 0.06241554836314305,
+      "avg_line_usd": 89.267896373057
+    },
+    {
+      "product_category": "Sports & Outdoors",
+      "lines": 904,
+      "merch_usd": 81106.28,
+      "share": 0.058765800862265925,
+      "avg_line_usd": 89.71933628318584
+    },
+    {
+      "product_category": "Home & Bedding",
+      "lines": 918,
+      "merch_usd": 74346.26,
+      "share": 0.053867807893719775,
+      "avg_line_usd": 80.98721132897603
+    },
+    {
+      "product_category": "Baby Products",
+      "lines": 1019,
+      "merch_usd": 69485.51,
+      "share": 0.0503459367569686,
+      "avg_line_usd": 68.1899018645731
+    },
+    {
+      "product_category": "Fashion",
+      "lines": 884,
+      "merch_usd": 67905.64,
+      "share": 0.04920123716270453,
+      "avg_line_usd": 76.81633484162896
+    },
+    {
+      "product_category": "Home Goods",
+      "lines": 874,
+      "merch_usd": 58126.26,
+      "share": 0.04211555775987129,
+      "avg_line_usd": 66.50601830663616
+    },
+    {
+      "product_category": "Pet Supplies",
+      "lines": 1011,
+      "merch_usd": 48714.86,
+      "share": 0.03529649938072815,
+      "avg_line_usd": 48.18482690405539
+    },
+    {
+      "product_category": "Toys & Games",
+      "lines": 803,
+      "merch_usd": 37574.08,
+      "share": 0.027224413483923182,
+      "avg_line_usd": 46.792129514321296
+    },
+    {
+      "product_category": "Health & Beauty",
+      "lines": 1037,
+      "merch_usd": 33483.84,
+      "share": 0.024260817701711557,
+      "avg_line_usd": 32.28914175506268
+    },
+    {
+      "product_category": "Office Supplies",
+      "lines": 909,
+      "merch_usd": 31782.69,
+      "share": 0.023028244316064435,
+      "avg_line_usd": 34.96445544554455
+    },
+    {
+      "product_category": "Books & Media",
+      "lines": 923,
+      "merch_usd": 22043.84,
+      "share": 0.015971931047505227,
+      "avg_line_usd": 23.88281690140845
+    }
+  ],
+  "region": [
+    {
+      "customer_region": "South",
+      "orders": 3415,
+      "buyers": 1262,
+      "merch_usd": 520345.65,
+      "aov_usd": 152.3706149341142
+    },
+    {
+      "customer_region": "West",
+      "orders": 2091,
+      "buyers": 769,
+      "merch_usd": 314344.34,
+      "aov_usd": 150.3320612147298
+    },
+    {
+      "customer_region": "Midwest",
+      "orders": 1933,
+      "buyers": 698,
+      "merch_usd": 289553.62,
+      "aov_usd": 149.79494050698395
+    },
+    {
+      "customer_region": "Northeast",
+      "orders": 1674,
+      "buyers": 610,
+      "merch_usd": 255917.62,
+      "aov_usd": 152.8779091995221
+    }
+  ],
+  "weekday": [
+    {
+      "dow_sun0": 0,
+      "orders": 1384
+    },
+    {
+      "dow_sun0": 1,
+      "orders": 1215
+    },
+    {
+      "dow_sun0": 2,
+      "orders": 1311
+    },
+    {
+      "dow_sun0": 3,
+      "orders": 1284
+    },
+    {
+      "dow_sun0": 4,
+      "orders": 1302
+    },
+    {
+      "dow_sun0": 5,
+      "orders": 1253
+    },
+    {
+      "dow_sun0": 6,
+      "orders": 1364
+    }
+  ],
+  "hour_utc": [
+    {
+      "hour": 8,
+      "orders": 630
+    },
+    {
+      "hour": 9,
+      "orders": 614
+    },
+    {
+      "hour": 10,
+      "orders": 578
+    },
+    {
+      "hour": 11,
+      "orders": 575
+    },
+    {
+      "hour": 12,
+      "orders": 588
+    },
+    {
+      "hour": 13,
+      "orders": 649
+    },
+    {
+      "hour": 14,
+      "orders": 620
+    },
+    {
+      "hour": 15,
+      "orders": 606
+    },
+    {
+      "hour": 16,
+      "orders": 647
+    },
+    {
+      "hour": 17,
+      "orders": 605
+    },
+    {
+      "hour": 18,
+      "orders": 608
+    },
+    {
+      "hour": 19,
+      "orders": 618
+    },
+    {
+      "hour": 20,
+      "orders": 575
+    },
+    {
+      "hour": 21,
+      "orders": 604
+    },
+    {
+      "hour": 22,
+      "orders": 596
+    }
+  ],
+  "generator_calendar_flags": [
+    {
+      "is_promotion_period": false,
+      "is_holiday_period": false,
+      "days": 927,
+      "orders": 7802,
+      "orders_per_day": 8.416396979503775
+    },
+    {
+      "is_promotion_period": false,
+      "is_holiday_period": true,
+      "days": 50,
+      "orders": 553,
+      "orders_per_day": 11.06
+    },
+    {
+      "is_promotion_period": true,
+      "is_holiday_period": false,
+      "days": 21,
+      "orders": 200,
+      "orders_per_day": 9.523809523809524
+    },
+    {
+      "is_promotion_period": true,
+      "is_holiday_period": true,
+      "days": 44,
+      "orders": 558,
+      "orders_per_day": 12.681818181818182
+    }
+  ],
+  "delivery_review": {
+    "late_rates": {
+      "delivered": 8651,
+      "late_by_date_rate": 0.6405039879782685,
+      "late_by_days_rate": 0.14726621199861287
+    },
+    "score_by_late": [
+      {
+        "late_by_days": false,
+        "reviews": 5302,
+        "avg_score": 4.140701622029423,
+        "low_score_share": 0.007921539041870993
+      },
+      {
+        "late_by_days": true,
+        "reviews": 886,
+        "avg_score": 2.9074492099322797,
+        "low_score_share": 0.3363431151241535
+      }
+    ],
+    "score_distribution": [
+      {
+        "review_score": 1,
+        "reviews": 46
+      },
+      {
+        "review_score": 2,
+        "reviews": 294
+      },
+      {
+        "review_score": 3,
+        "reviews": 1188
+      },
+      {
+        "review_score": 4,
+        "reviews": 2968
+      },
+      {
+        "review_score": 5,
+        "reviews": 1692
+      }
+    ]
+  },
+  "payment": [
+    {
+      "payment_type": "credit_card",
+      "orders_using": 4578,
+      "paid_usd": 700956.32,
+      "avg_installments": 2.474006116207951
+    },
+    {
+      "payment_type": "digital_wallet",
+      "orders_using": 2715,
+      "paid_usd": 430025.59,
+      "avg_installments": 1.0
+    },
+    {
+      "payment_type": "debit_card",
+      "orders_using": 1307,
+      "paid_usd": 196183.57,
+      "avg_installments": 1.0
+    },
+    {
+      "payment_type": "bank_transfer",
+      "orders_using": 803,
+      "paid_usd": 122016.3,
+      "avg_installments": 1.0
+    },
+    {
+      "payment_type": "gift_card",
+      "orders_using": 402,
+      "paid_usd": 60438.63,
+      "avg_installments": 1.0
+    }
+  ],
+  "anomalies": {
+    "cancel_rate_by_year": [
+      {
+        "year": 2024,
+        "cancel_rate": 0.02172601086300543,
+        "orders": 3314
+      },
+      {
+        "year": 2025,
+        "cancel_rate": 0.02015411973918198,
+        "orders": 3374
+      },
+      {
+        "year": 2026,
+        "cancel_rate": 0.020587113991612657,
+        "orders": 2623
+      }
+    ],
+    "stuck_orders": [
+      {
+        "order_status": "shipped",
+        "orders": 179,
+        "median_age_days": 515.4443287037037
+      },
+      {
+        "order_status": "processing",
+        "orders": 283,
+        "median_age_days": 489.51914351851855
+      }
+    ],
+    "partial_month": "2026-11 只有 7 天数据，趋势图应标注或排除"
+  },
+  "unknown_coverage": [
+    "没有获客渠道、浏览/加购、营销触达与同意、优惠券",
+    "没有购买数量、退款、取消发生时间、支付时间",
+    "没有成本与毛利、库存、投诉",
+    "客户只在 2024 年上半年建档，之后没有新客户进入（合成人口封闭）",
+    "生成器的促销/节日标记、客户分群和生命周期标签不是真实业务记录"
+  ]
+}
