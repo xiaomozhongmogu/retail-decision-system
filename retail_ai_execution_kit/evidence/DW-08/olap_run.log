@@ -1,0 +1,15 @@
+$ .venv/bin/python evidence/DW-08/run_and_check_olap.py
+2026-11-10T15:23:03+08:00
+PASS q1 slice: regions add up to the 2025 total (orders, merchandise) | expected (3306, Decimal('494692.48')) | got (3306, Decimal('494692.48'))
+PASS q2 dice: 2 regions x 3 categories = 6 cells | expected 6 | got 6
+PASS q3 roll-up: months, quarter subtotals, year subtotals and grand total all equal the same total | expected 1380161.23 | got (Decimal('1380161.23'), Decimal('1380161.23'), Decimal('1380161.23'), Decimal('1380161.23'))
+PASS q4a drill month->day: days add up to the month | expected (360, Decimal('54130.65')) | got (360, Decimal('54130.65'))
+PASS q4b drill day->order: orders add up to the day | expected (16, Decimal('3670.57')) | got (16, Decimal('3670.57'))
+PASS q4c drill order->line: lines add up to the orders, line count = sum of item_lines | expected (Decimal('3670.57'), 30) | got (Decimal('3670.57'), 30)
+PASS q5 pivot: 6 months x 4 region columns, cells add up to the unpivoted total | expected 224100.74 | got 224100.74
+PASS q6 geo drill: cities = state subtotals = region total | expected 93814.90 | got (Decimal('93814.90'), Decimal('93814.90'))
+PASS q7 shares sum to 1 within each region | expected 1.0 | got {'Midwest': 1.0, 'Northeast': 1.0, 'South': 1.0, 'West': 1.0}
+PASS q8 payment mix: paid amount adds up to order-level payments; orders_using_type is not additive (two-payment orders) | expected (Decimal('541655.39'), '>= 3306') | got (Decimal('541655.39'), 3535)
+PASS joining lines to payments would double count (why the set never does it) | expected > 1380161.23 | got 1493833.12
+11/11 passed
+exit=0

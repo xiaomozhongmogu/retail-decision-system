@@ -1111,10 +1111,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C10",
         "C28",
@@ -1136,7 +1136,9 @@
         "月到日到发票/明细下钻可回溯总量，维度组合不产生重复计算。",
         "无订单号的行为路线使用事件层下钻并明确单位，不能伪造订单。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-08/2026-11-10-olap.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

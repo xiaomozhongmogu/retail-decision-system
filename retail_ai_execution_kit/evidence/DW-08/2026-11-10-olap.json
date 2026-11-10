@@ -1,0 +1,81 @@
+{
+  "task_id": "DW-08",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; published build wh-db316daf8021 (read-only)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DW-08/run_and_check_olap.py",
+  "exit_code": 0,
+  "summary": "OLAP 标准查询集 10 条（8 个问题）：切片（2025 年各大区）、切块（2025Q4 × 西/南 × 3 品类）、日期上卷（月-季-年-总计 ROLLUP）、月→日→订单→明细三级下钻、旋转（2026 上半年月×大区 PIVOT）、地理下钻（大区→州→城市）、大区内品类占比与排名、支付方式结构。每条在已发布的只读构建上实际运行，11/11 核对：各层合计一致（全部 1,380,161.23）、下钻逐级可回溯、旋转单元格之和等于未旋转总额、占比和为 1；示范明细连支付会虚增到 1,493,833.12，查询集不这样连接。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "sql/dwd.sql",
+      "sha256": "aa3d90f95897472c2ff46eea241fdde54038a404369586227d2fe9e93b507dd8"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "reports/warehouse/etl_run.json",
+      "sha256": "7dc8489038b09317fd09ea21ae0e5e2a986e778fb88466b9177e9975cb079001"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sql/olap_examples.sql",
+      "sha256": "91f3c73ef81eec81a9b02ce8d00b6b314a7bd84ee9d5e2ccfeba1b4d829c2247"
+    },
+    {
+      "path": "reports/warehouse/olap_checks.json",
+      "sha256": "cdd6248275f415308937a24e24462f041e400d5527c7128fe51e7a4bee133ac1"
+    },
+    {
+      "path": "evidence/DW-08/run_and_check_olap.py",
+      "sha256": "016a25d8941883b5dc6d779a50b3167e2c9f71b687d9466adaa404e5a6cfeb29"
+    },
+    {
+      "path": "evidence/DW-08/olap_run.log",
+      "sha256": "45739007e0385e02a0afa242ab081457c7a6f6422885d379955d413c6c68988b"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "8 个项目问题（每条 SQL 上方写明问题），覆盖切片 q1、切块 q2、上卷 q3/q6、下钻 q4a-c/q6、旋转 q5，另有占比排名 q7 与支付粒度 q8；olap_checks.json 记录每个问题、列名、行数与样例结果。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "2025-11 共 360 单 / 54,130.65 USD，按日下钻合计相同；2025-11-28 共 16 单 / 3,670.57，按订单合计相同；其 30 条明细合计 3,670.57、条数等于订单 item_lines 之和。日期 ROLLUP 的月、季、年小计与总计都为 1,380,161.23；地理 ROLLUP 城市=州=大区合计。订单数在订单表计、金额在明细表计，支付不与明细连接，避免重复计算（示范反例）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "本项目为交易路线，有订单号与明细号，下钻落到订单和明细；不涉及行为事件层，没有伪造订单（olap_checks.json route_note）。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "查询以截止为 as_of；其他 as_of 需替换 approved_ts 条件。"
+  ],
+  "steps": [
+    "认领 DW-08（台账 4a66e989…）。",
+    "编写 sql/olap_examples.sql 与运行核对脚本，在 latest.json 指向的只读构建上执行，11/11 一次通过。"
+  ],
+  "task_spec_sha256": "fc14cd644a6aeb8747fd28bec3eca5b528e2dbd8fe9da37f600ea872ff1d028e",
+  "performed_at": "2026-11-10T15:23:22.013990+08:00"
+}

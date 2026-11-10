@@ -42,7 +42,7 @@
 | DW-05 | 建立时点客户快照接口 | midterm | done | DW-03 |
 | DW-06 | 实现ADS与指标语义 | midterm | done | DW-04, DW-05 |
 | DW-07 | 实现可重跑ETL编排 | midterm | done | DW-06, GOV-07 |
-| DW-08 | 完成OLAP标准查询集 | midterm | todo | DW-06 |
+| DW-08 | 完成OLAP标准查询集 | midterm | done | DW-06 |
 | DW-09 | 校验数仓约束和对账 | midterm | todo | DW-07, DW-08 |
 | DW-10 | 发布只读查询快照 | midterm | todo | DW-09 |
 | EDA-01 | 完成初步描述性统计 | proposal | todo | DATA-12 |
@@ -579,7 +579,7 @@
 
 ### DW-08 完成OLAP标准查询集
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C10, C28, U02。
 - 前置：DW-06。
 - 允许修改：`sql`, `reports/warehouse`；另可写本任务证据/交接。
@@ -592,7 +592,7 @@
 2. 月到日到发票/明细下钻可回溯总量，维度组合不产生重复计算。
 3. 无订单号的行为路线使用事件层下钻并明确单位，不能伪造订单。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-08/2026-11-10-olap.json
 
 ### DW-09 校验数仓约束和对账
 
