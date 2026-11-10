@@ -1,0 +1,83 @@
+{
+  "task_id": "DW-04",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic full scope",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DW-04/run_and_verify_dws.py",
+  "exit_code": 0,
+  "summary": "构建 4 张 DWS 汇总（日期×大区订单 3,605 行、日期×品类×大区 12,532 行、客户×日 9,102 行、商品×日 14,523 行），有效口径 approved_ts < 截止。每张表一行一个粒度键，商品金额合计都等于 DWD 有效商品金额 1,380,161.23；订单数 9,113、明细数 15,311 与 DWD 相等。5 个时间×维度切片由 pandas 从 DWD 明细独立重算一致；不可加指标（日去重客户、含品类订单数）跨天/跨品类相加会多算，已实测示范。18/18。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "docs/warehouse_design.md",
+      "sha256": "7b3cf943ed7d6fb1b8edc7123f2aac2e7b43efe709f290cf728a0d9d3d535212"
+    },
+    {
+      "path": "reports/warehouse/dwd_audit.json",
+      "sha256": "d70178d2b1f846aa079f63ab75b82019fa8af3364e4d8450a8bbe7cee399e348"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "f8c49414864f348ac441eb44edc1e6d72ae2b2aabe42d1e1d4cb37890d37ad50"
+    },
+    {
+      "path": "evidence/DW-04/run_and_verify_dws.py",
+      "sha256": "603430aa26cc246d03b106687cd9fc17a52255ea52a98cb6201bc1a458ba7e2a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sql/dws.sql",
+      "sha256": "abbcf09295693c12ee8760c127138a5a0c10be941bd751d01bde4d0ff6e9bdb2"
+    },
+    {
+      "path": "reports/warehouse/dws_audit.json",
+      "sha256": "eb8786ce82aaa16700f8431765ccb892a13ac5a1e10a9239ce1e31a0fcbd6264"
+    },
+    {
+      "path": "evidence/DW-04/dws_run.log",
+      "sha256": "5c0f4a6ec005acb5f83ec8a1c0100a898f25eecaa0bd95e9bba39050ed4b41e4"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "dws.orders_daily_region（日期×客户大区）、dws.sales_daily_category_region（日期×品类×客户大区）、dws.customer_daily（客户×日期）、dws.product_daily（商品×日期）已构建，粒度写入 sql/dws.sql、DDL 注释、设计文档与审计 JSON；本数据没有国家维度，地域汇总用客户大区；每张表主键唯一。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "可加指标（有效订单数、明细数、商品金额、运费）与不可加指标（buyers 日去重客户数、orders_containing 含该品类/商品的订单数）在 SQL 与审计中分开标注。实测 35 个月全部出现“月去重客户数 < 日去重相加”（如 2024-01 为 216 对 229）；2025-11 中西部按品类相加订单为 97，实际去重 72。月度去重必须从 DWD 重算。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "抽取 5 个切片（2025-03 图书南部、2024-12 时尚西部、2026-06 宠物东北、2025-11 全品类中西部、2026-01 汽车全大区），用 pandas 从 DWD 明细独立重算明细数与商品金额，全部与 DWS 一致；四张表的商品金额合计、订单与明细合计都等于 DWD。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "汇总按截止时的有效口径构建；需要其他 as_of 时由快照或 ADS 视图按 approved_ts 过滤。",
+    "运行脚本放在 evidence 目录（任务写入范围不含 src），DW-07 编排会直接调用 sql/dws.sql。"
+  ],
+  "steps": [
+    "认领 DW-04（台账 6de92dc0…）。",
+    "在 DDL 生成器和设计文档中增加 dws.orders_daily_region（DW-01 证据随之重出）。",
+    "编写 sql/dws.sql 与运行核对脚本。第 1 次：DuckDB 参数只支持单条语句，改为逐条执行；第 2 次：可加性演示 SQL 分组错误，改写为两个 CTE；第 3 次 18/18。"
+  ],
+  "task_spec_sha256": "8e5ab446fce802cd95f66a17d0b80d404c0a0af143752939182ed1a8b072a6cf",
+  "performed_at": "2026-11-10T15:14:19.030877+08:00"
+}

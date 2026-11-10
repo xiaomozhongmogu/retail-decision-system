@@ -121,6 +121,12 @@ L += ['CREATE TABLE IF NOT EXISTS dws.sales_daily_category_region (', J([
     '    shipping_usd DECIMAL(18,2) NOT NULL        -- additive',
     '    orders_containing BIGINT NOT NULL          -- distinct orders at this grain; NOT additive across categories',
     '    PRIMARY KEY (date_key, product_category, customer_region)']), ');']
+L += ['CREATE TABLE IF NOT EXISTS dws.orders_daily_region (', J([
+    '    date_key INTEGER NOT NULL', '    customer_region VARCHAR NOT NULL',
+    '    valid_orders BIGINT NOT NULL             -- additive across days and regions (one order = one day, one region)',
+    '    merch_usd DECIMAL(18,2) NOT NULL          -- additive', '    shipping_usd DECIMAL(18,2) NOT NULL       -- additive',
+    '    buyers BIGINT NOT NULL                    -- distinct customers that day; NOT additive across days',
+    '    PRIMARY KEY (date_key, customer_region)']), ');']
 L += ['CREATE TABLE IF NOT EXISTS dws.customer_daily (', J([
     '    customer_id VARCHAR NOT NULL', '    date_key INTEGER NOT NULL', '    valid_orders BIGINT NOT NULL', '    merch_usd DECIMAL(18,2) NOT NULL',
     '    PRIMARY KEY (customer_id, date_key)']), ');']

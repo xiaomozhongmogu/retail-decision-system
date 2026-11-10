@@ -89,3 +89,7 @@ PASS lineage and refresh order documented
 PASS DDL is generated from the contract version 
 41/41 passed
 exit=0
+--- 2026-11-10T15:12:58+08:00 DW-04 added dws.orders_daily_region to the generator and design doc (v1.1)
+written 103 lines
+42/42 passed
+exit=0

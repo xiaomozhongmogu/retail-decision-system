@@ -1,0 +1,98 @@
+{
+  "task_id": "DW-03",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic full scope (ODS batch 9f5ba7d8e03a46b4-engineering-import-v1)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/warehouse/dwd.py --db warehouse/build/dev.duckdb --audit reports/warehouse/dwd_audit.json; .venv/bin/python evidence/DW-03/verify_dwd.py",
+  "exit_code": 0,
+  "summary": "用 SQL 从 ODS 构建 DWD：5 个维度（日期 1,042、地理 105、客户 3,647、商品 8,000、卖家 800）与 4 个事实（订单 9,311、明细 15,639、支付 10,010、物流 9,311），按契约转类型、标准列名、USD 十进制、UTC 时间。与 DATA-07 的 Python 清洗结果逐行一致（9 张表 EXCEPT ALL 双向 0 差异）；主键唯一、无孤儿；星型连接保持明细粒度与金额；有效/取消/待审批与 DATA-08 一致，延迟标记与 DATA-10 一致；重建幂等。核对 20/20。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "reports/data/transaction_reconciliation.json",
+      "sha256": "5894bf1bdb01c4163748508a7f2c9f13ad15da7ccf7b2a75ebc8ecfb7fcdff3f"
+    },
+    {
+      "path": "reports/data/transform_audit.json",
+      "sha256": "55f058ee27fa116566ed1a842855e1754eb4f294e281f528fd152cd777e852e8"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "cffc581052da5ed6f9ebbf879b09c33204844733e654472363a5d783dd65058a"
+    },
+    {
+      "path": "evidence/DW-03/verify_dwd.py",
+      "sha256": "353b086e91ea37cca657aeda86079bdc5dc193af40a36f3f3bdae0e9bae2e7c1"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sql/dwd.sql",
+      "sha256": "aa3d90f95897472c2ff46eea241fdde54038a404369586227d2fe9e93b507dd8"
+    },
+    {
+      "path": "src/retail_bi/warehouse/dwd.py",
+      "sha256": "5aee28a0fd63e4318788e7671ebca6d03c655873277568a16306b87e19b6d4c1"
+    },
+    {
+      "path": "reports/warehouse/dwd_audit.json",
+      "sha256": "d70178d2b1f846aa079f63ab75b82019fa8af3364e4d8450a8bbe7cee399e348"
+    },
+    {
+      "path": "evidence/DW-03/dwd_run.log",
+      "sha256": "2340d1b965c7b8b882ee20dad1b9a65e056d8c5966ebcf84520b38bda454eea8"
+    },
+    {
+      "path": "evidence/DW-03/verification_run.log",
+      "sha256": "a3b6c5dacf91c9aeaffbadd11683500983e165ee480bd35d182213266853a91a"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "事实表 fact_order/fact_order_line/fact_payment/fact_fulfillment 与维度 dim_date/dim_customer/dim_product/dim_seller/dim_geo（本数据没有国家，地理维度为大区-州-城市）均已创建；类型按契约（DECIMAL(12,2) 金额 USD、TIMESTAMPTZ UTC、DATE、BIGINT），转换检查（日期无时间部分、天数为整数、金额不超过两位小数）全部为 0；与 Python 独立清洗逐值一致。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "维度键 date_key、geo_key、customer_id、product_id、seller_id 及订单键唯一（无版本化，维度为静态属性，动态属性不入维度）；州只属于一个大区；所有事实外键无孤儿；明细与 5 个维度/订单连接后仍为 15,639 行、1,408,601.73 USD，订单级金额等于明细汇总，支付逐单对账。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "取消（无审批 194 单）与截止后才审批（4 单）的订单保留在事实中，按 approved_ts 过滤后截止时有效 9,113 单、1,380,161.23 USD，与 DATA-08 对账一致；没有退款记录；匿名客户 0；隔离记录 0（与 DATA-07 报告一致）。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "开发库被 Git 忽略。",
+    "若将来出现多个 ODS 批次，dwd.py 会报错而不是自动选择，由 DW-07 编排处理。",
+    "本证据替代首次证据（sql/ddl.sql 变更后失效，保留为历史）。"
+  ],
+  "steps": [
+    "认领 DW-03（台账 de4b2ba1…）。",
+    "编写 sql/dwd.sql 与 dwd.py，第一次构建通过。",
+    "核对脚本的重建失败：用逐行 DELETE 清空时触发 DuckDB 同一事务内外键检查的已知限制；改为子表优先 DROP 后按 DDL 重建。",
+    "核对脚本第 2 次在第二次重建时因自身仍持有只读连接报错，关闭后第 3 次 20/20。",
+    "2026-11-10 DW-04 在 sql/ddl.sql 中增加 dws.orders_daily_region，ODS 与 DWD 定义未变；重跑核对全部通过。"
+  ],
+  "task_spec_sha256": "387a56632179c608bc15d8494f2c9950b6072608af54126cc220763d45c0bcbd",
+  "performed_at": "2026-11-10T15:14:37.785115+08:00"
+}

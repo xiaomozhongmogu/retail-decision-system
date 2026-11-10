@@ -1,0 +1,102 @@
+{
+  "task_id": "DW-02",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pyarrow 26.0.1",
+    "data_mode": "fully_synthetic full scope; failure paths on fixtures in a temporary directory",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/warehouse/ods.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --db warehouse/build/dev.duckdb --audit reports/warehouse/ods_audit.json (twice); .venv/bin/python evidence/DW-02/verify_ods.py",
+  "exit_code": 0,
+  "summary": "ODS 加载实现并运行：10 张源表共 77,916 行以原文本写入 ods.*，带批次号（内容指纹+导入版本，跨机器一致）、源文件、文件哈希、行号和加载时间；meta.load_batch/load_file 登记批次与逐文件行数。同批次重跑跳过。核对 18/18：逐值等于源文本（空字段保持空串）；缺文件、哈希不符、中途行数不符三种失败都回滚，不留下批次或数据行。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "src/retail_bi/data/clean.py",
+      "sha256": "6422153a1bf76413a5716a010c144eb53f86930b9471da5228b071e78e9253f5"
+    },
+    {
+      "path": "tests/data/conftest.py",
+      "sha256": "b6d85a704c5c6d392734ff5f6ab0c0159b5add33dee730d015db2817e0702f2f"
+    },
+    {
+      "path": "evidence/DW-02/verify_ods.py",
+      "sha256": "06a72d41de30586d9027ad7948bd325d4774491f0b71c7f0326d761070be7647"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sql/ods.sql",
+      "sha256": "99928ef3741c9488361a056f43ebea0f26364387c639cc86586dd93041a288ec"
+    },
+    {
+      "path": "src/retail_bi/warehouse/ods.py",
+      "sha256": "748da3e306af993e1502d6918609391453dd7a6288b31b4225a9e969fedfa5fc"
+    },
+    {
+      "path": "src/retail_bi/warehouse/db.py",
+      "sha256": "feeb46f051b412c476eb2468ba63b571823153becd05bd9dc64c51e930f8d4c6"
+    },
+    {
+      "path": "reports/warehouse/ods_audit.json",
+      "sha256": "7508b5bbe22a4f3d006bdb0aeda6e8589048dd85eca74fa91841d2ebe1aec8ee"
+    },
+    {
+      "path": "evidence/DW-02/ods_run.log",
+      "sha256": "86ecb96e971d45b33099acdbc51f68cd078c16fcc3358b9ef7f828b0784490c5"
+    },
+    {
+      "path": "evidence/DW-02/verification_run.log",
+      "sha256": "0412f6531020b71b183e2b8af9acfd1dd5825501a88de796f55d69aeac6300e1"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "每张 ODS 表保存源文件全部原始列（文本），另有 _batch_id、_source_file、_source_sha256、_row_no（从 1 起，对应 CSV 数据行）、_loaded_at；核对脚本按行号逐值比对 10 张表全部 77,916 行与源 CSV 完全一致，审批时间空字段保持为空串（194 行）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "同一批次已为 loaded 时重跑只复核行数并跳过（日志与夹具验证，行数不翻倍）。一个批次在单个事务内加载，夹具中在加载了订单之后因评价行数不符报错，事务回滚后 meta.load_batch、meta.load_file 与 ods.orders 都为 0 行，不留假成功。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "meta.load_file 记录每个文件的清单行数与实际加载行数，10 张表全部相等；缺少 reviews.csv 时报错并指出文件路径，数据库中没有残留批次。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "开发库 warehouse/build/dev.duckdb 被 Git 忽略；正式发布与原子切换在 DW-07/DW-10。",
+    "ODS 读取的是 DATA-05 的历史层 CSV（已按截止筛选、与 ZIP 逐行一致），不是直接读取 ZIP。",
+    "本证据替代首次证据（sql/ddl.sql 变更后失效，保留为历史）。"
+  ],
+  "steps": [
+    "认领 DW-02（台账 36c003fa…）。",
+    "编写 db.py（命名 SQL 块、UTC 连接）、sql/ods.sql、ods.py。",
+    "实际加载两次：第一次加载，第二次跳过。",
+    "verify_ods.py 18/18 通过。",
+    "2026-11-10 DW-04 在 sql/ddl.sql 中增加 dws.orders_daily_region，ODS 与 DWD 定义未变；重跑核对全部通过。"
+  ],
+  "task_spec_sha256": "c7103bf874d959c11f1c34a971e1f4276fe6d58a3661182d69b078c71c728d57",
+  "performed_at": "2026-11-10T15:14:37.741409+08:00"
+}

@@ -38,7 +38,7 @@
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | done | DATA-04, GOV-06 |
 | DW-02 | 实现ODS与加载审计 | midterm | done | DW-01, DATA-12 |
 | DW-03 | 实现DWD事实及维表 | midterm | done | DW-02 |
-| DW-04 | 实现DWS业务汇总 | midterm | todo | DW-03 |
+| DW-04 | 实现DWS业务汇总 | midterm | done | DW-03 |
 | DW-05 | 建立时点客户快照接口 | midterm | todo | DW-03 |
 | DW-06 | 实现ADS与指标语义 | midterm | todo | DW-04, DW-05 |
 | DW-07 | 实现可重跑ETL编排 | midterm | todo | DW-06, GOV-07 |
@@ -473,7 +473,7 @@
 2. 源缺品类/城市时不画未经来源支持的层级，动态分群不永久覆盖客户静态属性。
 3. 图、DDL、契约字段一致，设计含血缘和刷新顺序。
 
-证据：evidence/DW-01/2026-11-10-design.json
+证据：evidence/DW-01/2026-11-10-design-v1.1.json
 
 ### DW-02 实现ODS与加载审计
 
@@ -490,7 +490,7 @@
 2. 重跑不重复加载同一批次，失败不留下假成功状态。
 3. ODS行数与来源清单一致，缺失文件有清晰错误。
 
-证据：evidence/DW-02/2026-11-10-ods.json
+证据：evidence/DW-02/2026-11-10-ods-v2.json
 
 ### DW-03 实现DWD事实及维表
 
@@ -507,11 +507,11 @@
 2. 维度键唯一或版本规则明确，事实关联保持原有粒度。
 3. 取消/退款、匿名客户和隔离记录的处理与数据报告一致。
 
-证据：evidence/DW-03/2026-11-10-dwd.json
+证据：evidence/DW-03/2026-11-10-dwd-v2.json
 
 ### DW-04 实现DWS业务汇总
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C09, C10, U02。
 - 前置：DW-03。
 - 允许修改：`sql`, `reports/warehouse`；另可写本任务证据/交接。
@@ -524,7 +524,7 @@
 2. 可加与不可加指标分开，月独立客户不由日独立客户相加。
 3. 抽取多个时间和维度切片与DWD明细独立重算一致。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-04/2026-11-10-dws.json
 
 ### DW-05 建立时点客户快照接口
 

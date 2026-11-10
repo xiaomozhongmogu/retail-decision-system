@@ -64,3 +64,6 @@ PASS late flags match DATA-10 rates
 PASS rebuild is idempotent (same counts, all checks) 
 20/20 passed
 exit=0
+--- 2026-11-10T15:14:36+08:00 rerun after DW-04 added dws.orders_daily_region to sql/ddl.sql (ODS/DWD definitions unchanged)
+20/20 passed
+exit=0

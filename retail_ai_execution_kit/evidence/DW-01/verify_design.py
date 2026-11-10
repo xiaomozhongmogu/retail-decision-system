@@ -24,7 +24,7 @@ def check(name, cond, detail=''):
 
 
 tables = con.execute("SELECT table_schema, table_name FROM information_schema.tables").fetchall()
-check('DDL executes in DuckDB (10 ods + 9 dwd + 5 dws + 3 meta)', len(tables) == 27, f'{len(tables)} tables')
+check('DDL executes in DuckDB (10 ods + 9 dwd + 6 dws + 3 meta)', len(tables) == 28, f'{len(tables)} tables')
 META = {'_batch_id', '_source_file', '_source_sha256', '_row_no', '_loaded_at'}
 for t, spec in C['tables'].items():
     cols = [r[0] for r in con.execute(f'DESCRIBE ods.{t}').fetchall()]

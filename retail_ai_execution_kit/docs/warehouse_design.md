@@ -1,6 +1,6 @@
 # 数仓设计：概念、逻辑与物理（DW-01）
 
-- 版本：v1，2026-11-10，claude-opus-5-5 起草并自审
+- 版本：v1.1，2026-11-10，claude-opus-5-5 起草并自审（v1.1 在 DW-04 中增加 `dws.orders_daily_region`）
 - 依据：契约 `synthetic-transaction-v1`、交易规则 `transaction-rules-v1`、`docs/architecture.md`（GOV-06）
 - 物理 DDL：`sql/ddl.sql`，由 `evidence/DW-01/gen_ddl.py` 从契约生成（ODS 列名和 DWD 列类型直接取自契约），不要手改。
 - 引擎：DuckDB 单文件。离线构建写一个新文件，校验后发布为只读快照（DW-07、DW-10）。
@@ -30,6 +30,7 @@
 | `dwd.dim_product` | 维度 | 一个商品 | `product_id` | `ods.products` |
 | `dwd.dim_seller` | 维度 | 一个卖家 | `seller_id` | `ods.sellers` |
 | `dws.sales_daily_category_region` | 汇总 | 日期×品类×客户大区 | 三者组合 | 明细 + 商品 + 客户 |
+| `dws.orders_daily_region` | 汇总 | 日期×客户大区 | 两者组合 | 订单 |
 | `dws.customer_daily` | 汇总 | 客户×日期 | 两者组合 | 订单 |
 | `dws.product_daily` | 汇总 | 商品×日期 | 两者组合 | 明细 |
 | `dws.customer_snapshot` | 快照 | 客户×as_of | 两者组合 | 订单（只用 as_of 前已审批的） |
@@ -82,7 +83,7 @@ erDiagram
 ZIP 成员 CSV ──DATA-05 ingest──▶ engineering history_source/*.csv
    └─DW-02──▶ ods.<表>（文本 + _batch_id/_row_no）+ meta.load_batch/load_file
         └─DW-03──▶ dwd.dim_* / dwd.fact_*（按契约转类型；订单金额 = 明细汇总）
-              ├─DW-04──▶ dws.sales_daily_category_region / customer_daily / product_daily
+              ├─DW-04──▶ dws.orders_daily_region / sales_daily_category_region / customer_daily / product_daily
               ├─DW-05──▶ dws.customer_snapshot、dws.label_repurchase
               └─DW-06──▶ ads.* 视图 + meta.allowed_view
 ```

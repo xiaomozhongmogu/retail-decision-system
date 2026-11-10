@@ -854,7 +854,7 @@
         "图、DDL、契约字段一致，设计含血缘和刷新顺序。"
       ],
       "evidence": [
-        "evidence/DW-01/2026-11-10-design.json"
+        "evidence/DW-01/2026-11-10-design-v1.1.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -895,7 +895,7 @@
         "ODS行数与来源清单一致，缺失文件有清晰错误。"
       ],
       "evidence": [
-        "evidence/DW-02/2026-11-10-ods.json"
+        "evidence/DW-02/2026-11-10-ods-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -935,7 +935,7 @@
         "取消/退款、匿名客户和隔离记录的处理与数据报告一致。"
       ],
       "evidence": [
-        "evidence/DW-03/2026-11-10-dwd.json"
+        "evidence/DW-03/2026-11-10-dwd-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -948,10 +948,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C09",
         "C10",
@@ -973,7 +973,9 @@
         "可加与不可加指标分开，月独立客户不由日独立客户相加。",
         "抽取多个时间和维度切片与DWD明细独立重算一致。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-04/2026-11-10-dws.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

@@ -20,3 +20,6 @@ PASS row-count mismatch midway (after orders loaded): rolled back, no false load
 PASS fixture: load then rerun skips without duplicating rows 
 18/18 passed
 exit=0
+--- 2026-11-10T15:14:35+08:00 rerun after DW-04 added dws.orders_daily_region to sql/ddl.sql (ODS/DWD definitions unchanged)
+18/18 passed
+exit=0

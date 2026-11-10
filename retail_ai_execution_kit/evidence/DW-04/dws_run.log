@@ -1,0 +1,36 @@
+$ .venv/bin/python evidence/DW-04/run_and_verify_dws.py
+2026-11-10T15:13:35+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DW-04/run_and_verify_dws.py", line 33, in <module>
+    con.execute(SQL['build'], {'as_of': AS_OF})
+_duckdb.NotImplementedException: Not implemented Error: Prepared parameters are only supported for the last statement, please split your query up into separate 'execute' calls if you want to use prepared parameters
+exit=1
+--- run 2 (run 1: DuckDB prepared parameters apply only to single statements; build block now executed statement by statement)
+2026-11-10T15:13:44+08:00
+PASS dws.orders_daily_region one row per (date_key, customer_region) 3605 rows
+PASS dws.orders_daily_region merch total equals DWD valid merch 1380161.23
+PASS dws.sales_daily_category_region one row per (date_key, product_category, customer_region) 12532 rows
+PASS dws.sales_daily_category_region merch total equals DWD valid merch 1380161.23
+PASS dws.customer_daily one row per (customer_id, date_key) 9102 rows
+PASS dws.customer_daily merch total equals DWD valid merch 1380161.23
+PASS dws.product_daily one row per (product_id, date_key) 14523 rows
+PASS dws.product_daily merch total equals DWD valid merch 1380161.23
+PASS orders_daily_region and customer_daily order counts = DWD valid orders 9113
+PASS line-level tables line counts = DWD valid lines 15311
+PASS slice 2025-03 / Books & Media / South: lines and merch equal DWD recount 12 lines, 193.82 USD
+PASS slice 2024-12 / Fashion / West: lines and merch equal DWD recount 13 lines, 911.74 USD
+PASS slice 2026-06 / Pet Supplies / Northeast: lines and merch equal DWD recount 6 lines, 305.45 USD
+PASS slice 2025-11 / all categories / Midwest: lines and merch equal DWD recount 104 lines, 9622.84 USD
+PASS slice 2025-11 / all categories: summing orders_containing over categories over-counts distinct orders summed 97 vs distinct 72
+PASS slice 2026-01 / Automotive / all regions: lines and merch equal DWD recount 24 lines, 2593.31 USD
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DW-04/run_and_verify_dws.py", line 70, in <module>
+    demo = con.execute(SQL['additivity_demo'], {'as_of': AS_OF}).fetchall()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.BinderException: Binder Error: column "purchase_ts" must appear in the GROUP BY clause or must be part of an aggregate function.
+Either add it to the GROUP BY list, or use ANY_VALUE("purchase_ts") if the exact value of "purchase_ts" is not important.
+exit=1
+--- run 3 (run 2: additivity_demo query had a GROUP BY error; rewritten with two CTEs)
+2026-11-10T15:13:53+08:00
+18/18 passed
+exit=0
