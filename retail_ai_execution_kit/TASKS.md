@@ -36,7 +36,7 @@
 | DATA-11 | 执行清洗后质量门槛 | proposal | done | DATA-10 |
 | DATA-12 | 发布阶段一数据包 | proposal | done | DATA-11 |
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | done | DATA-04, GOV-06 |
-| DW-02 | 实现ODS与加载审计 | midterm | todo | DW-01, DATA-12 |
+| DW-02 | 实现ODS与加载审计 | midterm | done | DW-01, DATA-12 |
 | DW-03 | 实现DWD事实及维表 | midterm | todo | DW-02 |
 | DW-04 | 实现DWS业务汇总 | midterm | todo | DW-03 |
 | DW-05 | 建立时点客户快照接口 | midterm | todo | DW-03 |
@@ -477,7 +477,7 @@
 
 ### DW-02 实现ODS与加载审计
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C09, U02, Q02。
 - 前置：DW-01, DATA-12。
 - 允许修改：`sql`, `src/retail_bi/warehouse`, `reports/warehouse`；另可写本任务证据/交接。
@@ -490,7 +490,7 @@
 2. 重跑不重复加载同一批次，失败不留下假成功状态。
 3. ODS行数与来源清单一致，缺失文件有清晰错误。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-02/2026-11-10-ods.json
 
 ### DW-03 实现DWD事实及维表
 

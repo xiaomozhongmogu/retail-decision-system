@@ -1,0 +1,22 @@
+$ .venv/bin/python evidence/DW-02/verify_ods.py
+2026-11-10T15:09:39+08:00
+PASS ods.customers: every value equals source text in row order; metadata present 3647 rows
+PASS ods.sellers: every value equals source text in row order; metadata present 800 rows
+PASS ods.products: every value equals source text in row order; metadata present 8000 rows
+PASS ods.seller_products: every value equals source text in row order; metadata present 13966 rows
+PASS ods.orders: every value equals source text in row order; metadata present 9311 rows
+PASS ods.order_items: every value equals source text in row order; metadata present 15639 rows
+PASS ods.payments: every value equals source text in row order; metadata present 10010 rows
+PASS ods.shipping: every value equals source text in row order; metadata present 9311 rows
+PASS ods.reviews: every value equals source text in row order; metadata present 6190 rows
+PASS ods.calendar: every value equals source text in row order; metadata present 1042 rows
+PASS empty source fields kept as empty text (not NULL) 194
+PASS one loaded batch, counts match manifest 
+PASS rerun skipped the already-loaded batch 
+PASS missing file: clear error naming the file missing source file for ods.reviews: /private/var/folders/zr/w7kryzfj31gb0bzz0b3y7bnc0000gn/T/tmpaocyslgs/a/layer/history_source/reviews.csv
+PASS missing file: no batch, no rows left behind (0, 0, 0)
+PASS hash mismatch: refused, nothing committed 
+PASS row-count mismatch midway (after orders loaded): rolled back, no false loaded status (0, 0, 0)
+PASS fixture: load then rerun skips without duplicating rows 
+18/18 passed
+exit=0

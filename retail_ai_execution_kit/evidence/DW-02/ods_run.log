@@ -1,0 +1,7 @@
+$ .venv/bin/python src/retail_bi/warehouse/ods.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --db warehouse/build/dev.duckdb --audit reports/warehouse/ods_audit.json
+2026-11-10T15:09:13+08:00
+{"batch_id": "9f5ba7d8e03a46b4-engineering-import-v1", "skipped_already_loaded": false, "all_counts_match": true}
+exit=0
+--- rerun (same batch must be skipped)
+{"batch_id": "9f5ba7d8e03a46b4-engineering-import-v1", "skipped_already_loaded": true, "all_counts_match": true}
+exit=0

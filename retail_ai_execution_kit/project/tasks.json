@@ -867,10 +867,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C09",
         "U02",
@@ -894,7 +894,9 @@
         "重跑不重复加载同一批次，失败不留下假成功状态。",
         "ODS行数与来源清单一致，缺失文件有清晰错误。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-02/2026-11-10-ods.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
