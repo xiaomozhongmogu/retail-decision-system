@@ -58,3 +58,6 @@ exit=0
 $ .venv/bin/python tests/data/quality_gate.py
 gate passed 10/10
 exit=0
+--- 2026-11-10T15:03:58+08:00 quality_gate.py now drops pytest run time from the report so reruns are byte-identical
+gate passed 10/10
+exit=0

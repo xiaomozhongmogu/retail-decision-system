@@ -1,0 +1,93 @@
+{
+  "task_id": "DATA-12",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic full scope",
+    "network": "gh 查询仓库可见性（PRIVATE）；其余未联网"
+  },
+  "command": "(docs/data_readme.md §2 one-click chain) ; .venv/bin/python evidence/DATA-12/build_release.py ; .venv/bin/python evidence/DATA-12/verify_release.py",
+  "exit_code": 0,
+  "summary": "发布阶段一数据包 stage1-data-2026-11-10：登记原始 ZIP（私有仓库，哈希与大小）、四层派生数据的目录与逐文件哈希、契约/字典/规则/质量报告哈希、一键重建命令、课程条件实测（明细 15,639 行、17 个有效字段、35 个月时间），时效按 D012 用户授权写明“教师未答复”，并列出 5 项未知事项。文档中的一键命令实际运行，门槛 10/10；登记表与文件、说明一致 28/28。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "f8c49414864f348ac441eb44edc1e6d72ae2b2aabe42d1e1d4cb37890d37ad50"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "5e348ba24dd1b759f31459049d9b410950db6d3e52fdeafb646d5b7c02ef8f65"
+    },
+    {
+      "path": "reports/data/profile_after.json",
+      "sha256": "49137528fbb3e1245cf8391b1a4b058cf2758b17c35f8b602c731fe44a60dcbe"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "evidence/DATA-12/build_release.py",
+      "sha256": "55d22e2d7d38ada595d03623bfa1badb049d985f22d807f439656653c722e6ef"
+    },
+    {
+      "path": "evidence/DATA-12/verify_release.py",
+      "sha256": "cbbdafa312380663dc36aac428a34ed963f4c160c118ec0f1c872c2cd86ab0d1"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/data/dataset_release.json",
+      "sha256": "8ee0af58ae9a9d4f0ab29ac75bdb434e04f957307b1ce194e3f560ec0d521ca7"
+    },
+    {
+      "path": "docs/data_readme.md",
+      "sha256": "992e92d0c63c92a00e52f2c64be8f5689d275d974f80ae091fa8c0726fce8cd8"
+    },
+    {
+      "path": "evidence/DATA-12/release_run.log",
+      "sha256": "24d2a3b180a9ecb7cf4788f25841a6466cd662c9c90f2f415ffa2a3295f73c6f"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "dataset_release.json 登记原始 ZIP 路径（私有仓库，已被 Git 跟踪）、派生目录（Git 忽略）与各层逐文件 SHA-256、契约/指标/规则/版本、字典与质量报告哈希；data_readme.md 第 2 节给出一条命令完成导入→清洗→集成→转换→质量门槛，已实际运行通过；核对脚本确认登记哈希与文件一致。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "规模：订单明细 15,639 行 ≥ 10,000（按记录数满足，写明解压字节 7,974,631 未达 10 MB、不以字节主张）；有效字段 17 个；时间字段 purchase_ts 覆盖 2024-01-01 至 2026-11-07 共 35 个月。时效口径：按 D012 用户授权的工作假设视为已确认，并明确写“教师未答复”，不冒称教师确认。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "交付方式：代码、文档与原始 ZIP 在课程私有仓库，派生数据按命令重建并按哈希核对，原始与派生数据都不公开（C07）。范围为冻结研究范围全量、未抽样，测试夹具与正式数据分开。未知事项列出 5 项：教师对合成数据与时效的认可、最终提交的数据交付方式、下载件许可、源时区、其他成员电脑的重建。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "课程允许的最终数据交付方式没有教师规定，本方案是项目自定。",
+    "只在本机 macOS arm64 实测；另一路径从零重建一致（DATA-07 证据），其他电脑未验证。"
+  ],
+  "steps": [
+    "认领 DATA-12（台账 a860ca74…）。",
+    "在全新克隆中重建时发现版本键依赖绝对路径，先修复为 clean-v2（见 DATA-07 证据）。",
+    "撰写 data_readme.md 与 build_release.py；按文档命令实际运行一键链（门槛 10/10）。",
+    "发现门槛报告含 pytest 运行时间导致重跑结果不同，去掉后连续两次哈希一致；更正隔离目录忽略检查（需带斜杠）。",
+    "verify_release.py 第 2、3 次各有 1 项失败：登记表与说明中三条未知事项措辞不一致，统一后 28/28。"
+  ],
+  "task_spec_sha256": "b6b9211d57a2abaadd67cc33dd56a98afaa39e4557d28638ee5672d85fe27692",
+  "performed_at": "2026-11-10T15:04:45.015212+08:00"
+}

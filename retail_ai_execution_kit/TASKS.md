@@ -34,7 +34,7 @@
 | DATA-09 | 完成集成与冲突处理 | proposal | done | DATA-07, DATA-08 |
 | DATA-10 | 设计归约、转换与时间特征 | proposal | done | DATA-09 |
 | DATA-11 | 执行清洗后质量门槛 | proposal | done | DATA-10 |
-| DATA-12 | 发布阶段一数据包 | proposal | in_progress | DATA-11 |
+| DATA-12 | 发布阶段一数据包 | proposal | done | DATA-11 |
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | todo | DATA-04, GOV-06 |
 | DW-02 | 实现ODS与加载审计 | midterm | todo | DW-01, DATA-12 |
 | DW-03 | 实现DWD事实及维表 | midterm | todo | DW-02 |
@@ -436,11 +436,11 @@
 2. 测试异常行隔离、重复导入、退款分类、金额差异和时间解析，给明确通过/失败结果。
 3. 每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。
 
-证据：evidence/DATA-11/2026-11-10-quality-gate-v2.json
+证据：evidence/DATA-11/2026-11-10-quality-gate-v3.json
 
 ### DATA-12 发布阶段一数据包
 
-- [ ] 状态：`in_progress`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C03, C04, C05, C07, C20, C24。
 - 前置：DATA-11。
 - 允许修改：`reports/data`, `docs`；另可写本任务证据/交接。
@@ -453,7 +453,7 @@
 2. 至少10000条或10MB、至少8字段、明确时间及已确认的时效口径全部有证据。
 3. 提供课程允许的数据交付方式；样本不能冒充全量，未知事项明确列出。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-12/2026-11-10-release.json
 
 
 ## DW — 数仓与OLAP

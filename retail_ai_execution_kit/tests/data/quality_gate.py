@@ -9,6 +9,7 @@ usage: .venv/bin/python tests/data/quality_gate.py
 Thresholds marked "project" are this project's engineering settings, not teacher numbers.
 """
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -56,6 +57,7 @@ rec = reconcile(clean, CUTOFF)
 tests = subprocess.run([sys.executable, '-m', 'pytest', str(ROOT / 'tests/data'), '-q', '-p', 'no:cacheprovider'],
                        cwd=ROOT, capture_output=True, text=True)
 test_summary = tests.stdout.strip().splitlines()[-1] if tests.stdout.strip() else tests.stderr.strip()[-200:]
+test_summary = re.sub(r' in [0-9.]+s', '', test_summary).strip('= ')   # drop run time so reruns give identical reports
 
 profile_after = {
     'task_id': 'DATA-11', 'clean_key': cman['key'], 'cutoff_exclusive': CUTOFF,

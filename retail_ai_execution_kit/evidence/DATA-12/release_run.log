@@ -1,0 +1,60 @@
+$ (one-click chain from docs/data_readme.md §2)
+2026-11-10T15:03:16+08:00
+PASSED scale: order_items >= 10,000 records (course rule) | 15639
+PASSED fields: >= 8 effective business fields (course rule) | 17
+PASSED time: explicit purchase timestamp with coverage | 2024-01-01 09:06:48+00 .. 2026-11-07 22:15:48+00, 35 months
+PASSED no silent row loss: every input row is output or quarantined | quarantined 0
+PASSED reconciliation: all transaction-rule checks true | 11/11
+PASSED amounts: no negative / refund rows | 0
+PASSED label: positives >= 1,000 (project) | 6618
+PASSED label: negatives >= 1,000 (project) | 85623
+PASSED label: every complete quarter (>= 12 weekly snapshots) has >= 100 positives (project; time-based test sets stay usable) | min 527 over 10 complete quarters
+PASSED rule tests pass (tests/data) | 19 passed in 0.69s
+gate passed 10/10
+exit=0
+$ .venv/bin/python evidence/DATA-12/build_release.py
+{"versions": {"contract": "synthetic-transaction-v1", "metrics_rules": "transaction-rules-v1", "engineering_import": "engineering-import-v1", "clean": "9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2", "integrated": "f4f1d4c30d91d6a0-integrate-v1", "transformed": "f6f9711c5b7cb385-transform-v1", "cutoff_exclusive": "2026-11-08T00:00:00+00:00"}, "git_tracked": true, "ignored": {"data/raw": true, "data/processed": true, "data/quarantine": false}, "gate": "passed"}
+exit=0
+--- 2026-11-10T15:04:00+08:00 build_release.py rerun (ignore check now uses directory paths with trailing slash)
+{"versions": {"contract": "synthetic-transaction-v1", "metrics_rules": "transaction-rules-v1", "engineering_import": "engineering-import-v1", "clean": "9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2", "integrated": "f4f1d4c30d91d6a0-integrate-v1", "transformed": "f6f9711c5b7cb385-transform-v1", "cutoff_exclusive": "2026-11-08T00:00:00+00:00"}, "git_tracked": true, "ignored": {"data/raw/": true, "data/processed/": true, "data/quarantine/": true}, "gate": "passed"}
+exit=0
+$ .venv/bin/python evidence/DATA-12/verify_release.py
+PASS source ZIP hash and size 
+PASS derived dirs ignored by git 
+PASS layer files match register: engineering import (DATA-05) 12 files
+PASS layer files match register: clean typed (DATA-07) 10 files
+PASS layer files match register: integrated (DATA-09) 2 files
+PASS layer files match register: transformed (DATA-10) 1 files
+PASS document hash contracts/data_contract.json 
+PASS document hash docs/data_dictionary.md 
+PASS document hash contracts/metrics.json 
+PASS document hash docs/transaction_rules.md 
+PASS document hash docs/preprocessing_methods.md 
+PASS document hash reports/data/dataset_selection.md 
+PASS document hash reports/data/profile_before.md 
+PASS document hash reports/data/profile_after.json 
+PASS document hash reports/data/quality_checks.json 
+PASS document hash reports/data/transaction_reconciliation.json 
+PASS document hash reports/data/integration_audit.json 
+PASS document hash reports/data/transform_audit.json 
+PASS readme names every layer directory 
+PASS readme one-click chain present and ends with the gate 
+PASS records threshold 
+PASS fields threshold 
+PASS time field and coverage 
+PASS freshness stated as user-authorized, not teacher 
+PASS gate passed with warning disclosed 
+PASS full scope, not sample 
+PASS no public release 
+FAIL unknowns listed in both 
+27/28 passed
+exit=1
+--- 2026-11-10T15:04:09+08:00 run 3 (run 2: 27/28, register wording of one unknown differed from the readme by one character; aligned)
+build exit=0
+FAIL unknowns listed in both 
+27/28 passed
+exit=1
+--- 2026-11-10T15:04:20+08:00 run 4 (run 3 still 27/28: two more unknowns differed in wording from the readme; aligned)
+build exit=0
+28/28 passed
+exit=0

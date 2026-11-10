@@ -3,7 +3,7 @@
   "project_title": "基于用户全生命周期的电商零售智能决策与AI运营助手系统",
   "baseline_date": "2026-11-05",
   "timezone": "Asia/Shanghai",
-  "project_state": "engineering_data_contract_approved_import_review_pending",
+  "project_state": "stage1_data_released_warehouse_next",
   "active_dataset": "合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认",
   "coordinator": "claude-opus-5-5（Claude Code 桌面端，对话“电商项目接力｜说继续即可”）；2026-11-10 14:30 起按用户“继续”接手，接手台账 fbff0147…",
   "milestones": {
@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "DATA-03..08 done (2026-11-10, claude-opus-5-5 coordinating): synthetic transaction package frozen (D013, per D012 user authorization, not teacher), contract synthetic-transaction-v1, clean-v1, transaction-rules-v1 (valid purchase = approved order). Next: DATA-09 integration audit, DATA-10 transforms, DATA-11 quality gate, DATA-12 release; DW-01 design.",
+  "state_note": "DATA-01..12 done (2026-11-10): stage-1 synthetic data package released (reports/data/dataset_release.json, docs/data_readme.md), per D012 user authorization (no teacher confirmation). Next: DW-01 warehouse design, then DW-02..; EDA-01; UI-01; AI-01; DOC-04.",
   "tasks": [
     {
       "id": "GOV-01",
@@ -771,7 +771,7 @@
         "每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。"
       ],
       "evidence": [
-        "evidence/DATA-11/2026-11-10-quality-gate-v2.json"
+        "evidence/DATA-11/2026-11-10-quality-gate-v3.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -784,10 +784,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "in_progress",
+      "status": "done",
       "owner": "claude-opus-5-5",
-      "reviewer": null,
-      "review_mode": null,
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C03",
         "C04",
@@ -812,7 +812,9 @@
         "至少10000条或10MB、至少8字段、明确时间及已确认的时效口径全部有证据。",
         "提供课程允许的数据交付方式；样本不能冒充全量，未知事项明确列出。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-12/2026-11-10-release.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false
