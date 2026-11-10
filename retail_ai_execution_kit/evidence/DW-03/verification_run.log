@@ -1,0 +1,66 @@
+$ .venv/bin/python evidence/DW-03/verify_dwd.py
+2026-11-10T15:11:44+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DW-03/verify_dwd.py", line 26, in <module>
+    before = build(DB)            # rebuild once more: must give the same result
+             ^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/dwd.py", line 32, in build
+    con.execute(SQL[step], params) if params else con.execute(SQL[step])
+                                                  ^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.ConstraintException: Constraint Error: Violates foreign key constraint because key "order_id: order_0000002" is still referenced by a foreign key in a different table. If this is an unexpected constraint violation, please refer to our foreign key limitations in the documentation
+exit=1
+--- run 2 (run 1 crashed at the first rebuild, see dwd_run.log)
+PASS dim_customer: DWD (SQL) equals DATA-07 clean (Python) row for row 3647 rows, diff 0/0
+PASS dim_product: DWD (SQL) equals DATA-07 clean (Python) row for row 8000 rows, diff 0/0
+PASS dim_seller: DWD (SQL) equals DATA-07 clean (Python) row for row 800 rows, diff 0/0
+PASS dim_date: DWD (SQL) equals DATA-07 clean (Python) row for row 1042 rows, diff 0/0
+PASS fact_order: DWD (SQL) equals DATA-07 clean (Python) row for row 9311 rows, diff 0/0
+PASS fact_order_line: DWD (SQL) equals DATA-07 clean (Python) row for row 15639 rows, diff 0/0
+PASS fact_payment: DWD (SQL) equals DATA-07 clean (Python) row for row 10010 rows, diff 0/0
+PASS fact_fulfillment: DWD (SQL) equals DATA-07 clean (Python) row for row 9311 rows, diff 0/0
+PASS reviews merged into fact_order: DWD (SQL) equals DATA-07 clean (Python) row for row 6190 rows, diff 0/0
+PASS dwd.dim_date key date_key unique 
+PASS dwd.dim_geo key geo_key unique 
+PASS dwd.dim_customer key customer_id unique 
+PASS dwd.dim_product key product_id unique 
+PASS dwd.dim_seller key seller_id unique 
+PASS dwd.fact_order key order_id unique 
+PASS no orphan keys 
+PASS star join keeps line grain and amount (15639, '1408601.73')
+PASS valid/cancelled/pending match DATA-08 reconciliation 
+PASS late flags match DATA-10 rates 
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DW-03/verify_dwd.py", line 74, in <module>
+    again = build(DB)
+            ^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/dwd.py", line 24, in build
+    con = connect(db)
+          ^^^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/db.py", line 19, in connect
+    con = duckdb.connect(str(path), read_only=read_only)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.ConnectionException: Connection Error: Can't open a connection to same database file with a different configuration than existing connections
+exit=1
+--- run 3 (run 2: all checks before the second rebuild passed; the verifier kept its read-only connection open while rebuilding; now closes it first)
+PASS dim_customer: DWD (SQL) equals DATA-07 clean (Python) row for row 3647 rows, diff 0/0
+PASS dim_product: DWD (SQL) equals DATA-07 clean (Python) row for row 8000 rows, diff 0/0
+PASS dim_seller: DWD (SQL) equals DATA-07 clean (Python) row for row 800 rows, diff 0/0
+PASS dim_date: DWD (SQL) equals DATA-07 clean (Python) row for row 1042 rows, diff 0/0
+PASS fact_order: DWD (SQL) equals DATA-07 clean (Python) row for row 9311 rows, diff 0/0
+PASS fact_order_line: DWD (SQL) equals DATA-07 clean (Python) row for row 15639 rows, diff 0/0
+PASS fact_payment: DWD (SQL) equals DATA-07 clean (Python) row for row 10010 rows, diff 0/0
+PASS fact_fulfillment: DWD (SQL) equals DATA-07 clean (Python) row for row 9311 rows, diff 0/0
+PASS reviews merged into fact_order: DWD (SQL) equals DATA-07 clean (Python) row for row 6190 rows, diff 0/0
+PASS dwd.dim_date key date_key unique 
+PASS dwd.dim_geo key geo_key unique 
+PASS dwd.dim_customer key customer_id unique 
+PASS dwd.dim_product key product_id unique 
+PASS dwd.dim_seller key seller_id unique 
+PASS dwd.fact_order key order_id unique 
+PASS no orphan keys 
+PASS star join keeps line grain and amount (15639, '1408601.73')
+PASS valid/cancelled/pending match DATA-08 reconciliation 
+PASS late flags match DATA-10 rates 
+PASS rebuild is idempotent (same counts, all checks) 
+20/20 passed
+exit=0

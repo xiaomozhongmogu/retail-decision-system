@@ -1,0 +1,9 @@
+$ .venv/bin/python src/retail_bi/warehouse/dwd.py --db warehouse/build/dev.duckdb --audit reports/warehouse/dwd_audit.json
+2026-11-10T15:11:16+08:00
+{"counts": {"dim_date": 1042, "dim_geo": 105, "dim_customer": 3647, "dim_product": 8000, "dim_seller": 800, "fact_order": 9311, "fact_order_line": 15639, "fact_payment": 10010, "fact_fulfillment": 9311}, "checks": {"grain_orders_equal_ods": true, "grain_lines_equal_ods": true, "grain_payments_equal_ods": true, "grain_fulfillment_equal_ods": true, "dims_equal_ods": true, "cast_checks_zero": true, "order_merch_equals_line_merch": true, "payments_reconcile": true, "no_approval_equals_cancelled": true, "no_anonymous_orders": true}}
+exit=0
+--- run 2 (run 1 above built once; the verifier's rebuild then failed: DELETE-based clear hit DuckDB's same-transaction foreign key limitation. clear now drops tables child-first and recreates them from sql/ddl.sql)
+$ .venv/bin/python src/retail_bi/warehouse/dwd.py --db warehouse/build/dev.duckdb --audit reports/warehouse/dwd_audit.json
+2026-11-10T15:12:01+08:00
+{"counts": {"dim_date": 1042, "dim_geo": 105, "dim_customer": 3647, "dim_product": 8000, "dim_seller": 800, "fact_order": 9311, "fact_order_line": 15639, "fact_payment": 10010, "fact_fulfillment": 931
+exit=0

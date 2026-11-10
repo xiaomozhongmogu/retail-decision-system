@@ -908,10 +908,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C09",
         "U02",
@@ -934,7 +934,9 @@
         "维度键唯一或版本规则明确，事实关联保持原有粒度。",
         "取消/退款、匿名客户和隔离记录的处理与数据报告一致。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-03/2026-11-10-dwd.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

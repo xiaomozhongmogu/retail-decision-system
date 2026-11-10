@@ -37,7 +37,7 @@
 | DATA-12 | 发布阶段一数据包 | proposal | done | DATA-11 |
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | done | DATA-04, GOV-06 |
 | DW-02 | 实现ODS与加载审计 | midterm | done | DW-01, DATA-12 |
-| DW-03 | 实现DWD事实及维表 | midterm | todo | DW-02 |
+| DW-03 | 实现DWD事实及维表 | midterm | done | DW-02 |
 | DW-04 | 实现DWS业务汇总 | midterm | todo | DW-03 |
 | DW-05 | 建立时点客户快照接口 | midterm | todo | DW-03 |
 | DW-06 | 实现ADS与指标语义 | midterm | todo | DW-04, DW-05 |
@@ -494,7 +494,7 @@
 
 ### DW-03 实现DWD事实及维表
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C09, U02, Q01。
 - 前置：DW-02。
 - 允许修改：`sql`, `src/retail_bi/warehouse`, `reports/warehouse`；另可写本任务证据/交接。
@@ -507,7 +507,7 @@
 2. 维度键唯一或版本规则明确，事实关联保持原有粒度。
 3. 取消/退款、匿名客户和隔离记录的处理与数据报告一致。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-03/2026-11-10-dwd.json
 
 ### DW-04 实现DWS业务汇总
 
