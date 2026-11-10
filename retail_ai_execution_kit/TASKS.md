@@ -41,7 +41,7 @@
 | DW-04 | 实现DWS业务汇总 | midterm | done | DW-03 |
 | DW-05 | 建立时点客户快照接口 | midterm | done | DW-03 |
 | DW-06 | 实现ADS与指标语义 | midterm | done | DW-04, DW-05 |
-| DW-07 | 实现可重跑ETL编排 | midterm | todo | DW-06, GOV-07 |
+| DW-07 | 实现可重跑ETL编排 | midterm | done | DW-06, GOV-07 |
 | DW-08 | 完成OLAP标准查询集 | midterm | todo | DW-06 |
 | DW-09 | 校验数仓约束和对账 | midterm | todo | DW-07, DW-08 |
 | DW-10 | 发布只读查询快照 | midterm | todo | DW-09 |
@@ -229,7 +229,7 @@
 2. Git忽略密钥和大数据，配置样例无真实秘钥；保留课程私有数据边界。
 3. 区分当前已实现命令与计划命令；干净环境最小导入或帮助命令实际成功。
 
-证据：evidence/GOV-07/2026-11-09-env-smoke.json
+证据：evidence/GOV-07/2026-11-10-dw07-recheck.json
 
 ### GOV-08 建立认领、证据和交接流程
 
@@ -562,7 +562,7 @@
 
 ### DW-07 实现可重跑ETL编排
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C09, C20, U02, Q02。
 - 前置：DW-06, GOV-07。
 - 允许修改：`src/retail_bi`, `reports/warehouse`, `docs/COMMANDS.md`；另可写本任务证据/交接。
@@ -575,7 +575,7 @@
 2. 重跑幂等，临时产物完成后原子发布；应用不读取半成品。
 3. 记录每层行数、金额、耗时、输入输出版本和异常。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-07/2026-11-10-pipeline.json
 
 ### DW-08 完成OLAP标准查询集
 

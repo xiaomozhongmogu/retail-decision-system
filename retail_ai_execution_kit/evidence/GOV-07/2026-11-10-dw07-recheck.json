@@ -1,0 +1,105 @@
+{
+  "task_id": "GOV-07",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5（复核）",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "cpu": "Apple M1 Pro",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv, uv 0.12.7)",
+    "system_lib": "Homebrew libomp 23.1.5"
+  },
+  "command": ".venv/bin/python scripts/env_smoke.py",
+  "exit_code": 0,
+  "summary": "DW-07 在 docs/COMMANDS.md 登记已实现的数据与数仓命令后复核 GOV-07：环境冒烟重跑通过（失败 0），COMMANDS.md 仍区分已实现（治理、环境、数据与数仓）与计划中命令，三条验收条件仍满足。原安装过程与首次失败记录见 2026-11-09 证据与 setup_run.log、smoke_run.log。",
+  "inputs": [
+    {
+      "path": "docs/architecture.md",
+      "sha256": "e064898441aef08a42e3410859cc124a3195c9d4cad611a1b91f4076dde291a1"
+    },
+    {
+      "path": "reports/governance/workspace_inventory.md",
+      "sha256": "8c8492018ef411becc7c797c40d0a34acfa9da76effe50c4fd90a2f3fdf6a0c1"
+    },
+    {
+      "path": ".env.example",
+      "sha256": "53e08b08d2bc8be49efe140683644f0dbad71557c575465c9d399e90c22554e2"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/COMMANDS.md",
+      "sha256": "2d1a4ba474ba27bf6b4cb7f00754310615b8f582af0d1110e381f76bf431101e"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "663c05508991d3ece424e7e18d7cd7175f763fb528c78fc803e47084adc972b8"
+    },
+    {
+      "path": "requirements.lock",
+      "sha256": "6adc2d1ec6d94e895c79c904a78d1654302fc9eaf5ef1f4a3d05f39d6e376eec"
+    },
+    {
+      "path": "reports/governance/environment_smoke.md",
+      "sha256": "01533488e77192319cc13f0d1cc750e1de7af6332ab8ccdb1a147cf669f9037e"
+    },
+    {
+      "path": "scripts/env_smoke.py",
+      "sha256": "caeb0e9c5bc868295d961b78eb88bd7b1eb18d81612cba126915bedbca2992cb"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "2e66a67ed8af63ad75ed59b1b0b6a04ce4a551f612362a7981484d523016f1e2"
+    },
+    {
+      "path": "evidence/GOV-07/setup_run.log",
+      "sha256": "044cf8d87ab075070ae37557133e8a6eaab09a44e215988956a3eb5dc5887456"
+    },
+    {
+      "path": "evidence/GOV-07/smoke_run.log",
+      "sha256": "6af08e5dd11b986b8d0bdd6b4fc5c69c688c89f9983d91fa24c1ee600089a3ee"
+    },
+    {
+      "path": "evidence/GOV-07/gitignore_check.log",
+      "sha256": "a637e88da05a88573418310d085ab240cc0507ef52502d4eb30776c55a2cf2fc"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "environment_smoke.md §1：记录了 Apple M1 Pro/arm64/macOS 27.2 与 Python 3.12.14；锁文件头记录了生成命令；安装和冒烟的退出码见 setup_run.log 与 smoke_run.log（修复后 exit=0）；启动方法写入 COMMANDS.md。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "gitignore_check.log：.env、.env.*、.venv、data/raw|processed、models、warehouse、*.duckdb、logs、.intent-lens 均被忽略；.env.example 因否定规则保留跟踪，三个键的值都为空；报告写明课程原件会被跟踪，因此仓库不能公开。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "COMMANDS.md 新增“已实现：项目环境”一节，计划中的业务命令仍标为未实现；在新建的干净 .venv 中，env_smoke.py（最小导入与训练）和 streamlit --version 都实际成功。（2026-11-10 复核：COMMANDS.md 新增“已实现：数据与数仓”一节，均有 DW-07/DATA 任务的实际运行证据；计划中表格标明已实现与未实现。）"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "“干净环境”是本机新建的虚拟环境，不是第二台机器（REL-02）。",
+    "第一次冒烟失败（libomp）的结果保留在 smoke_run.log。",
+    "没有启动 Streamlit 页面，也没有调用 LLM。",
+    "brew install libomp 修改的是本机 Homebrew，项目目录之外。",
+    "本证据替代 2026-11-09 证据（COMMANDS.md 与 smoke_run.log 变更后失效，旧证据保留）。"
+  ],
+  "steps": [
+    "编写 pyproject.toml 并用 uv 生成锁文件。",
+    "新建 .venv 并按锁文件安装，uv pip check 通过。",
+    "编写 scripts/env_smoke.py 并运行；第一次失败后安装 libomp 再重跑。",
+    "扩充 .gitignore，在临时仓库中用 git check-ignore 实测。",
+    "更新 COMMANDS.md，编写 environment_smoke.md。",
+    "2026-11-10 DW-07 修改 docs/COMMANDS.md 后，重跑 scripts/env_smoke.py（退出码 0，追加到 smoke_run.log），审阅文档区分已实现与计划命令。"
+  ],
+  "task_spec_sha256": "45bcd39c48a6047891584bb8abae2d2b3877aee6686cd9521aa21560dcab14dc",
+  "performed_at": "2026-11-10T15:21:59.842963+08:00"
+}

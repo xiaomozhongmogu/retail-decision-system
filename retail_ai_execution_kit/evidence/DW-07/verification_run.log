@@ -1,0 +1,23 @@
+$ .venv/bin/python evidence/DW-07/verify_pipeline.py
+2026-11-10T15:20:47+08:00
+PASS first run: all stages ok, ending with publish 
+PASS report records rows per layer, amounts, durations, input versions 
+PASS rerun with same inputs is a no-op: same version, existing build verified, not rebuilt ['ingest', 'clean', 'verify_existing']
+PASS injected failure at dws: exit 1, failed stage named with error 
+PASS failed run leaves no half-built file []
+FAIL failed run does not touch the published build or latest.json 
+PASS forced full rebuild succeeds with identical checked values and row counts 
+PASS latest.json points to the published version 
+7/8 passed
+exit=1
+--- run 2 (run 1: 7/8 — a reuse run rewrote latest.json's published_at; fixed in pipeline.py)
+PASS first run: all stages ok, ending with publish 
+PASS report records rows per layer, amounts, durations, input versions 
+PASS rerun with same inputs is a no-op: same version, existing build verified, not rebuilt ['ingest', 'clean', 'verify_existing']
+PASS injected failure at dws: exit 1, failed stage named with error 
+PASS failed run leaves no half-built file []
+PASS failed run does not touch the published build or latest.json 
+PASS forced full rebuild succeeds with identical checked values and row counts 
+PASS latest.json points to the published version 
+8/8 passed
+exit=0

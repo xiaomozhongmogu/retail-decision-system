@@ -292,7 +292,7 @@
         "区分当前已实现命令与计划命令；干净环境最小导入或帮助命令实际成功。"
       ],
       "evidence": [
-        "evidence/GOV-07/2026-11-09-env-smoke.json"
+        "evidence/GOV-07/2026-11-10-dw07-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1069,10 +1069,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C09",
         "C20",
@@ -1097,7 +1097,9 @@
         "重跑幂等，临时产物完成后原子发布；应用不读取半成品。",
         "记录每层行数、金额、耗时、输入输出版本和异常。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-07/2026-11-10-pipeline.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

@@ -39,16 +39,41 @@ uv pip sync --python .venv/bin/python requirements.lock
 - LLM 凭据：复制 `.env.example` 为 `.env` 后填写；`.env` 已被 `.gitignore` 忽略。冒烟检查不读取凭据，也不联网。
 - 系统自带的 `python3`（3.9.6）只用于运行上面的治理脚本，不用于业务代码。
 
+## 已实现：数据与数仓（2026-11-10 实际运行通过）
+
+工作目录：`retail_ai_execution_kit/`，解释器 `.venv/bin/python`。数据完全合成（D012/D013）。
+
+```bash
+.venv/bin/python src/retail_bi/pipeline.py build
+```
+
+- 用途：从原始 ZIP 一条命令重建到 ADS（导入 → 清洗 → ODS → DWD → DWS → 时点快照与标签 → ADS → 交叉检查 → 原子发布）。
+- 输出：`warehouse/builds/<版本>.duckdb`（版本由输入内容决定）与指针 `warehouse/builds/latest.json`；运行报告 `reports/warehouse/etl_run.json`。
+- 成功条件：退出码 0，报告 `status: ok`。同样的输入重跑只复核已有版本；`--force` 强制重建。失败时退出码 1，报告写明失败阶段，不留半成品，不改动已发布版本（DW-07 实测）。
+- 本机耗时约 2 秒（DW-07 实测）。
+
+```bash
+.venv/bin/python -m pytest tests/data -q
+```
+
+- 数据规则测试（隔离、重复导入、取消/待审批、金额差额、时间解析），夹具只在临时目录中使用。
+
+```bash
+.venv/bin/python tests/data/quality_gate.py
+```
+
+- 清洗后质量门槛，成功时输出 `gate passed 10/10`。
+- 只重建数据层（不建仓）的分步命令见 `docs/data_readme.md` 第 2 节。
+
 ## 计划中：业务命令
 
 以下入口要等对应实现任务实际建立后才能登记为可用（环境已由 GOV-07 建立）：
 
 | 目的 | 拟定形式 | 当前状态 |
 | --- | --- | --- |
-| 数据探查/导入 | `python -m retail_bi.cli ingest --config ...` | 未实现 |
-| 清洗和建仓 | `python -m retail_bi.cli build --config ...` | 未实现 |
-| 构建样本/训练 | `python -m retail_bi.cli train --config ...` | 未实现 |
-| 数据/模型/AI验证 | `python -m retail_bi.cli verify --suite ...` | 未实现 |
+| 数据导入与建仓 | `.venv/bin/python src/retail_bi/pipeline.py build` | **已实现（DW-07）**，见上节 |
+| 构建样本/训练 | 待 ML-02 起实现 | 未实现 |
+| 数据/模型/AI验证 | 数据部分见上节；模型与 AI 待实现 | 部分实现 |
 | Web | `streamlit run app.py` | 未实现 |
 
 实现后填写精确命令、工作目录、输入配置、输出路径、成功条件、预期耗时和真实运行证据。不能因为本文列出命令就写“已运行”。

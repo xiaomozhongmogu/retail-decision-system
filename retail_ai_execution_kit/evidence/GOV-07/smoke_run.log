@@ -165,3 +165,11 @@ $ .venv/bin/python scripts/env_smoke.py
   "failures": []
 }
 [exit=0]
+--- 2026-11-10T15:21:32+08:00 GOV-07 recheck after DW-07 registered implemented commands in docs/COMMANDS.md
+$ .venv/bin/python scripts/env_smoke.py
+  "plotly_figure": {
+    "traces": 1
+  },
+  "failures": []
+}
+exit=0
