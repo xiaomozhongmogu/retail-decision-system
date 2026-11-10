@@ -1,0 +1,129 @@
+{
+  "task_id": "DATA-07",
+  "generated_by": "src/retail_bi/data/clean.py",
+  "clean_key": "a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1",
+  "identity": {
+    "layer_manifest_sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10",
+    "contract_version": "synthetic-transaction-v1",
+    "contract_sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac",
+    "clean_version": "clean-v1"
+  },
+  "reused_existing_output": true,
+  "row_counts": {
+    "customers": {
+      "rows_in": 3647,
+      "rows_after_type_and_pk": 3647,
+      "rows_out": 3647,
+      "rows_quarantined": 0
+    },
+    "sellers": {
+      "rows_in": 800,
+      "rows_after_type_and_pk": 800,
+      "rows_out": 800,
+      "rows_quarantined": 0
+    },
+    "products": {
+      "rows_in": 8000,
+      "rows_after_type_and_pk": 8000,
+      "rows_out": 8000,
+      "rows_quarantined": 0
+    },
+    "seller_products": {
+      "rows_in": 13966,
+      "rows_after_type_and_pk": 13966,
+      "rows_out": 13966,
+      "rows_quarantined": 0
+    },
+    "orders": {
+      "rows_in": 9311,
+      "rows_after_type_and_pk": 9311,
+      "rows_out": 9311,
+      "rows_quarantined": 0
+    },
+    "order_items": {
+      "rows_in": 15639,
+      "rows_after_type_and_pk": 15639,
+      "rows_out": 15639,
+      "rows_quarantined": 0
+    },
+    "payments": {
+      "rows_in": 10010,
+      "rows_after_type_and_pk": 10010,
+      "rows_out": 10010,
+      "rows_quarantined": 0
+    },
+    "shipping": {
+      "rows_in": 9311,
+      "rows_after_type_and_pk": 9311,
+      "rows_out": 9311,
+      "rows_quarantined": 0
+    },
+    "reviews": {
+      "rows_in": 6190,
+      "rows_after_type_and_pk": 6190,
+      "rows_out": 6190,
+      "rows_quarantined": 0
+    },
+    "calendar": {
+      "rows_in": 1042,
+      "rows_after_type_and_pk": 1042,
+      "rows_out": 1042,
+      "rows_quarantined": 0
+    }
+  },
+  "quarantine": {
+    "dir": null,
+    "counts": {}
+  },
+  "imputation": "没有任何插补：ID 不插补，数值不做均值填充，事件时间空值保留",
+  "missing_policy": {
+    "sellers.deactivated_at": {
+      "nulls": 800,
+      "rule": "保留空值；该列全空或不适用"
+    },
+    "orders.order_approved_at": {
+      "nulls": 194,
+      "rule": "保留空值，表示事件在截止前尚未发生（与最终状态严格对应）；不插补"
+    },
+    "orders.order_delivered_carrier_date": {
+      "nulls": 477,
+      "rule": "保留空值，表示事件在截止前尚未发生（与最终状态严格对应）；不插补"
+    },
+    "orders.order_delivered_customer_date": {
+      "nulls": 656,
+      "rule": "保留空值，表示事件在截止前尚未发生（与最终状态严格对应）；不插补"
+    },
+    "shipping.actual_delivery_days": {
+      "nulls": 656,
+      "rule": "保留空值（未送达订单没有实际天数）；DATA-10 从时间戳重算"
+    },
+    "shipping.delivery_delay_days": {
+      "nulls": 656,
+      "rule": "保留空值（未送达订单没有实际天数）；DATA-10 从时间戳重算"
+    }
+  },
+  "customer_coverage": {
+    "summary_scope_orders": 9311,
+    "customer_model_scope_orders": 9311,
+    "unknown_customer_orders": 0,
+    "rule": "未知客户的订单可进入经营汇总，但不进入客户级指标和模型；本数据 customer_id 全部已知，所以两种覆盖都等于全部订单，仍分别报告"
+  },
+  "duplicates": {
+    "exact_duplicate_rows_removed": 0,
+    "primary_key_duplicates_quarantined": 0,
+    "same_product_repeated_lines_kept": 779,
+    "same_product_rule": "保留。同单重复商品是同一上架、每行价格不同的独立明细（DATA-06），不是重复导入；主键是 order_id+order_item_seq，不假定订单+商品唯一，也不把重复行合并成数量",
+    "same_customer_same_day_orders": "保留。订单号不同、时间不同，是独立订单"
+  },
+  "duplicate_import_guard": "输出目录键 = 输入层清单哈希前 16 位 + 契约版本 + clean-v1；同一输入重跑会校验已有输出哈希后直接返回，不重写；身份不一致或文件被改则拒绝；独占锁防并发写入",
+  "type_conversion": {
+    "string": "string",
+    "integer": "int64",
+    "decimal(12,2)": "decimal128(12, 2)",
+    "double": "double",
+    "boolean": "bool",
+    "date": "date32[day]",
+    "timestamp": "timestamp[ms, tz=UTC]"
+  },
+  "standard_names": "输出列使用契约 standard_name（如 order_purchase_timestamp → purchase_ts）"
+}

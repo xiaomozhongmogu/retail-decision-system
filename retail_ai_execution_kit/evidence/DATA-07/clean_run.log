@@ -1,0 +1,38 @@
+$ .venv/bin/python src/retail_bi/data/clean.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --out-root data/processed/clean --quarantine-root data/quarantine --report reports/data/cleaning_missing_duplicates.json
+2026-11-10T14:45:54+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/clean.py", line 259, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/clean.py", line 251, in main
+    target, manifest, reused = build(a.layer, a.contract, a.out_root, a.quarantine_root)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/clean.py", line 157, in build
+    raise ValueError(f'{table}: Parquet round trip changed data')
+ValueError: orders: Parquet round trip changed data
+exit=1
+--- rerun (duplicate-import guard)
+2026-11-10T14:45:55+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/clean.py", line 259, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/clean.py", line 251, in main
+    target, manifest, reused = build(a.layer, a.contract, a.out_root, a.quarantine_root)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/clean.py", line 157, in build
+    raise ValueError(f'{table}: Parquet round trip changed data')
+ValueError: orders: Parquet round trip changed data
+exit=1
+--- attempt 2: Parquet stores second-precision timestamps as ms, so the round-trip check failed on type (values equal); arrow type changed to timestamp(ms, UTC). Attempt 1 left no output (staging removed, lock released).
+$ .venv/bin/python src/retail_bi/data/clean.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --out-root data/processed/clean --quarantine-root data/quarantine --report reports/data/cleaning_missing_duplicates.json
+2026-11-10T14:46:12+08:00
+{"target": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1", "reused": false, "tables": {"customers": {"rows_in": 3647, "rows_after_type_and_pk": 3647, "rows_out": 3647, "rows_quarantined": 0}, "sellers": {"rows_in": 800, "rows_after_type_and_pk": 800, "rows_out": 800, "rows_quarantined": 0}, "products": {"rows_in": 8000, "rows_after_type_and_pk": 8000, "rows_out": 8000, "rows_quarantined": 0}, "seller_products": {"rows_in": 13966, "rows_after_type_and_pk": 13966, "rows_out": 13966, "rows_quarantined": 0}, "orders": {"rows_in": 9311, "rows_after_type_and_pk": 9311, "rows_out": 9311, "rows_quarantined": 0}, "order_items": {"rows_in": 15639, "rows_after_type_and_pk": 15639, "rows_out": 15639, "rows_quarantined": 0}, "payments": {"rows_in": 10010, "rows_after_type_and_pk": 10010, "rows_out": 10010, "rows_quarantined": 0}, "shipping": {"rows_in": 9311, "rows_after_type_and_pk": 9311, "rows_out": 9311, "rows_quarantined": 0}, "reviews": {"rows_in": 6190, "rows_after_type_and_pk": 6190, "rows_out": 6190, "rows_quarantined": 0}, "calendar": {"rows_in": 1042, "rows_after_type_and_pk": 1042, "rows_out": 1042, "rows_quarantined": 0}}, "quarantine": {"dir": null, "counts": {}}}
+exit=0
+--- rerun (duplicate-import guard)
+2026-11-10T14:46:13+08:00
+{"target": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1", "reused": true, "tables": {"customers": {"rows_in": 3647, "rows_after_type_and_pk": 3647, "rows_out": 3647, "rows_quarantined": 0}, "sellers": {"rows_in": 800, "rows_after_type_and_pk": 800, "rows_out": 800, "rows_quarantined": 0}, "products": {"rows_in": 8000, "rows_after_type_and_pk": 8000, "rows_out": 8000, "rows_quarantined": 0}, "seller_products": {"rows_in": 13966, "rows_after_type_and_pk": 13966, "rows_out": 13966, "rows_quarantined": 0}, "orders": {"rows_in": 9311, "rows_after_type_and_pk": 9311, "rows_out": 9311, "rows_quarantined": 0}, "order_items": {"rows_in": 15639, "rows_after_type_and_pk": 15639, "rows_out": 15639, "rows_quarantined": 0}, "payments": {"rows_in": 10010, "rows_after_type_and_pk": 10010, "rows_out": 10010, "rows_quarantined": 0}, "shipping": {"rows_in": 9311, "rows_after_type_and_pk": 9311, "rows_out": 9311, "rows_quarantined": 0}, "reviews": {"rows_in": 6190, "rows_after_type_and_pk": 6190, "rows_out": 6190, "rows_quarantined": 0}, "calendar": {"rows_in": 1042, "rows_after_type_and_pk": 1042, "rows_out": 1042, "rows_quarantined": 0}}, "quarantine": {"dir": null, "counts": {}}}
+exit=0
+--- attempt 3: added check that layer files still match the import manifest; existing output is reused only if identity matches
+$ .venv/bin/python src/retail_bi/data/clean.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --out-root data/processed/clean --quarantine-root data/quarantine --report reports/data/cleaning_missing_duplicates.json
+2026-11-10T14:46:58+08:00
+{"target": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1", "reused":
+exit=0

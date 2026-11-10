@@ -1,0 +1,59 @@
+$ .venv/bin/python evidence/DATA-07/verify_clean.py
+2026-11-10T14:46:58+08:00
+PASS customers: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS sellers: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS products: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS seller_products: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS orders: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS order_items: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS payments: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS shipping: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS reviews: rows, nulls (no imputation), IDs, money sums, keys equal source 
+FAIL calendar: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS timestamps typed as UTC (engineering assumption) timestamp[ms, tz=UTC]
+PASS nothing quarantined in real data and counts reconcile 
+PASS summary and customer-model coverage reported separately 
+PASS repeated product lines kept with reason 
+PASS fixture: bad timestamp quarantined with source line and reason 
+PASS fixture: duplicate primary key quarantined 
+PASS fixture: dependent rows of the bad order quarantined as orphans, not silently dropped 
+PASS fixture: every input row is either output or quarantined 
+PASS fixture: rerun reuses output without rewriting 
+PASS fixture: tampered output refused, not overwritten 
+PASS fixture: same version key with a different contract is refused 
+PASS fixture: input layer file changed after import is refused 
+PASS fixture: active lock refused 
+PASS fixture: lock left in place for a person to inspect 
+PASS real data untouched by fixture tests 
+24/25 passed
+exit=1
+--- run 2 (run 1 FAIL on calendar: verifier compared the raw key string '2024-01-01T00:00:00' with the typed date; now parses source keys with the contract type before comparing)
+$ .venv/bin/python evidence/DATA-07/verify_clean.py
+2026-11-10T14:47:11+08:00
+PASS customers: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS sellers: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS products: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS seller_products: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS orders: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS order_items: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS payments: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS shipping: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS reviews: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS calendar: rows, nulls (no imputation), IDs, money sums, keys equal source 
+PASS timestamps typed as UTC (engineering assumption) timestamp[ms, tz=UTC]
+PASS nothing quarantined in real data and counts reconcile 
+PASS summary and customer-model coverage reported separately 
+PASS repeated product lines kept with reason 
+PASS fixture: bad timestamp quarantined with source line and reason 
+PASS fixture: duplicate primary key quarantined 
+PASS fixture: dependent rows of the bad order quarantined as orphans, not silently dropped 
+PASS fixture: every input row is either output or quarantined 
+PASS fixture: rerun reuses output without rewriting 
+PASS fixture: tampered output refused, not overwritten 
+PASS fixture: same version key with a different contract is refused 
+PASS fixture: input layer file changed after import is refused 
+PASS fixture: active lock refused 
+PASS fixture: lock left in place for a person to inspect 
+PASS real data untouched by fixture tests 
+25/25 passed
+exit=0

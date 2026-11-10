@@ -29,7 +29,7 @@
 | DATA-04 | 完成正式数据契约和字典 | proposal | done | DATA-03 |
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | done | DATA-04 |
 | DATA-06 | 全量质量剖析与问题基线 | proposal | done | DATA-05 |
-| DATA-07 | 处理缺失、类型与重复导入 | proposal | todo | DATA-06 |
+| DATA-07 | 处理缺失、类型与重复导入 | proposal | done | DATA-06 |
 | DATA-08 | 统一购买、取消、退款与金额规则 | proposal | todo | DATA-06 |
 | DATA-09 | 完成集成与冲突处理 | proposal | todo | DATA-07, DATA-08 |
 | DATA-10 | 设计归约、转换与时间特征 | proposal | todo | DATA-09 |
@@ -355,7 +355,7 @@
 
 ### DATA-07 处理缺失、类型与重复导入
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C08, Q01。
 - 前置：DATA-06。
 - 允许修改：`src/retail_bi/data`, `reports/data`, `data/quarantine`；另可写本任务证据/交接。
@@ -368,7 +368,7 @@
 2. 解析失败进入隔离数据，保留来源行与原因，不能静默消失。
 3. 文件哈希防重复导入；原始重复行是否删除有业务理由，不假定发票加商品唯一。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-07/2026-11-10-clean.json
 
 ### DATA-08 统一购买、取消、退款与金额规则
 

@@ -1,0 +1,85 @@
+{
+  "task_id": "DATA-07",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), pyarrow 26.0.1",
+    "data_mode": "fully_synthetic full scope; failure-path fixtures in a temporary directory",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/data/clean.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --out-root data/processed/clean --quarantine-root data/quarantine --report reports/data/cleaning_missing_duplicates.json; .venv/bin/python evidence/DATA-07/verify_clean.py",
+  "exit_code": 0,
+  "summary": "按已批准契约做类型化清洗：10 张表全部行通过类型、主键和外键检查，输出 Parquet（标准列名、USD 十进制、UTC 毫秒时间戳），没有行进入隔离区，没有任何插补。隔离、重复导入保护、篡改拒绝、契约变化拒绝、输入改动拒绝、锁冲突都用临时夹具实测。核对 25/25 通过。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "reports/data/profile_before.json",
+      "sha256": "015d01d93c42a7afe37f6b34698ded14f2907cc20f1e1d3d06ed1f7908dbbcdb"
+    },
+    {
+      "path": "evidence/DATA-07/verify_clean.py",
+      "sha256": "7a1525e5954439a45126db54fb456bb1a80bdf969d8f4630ab66cfcfd8ddaa42"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/data/clean.py",
+      "sha256": "2a221571ae525946d3a08a8c9b78939595b9eaf28073e8f6ea12d930ba0a22dc"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "24fbd24ae82a4341c20facea1556e4d2a1849cdd5d26c14c71f3eb1e9c7b758a"
+    },
+    {
+      "path": "evidence/DATA-07/clean_run.log",
+      "sha256": "8f21da6ae5414bf69baea4cf57ab77e6f0cecb79c64af8d95738b3275d6e05e1"
+    },
+    {
+      "path": "evidence/DATA-07/verification_run.log",
+      "sha256": "bf665b3624c5d9d65e593a018db7bd83606ff2dbdde9935727d0034d72887b9a"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "ID 一律不插补：主键或外键为空的行进入隔离区；核对确认输出中所有主外键列无空值、每列空值数与契约实测相同（没有任何均值或其他插补）。报告分别给出经营汇总覆盖（9,311 单）与客户建模覆盖（9,311 单，未知客户 0），并写明未知客户只进汇总、不进客户模型的规则。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "类型解析失败、主键重复、外键孤儿都写入 data/quarantine/<key>/<table>.csv，含源文件行号、列、原值和原因；夹具中把一行下单时间改成非法值后，该行（源第 6 行）进入隔离区，其明细、支付、物流行作为孤儿也进入隔离区；每张表都满足输入行数 = 输出 + 隔离。正式数据隔离 0 行。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "输出键 = 输入层清单哈希 + 契约版本 + clean-v1，身份还记录契约文件哈希；重跑命中已有输出并校验哈希、不重写（日志与夹具都验证）；输出被篡改、同版本键但契约内容不同、输入层文件在导入后被改、存在锁时均拒绝。完全重复行 0；同单重复商品 779 行保留并写明理由：每行价格不同的独立明细，主键是订单+明细序号，不假定订单+商品唯一，也不合并为数量；同客户同日多单保留。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "输出数据（data/processed/clean、data/quarantine）被 Git 忽略，只提交代码、报告和日志。",
+    "报告文件由最后一次运行写入，reused_existing_output=true 表示该次命中已有输出。",
+    "时区为 UTC 工程假设。"
+  ],
+  "steps": [
+    "认领 DATA-07（台账 7d5f2eac…）。",
+    "编写 clean.py。第 1 次运行失败：Parquet 把秒精度时间戳存为毫秒，回读校验按类型判定不一致（值相同），失败时临时目录已清理、锁已释放；改为毫秒类型后成功，重跑命中已有输出。",
+    "补充“输入层文件须与导入清单一致”的检查后再次运行。",
+    "编写 verify_clean.py：真实输出逐表核对行数、空值、ID、金额合计、主键；临时目录夹具测试失败路径。第 1 次日历表失败是核对脚本按字符串比较日期键，改为按契约类型解析后 25/25 通过。"
+  ],
+  "task_spec_sha256": "7436b1458dfc3a3bdbf45dc48818b1482bac03baaa5932cc0a7e1bccc32974f7",
+  "performed_at": "2026-11-10T14:47:37.254826+08:00"
+}

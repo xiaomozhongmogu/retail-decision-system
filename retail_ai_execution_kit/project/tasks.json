@@ -587,10 +587,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C08",
         "Q01"
@@ -612,7 +612,9 @@
         "解析失败进入隔离数据，保留来源行与原因，不能静默消失。",
         "文件哈希防重复导入；原始重复行是否删除有业务理由，不假定发票加商品唯一。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-07/2026-11-10-clean.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
