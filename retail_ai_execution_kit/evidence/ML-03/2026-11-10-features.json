@@ -1,0 +1,88 @@
+{
+  "task_id": "ML-03",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1, pytest 9.2.0",
+    "data_mode": "fully_synthetic; release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/features/customer_features.py && .venv/bin/python -m pytest tests/model/test_features.py -v -p no:cacheprovider",
+  "exit_code": 0,
+  "summary": "features-v1：30 个时点特征（7/30/90 天 RFM、最近购买与客龄、全部历史订单与金额、客单价、每单行数、90 天活跃日、购买间隔均值与最近值、品类与商品多样性、分期与信用卡比例、已送达订单的日期口径延迟比例、最近评分、大区独热、as_of 月份），覆盖全部 92,241 个样本。空值都有业务含义并配指示列。测试 7/7：3 个 as_of 删除未来信息后重算全部特征不变；禁用字段不在特征中；单次购买间隔为空；窗口嵌套。特征字典逐个写明公式、窗口、空值与来源。",
+  "inputs": [
+    {
+      "path": "docs/model_target.md",
+      "sha256": "fd9e05db0069e983f53c1c9db8df14a77c3449bec4cfbcc7b531821a3eec1704"
+    },
+    {
+      "path": "reports/model/sample_audit.json",
+      "sha256": "7a3b3bdc77c06845cb74ce954c0b4aad3de1ac3afa1372e8c4409532647b53ab"
+    },
+    {
+      "path": "docs/preprocessing_methods.md",
+      "sha256": "fc796f94a0fe228009f4170facf453977ab72c7985f3aacbb0a0cc20e8fbe684"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/features/customer_features.py",
+      "sha256": "593dd028913616bfce203798dff2735dc73cf160498b5c690dc47325e999fba8"
+    },
+    {
+      "path": "docs/feature_dictionary.md",
+      "sha256": "67c22084cfbc076ba48e72cd158dea4518da519be29ddf579c5e4fbf7e9433a2"
+    },
+    {
+      "path": "tests/model/test_features.py",
+      "sha256": "23b225a06804cc0f272f4be22bfd1e7f08fdc10875be744ed935b33fcb73e2a3"
+    },
+    {
+      "path": "reports/model/feature_build.json",
+      "sha256": "7109464eced64a9cf13a0035407c134061f7a418a338757e02c7b65c9cb04077"
+    },
+    {
+      "path": "evidence/ML-03/features_run.log",
+      "sha256": "299c0894960b2c400606dfaa375068fc4e43e07c051efa417b25ea5c32517df5"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "实现过去 7/30/90 天订单数与金额、recency、全部历史 F/M、购买间隔（均值、最近一次）、90 天活跃日、商品与品类多样性等；数据中没有退货记录，取消没有发生时间，因此没有“已发生退货”特征，字典第“不使用的信息”节写明原因。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "特征列表不含 customer_id、最终状态、取消、未来金额、退款、聚类与生成器标签（测试断言）；商品品类与客户大区为 2024-01-01 前创建的主数据，评价按创建日早于 as_of 日期、送达按送达时间早于 as_of 截断。防泄漏测试：在 2024-09-02、2025-08-04、2026-06-01 把之后的订单、审批、送达、评价删除或置空，重算的 30 个特征与原值一致。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "docs/feature_dictionary.md 对 30 个特征逐个给出公式、窗口、空值和来源（覆盖检查无遗漏）；只买过一次的客户购买间隔为空并以 has_gap=0 标示（测试验证），无已送达订单时延迟比例为空、无评价时评分为空，各有指示列；逻辑回归的填补放在 ML-06 并只用训练期中位数。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "支付方式与分期按下单时可得的工程假设使用（无支付时间）。",
+    "特征文件被 Git 忽略，按命令重建。"
+  ],
+  "steps": [
+    "认领 ML-03（台账 6922a183…）。",
+    "编写 customer_features.py，为全部样本计算 30 个特征。",
+    "编写防泄漏与空值测试，7/7。",
+    "撰写特征字典并检查 30 个特征全部覆盖。"
+  ],
+  "task_spec_sha256": "cda05f52b1b107c91e6c7cf5331f710836e01c574eb64015e981ca19a67f14a0",
+  "performed_at": "2026-11-10T15:35:21.074251+08:00"
+}

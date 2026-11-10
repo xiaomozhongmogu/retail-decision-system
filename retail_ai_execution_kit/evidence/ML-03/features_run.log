@@ -1,0 +1,17 @@
+$ .venv/bin/python src/retail_bi/features/customer_features.py && .venv/bin/python -m pytest tests/model/test_features.py -v -p no:cacheprovider
+2026-11-10T15:34:36+08:00
+{"rows": 92241, "null_counts": {"gap_mean_days": 33920, "gap_last_days": 33920, "late_by_date_share": 5046, "last_review_score": 18493}, "positives": 6618}
+plugins: anyio-4.16.0
+collecting ... collected 7 items
+
+tests/model/test_features.py::test_features_do_not_change_when_the_future_is_removed[2024-09-02 00:00:00+00] PASSED [ 14%]
+tests/model/test_features.py::test_features_do_not_change_when_the_future_is_removed[2025-08-04 00:00:00+00] PASSED [ 28%]
+tests/model/test_features.py::test_features_do_not_change_when_the_future_is_removed[2026-06-01 00:00:00+00] PASSED [ 42%]
+tests/model/test_features.py::test_forbidden_columns_absent_from_feature_list PASSED [ 57%]
+tests/model/test_features.py::test_single_purchase_gap_is_null_with_indicator PASSED [ 71%]
+tests/model/test_features.py::test_review_and_delivery_nulls_have_indicators PASSED [ 85%]
+tests/model/test_features.py::test_one_feature_row_per_sample_and_windows_nested PASSED [100%]
+
+============================== 7 passed in 0.54s ===============================
+exit=0
+--- dictionary coverage check: features missing from docs/feature_dictionary.md: [] exit=0

@@ -1532,10 +1532,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C08",
         "C13",
@@ -1559,7 +1559,9 @@
         "禁止客户ID、未来总额/退款/聚类及后验状态；商品属性也要检查时点可得性。",
         "每个特征有公式、窗口、空值和数据来源，单次购买无法计算的间隔明确处理。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-03/2026-11-10-features.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

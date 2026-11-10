@@ -53,7 +53,7 @@
 | EDA-06 | 形成面向决策的分析结论 | midterm | todo | EDA-03, EDA-04, EDA-05 |
 | ML-01 | 冻结预测目标与适用母体 | midterm | done | DATA-12, GOV-05 |
 | ML-02 | 实现按时点构建监督样本 | midterm | done | ML-01, DW-05 |
-| ML-03 | 实现历史特征与缺失策略 | midterm | todo | ML-02 |
+| ML-03 | 实现历史特征与缺失策略 | midterm | done | ML-02 |
 | ML-04 | 固定时间切分并审计泄漏 | midterm | todo | ML-03 |
 | ML-05 | 完成RFM规则与K-Means分群 | midterm | todo | EDA-05, ML-04 |
 | ML-06 | 训练规则与逻辑回归基线 | midterm | todo | ML-04 |
@@ -772,7 +772,7 @@
 
 ### ML-03 实现历史特征与缺失策略
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C08, C13, U03, Q03。
 - 前置：ML-02。
 - 允许修改：`src/retail_bi/features`, `docs`, `tests/model`；另可写本任务证据/交接。
@@ -785,7 +785,7 @@
 2. 禁止客户ID、未来总额/退款/聚类及后验状态；商品属性也要检查时点可得性。
 3. 每个特征有公式、窗口、空值和数据来源，单次购买无法计算的间隔明确处理。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-03/2026-11-10-features.json
 
 ### ML-04 固定时间切分并审计泄漏
 
