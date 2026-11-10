@@ -1,0 +1,4 @@
+$ .venv/bin/python src/retail_bi/model/baselines.py
+2026-11-10T15:37:41+08:00
+{"base_rate": [0.5, 0.076583], "rule_recency": [0.507837, 0.078014], "rule_frequency_90d": [0.508704, 0.078159], "logreg": [0.555988, 0.089709], "logreg_balanced": [0.554547, 0.089308]}
+exit=0

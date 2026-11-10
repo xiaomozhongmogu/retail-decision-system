@@ -56,7 +56,7 @@
 | ML-03 | 实现历史特征与缺失策略 | midterm | done | ML-02 |
 | ML-04 | 固定时间切分并审计泄漏 | midterm | done | ML-03 |
 | ML-05 | 完成RFM规则与K-Means分群 | midterm | todo | EDA-05, ML-04 |
-| ML-06 | 训练规则与逻辑回归基线 | midterm | todo | ML-04 |
+| ML-06 | 训练规则与逻辑回归基线 | midterm | done | ML-04 |
 | ML-07 | 训练并有限调优LightGBM | midterm | todo | ML-06 |
 | ML-08 | 冻结模型、校准与阈值 | midterm | todo | ML-07 |
 | ML-09 | 完成最终时间外评估 | midterm | todo | ML-08 |
@@ -823,7 +823,7 @@
 
 ### ML-06 训练规则与逻辑回归基线
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C13, U03, Q04。
 - 前置：ML-04。
 - 允许修改：`src/retail_bi/model`, `reports/model`；另可写本任务证据/交接。
@@ -836,7 +836,7 @@
 2. 缺失/不平衡处理限定训练数据并保留参数。
 3. 保存实际验证结果和运行记录，不只描述算法。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-06/2026-11-10-baselines.json
 
 ### ML-07 训练并有限调优LightGBM
 

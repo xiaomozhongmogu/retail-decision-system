@@ -1,0 +1,94 @@
+{
+  "task_id": "ML-06",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), scikit-learn 1.9.1",
+    "data_mode": "fully_synthetic; features-v1, split-v1",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/model/baselines.py; .venv/bin/python evidence/ML-06/verify_baselines.py",
+  "exit_code": 0,
+  "summary": "基线：基率、最近购买规则、近 90 天频次规则、逻辑回归（不加权/类别平衡）。验证集正例比例 0.0766；逻辑回归 ROC-AUC 0.556、PR-AUC 0.0897（最好），规则约 0.508；区分能力弱，如实记录。预处理（中位数、log1p、标准化）只在训练集拟合并保存参数。独立 sklearn 流水线复现逻辑回归验证指标一致；测试集未使用。核对 6/6。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/model/split.py",
+      "sha256": "9103e1546ae719fe842070e1aa58baf5e0f3e0377cfa3ac596aa0dd7bdcfa00f"
+    },
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/model/feature_build.json",
+      "sha256": "7109464eced64a9cf13a0035407c134061f7a418a338757e02c7b65c9cb04077"
+    },
+    {
+      "path": "docs/model_target.md",
+      "sha256": "fd9e05db0069e983f53c1c9db8df14a77c3449bec4cfbcc7b531821a3eec1704"
+    },
+    {
+      "path": "evidence/ML-06/verify_baselines.py",
+      "sha256": "6267626bafb6be05cfa228d639f98dcda34939e0cab1ee8e5004517194375731"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/baselines.json",
+      "sha256": "fb9430a5be7f0390acb5958dfbb448606a6d2842db41e91bbf617ee2ae343eaa"
+    },
+    {
+      "path": "reports/model/baselines.md",
+      "sha256": "7fb2541c8d986435e7a9e02612917483494e885bee01585c782f4b57ab4aa37e"
+    },
+    {
+      "path": "src/retail_bi/model/baselines.py",
+      "sha256": "a323faffbc501206b38b01991c67183226464b8f448af2ff42b3c12d665e9c16"
+    },
+    {
+      "path": "src/retail_bi/model/common.py",
+      "sha256": "7c85e6dfefd016199e16fdf06baff71d1fccaefbb6698a2300ba9f3659a38ca2"
+    },
+    {
+      "path": "evidence/ML-06/baselines_run.log",
+      "sha256": "cd007c4389df367aff855e7631b9e966d2465d86a5b7598c427433055f0106dd"
+    },
+    {
+      "path": "evidence/ML-06/verification_run.log",
+      "sha256": "6a3da4b3abe4b12b546a9c70d3fe5bd73c743348994fb1e919409ffe61e6c231"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "规则与逻辑回归都用 common.py 的同一母体 target-v1、标签、切分 split-v1、特征顺序 features-v1 和指标函数；所有模型在相同的 17,432 行验证样本上评估。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "缺失用训练集中位数填补（核对：等于训练集中位数而非训练+验证），log1p 与标准化参数来自训练集，全部保存在 baselines.json；不平衡处理比较不加权与 class_weight=balanced，并说明加权后概率不可当作校准概率。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "baselines.json 保存运行时间、种子、库版本、数据身份、训练与验证的 ROC-AUC/PR-AUC/KS/Lift/Recall/Brier/LogLoss 与系数；运行日志保留；独立流水线复现 0.555988/0.089709。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "信号弱：逻辑回归 Lift@10% 为 0.96，规则几乎无区分力；这是合成数据的真实结果。"
+  ],
+  "steps": [
+    "认领 ML-06（台账 4a89a80a…）。",
+    "编写 common.py 与 baselines.py 并运行。",
+    "verify_baselines.py 第 1 次因可空类型报错，转浮点后 6/6。"
+  ],
+  "task_spec_sha256": "c765dae7f0c89b5321d7bb829dec5954f7f26085acd982f284ce4b4386e3ca64",
+  "performed_at": "2026-11-10T15:38:37.502728+08:00"
+}
