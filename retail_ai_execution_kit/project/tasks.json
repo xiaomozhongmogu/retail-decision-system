@@ -204,7 +204,7 @@
         "生命周期规则、价值聚类、未来未复购风险和营销增量效果分开定义。"
       ],
       "evidence": [
-        "evidence/GOV-05/2026-11-10-data08-recheck.json"
+        "evidence/GOV-05/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -246,7 +246,7 @@
         "接口包含as_of、版本、单位、空结果与错误结构；此时允许契约草案，不能假称业务实现。"
       ],
       "evidence": [
-        "evidence/GOV-06/2026-11-10-data08-recheck.json"
+        "evidence/GOV-06/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -453,7 +453,7 @@
         "不得拼接无关来源用户ID；核验至少8个有意义的源业务字段，不以拆日期或模拟补列凑数；D012工作假设允许工程验收，不冒称教师实际确认。"
       ],
       "evidence": [
-        "evidence/DATA-03/2026-11-10-data08-recheck.json"
+        "evidence/DATA-03/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -653,7 +653,7 @@
         "原始与清洗净额差异逐项解释；无法关联退款原单时按实际发生时间统计。"
       ],
       "evidence": [
-        "evidence/DATA-08/2026-11-10-transaction-rules-v2.json"
+        "evidence/DATA-08/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -771,7 +771,7 @@
         "每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。"
       ],
       "evidence": [
-        "evidence/DATA-11/2026-11-10-quality-gate-v3.json"
+        "evidence/DATA-11/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -813,7 +813,7 @@
         "提供课程允许的数据交付方式；样本不能冒充全量，未知事项明确列出。"
       ],
       "evidence": [
-        "evidence/DATA-12/2026-11-10-release.json"
+        "evidence/DATA-12/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -854,7 +854,7 @@
         "图、DDL、契约字段一致，设计含血缘和刷新顺序。"
       ],
       "evidence": [
-        "evidence/DW-01/2026-11-10-design-v1.1.json"
+        "evidence/DW-01/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -974,7 +974,7 @@
         "抽取多个时间和维度切片与DWD明细独立重算一致。"
       ],
       "evidence": [
-        "evidence/DW-04/2026-11-10-dws.json"
+        "evidence/DW-04/2026-11-10-dw06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1027,10 +1027,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C10",
         "U02",
@@ -1055,7 +1055,9 @@
         "经营总览、cohort、分群与风险的ADS视图职责明确，AI仅查询允许视图。",
         "订单、客单价、净额和复购指标的样例与手算/独立SQL一致。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-06/2026-11-10-ads.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

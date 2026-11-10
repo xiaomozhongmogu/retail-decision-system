@@ -1,0 +1,94 @@
+{
+  "task_id": "DW-01",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DW-01/gen_ddl.py && .venv/bin/python evidence/DW-01/verify_design.py",
+  "exit_code": 0,
+  "summary": "数仓设计 v1：ODS（10 张原样文本表 + 批次/文件/行号元数据）、DWD 星型（4 个事实：订单明细、订单、支付、物流；5 个维度：日期、地理、客户、商品、卖家）、DWS（3 个日汇总、客户时点快照、独立标签表）、ADS 视图与允许视图清单。DDL 由契约生成并在 DuckDB 中实际执行（28 张表；v1.1 在 DW-04 中增加 dws.orders_daily_region）；设计文档含粒度、键、ER 图、只画源数据支持的层级、动态属性分离、血缘与刷新顺序。核对 42/42。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "e064898441aef08a42e3410859cc124a3195c9d4cad611a1b91f4076dde291a1"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "reports/data/integration_audit.json",
+      "sha256": "a500de0a4f058fbfa8a163a3546656096c4715d3a03c8558953ee56f3f9b4296"
+    },
+    {
+      "path": "evidence/DW-01/gen_ddl.py",
+      "sha256": "ef48edd0f9dc92583b643cd2b7b848f9ccb7616ee1d9fa1baec18239f7b69cad"
+    },
+    {
+      "path": "evidence/DW-01/verify_design.py",
+      "sha256": "ef18975aa34a0a85afda6568b69fe1f232c6690406fed34e625fabbbd3e1e5c4"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/warehouse_design.md",
+      "sha256": "7b3cf943ed7d6fb1b8edc7123f2aac2e7b43efe709f290cf728a0d9d3d535212"
+    },
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "evidence/DW-01/verification_run.log",
+      "sha256": "24c2d5882ccfb056e9a5ba058955d6b57b6a3fb8ece01745bf4f0d2d3d618553"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "warehouse_design.md 第 1 节列出 ODS/DWD/DWS/ADS（及 meta）的职责与不做什么；第 2 节逐表给出类型、粒度、主键和来源，并用 ER 图画出星型关系（日期、客户、地理、商品、卖家维度与订单、明细、支付、物流事实）；核对脚本确认 DDL 中每个外键都出现在 ER 图里。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 3 节只建源数据支持的层级：日期、地理（大区→州→城市，源有三个字段）、品类只有一级并写明没有子品类；没有渠道、门店、品牌维度。第 4 节规定生成器分群和生命周期标签不进维度表，项目计算的生命周期、RFM 分群、风险分带 as_of 与版本存放于快照或模型表，永远不回写维度表；DDL 中 dim_customer 不含这些列。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "DDL 由生成器从契约产生：ODS 列名与契约原始列名逐一对应（10 张表核对通过），DWD 列为契约标准名或第 8 节列出的派生列（核对脚本逐列检查）；DDL 在 DuckDB 实际执行成功。第 6 节血缘从 ZIP 到 ADS，第 7 节刷新顺序与失败不发布规则。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "只有设计与 DDL，加载与转换由 DW-02 至 DW-06 实现。",
+    "docs/architecture.md 中路线 A 的旧描述没有修改（避免牵动 GOV-06/07 证据），本设计文档声明以本文为准。",
+    "本证据替代此前版本（contracts/metrics.json 在 DW-06 中扩充后失效，旧证据保留为历史）。"
+  ],
+  "steps": [
+    "认领 DW-01（台账 879ddb4d…）。",
+    "编写 gen_ddl.py。DuckDB 执行先后报错：列名 date 与关键字冲突改为 calendar_date；真正原因是行内注释吞掉了逗号，改为在注释前加逗号后执行成功。",
+    "撰写 warehouse_design.md。",
+    "verify_design.py 第 1 次 38/41：预期表数写错（实为 27）、dim_geo 三列未列入派生列清单、ADS 行匹配过严；修正后 41/41。",
+    "2026-11-10 DW-04 增加 dws.orders_daily_region（日期×客户大区订单汇总，订单数跨天和大区可加），更新生成器、DDL 与设计文档 v1.1，重跑核对 42/42。",
+    "2026-11-10 DW-06 在 contracts/metrics.json 中为每个指标增加粒度与 ADS 视图映射，并新增 30 天经验复购率与 cohort 留存率两个 ADS 指标；原有指标 SQL 未改。已审阅本任务结论不受影响，并重跑本任务核对（若有）全部通过。"
+  ],
+  "task_spec_sha256": "b47892e5eccb9287017cbaddcb5d226bc9afe02b5b9005d28113191ba4abf85c",
+  "performed_at": "2026-11-10T15:19:23.214335+08:00"
+}

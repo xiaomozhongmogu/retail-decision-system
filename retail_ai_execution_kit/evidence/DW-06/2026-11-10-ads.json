@@ -1,0 +1,101 @@
+{
+  "task_id": "DW-06",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic full scope",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DW-06/build_and_check.py",
+  "exit_code": 0,
+  "summary": "ADS 视图 8 个（参数、日/月经营总览、月×品类×大区、cohort 留存、周生命周期分布、最新客户画像、周经验复购率）与允许视图清单 6 个（客户级画像不对 AI 开放）。metrics.json 每个指标补充粒度与 ADS 映射，新增经验复购率、cohort 留存率；所有指标具备单位、分子分母、窗口、纳入/排除、空值、粒度与 SQL 映射。样例核对 11/11：月订单/客户/金额与 pandas、客单价手算、季度金额与 DATA-08 规则 SQL（Python 清洗数据上）、取消对账、日月加总、复购率与 pandas、cohort 格子与 pandas、未成熟格为空、不完整月标记。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "sql/dws.sql",
+      "sha256": "abbcf09295693c12ee8760c127138a5a0c10be941bd751d01bde4d0ff6e9bdb2"
+    },
+    {
+      "path": "sql/customer_snapshot.sql",
+      "sha256": "b8708facf3773fec24eee828e8223fdee910943aee344f6200a82621cae86b29"
+    },
+    {
+      "path": "src/retail_bi/data/transactions.py",
+      "sha256": "c3e98179fd87b3aea47aa91a11e9715b29dd7ca354ae6ea02fda2937c7b20047"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "reports/warehouse/dws_audit.json",
+      "sha256": "eb8786ce82aaa16700f8431765ccb892a13ac5a1e10a9239ce1e31a0fcbd6264"
+    },
+    {
+      "path": "reports/warehouse/snapshot_contract.json",
+      "sha256": "451076a9698a59a42e9fd913ba0069e98139f2416e219ce2f1cb61509f1521f9"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "reports/warehouse/metric_checks.json",
+      "sha256": "9e3dd512dcdec6029ac3c15434be1534af800be7b7b51d8eb084d47aac2d6347"
+    },
+    {
+      "path": "evidence/DW-06/build_and_check.py",
+      "sha256": "0b94441dfe93492422e01be71dac5cf2fafaa8e519208db9ca6fac62daff3128"
+    },
+    {
+      "path": "evidence/DW-06/ads_run.log",
+      "sha256": "427a7f35a0d5af52bbe40ee6b1490544e3be0bc71e4dda4a5f2b7a4ec4911663"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "contracts/metrics.json 13 个指标逐一含 unit、numerator、denominator、windows、inclusions、exclusions、zero_null_policy、grain、sql_mapping、ads_view 与样例（required_for_approval 自动检查无缺项）；模型概率类指标如实标为 ML-11 输出，目标定义映射到标签 SQL。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "sql/ads.sql 与 metric_checks.json 写明视图职责：经营总览（kpi_daily、kpi_monthly、sales_month_category_region）、cohort（cohort_retention）、分群/生命周期（lifecycle_mix_weekly、customer_profile_latest）、风险（repurchase_rate_weekly 经验比例，模型分由 ML-11 加入）。meta.allowed_view 只登记 6 个聚合视图，AI 查询层只允许读这些视图；客户级画像不在清单内。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "2025-07 月订单 272、客户 261、商品金额 41,459.91 与 pandas 一致，客单价 152.4261 与手算一致；2026-Q3 订单 734、金额 112,870.30 与 DATA-08 规则 SQL 在 Python 清洗数据上的结果一致（无退款，金额即扣除取消后的商品金额）；取消 194 单 / 27,778.26 与对账一致；2025-03-03 复购母体 765、复购 52 与 pandas 从订单重算一致；cohort 2025-02 第 3 个月 90 人中 5 人与 pandas 一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "ADS 以数据截止为 as_of；其他时点需由服务层按 approved_ts 过滤（AI-04/05）。",
+    "生命周期使用默认阈值，EDA-05 校准。",
+    "运行脚本放在 evidence 目录（写入范围不含 src），DW-07 编排会直接执行 sql/ads.sql。"
+  ],
+  "steps": [
+    "认领 DW-06（台账 d4c009f8…）。",
+    "编写 sql/ads.sql 并预览各视图。",
+    "编写 build_and_check.py：建视图、登记允许视图、扩充 metrics.json、抽样核对。第 1 次 10/11（模型类指标缺 SQL 映射）；第 2 次因脚本未跳过已新增指标报错；第 3、4 次 11/11 且结果一致。",
+    "metrics.json 变化使 GOV-05、GOV-06、DATA-03、DATA-08、DATA-11、DATA-12、DW-01、DW-04 的证据失效，逐个重跑核对后重出证据。"
+  ],
+  "task_spec_sha256": "4a40c4b2591328a4b532483fcf56ba11666c9e5b4866f29ef49100a1fbe3a303",
+  "performed_at": "2026-11-10T15:19:23.310107+08:00"
+}

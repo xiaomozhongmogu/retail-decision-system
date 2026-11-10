@@ -58,3 +58,7 @@ exit=1
 build exit=0
 28/28 passed
 exit=0
+--- 2026-11-10T15:18:53+08:00 rerun after DW-06 added grain/ADS mapping and two ADS-level metrics to contracts/metrics.json (existing metric SQL unchanged)
+$ .venv/bin/python evidence/DATA-12/build_release.py > /dev/null && .venv/bin/python evidence/DATA-12/verify_release.py
+28/28 passed
+exit=0

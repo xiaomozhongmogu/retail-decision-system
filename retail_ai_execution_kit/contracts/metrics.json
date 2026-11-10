@@ -54,7 +54,9 @@
         "full history": 9113,
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": 39,
         "empty window 2023-01 (zero denominator)": 0
-      }
+      },
+      "grain": "日 / 月（按下单日）；可跨日、跨大区相加",
+      "ads_view": "ads.kpi_daily.valid_orders, ads.kpi_monthly.valid_orders"
     },
     {
       "id": "merchandise_sales_usd",
@@ -83,7 +85,9 @@
         "full history": "1380161.23",
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": "6516.57",
         "empty window 2023-01 (zero denominator)": "0.00"
-      }
+      },
+      "grain": "日 / 月 / 月×品类×大区；可加",
+      "ads_view": "ads.kpi_daily.merchandise_sales_usd, ads.kpi_monthly.merchandise_sales_usd, ads.sales_month_category_region.merchandise_sales_usd"
     },
     {
       "id": "shipping_usd",
@@ -112,7 +116,9 @@
         "full history": "129459.18",
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": "481.68",
         "empty window 2023-01 (zero denominator)": "0.00"
-      }
+      },
+      "grain": "日 / 月；可加",
+      "ads_view": "ads.kpi_daily.shipping_usd, ads.kpi_monthly.shipping_usd"
     },
     {
       "id": "order_value_usd",
@@ -141,7 +147,9 @@
         "full history": "1509620.41",
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": "6998.25",
         "empty window 2023-01 (zero denominator)": "0.00"
-      }
+      },
+      "grain": "订单",
+      "ads_view": "dwd.fact_order.order_value_usd（不在 ADS 暴露）"
     },
     {
       "id": "buyers",
@@ -170,7 +178,9 @@
         "full history": 3339,
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": 39,
         "empty window 2023-01 (zero denominator)": 0
-      }
+      },
+      "grain": "日 / 月；不可跨期相加，月度按月重算",
+      "ads_view": "ads.kpi_daily.buyers, ads.kpi_monthly.buyers"
     },
     {
       "id": "aov_usd",
@@ -199,7 +209,9 @@
         "full history": 151.44971249862834,
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": 167.09153846153845,
         "empty window 2023-01 (zero denominator)": null
-      }
+      },
+      "grain": "日 / 月；比率，不可相加",
+      "ads_view": "ads.kpi_daily.aov_usd, ads.kpi_monthly.aov_usd"
     },
     {
       "id": "cancelled_orders",
@@ -229,7 +241,9 @@
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": 0,
         "empty window 2023-01 (zero denominator)": 0
       },
-      "caveat": "最终状态含截止后信息；as_of 早于截止时，尚未审批的订单无法区分“待审批”和“将取消”，只在完整历史期间使用"
+      "caveat": "最终状态含截止后信息；as_of 早于截止时，尚未审批的订单无法区分“待审批”和“将取消”，只在完整历史期间使用",
+      "grain": "月（按下单月）",
+      "ads_view": "ads.kpi_monthly.cancelled_orders"
     },
     {
       "id": "cancelled_merchandise_usd",
@@ -258,7 +272,9 @@
         "full history": "27778.26",
         "2026-11-01..cutoff seen at 2026-11-05 (observability)": "0.00",
         "empty window 2023-01 (zero denominator)": "0.00"
-      }
+      },
+      "grain": "月（按下单月）",
+      "ads_view": "ads.kpi_monthly.cancelled_merchandise_usd"
     },
     {
       "id": "repurchase_30d",
@@ -282,7 +298,11 @@
       ],
       "sql": "由 ML-02 样本构建实现",
       "label_maturity_days": 1,
-      "owner": "ML-01/ML-02"
+      "owner": "ML-01/ML-02",
+      "grain": "客户×as_of",
+      "ads_view": "ML-11 输出；经验值见 ads.repurchase_rate_weekly",
+      "sql_mapping": "sql/customer_snapshot.sql block labels（目标定义；概率由 ML-11 模型输出）",
+      "examples_and_checks": "标签与 DATA-11 门槛一致见 evidence/DW-05；模型概率样例待 ML-11"
     },
     {
       "id": "non_repurchase_30d",
@@ -305,7 +325,11 @@
         "payment_type"
       ],
       "sql": "由 ML-11 评分服务输出",
-      "owner": "ML-11"
+      "owner": "ML-11",
+      "grain": "客户×as_of",
+      "ads_view": "ML-11 输出",
+      "sql_mapping": "1 - repurchase_30d（ML-11 评分服务输出）",
+      "examples_and_checks": "待 ML-11"
     },
     {
       "id": "rfm",
@@ -328,20 +352,79 @@
         "payment_type"
       ],
       "sql": "由 DW-05 客户快照实现",
-      "owner": "DW-05/ML-05"
+      "owner": "DW-05/ML-05",
+      "grain": "客户×as_of",
+      "ads_view": "dws.customer_snapshot（recency_days, frequency_90d, monetary_90d_usd）",
+      "sql_mapping": "sql/customer_snapshot.sql block snapshot（recency_days, frequency_90d, monetary_90d_usd）",
+      "examples_and_checks": "evidence/DW-05/verify_snapshot.py：3 个 as_of 由截断订单独立重算一致"
+    },
+    {
+      "id": "repurchase_rate_30d_observed",
+      "name": "30天经验复购率",
+      "unit": "ratio 0-1",
+      "definition": "as_of 时 90 天母体中，[as_of, as_of+30d) 内有有效购买（as_of+31d 前已审批）的客户占比；是已发生的比例，不是模型概率",
+      "population": "as_of 前 90 天有有效购买的已知客户",
+      "inclusions": "标签已成熟的 as_of",
+      "exclusions": "未成熟 as_of",
+      "numerator": "repurchasers",
+      "denominator": "population",
+      "windows": "as_of 每周一；标签窗 [as_of, as_of+30d)",
+      "zero_null_policy": "母体为 0 时为 null",
+      "supported_dimensions": [
+        "as_of week"
+      ],
+      "grain": "as_of（周）",
+      "ads_view": "ads.repurchase_rate_weekly",
+      "sql_mapping": "sql/ads.sql view ads.repurchase_rate_weekly",
+      "examples_and_checks": "reports/warehouse/metric_checks.json"
+    },
+    {
+      "id": "cohort_retention_rate",
+      "name": "cohort 留存率",
+      "unit": "ratio 0-1",
+      "definition": "首次可观测有效购买月为 cohort，第 k 个月有有效购买的客户 / cohort 客户数；未成熟（含不完整的截止月）为 null",
+      "population": "至少一次有效购买的客户",
+      "inclusions": "有效购买",
+      "exclusions": "取消订单",
+      "numerator": "active_customers",
+      "denominator": "cohort_customers",
+      "windows": "自然月，按下单时间",
+      "zero_null_policy": "未成熟格子为 null，不当作 0",
+      "supported_dimensions": [
+        "cohort_month",
+        "months_since_first"
+      ],
+      "grain": "cohort 月×距首购月数",
+      "ads_view": "ads.cohort_retention",
+      "sql_mapping": "sql/ads.sql view ads.cohort_retention",
+      "examples_and_checks": "reports/warehouse/metric_checks.json"
     }
   ],
   "required_for_approval": [
-    "windows",
-    "population",
-    "inclusions",
-    "exclusions",
-    "numerator",
+    "ads_view",
     "denominator",
-    "zero_null_policy",
-    "supported_dimensions",
+    "examples_and_checks",
+    "exclusions",
+    "grain",
+    "inclusions",
+    "numerator",
+    "population",
     "sql_mapping",
-    "examples_and_checks"
+    "supported_dimensions",
+    "windows",
+    "zero_null_policy"
   ],
-  "approval_note": "可执行 SQL 的 8 个指标在 DATA-08 对账中实际运行；模型与快照类指标的 SQL 由所属任务实现后补齐"
+  "approval_note": "可执行 SQL 的 8 个指标在 DATA-08 对账中实际运行；模型与快照类指标的 SQL 由所属任务实现后补齐",
+  "ads": {
+    "views_sql": "sql/ads.sql",
+    "allowed_views": [
+      "ads.cohort_retention",
+      "ads.kpi_daily",
+      "ads.kpi_monthly",
+      "ads.lifecycle_mix_weekly",
+      "ads.repurchase_rate_weekly",
+      "ads.sales_month_category_region"
+    ],
+    "as_of": "2026-11-08T00:00:00Z"
+  }
 }

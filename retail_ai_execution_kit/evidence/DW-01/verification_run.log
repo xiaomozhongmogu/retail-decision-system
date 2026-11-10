@@ -93,3 +93,7 @@ exit=0
 written 103 lines
 42/42 passed
 exit=0
+--- 2026-11-10T15:18:53+08:00 rerun after DW-06 added grain/ADS mapping and two ADS-level metrics to contracts/metrics.json (existing metric SQL unchanged)
+$ .venv/bin/python evidence/DW-01/verify_design.py
+42/42 passed
+exit=0

@@ -1,0 +1,28 @@
+$ .venv/bin/python evidence/DW-06/build_and_check.py
+2026-11-10T15:18:14+08:00
+PASS kpi_monthly 2025-07 orders / buyers / merch vs pandas | expected (272, 261, Decimal('41459.91')) | got (272, 261, '41459.91')
+PASS kpi_monthly 2025-07 AOV = merch / orders (hand) | expected 152.4261 | got 152.4261
+PASS 2026-Q3 orders and merchandise (net of cancellations; no refunds exist) vs DATA-08 rule SQL on clean parquet | expected (734, '112870.30') | got (734, '112870.30')
+PASS cancelled orders / merchandise (all months) vs DATA-08 reconciliation | expected (194, '27778.26') | got (194, '27778.26')
+PASS kpi_daily orders add up to kpi_monthly (2026-03) | expected 260 | got 260
+PASS repurchase_rate_weekly 2025-03-03 vs pandas from orders | expected (765, 52) | got (765, 52)
+PASS cohort 2025-02, month +3 retention vs pandas | expected (90, 5) | got (90, 5)
+PASS immature cohort cells are NULL, not 0 | expected all immature cells NULL | got (0, 35)
+PASS partial month 2026-11 flagged | expected True | got True
+PASS allowed views registered and exclude customer-level profile | expected 6 | got ['ads.cohort_retention', 'ads.kpi_daily', 'ads.kpi_monthly', 'ads.lifecycle_mix_weekly', 'ads.repurchase_rate_weekly', 'ads.sales_month_category_region']
+FAIL every metric has unit, numerator/denominator, window, inclusions/exclusions, null policy, grain and SQL/ADS mapping | expected [] | got [('repurchase_30d', 'examples_and_checks'), ('repurchase_30d', 'sql_mapping'), ('non_repurchase_30d', 'examples_and_checks'), ('non_repurchase_30d', 'sql_mapping'), ('rfm', 'examples_and_checks'), ('rfm', 'sql_mapping')]
+10/11 passed
+exit=1
+--- run 2 (run 1: 10/11 — model metrics lacked sql_mapping/examples; mapped to the DW-05 snapshot/label SQL, model probabilities marked pending ML-11)
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DW-06/build_and_check.py", line 110, in <module>
+    g, v = ads_map[x['id']]
+           ~~~~~~~^^^^^^^^^
+KeyError: 'repurchase_rate_30d_observed'
+exit=1
+--- run 3 (run 2: KeyError — metrics added by run 1 were not in the mapping loop; loop now covers mapped ids only)
+11/11 passed
+exit=0
+--- run 4 (idempotence: same output expected)
+11/11 passed
+exit=0

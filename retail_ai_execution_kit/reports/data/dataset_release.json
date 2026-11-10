@@ -187,7 +187,7 @@
   "documents": {
     "contracts/data_contract.json": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac",
     "docs/data_dictionary.md": "0e1708bc983a5a55cefd448fa3176fbe9c38b5bd2dcda10651b567413bd153f3",
-    "contracts/metrics.json": "f8c49414864f348ac441eb44edc1e6d72ae2b2aabe42d1e1d4cb37890d37ad50",
+    "contracts/metrics.json": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9",
     "docs/transaction_rules.md": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb",
     "docs/preprocessing_methods.md": "fc796f94a0fe228009f4170facf453977ab72c7985f3aacbb0a0cc20e8fbe684",
     "reports/data/dataset_selection.md": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a",

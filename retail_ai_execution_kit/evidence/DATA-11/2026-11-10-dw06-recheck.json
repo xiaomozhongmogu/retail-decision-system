@@ -1,0 +1,100 @@
+{
+  "task_id": "DATA-11",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pytest 9.2.0",
+    "data_mode": "formal synthetic data (clean-v2) for the gate; hand-made fixtures in pytest tmp_path for rule tests",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python tests/data/quality_gate.py; .venv/bin/python -m pytest tests/data -v -p no:cacheprovider",
+  "exit_code": 0,
+  "summary": "清洗后质量门槛 10/10 通过（第 1 次运行 9/10，见下），19 个规则测试通过。清洗后实测：明细 15,639 行、17 个有效字段、35 个月、隔离 0、对账 11/11；按冻结口径重算 30 天标签：132 个周快照、92,241 行、正例 6,618（7.17%）、负例 85,623，10 个完整季度每季正例至少 527。警告：2026-Q4 只有 1 个快照、72 个正例，不能单独作测试期。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "src/retail_bi/data/clean.py",
+      "sha256": "6422153a1bf76413a5716a010c144eb53f86930b9471da5228b071e78e9253f5"
+    },
+    {
+      "path": "src/retail_bi/data/transactions.py",
+      "sha256": "c3e98179fd87b3aea47aa91a11e9715b29dd7ca354ae6ea02fda2937c7b20047"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "cffc581052da5ed6f9ebbf879b09c33204844733e654472363a5d783dd65058a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/data/profile_after.json",
+      "sha256": "49137528fbb3e1245cf8391b1a4b058cf2758b17c35f8b602c731fe44a60dcbe"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "5e348ba24dd1b759f31459049d9b410950db6d3e52fdeafb646d5b7c02ef8f65"
+    },
+    {
+      "path": "tests/data/quality_gate.py",
+      "sha256": "2b3fb2f063bcd128c9033d3318c7f623d42d536f9cf064da9cda30b7233c01ef"
+    },
+    {
+      "path": "tests/data/test_rules.py",
+      "sha256": "7d47a78defae20d8b0a9d2e94ea0dcce290338e13910b99a3a713aed1944ef83"
+    },
+    {
+      "path": "tests/data/conftest.py",
+      "sha256": "b6d85a704c5c6d392734ff5f6ab0c0159b5add33dee730d015db2817e0702f2f"
+    },
+    {
+      "path": "evidence/DATA-11/gate_run.log",
+      "sha256": "83209fc761bc6c2ab7b30b80d3e563c0fa5f40504c9fd269bf5e105476571f10"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "profile_after.json 实测清洗后各表行数（与清洗前逐表相同）、每表字段数、有效字段 17、下单时间 2024-01-01 至 2026-11-07 共 35 个月、可建模客户（有有效购买 3,339 人），并按冻结口径重算 30 天正负类：正例 6,618、负例 85,623，分季度列出；正负类都足够，比例低已写明以 PR-AUC 与校准为主。不完整季度 2026-Q4 正例不足，作为警告交给 ML-04，没有据此宣称该期可单独评估。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "test_rules.py 覆盖并通过：异常行隔离（非法时间→隔离，带源行号与原因，依赖行作为孤儿隔离；重复主键隔离）、重复导入（重跑复用不重写、篡改输出拒绝、输入改动拒绝）、退款/取消分类（已审批计入、无审批为取消、截止后审批暂不计入、负金额被对账标记失败）、金额差异（差额精确到分等于取消+未审批）、时间解析（无时区→UTC、日期带时间报错、非法值报错）。门槛结果逐项写入 quality_checks.json，明确 passed/failed。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "每个测试写明输入和期望值（例如商品金额 160.50、差额 39.99、隔离行号 3）。夹具在 conftest.py 中手工构造，只写入 pytest 的临时目录，不读取也不写入 data/ 下的正式数据。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "阈值 1,000 正例/负例、每完整季度 100 正例是项目工程设定，不是教师要求。",
+    "第 1 次门槛运行 9/10：原检查把只有 1 个快照的不完整季度 2026-Q4 也算在内（72 个正例）而失败；门槛 100 未改，改为只要求完整季度，并把 2026-Q4 列为警告，两次运行都保留在 gate_run.log。",
+    "数据完全合成；时区为 UTC 工程假设。",
+    "本证据替代此前版本（contracts/metrics.json 在 DW-06 中扩充后失效，旧证据保留为历史）。"
+  ],
+  "steps": [
+    "认领 DATA-11（台账 21a0062e…）。",
+    "编写 conftest.py（手工夹具）与 test_rules.py，19 个测试通过。",
+    "编写 quality_gate.py，在正式清洗数据上测量并调用对账与测试。第 1 次 9/10（2026-Q4 正例 72）；重新定义为完整季度检查并把不完整季度列为警告后 10/10。",
+    "2026-11-10 15:00 版本键修订：全新目录重建时发现 DATA-05 导入清单含本机绝对路径，清洗步骤用该清单哈希命名输出目录，换机器后目录名不同（数据内容相同）。clean.py 改为按内容指纹（源哈希、截止、导入版本、各文件哈希）生成键并去掉清单中的绝对路径，版本升为 clean-v2；删除本会话生成的 v1 派生目录后重跑整条链，并在另一路径从原始 ZIP 完整重建，16 个输出文件（含目录名）哈希完全一致（evidence/DATA-07/cross_path_rebuild_hashes_*.txt）。所有核对重跑通过。",
+    "2026-11-10 15:05：quality_gate.py 去掉报告中的 pytest 运行时间，使重跑结果字节一致（连续两次运行报告哈希相同）；重跑门槛 10/10。",
+    "2026-11-10 DW-06 在 contracts/metrics.json 中为每个指标增加粒度与 ADS 视图映射，并新增 30 天经验复购率与 cohort 留存率两个 ADS 指标；原有指标 SQL 未改。已审阅本任务结论不受影响，并重跑本任务核对（若有）全部通过。"
+  ],
+  "task_spec_sha256": "d39f181d6a869d58c4ee3395e3142848ab298fa7af8e4b7628ef7f7f14c1c068",
+  "performed_at": "2026-11-10T15:19:23.129229+08:00"
+}

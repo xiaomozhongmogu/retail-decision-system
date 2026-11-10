@@ -24,3 +24,7 @@ exit=0
 $ .venv/bin/python evidence/DATA-08/verify_rules.py
 18/18 passed
 exit=0
+--- 2026-11-10T15:18:51+08:00 rerun after DW-06 added grain/ADS mapping and two ADS-level metrics to contracts/metrics.json (existing metric SQL unchanged)
+$ .venv/bin/python evidence/DATA-08/verify_rules.py
+18/18 passed
+exit=0

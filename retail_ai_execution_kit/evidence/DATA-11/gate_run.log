@@ -61,3 +61,7 @@ exit=0
 --- 2026-11-10T15:03:58+08:00 quality_gate.py now drops pytest run time from the report so reruns are byte-identical
 gate passed 10/10
 exit=0
+--- 2026-11-10T15:18:52+08:00 rerun after DW-06 added grain/ADS mapping and two ADS-level metrics to contracts/metrics.json (existing metric SQL unchanged)
+$ .venv/bin/python tests/data/quality_gate.py
+gate passed 10/10
+exit=0

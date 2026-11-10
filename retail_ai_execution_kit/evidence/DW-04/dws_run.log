@@ -34,3 +34,7 @@ exit=1
 2026-11-10T15:13:53+08:00
 18/18 passed
 exit=0
+--- 2026-11-10T15:18:53+08:00 rerun after DW-06 added grain/ADS mapping and two ADS-level metrics to contracts/metrics.json (existing metric SQL unchanged)
+$ .venv/bin/python evidence/DW-04/run_and_verify_dws.py
+18/18 passed
+exit=0
