@@ -35,7 +35,7 @@
 | DATA-10 | 设计归约、转换与时间特征 | proposal | done | DATA-09 |
 | DATA-11 | 执行清洗后质量门槛 | proposal | done | DATA-10 |
 | DATA-12 | 发布阶段一数据包 | proposal | done | DATA-11 |
-| DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | todo | DATA-04, GOV-06 |
+| DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | done | DATA-04, GOV-06 |
 | DW-02 | 实现ODS与加载审计 | midterm | todo | DW-01, DATA-12 |
 | DW-03 | 实现DWD事实及维表 | midterm | todo | DW-02 |
 | DW-04 | 实现DWS业务汇总 | midterm | todo | DW-03 |
@@ -460,7 +460,7 @@
 
 ### DW-01 完成概念、逻辑和物理数仓设计
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C09, C28, U02, Q01。
 - 前置：DATA-04, GOV-06。
 - 允许修改：`docs`, `sql`；另可写本任务证据/交接。
@@ -473,7 +473,7 @@
 2. 源缺品类/城市时不画未经来源支持的层级，动态分群不永久覆盖客户静态属性。
 3. 图、DDL、契约字段一致，设计含血缘和刷新顺序。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-01/2026-11-10-design.json
 
 ### DW-02 实现ODS与加载审计
 

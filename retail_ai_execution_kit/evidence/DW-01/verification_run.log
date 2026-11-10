@@ -1,0 +1,91 @@
+$ .venv/bin/python evidence/DW-01/gen_ddl.py && .venv/bin/python evidence/DW-01/verify_design.py
+2026-11-10T15:07:35+08:00
+(earlier generator runs failed in DuckDB: first on the inline-comment/comma join that commented out commas; fixed by placing commas before comments)
+written 100 lines
+FAIL DDL executes in DuckDB 27 tables
+PASS ods.customers = contract raw columns + load metadata 
+PASS ods.sellers = contract raw columns + load metadata 
+PASS ods.products = contract raw columns + load metadata 
+PASS ods.seller_products = contract raw columns + load metadata 
+PASS ods.orders = contract raw columns + load metadata 
+PASS ods.order_items = contract raw columns + load metadata 
+PASS ods.payments = contract raw columns + load metadata 
+PASS ods.shipping = contract raw columns + load metadata 
+PASS ods.reviews = contract raw columns + load metadata 
+PASS ods.calendar = contract raw columns + load metadata 
+FAIL every DWD column is a contract standard name or a documented derived column ['dim_geo.region', 'dim_geo.state', 'dim_geo.city']
+PASS design doc describes dwd.dim_customer 
+PASS design doc describes dwd.dim_date 
+PASS design doc describes dwd.dim_geo 
+PASS design doc describes dwd.dim_product 
+PASS design doc describes dwd.dim_seller 
+PASS design doc describes dwd.fact_fulfillment 
+PASS design doc describes dwd.fact_order 
+PASS design doc describes dwd.fact_order_line 
+PASS design doc describes dwd.fact_payment 
+PASS design doc describes dws.customer_daily 
+PASS design doc describes dws.customer_snapshot 
+PASS design doc describes dws.label_repurchase 
+PASS design doc describes dws.product_daily 
+PASS design doc describes dws.sales_daily_category_region 
+PASS ER diagram has dim_geo -> dim_customer 
+PASS ER diagram has dim_geo -> dim_seller 
+PASS ER diagram has fact_order -> fact_fulfillment 
+PASS ER diagram has dim_date -> fact_order 
+PASS ER diagram has dim_customer -> fact_order 
+PASS ER diagram has dim_date -> fact_order_line 
+PASS ER diagram has fact_order -> fact_order_line 
+PASS ER diagram has dim_product -> fact_order_line 
+PASS ER diagram has dim_seller -> fact_order_line 
+PASS ER diagram has fact_order -> fact_payment 
+FAIL layer duties for ODS/DWD/DWS/ADS 
+PASS only source-supported hierarchies; no subcategory 
+PASS generator labels not in dim_customer 
+PASS lineage and refresh order documented 
+PASS DDL is generated from the contract version 
+38/41 passed
+exit=1
+--- run 2 (run 1: 38/41 — expected table count was wrong (27 is correct: dws has 5 tables), dim_geo columns missing from the documented derived list, layer-duty pattern too strict for '`ads`（视图）')
+PASS DDL executes in DuckDB (10 ods + 9 dwd + 5 dws + 3 meta) 27 tables
+PASS ods.customers = contract raw columns + load metadata 
+PASS ods.sellers = contract raw columns + load metadata 
+PASS ods.products = contract raw columns + load metadata 
+PASS ods.seller_products = contract raw columns + load metadata 
+PASS ods.orders = contract raw columns + load metadata 
+PASS ods.order_items = contract raw columns + load metadata 
+PASS ods.payments = contract raw columns + load metadata 
+PASS ods.shipping = contract raw columns + load metadata 
+PASS ods.reviews = contract raw columns + load metadata 
+PASS ods.calendar = contract raw columns + load metadata 
+PASS every DWD column is a contract standard name or a documented derived column []
+PASS design doc describes dwd.dim_customer 
+PASS design doc describes dwd.dim_date 
+PASS design doc describes dwd.dim_geo 
+PASS design doc describes dwd.dim_product 
+PASS design doc describes dwd.dim_seller 
+PASS design doc describes dwd.fact_fulfillment 
+PASS design doc describes dwd.fact_order 
+PASS design doc describes dwd.fact_order_line 
+PASS design doc describes dwd.fact_payment 
+PASS design doc describes dws.customer_daily 
+PASS design doc describes dws.customer_snapshot 
+PASS design doc describes dws.label_repurchase 
+PASS design doc describes dws.product_daily 
+PASS design doc describes dws.sales_daily_category_region 
+PASS ER diagram has dim_geo -> dim_customer 
+PASS ER diagram has dim_geo -> dim_seller 
+PASS ER diagram has fact_order -> fact_fulfillment 
+PASS ER diagram has dim_date -> fact_order 
+PASS ER diagram has dim_customer -> fact_order 
+PASS ER diagram has dim_date -> fact_order_line 
+PASS ER diagram has fact_order -> fact_order_line 
+PASS ER diagram has dim_product -> fact_order_line 
+PASS ER diagram has dim_seller -> fact_order_line 
+PASS ER diagram has fact_order -> fact_payment 
+PASS layer duties for ODS/DWD/DWS/ADS 
+PASS only source-supported hierarchies; no subcategory 
+PASS generator labels not in dim_customer 
+PASS lineage and refresh order documented 
+PASS DDL is generated from the contract version 
+41/41 passed
+exit=0

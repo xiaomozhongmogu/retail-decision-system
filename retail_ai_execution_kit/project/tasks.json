@@ -826,10 +826,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C09",
         "C28",
@@ -853,7 +853,9 @@
         "源缺品类/城市时不画未经来源支持的层级，动态分群不永久覆盖客户静态属性。",
         "图、DDL、契约字段一致，设计含血缘和刷新顺序。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-01/2026-11-10-design.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false
