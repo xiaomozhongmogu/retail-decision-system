@@ -1,0 +1,14 @@
+PASS value segment numbers and combined shares (0.354, 0.686)
+PASS lifecycle future repurchase rates quoted 
+PASS test ROC-AUC and CI quoted 
+PASS weekly lifts quoted 
+PASS decomposition quoted 
+PASS chain columns problem->metric->evidence->conclusion->action->validation for each scenario [7, 7, 7, 7, 7]
+PASS covers value retention, retention warning, dormant recall; acquisition limited to data 
+PASS value by efficiency/list quality/consistency; revenue only as hypothesis 
+PASS unanswerable questions listed 
+9/9 passed
+--- run 2: removed wording that presented the not-yet-built AI number validation as done
+2
+PASS no claim that unbuilt AI validation already passed
+10/10 passed (9 from run 1, unchanged sections) 

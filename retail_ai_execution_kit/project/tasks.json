@@ -1423,10 +1423,10 @@
       "category": "EDA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C01",
         "C12",
@@ -1449,7 +1449,9 @@
         "至少覆盖价值维系、留存预警、沉睡召回；获客只能在真实数据范围内讨论。",
         "业务价值先评价效率/名单质量/报告一致性，收入增长只作明确假设或未来实验。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/EDA-06/2026-11-10-brief.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

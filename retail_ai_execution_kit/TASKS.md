@@ -50,7 +50,7 @@
 | EDA-03 | 构建首观测购买cohort与留存 | midterm | done | DW-06 |
 | EDA-04 | 完成经营诊断与证据分解 | midterm | done | EDA-02 |
 | EDA-05 | 实现互斥生命周期规则 | midterm | done | DW-05, GOV-05 |
-| EDA-06 | 形成面向决策的分析结论 | midterm | todo | EDA-03, EDA-04, EDA-05 |
+| EDA-06 | 形成面向决策的分析结论 | midterm | done | EDA-03, EDA-04, EDA-05 |
 | ML-01 | 冻结预测目标与适用母体 | midterm | done | DATA-12, GOV-05 |
 | ML-02 | 实现按时点构建监督样本 | midterm | done | ML-01, DW-05 |
 | ML-03 | 实现历史特征与缺失策略 | midterm | done | ML-02 |
@@ -718,7 +718,7 @@
 
 ### EDA-06 形成面向决策的分析结论
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C01, C12, C27, C30。
 - 前置：EDA-03, EDA-04, EDA-05。
 - 允许修改：`reports/analysis`；另可写本任务证据/交接。
@@ -731,7 +731,7 @@
 2. 至少覆盖价值维系、留存预警、沉睡召回；获客只能在真实数据范围内讨论。
 3. 业务价值先评价效率/名单质量/报告一致性，收入增长只作明确假设或未来实验。
 
-证据：尚无已登记验收证据。
+证据：evidence/EDA-06/2026-11-10-brief.json
 
 
 ## ML — 分群与预测

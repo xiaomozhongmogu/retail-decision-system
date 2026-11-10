@@ -1,0 +1,84 @@
+{
+  "task_id": "EDA-06",
+  "verification_status": "passed",
+  "method": "inspection",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv) for the consistency checks",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "未联网"
+  },
+  "summary": "决策简报：5 个场景（价值维系、留存预警、沉睡召回、经营监控、仅限数据范围的获客）各按问题→指标→证据→结论→行动→验证方式串联，证据数字与来源报告核对一致；业务价值按效率、名单质量、报告一致性评价，收入增长只作假设与未来试验；列出不能回答的问题。核对 10/10（含删除一处把未完成的 AI 数值校验写成已完成的措辞）。",
+  "inputs": [
+    {
+      "path": "reports/model/cluster_metrics.json",
+      "sha256": "8d577f1a1e955f5e72283cc1edd5ec5e3e0c6a85c4346714eef3ee219d38cb40"
+    },
+    {
+      "path": "reports/analysis/lifecycle_checks.json",
+      "sha256": "8d3af8bc480ef13b14481048b00f319871ea631fcdfe1d7e22e603dbbcbabe68"
+    },
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "reports/analysis/diagnosis_facts.json",
+      "sha256": "11c067a1d06d9ba5d2ecd992d33a9eefcf8c1dd1ca331fd68de5ecab1e430da9"
+    },
+    {
+      "path": "reports/analysis/business_trends.json",
+      "sha256": "0bca6642f35fdc97a06e8ac4b3aeaa14947fe3c13d9d674754d447481e1867ec"
+    },
+    {
+      "path": "reports/analysis/cohort.md",
+      "sha256": "fd5e04e98150524868e7b9cefe68e82493c8d7daaa6ae9e07fbda648bb83b3fa"
+    },
+    {
+      "path": "docs/lifecycle_rules.md",
+      "sha256": "b3b50509e1f88f9a28dbcb4c01ade3e6fd23cf260fe7f044538967e3b4f0eff3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/analysis/decision_brief.md",
+      "sha256": "44d48b8fde91371ec4adb9b398b334e010dec76ff821b06446ef54c81a407894"
+    },
+    {
+      "path": "evidence/EDA-06/verification_run.log",
+      "sha256": "4df66ba98a53cff47f7b817706a598313c7c36d4dfe968d8ba9e3897cab5f3a9"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "第 1 节表格对每个场景给出问题、指标、证据（带来源文件）、结论、行动和验证方式 7 列（核对每行 7 列）；第 3 节列出数据不能回答的问题（渠道、成本、退货、增量效果、个体复购预测、真实市场）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "覆盖价值维系（两个高价值群约 35% 的客户贡献约 69% 金额）、留存预警（状态分布与“不能预示流失”）、沉睡召回（复购率与活跃相同、只做小规模试验）；获客只讨论首单后的 +1 月留存，明确不做渠道与成本分析。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 2 节先按效率、名单质量（如实给出周内 Lift 规则 1.02、模型 0.84）、报告一致性评价价值；收入增长只作为需随机对照试验验证的假设，不报告挽回金额或 ROI；AI 数值校验标为尚未完成。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "AI 模块尚未实现，相关行动依赖后续任务。",
+    "数据完全合成。"
+  ],
+  "steps": [
+    "认领 EDA-06。",
+    "汇总各报告撰写简报；核对 9/9 后自查发现一处把未完成的 AI 校验写成已完成，改正后核对通过。"
+  ],
+  "task_spec_sha256": "89fcb46ae79c7b60a075fcfda1528de52477e6d5ef35f338bdc818fae968324f",
+  "performed_at": "2026-11-10T21:28:06.339867+08:00"
+}
