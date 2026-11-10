@@ -1808,10 +1808,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C12",
         "C13",
@@ -1833,7 +1833,9 @@
         "特征重要性或SHAP是模型解释，不解释成可干预因果效果。",
         "说明历史客户跨时间测试不证明能泛化到全新客户或当代中国市场。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-10/2026-11-10-errors.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

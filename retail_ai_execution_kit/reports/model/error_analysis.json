@@ -1,0 +1,261 @@
+{
+  "task_id": "ML-10",
+  "model_version": "repurchase-logreg-v1",
+  "capacity_share": 0.1,
+  "confusion_at_weekly_top_k": {
+    "TN": 15029,
+    "FP": 1695,
+    "FN": 1171,
+    "TP": 107
+  },
+  "median_features_by_outcome": {
+    "FN": {
+      "recency_days": 44.08,
+      "orders_90d": 1.0,
+      "merch_90d": 120.23,
+      "orders_all_time": 3.0,
+      "tenure_days": 579.29,
+      "gap_mean_days": 254.65,
+      "as_of_month": 7.0
+    },
+    "FP": {
+      "recency_days": 39.38,
+      "orders_90d": 1.0,
+      "merch_90d": 96.61,
+      "orders_all_time": 3.0,
+      "tenure_days": 548.59,
+      "gap_mean_days": 207.77,
+      "as_of_month": 6.0
+    },
+    "TN": {
+      "recency_days": 43.36,
+      "orders_90d": 1.0,
+      "merch_90d": 116.93,
+      "orders_all_time": 3.0,
+      "tenure_days": 593.29,
+      "gap_mean_days": 246.4,
+      "as_of_month": 7.0
+    },
+    "TP": {
+      "recency_days": 41.38,
+      "orders_90d": 1.0,
+      "merch_90d": 127.47,
+      "orders_all_time": 3.0,
+      "tenure_days": 477.09,
+      "gap_mean_days": 208.12,
+      "as_of_month": 7.0
+    }
+  },
+  "by_month": [
+    {
+      "month": "2026-03",
+      "rows": 649,
+      "positive_rate": 0.057,
+      "mean_pred": 0.0596,
+      "roc_auc": 0.5011,
+      "flagged_share": 0.1002,
+      "precision_flagged": 0.0308
+    },
+    {
+      "month": "2026-04",
+      "rows": 2520,
+      "positive_rate": 0.0635,
+      "mean_pred": 0.0619,
+      "roc_auc": 0.471,
+      "flagged_share": 0.1,
+      "precision_flagged": 0.0397
+    },
+    {
+      "month": "2026-05",
+      "rows": 2502,
+      "positive_rate": 0.0747,
+      "mean_pred": 0.0645,
+      "roc_auc": 0.4771,
+      "flagged_share": 0.0999,
+      "precision_flagged": 0.032
+    },
+    {
+      "month": "2026-06",
+      "rows": 3195,
+      "positive_rate": 0.0563,
+      "mean_pred": 0.067,
+      "roc_auc": 0.5057,
+      "flagged_share": 0.1005,
+      "precision_flagged": 0.053
+    },
+    {
+      "month": "2026-07",
+      "rows": 2635,
+      "positive_rate": 0.0679,
+      "mean_pred": 0.0696,
+      "roc_auc": 0.5201,
+      "flagged_share": 0.1002,
+      "precision_flagged": 0.0682
+    },
+    {
+      "month": "2026-08",
+      "rows": 3285,
+      "positive_rate": 0.0664,
+      "mean_pred": 0.0717,
+      "roc_auc": 0.5016,
+      "flagged_share": 0.0998,
+      "precision_flagged": 0.0701
+    },
+    {
+      "month": "2026-09",
+      "rows": 2573,
+      "positive_rate": 0.0952,
+      "mean_pred": 0.0741,
+      "roc_auc": 0.5175,
+      "flagged_share": 0.1003,
+      "precision_flagged": 0.093
+    },
+    {
+      "month": "2026-10",
+      "rows": 643,
+      "positive_rate": 0.112,
+      "mean_pred": 0.077,
+      "roc_auc": 0.5157,
+      "flagged_share": 0.0995,
+      "precision_flagged": 0.0781
+    }
+  ],
+  "by_region": [
+    {
+      "region": "Midwest",
+      "rows": 3888,
+      "positive_rate": 0.0854,
+      "mean_pred": 0.0632,
+      "roc_auc": 0.5325,
+      "flagged_share": 0.0231,
+      "precision_flagged": 0.0778
+    },
+    {
+      "region": "Northeast",
+      "rows": 3253,
+      "positive_rate": 0.0762,
+      "mean_pred": 0.0679,
+      "roc_auc": 0.5116,
+      "flagged_share": 0.0815,
+      "precision_flagged": 0.0302
+    },
+    {
+      "region": "South",
+      "rows": 6611,
+      "positive_rate": 0.0656,
+      "mean_pred": 0.0698,
+      "roc_auc": 0.5136,
+      "flagged_share": 0.1325,
+      "precision_flagged": 0.0639
+    },
+    {
+      "region": "West",
+      "rows": 4250,
+      "positive_rate": 0.0621,
+      "mean_pred": 0.0708,
+      "roc_auc": 0.5499,
+      "flagged_share": 0.1344,
+      "precision_flagged": 0.063
+    }
+  ],
+  "by_value_segment": [
+    {
+      "value_segment": "较早一般",
+      "rows": 8101,
+      "positive_rate": 0.0713,
+      "mean_pred": 0.0682,
+      "roc_auc": 0.5263,
+      "flagged_share": 0.0886,
+      "precision_flagged": 0.0585
+    },
+    {
+      "value_segment": "较早高价值",
+      "rows": 3589,
+      "positive_rate": 0.0674,
+      "mean_pred": 0.0673,
+      "roc_auc": 0.4711,
+      "flagged_share": 0.1134,
+      "precision_flagged": 0.0565
+    },
+    {
+      "value_segment": "近期一般",
+      "rows": 3971,
+      "positive_rate": 0.0725,
+      "mean_pred": 0.0686,
+      "roc_auc": 0.5168,
+      "flagged_share": 0.0914,
+      "precision_flagged": 0.0661
+    },
+    {
+      "value_segment": "近期高价值",
+      "rows": 2341,
+      "positive_rate": 0.0726,
+      "mean_pred": 0.0696,
+      "roc_auc": 0.531,
+      "flagged_share": 0.1341,
+      "precision_flagged": 0.0573
+    }
+  ],
+  "by_lifecycle": [
+    {
+      "lifecycle": "active",
+      "rows": 17163,
+      "positive_rate": 0.0711,
+      "mean_pred": 0.0681,
+      "roc_auc": 0.516,
+      "flagged_share": 0.0961,
+      "precision_flagged": 0.0594
+    },
+    {
+      "lifecycle": "new",
+      "rows": 839,
+      "positive_rate": 0.0691,
+      "mean_pred": 0.0715,
+      "roc_auc": 0.4997,
+      "flagged_share": 0.1824,
+      "precision_flagged": 0.0588
+    }
+  ],
+  "coefficients_top10": [
+    [
+      "products_90d",
+      -0.22403432988566388
+    ],
+    [
+      "categories_90d",
+      0.1544462353505869
+    ],
+    [
+      "as_of_month",
+      0.1540741204957083
+    ],
+    [
+      "delivered_count",
+      0.1498118135742899
+    ],
+    [
+      "gap_last_days",
+      -0.13842738322506634
+    ],
+    [
+      "orders_all_time",
+      -0.10459421997702581
+    ],
+    [
+      "lines_per_order",
+      0.07613472415193531
+    ],
+    [
+      "active_days_90d",
+      -0.07523598777024171
+    ],
+    [
+      "recency_days",
+      -0.06038874798938992
+    ],
+    [
+      "merch_all_time",
+      -0.05814108121828045
+    ]
+  ]
+}

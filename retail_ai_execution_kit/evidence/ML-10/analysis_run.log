@@ -1,0 +1,7 @@
+$ .venv/bin/python evidence/ML-10/error_analysis.py
+2026-11-10T21:16:43+08:00
+{'TN': 15029, 'FP': 1695, 'FN': 1171, 'TP': 107} [('2026-03', 0.5011), ('2026-04', 0.471), ('2026-05', 0.4771), ('2026-06', 0.5057), ('2026-07', 0.5201), ('2026-08', 0.5016), ('2026-09', 0.5175), ('2026-10', 0.5157)]
+exit=0
+--- run 2: one interpretive sentence corrected (the medians do not support 'distinguishes by history size and month')
+exit=0
+--- verification: confusion sums, group coverage, no identities, causal/generalisation caveats: [True, True, True, True, True] exit=0

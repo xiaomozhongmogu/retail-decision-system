@@ -1,0 +1,82 @@
+{
+  "task_id": "ML-10",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; test set of split-v1, frozen model",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/ML-10/error_analysis.py",
+  "exit_code": 0,
+  "summary": "误差分析：每周前 10% 入选下 TP 107、FP 1,695、FN 1,171、TN 15,029（漏报占复购 91.6%）；四类结果特征中位数几乎相同。按月份、大区、价值分群、生命周期分组，ROC-AUC 都在 0.47–0.52。系数作为模型解释、明确不是因果；写明不能推广到全新客户、真实企业或中国市场，也不估计营销增量。只报告汇总，无客户身份。核对 5/5。",
+  "inputs": [
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "reports/model/cluster_metrics.json",
+      "sha256": "8d577f1a1e955f5e72283cc1edd5ec5e3e0c6a85c4346714eef3ee219d38cb40"
+    },
+    {
+      "path": "src/retail_bi/model/evaluate.py",
+      "sha256": "af1154aff362b38da1dc8784e355fbea6e92692a5b4056c8c3a2868c3f1d928a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/error_analysis.md",
+      "sha256": "14e1b64974fd32d30784179dac12382a6bc1e5eec5565c9e85ef7b2f0928fc46"
+    },
+    {
+      "path": "reports/model/error_analysis.json",
+      "sha256": "d33e55f2310682d63de7dbcdf83a22588b744884c5d4ce29a92ef4b0b6595b22"
+    },
+    {
+      "path": "evidence/ML-10/error_analysis.py",
+      "sha256": "ee4b768bde56667583820bfa03680ef953d425a9fbecb507c4b0da9bfc6a6864"
+    },
+    {
+      "path": "evidence/ML-10/analysis_run.log",
+      "sha256": "c64642cdad135f7b1118c74e61022afd510163aa6ff0651e7a1f1f19b7b611d2"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "分析误报与漏报的数量和特征中位数，并按时间（8 个月份）、地区（4 个大区，本数据无国家）、价值群（ML-05 规则分群）、生命周期分组给出实际比例、平均预测、ROC-AUC、入选比例与命中率；全部为汇总，报告不含客户 ID（核对）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 3 节列出标准化系数前 10，并写明只说明模型如何组合特征、不表示改变特征会改变复购，系数在相关特征下不稳定。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 4 节说明 74% 测试客户见于训练、结论只适用于已知客户的未来时点，不证明能泛化到全新客户；数据为合成美国式电商，不能推广到真实企业或当代中国市场；不估计营销增量。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "分组样本较小时 AUC 波动大，报告已提示。",
+    "任务写入范围只有 reports/model，分析脚本放在 evidence 目录。"
+  ],
+  "steps": [
+    "认领 ML-10（台账 56906098…→5776c4ee…）。",
+    "编写并运行误差分析；修正一处不被数据支持的解释性措辞；核对 5 项通过。"
+  ],
+  "task_spec_sha256": "eccaff46a9925e6ac431b00fd6fdb3fbc73dc71209eab925b49a1da952aef305",
+  "performed_at": "2026-11-10T21:17:11.309377+08:00"
+}
