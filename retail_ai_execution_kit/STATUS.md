@@ -2,13 +2,14 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：Synthetic engineering import verified: leading-zero postal codes preserved and observed event views isolated. DATA-05 in_review until formal DATA-03/04 acceptance; D001/D006 pending. No warehouse/model/AI acceptance claimed.
+- 项目状态说明：D012: user authorized treating data timing/synthetic eligibility as confirmed working assumption. No teacher-reply wait for engineering. Next DATA-03 freeze selected route, DATA-04 technical contract, then review existing DATA-05 import. No actual teacher reply fabricated.
 - 正式主数据：尚未选定/核验。
 - 协调者：未指定: Codex released after engineering import stage (2026-11-10)。
-- 已选 85 项；done 8 项；blocked 2 项；其他未验收 75 项。
+- 已选 85 项；done 8 项；blocked 1 项；其他未验收 76 项。
 
 ## 可认领的下一步
 
+- DATA-03：确认唯一主数据路线
 - AI-01：实现LLM适配与配置边界
 - UI-01：建立Streamlit多页骨架
 - DOC-04：核验学术文献与综述引用
@@ -16,7 +17,6 @@
 ## 当前阻塞
 
 - GOV-03：已从用户提供的选题报告登记 5 名成员姓名、学号与组长（ops/TEAM.md）；仍缺：各模块负责人与复核者、可投入时间、文档章节与演示分工，以及孙卓班级的确认，均需团队提供。恢复条件：用户提供分工表。
-- GOV-04：D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。
 
 ## 四个关卡
 

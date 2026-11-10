@@ -18,14 +18,14 @@
 | GOV-01 | 核对课程原文并建立需求映射 | proposal | done | 无 |
 | GOV-02 | 盘点现有仓库和AI运行能力 | proposal | done | GOV-01 |
 | GOV-03 | 填写真实团队与责任矩阵 | proposal | blocked | GOV-01 |
-| GOV-04 | 解决数据时效及课程口径歧义 | proposal | blocked | GOV-01 |
+| GOV-04 | 解决数据时效及课程口径歧义 | proposal | in_review | GOV-01 |
 | GOV-05 | 冻结业务范围和可观测生命周期 | proposal | done | GOV-01 |
 | GOV-06 | 冻结轻量架构和公共接口草案 | proposal | done | GOV-05, GOV-02 |
 | GOV-07 | 建立环境、目录和命令入口 | proposal | done | GOV-02, GOV-06 |
 | GOV-08 | 建立认领、证据和交接流程 | proposal | done | GOV-01, GOV-02 |
 | DATA-01 | 核验候选数据来源与许可 | proposal | done | GOV-05 |
 | DATA-02 | 实读候选文件并探查字段 | proposal | done | DATA-01, GOV-07 |
-| DATA-03 | 确认唯一主数据路线 | proposal | todo | DATA-02, GOV-04 |
+| DATA-03 | 确认唯一主数据路线 | proposal | todo | DATA-02 |
 | DATA-04 | 完成正式数据契约和字典 | proposal | todo | DATA-03 |
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | in_review | DATA-04 |
 | DATA-06 | 全量质量剖析与问题基线 | proposal | todo | DATA-05 |
@@ -165,7 +165,7 @@
 
 ### GOV-04 解决数据时效及课程口径歧义
 
-- [ ] 状态：`blocked`；阶段：`proposal`；范围：已选核心。
+- [ ] 状态：`in_review`；阶段：`proposal`；范围：已选核心。
 - 依据：C06, C16, C30, B01, B05。
 - 前置：GOV-01。
 - 允许修改：`ops`, `reports/governance`；另可写本任务证据/交接。
@@ -177,8 +177,6 @@
 1. 可用真实来源证据证明满足较严格数据时间条款，或保存教师对时间定义/历史数据例外的明确答复；两者均无则维持未解决。
 2. AI数量按评分表至少2、本项目3执行；不以标题选做擅自删掉承诺模块。
 3. 列出未答复的加分计算与生产可用口径；加分歧义可保留但不能据此保证分数。
-
-**当前阻塞：** D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。
 
 证据：尚无已登记验收证据。
 
@@ -268,7 +266,7 @@
 2. 至少核验主候选和备选的可下载性；账号或权限需求明确记录，不绕过访问控制。
 3. UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。
 
-证据：evidence/DATA-01/2026-11-10-d011-recheck.json
+证据：evidence/DATA-01/2026-11-10-d012-recheck.json
 
 ### DATA-02 实读候选文件并探查字段
 
@@ -291,16 +289,16 @@
 
 - [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
 - 依据：C06, C07, U01, Q01。
-- 前置：DATA-02, GOV-04。
+- 前置：DATA-02。
 - 允许修改：`reports/data`, `ops`, `contracts`；另可写本任务证据/交接。
 - 输出：`reports/data/dataset_selection.md`。
 - 实际执行要求：以相应来源核验/文档审阅为主，必要运行另记录。
 
 **验收条件**
 
-1. 数据选型与GOV-04记录的时效结论一致：结论来自满足较严格条款的充分数据证据，或教师解释/例外；保留来源和日期。
+1. 依据D012用户明确授权，按合成数据与时间口径已确认的工作假设冻结工程主数据；注明授权来源，不伪称收到教师真实答复。
 2. 确认采用交易路线还是行为路线，并列出被删除或调整的指标/模型/页面。
-3. 不得将无关数据集用户ID拼接；未解决时效或8字段问题不能标通过。
+3. 不得拼接无关来源用户ID；核验至少8个有意义的源业务字段，不以拆日期或模拟补列凑数；D012工作假设允许工程验收，不冒称教师实际确认。
 
 证据：尚无已登记验收证据。
 
@@ -336,7 +334,7 @@
 2. 原始层只读保留，导入可重复执行；凭据不进入日志或仓库。
 3. 采集受限时如实记录，不能用生成数据替代正式数据规模。
 
-**当前阻塞：** Engineering import verified; formal DATA-03/04 dependencies pending teacher D001/D006 and synthetic contract. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json. Source manifest and working views ready; do not rerun as a fresh task.
+**当前阻塞：** Engineering import verified; awaiting DATA-03 selection and DATA-04 technical contract under D012 user-authorized eligibility assumption. Teacher reply is not a blocker. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json.
 
 证据：尚无已登记验收证据。
 

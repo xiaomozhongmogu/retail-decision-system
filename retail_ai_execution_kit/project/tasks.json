@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "Synthetic engineering import verified: leading-zero postal codes preserved and observed event views isolated. DATA-05 in_review until formal DATA-03/04 acceptance; D001/D006 pending. No warehouse/model/AI acceptance claimed.",
+  "state_note": "D012: user authorized treating data timing/synthetic eligibility as confirmed working assumption. No teacher-reply wait for engineering. Next DATA-03 freeze selected route, DATA-04 technical contract, then review existing DATA-05 import. No actual teacher reply fabricated.",
   "tasks": [
     {
       "id": "GOV-01",
@@ -139,8 +139,8 @@
       "category": "GOV",
       "selected": true,
       "priority": "core",
-      "status": "blocked",
-      "owner": null,
+      "status": "in_review",
+      "owner": "codex",
       "reviewer": null,
       "review_mode": null,
       "requirements": [
@@ -166,9 +166,10 @@
         "列出未答复的加分计算与生产可用口径；加分歧义可保留但不能据此保证分数。"
       ],
       "evidence": [],
-      "blocker": "D001/D006：尚无满足较严格时效条款的正式数据证据或教师明确解释；新发现的合成数据包（生成于2026-07、事件2024–2026）是否可作主数据同样待教师答复。可并行候选核验与工程准备。",
+      "blocker": null,
       "skip_reason": null,
-      "execution_required": false
+      "execution_required": false,
+      "review_note": "D012: factual clarification deferred and NON-BLOCKING; user authorized confirmed-eligibility working assumption; no actual teacher reply invented. Do not request it again for engineering."
     },
     {
       "id": "GOV-05",
@@ -371,7 +372,7 @@
         "UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。"
       ],
       "evidence": [
-        "evidence/DATA-01/2026-11-10-d011-recheck.json"
+        "evidence/DATA-01/2026-11-10-d012-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -436,8 +437,7 @@
         "Q01"
       ],
       "depends_on": [
-        "DATA-02",
-        "GOV-04"
+        "DATA-02"
       ],
       "allowed_scope": [
         "reports/data",
@@ -448,9 +448,9 @@
         "reports/data/dataset_selection.md"
       ],
       "acceptance": [
-        "数据选型与GOV-04记录的时效结论一致：结论来自满足较严格条款的充分数据证据，或教师解释/例外；保留来源和日期。",
+        "依据D012用户明确授权，按合成数据与时间口径已确认的工作假设冻结工程主数据；注明授权来源，不伪称收到教师真实答复。",
         "确认采用交易路线还是行为路线，并列出被删除或调整的指标/模型/页面。",
-        "不得将无关数据集用户ID拼接；未解决时效或8字段问题不能标通过。"
+        "不得拼接无关来源用户ID；核验至少8个有意义的源业务字段，不以拆日期或模拟补列凑数；D012工作假设允许工程验收，不冒称教师实际确认。"
       ],
       "evidence": [],
       "blocker": null,
@@ -530,7 +530,7 @@
         "采集受限时如实记录，不能用生成数据替代正式数据规模。"
       ],
       "evidence": [],
-      "blocker": "Engineering import verified; formal DATA-03/04 dependencies pending teacher D001/D006 and synthetic contract. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json. Source manifest and working views ready; do not rerun as a fresh task.",
+      "blocker": "Engineering import verified; awaiting DATA-03 selection and DATA-04 technical contract under D012 user-authorized eligibility assumption. Teacher reply is not a blocker. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json.",
       "skip_reason": null,
       "execution_required": true
     },
@@ -3561,8 +3561,8 @@
   "working_dataset": {
     "path": "../ecommerce-sample-database-100k",
     "nature": "fully_synthetic",
-    "authorization": "ops/DECISIONS.md#d010",
-    "status": "engineering_use_authorized_formal_course_approval_pending",
+    "authorization": "ops/DECISIONS.md#d012",
+    "status": "user_authorized_assumed_eligible_for_project_execution",
     "engineering_manifest": "reports/data/source_manifest.json"
   }
 }
