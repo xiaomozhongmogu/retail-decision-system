@@ -1,0 +1,97 @@
+{
+  "task_id": "ML-08",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), scikit-learn 1.9.1",
+    "data_mode": "fully_synthetic; features-v1, split-v1 (train + validation only)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/model/model_select.py; .venv/bin/python evidence/ML-08/verify_selection.py",
+  "exit_code": 0,
+  "summary": "在看测试集之前冻结：概率模型 repurchase-logreg-v1（逻辑回归，不加权，验证 PR-AUC 最高；在训练+验证上按相同超参数重拟合，JSON 参数可直接打分，模型文件 SHA-256 01b2b335…）；校准为 none（时间分块交叉拟合下 Platt/等渗都没有改善 Brier，ECE 0.014）；周名单排序策略为近 90 天订单数规则（验证期周内 Lift@10% 1.158，逻辑回归 0.941）；不设 0.5 阈值，默认每周容量 K=10%。重要发现：所有候选的周内 ROC-AUC 只有 0.50–0.52，周内排序接近随机。核对 7/7。",
+  "inputs": [
+    {
+      "path": "reports/model/baselines.json",
+      "sha256": "fb9430a5be7f0390acb5958dfbb448606a6d2842db41e91bbf617ee2ae343eaa"
+    },
+    {
+      "path": "reports/model/boosting_validation.json",
+      "sha256": "d82150f7c9b7155a3da8644bb3770fa6c5417cd9f1b8c0308d4c050b07b2ee00"
+    },
+    {
+      "path": "reports/model/training_runs.json",
+      "sha256": "71656bff1bdabba69dfe36014001e4b8da2fab151eca1bce2c10c462116f06b5"
+    },
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "src/retail_bi/model/baselines.py",
+      "sha256": "a323faffbc501206b38b01991c67183226464b8f448af2ff42b3c12d665e9c16"
+    },
+    {
+      "path": "src/retail_bi/model/common.py",
+      "sha256": "7c85e6dfefd016199e16fdf06baff71d1fccaefbb6698a2300ba9f3659a38ca2"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "src/retail_bi/model/model_select.py",
+      "sha256": "d812b02b3c7581bfc7bc89aa29fcbbeba4ee6a15db54374612c33d2e74360d35"
+    },
+    {
+      "path": "evidence/ML-08/select_run.log",
+      "sha256": "f1f99f601722b66fac589b457b77570e0fb109bff43ec566a3f6a3502395cf10"
+    },
+    {
+      "path": "evidence/ML-08/verification_run.log",
+      "sha256": "ca674e1be0f00bf28b4a986eb9ece082791ff74c3c4ea74ec168f430755c5776"
+    },
+    {
+      "path": "evidence/ML-08/verify_selection.py",
+      "sha256": "e7bc6552ea7deb231724113e190061cb3f9b4d509eae09c661acf88483d5cba6"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "model_selection.json 在验证阶段记录模型（repurchase-logreg-v1）、超参数（C=1.0、不加权、种子 20261110）、校准方法（none，附交叉拟合 Brier）、阈值（不用固定阈值）与容量 K（每周 10%），以及冻结时间 frozen_at；test_set_used=false。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "比较了 Platt 与等渗校准（时间分块交叉拟合，Brier 0.07138 / 0.07173 / 0.07203），原始概率最好；按业务容量取每周前 K 而不是 0.5 阈值；名单排序依据周内 Lift@K 选择规则策略，并说明合并指标主要反映月度基率变化。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "记录“冻结后不得因测试结果更换模型、校准、排序策略或 K”；选择标准从合并 PR-AUC 扩展到周内 Lift 的原因与时间（测试前）写入 selection_criterion_change；冻结模型 JSON 打分与 sklearn 重拟合逐行一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "模型文件在 models/（被 Git 忽略），由 ML-12 发布并登记哈希。",
+    "验证集同时用于早停、选择与排序策略，验证结果偏乐观；以 ML-09 为准。",
+    "周内排序接近随机：模型主要提供概率水平而不是精准名单。"
+  ],
+  "steps": [
+    "认领 ML-08（台账 3d276502…）。",
+    "分析验证集提升度，发现合并指标与周内排序差异，比较各候选周内表现。",
+    "编写选择脚本（原名 select.py 与标准库重名，改为 model_select.py），冻结并保存 JSON 模型。",
+    "verify_selection.py 7/7。"
+  ],
+  "task_spec_sha256": "4256c128ab06f8f1c968f119705141c1c5980f33e0a5eedae2d7dfff22a22b83",
+  "performed_at": "2026-11-10T21:09:21.286289+08:00"
+}

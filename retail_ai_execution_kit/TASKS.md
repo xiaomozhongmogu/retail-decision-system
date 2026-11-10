@@ -58,7 +58,7 @@
 | ML-05 | 完成RFM规则与K-Means分群 | midterm | todo | EDA-05, ML-04 |
 | ML-06 | 训练规则与逻辑回归基线 | midterm | done | ML-04 |
 | ML-07 | 训练并有限调优LightGBM | midterm | done | ML-06 |
-| ML-08 | 冻结模型、校准与阈值 | midterm | todo | ML-07 |
+| ML-08 | 冻结模型、校准与阈值 | midterm | done | ML-07 |
 | ML-09 | 完成最终时间外评估 | midterm | todo | ML-08 |
 | ML-10 | 解释误差与适用限制 | midterm | todo | ML-09, ML-05 |
 | ML-11 | 实现评分服务与适用性输出 | midterm | todo | ML-10, DW-10 |
@@ -857,7 +857,7 @@
 
 ### ML-08 冻结模型、校准与阈值
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：U03, Q04。
 - 前置：ML-07。
 - 允许修改：`reports/model`, `src/retail_bi/model`；另可写本任务证据/交接。
@@ -870,7 +870,7 @@
 2. 考虑概率校准及业务容量，不使用固定0.5替代所有场景判断。
 3. 不得在看到最终测试后悄悄换冠军；改变需新实验记录与新的诚实评估方案。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-08/2026-11-10-selection.json
 
 ### ML-09 完成最终时间外评估
 

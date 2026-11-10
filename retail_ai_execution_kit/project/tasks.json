@@ -1729,10 +1729,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "U03",
         "Q04"
@@ -1752,7 +1752,9 @@
         "考虑概率校准及业务容量，不使用固定0.5替代所有场景判断。",
         "不得在看到最终测试后悄悄换冠军；改变需新实验记录与新的诚实评估方案。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-08/2026-11-10-selection.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

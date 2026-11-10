@@ -1,0 +1,19 @@
+$ .venv/bin/python evidence/ML-08/verify_selection.py
+2026-11-10T21:08:48+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/ML-08/verify_selection.py", line 15, in <module>
+    from select import fit_lr  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'fit_lr' from 'select' (unknown location)
+exit=1
+--- run 2 (run 1: import of 'select' hit the stdlib module; file renamed)
+PASS frozen JSON model reproduces sklearn refit probabilities max diff 0.00e+00
+PASS frozen model fitted on train + validation only 
+PASS test set not loaded during selection 
+PASS freeze time recorded and no-switch rule stated 
+PASS calibration choice follows cross-fitted Brier {'none': 0.07138, 'platt': 0.0717259, 'isotonic': 0.0720259}
+PASS ranking policy = best validation within-week lift@10% rule_frequency_90d
+PASS no fixed 0.5 threshold; capacity K recorded 
+model file sha256 01b2b335e07bd51bd7f3da1bac0219089e04438aa8beb655e54f1dab3b0855d2
+7/7 passed
+exit=0
