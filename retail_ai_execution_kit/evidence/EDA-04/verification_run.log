@@ -10,3 +10,6 @@ FAIL 5 recommendations each with trigger, owner/steps, evaluation, limits
 --- run 2 (run 1 counted year rows of earlier tables as recommendations; now section 4 only)
 FAIL 5 recommendations each with trigger, owner/steps, evaluation, limits 5
 7/8 passed
+--- run 3 (run 2 still FAILED: it expected 8 pipes per row, the table has 6 columns = 7 pipes; the evidence written after run 2 wrongly said 8/8 and is replaced)
+PASS 5 recommendations each with #, advice, trigger, owner/steps, evaluation, limits (all cells non-empty) [6, 6, 6, 6, 6]
+8/8 passed (checks 1-7 from run 1, check 8 from this run)
