@@ -1,0 +1,78 @@
+{
+  "task_id": "DATA-01",
+  "verification_status": "passed",
+  "method": "inspection",
+  "performed_at": "2026-11-10T14:18:19.304600+08:00",
+  "actor": "codex",
+  "reviewer": "codex",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "network": "联网；curl、GitHub API、Hugging Face API、firecrawl 页面抓取"
+  },
+  "summary": "Local impact review of D011: same engineering dataset and source/permission facts; no new web verification. Historical source checks reused with original provenance.",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "c9ee3002fd32da554f12d7d448bd9dd8a4e6663be56687fc07d09bc387ae2d16"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "5b4c555ff55ae53cc7361f86bbfe3bae9358c78ff936347e328079be8af8431d"
+    },
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "sha256": "a554858356f1abe16a419c9ea6dcfb9562fd0abe83f6a8b3a8dafe333377de64"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    },
+    {
+      "path": "evidence/DATA-01/source_checks.log",
+      "sha256": "d3ac6d4ecc7b50ff17457d83bfb9358799b1d25ea8b613f8bf63fed400041a2a"
+    },
+    {
+      "path": "evidence/DATA-01/synthetic_download_manifest.json",
+      "sha256": "0a3863f85ddc3565ff6904c79136b9a2fb3ea53352551bfaf4932e5aa21cdcbe"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "data_candidates.md 第 1 节为 A–D 逐项列出下载入口、发布者、许可、事件时间、首次发布与最近更新时间，并用〔页〕〔实测〕〔他人〕标注来源层次；第 3 节记录了实测的 ZIP 哈希与逐文件比对。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "主候选 A：读到 ZIP 签名 PK，不需要账号；备选 B：完整下载并与 manifest 哈希一致；C：页面免登录，未登录调用 API 返回 302 签名链接，没有跟进，并注明条款可能要求账号；D：gated=false，读到 Parquet 签名 PAR1。没有绕过任何访问控制。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 2 节写明：A 和 C 只能在教师认可历史数据后采用（D001）；D 不能凭 2026-10 的更新认定合规（相对日期、扰动、合成注入）；B 的时效与合成属性另由 D006 决定。没有作任何合规认定。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "A、C、D 都没有全量下载，规模与字段为页面说法。",
+    "没有阅读 Kaggle 和 Hugging Face 条款全文。",
+    "页面信息以 2026-11-09 抓取为准。",
+    "官网 ZIP 保存在会话临时目录，没有放进项目（data/raw 留给 DATA-05）。",
+    "本轮只审阅本地历史来源证据与 D010 的影响，没有重新访问来源网站。"
+  ],
+  "steps": [
+    "Read current decisions including D010/D011, original DATA-01 source report/log and prior local impact evidence.",
+    "D011 only isolates engineering import/availability rules, retaining synthetic identity, license uncertainty and D001/D006. Source facts and original artifact hashes remain unchanged.",
+    "Checked all original artifact hashes and kept formal dataset approval pending."
+  ],
+  "task_spec_sha256": "076cb517df179bd1140eaad673d92c04c080929d02470daa5e8e75d52c147956"
+}

@@ -1,0 +1,129 @@
+{
+  "task_id": "DATA-05",
+  "task_spec_sha256": "d2ca98ae9ff9baa9767d13dc8dec1110d03d8c29516bf9e60e3b41c8e8ef734d",
+  "verification_status": "partial",
+  "method": "command",
+  "performed_at": "2026-11-10T14:18:19.304600+08:00",
+  "actor": "codex",
+  "reviewer": "codex",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 .venv",
+    "mode": "offline fully synthetic engineering input"
+  },
+  "command": "See reports/data/engineering_import_review.md exact import command; .venv/bin/python evidence/DATA-05/verify_import.py",
+  "exit_code": 0,
+  "summary": "Engineering stage verified; formal acceptance pending DATA-03/04 and teacher eligibility. Preserved original ZIP, rebuilt postal strings and isolated event-observed views. No business labels or formal metric approval claimed.",
+  "inputs": [
+    {
+      "path": "src/retail_bi/data/candidate_probe.py",
+      "sha256": "df20e3ca38ea8415692fc34bf2c00a359d769363540a9129769d8bf59755b740"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "sha256": "a554858356f1abe16a419c9ea6dcfb9562fd0abe83f6a8b3a8dafe333377de64"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/raw/archives/d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16.zip",
+      "sha256": "d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/data/ingest.py",
+      "sha256": "d0f30d29ae8d88741a54ed6c33f581fe93e42c758b7d92c2460f628503b171e9"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "reports/data/engineering_import_review.md",
+      "sha256": "f9a5140b17f8cb98db1739168c6a57484a1008c29051a4a2f9d3df6d5facde87"
+    },
+    {
+      "path": "evidence/DATA-05/import_run.json",
+      "sha256": "4a2daa61641b3241ba9412fea606f4859edc74da4c3792a177361510c8fd6055"
+    },
+    {
+      "path": "evidence/DATA-05/verify_import.py",
+      "sha256": "92b1a1abb9a585d07372f4e2598aa1caebc41f62dc6cbcfcf5828adf0d0e6621"
+    },
+    {
+      "path": "evidence/DATA-05/verification_run.log",
+      "sha256": "966e4fc0b9b22a835cec506a6037f09e53232fdfa038519b49c44e5b64483d37"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/customers.csv",
+      "sha256": "2aa9a6136a85cd34c43045deddcb8ae5c14467570c6b635c446f8c119c60b1b2"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/products.csv",
+      "sha256": "6f669e9fe16a9d03fcb584d14196ed815c93b2abc2039ab9928774bf2cbd2ab4"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/reviews.csv",
+      "sha256": "b90274a58fa8a60903436a2ef5f81cdb2e376a0ae2bc9758acbda44dd8d72651"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/orders.csv",
+      "sha256": "e645d2f7bf76ab62891ca563dde12496d6bc4579767e7024295b63182c88a38b"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/calendar.csv",
+      "sha256": "cf2bdf52a6fe3e33a795e4db8cd0503b360e64b624188c63538e0ec251e7f8f8"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/payments.csv",
+      "sha256": "1493dc289e95ed19c744eebfbdab4411201aae6134c20957eb6629a114bf6c6f"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/sellers.csv",
+      "sha256": "b431be39b18b233915e972c6fd91c14457a8c182f2019795e63e33169b085be3"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/order_items.csv",
+      "sha256": "f102c7eed9794c269d1612e98dce75ce998cbd8d441bc3df21fa384044037e58"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/seller_products.csv",
+      "sha256": "68a25acfae66d920a8e33ef96edfbdac6c5e0a043385b31cdec265b64880beef"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/history_source/shipping.csv",
+      "sha256": "d8dd8dc9becd8ef447c0d996366c105ef43f47e2c6e6e259ab4302d4807bd762"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/observed/orders.csv",
+      "sha256": "8c8ac4201d10ec371720e5734d422144da05380cd12d7ef825c4616fb3555804"
+    },
+    {
+      "path": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1/observed/reviews.csv",
+      "sha256": "aeb27f58747a0c8aeab2000453418d7a57c6e7c7c6e9c21ae7dc2722e10f2ff2"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "pending",
+      "finding": "Full selected ZIP archived/rebuilt and hashed, but formally frozen research scope and DATA-04 contract not yet accepted."
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "Source unchanged, idempotent hash-verified replay, exclusive lock, atomic work-directory publish and corruption refusal verified; no credentials read."
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "Only existing synthetic files rebuilt, original provenance preserved; no generated replacement records or inflated scale. No external acquisition claimed."
+    }
+  ],
+  "limitations": [
+    "Self-review; no teacher approval or business training/warehouse acceptance.",
+    "Observed views are a minimal engineering subset, not a complete historically accurate customer/status/payment snapshot.",
+    "Score availability at review creation and UTC interpretation are explicit engineering assumptions."
+  ]
+}

@@ -2,9 +2,9 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：Local synthetic data authorized for engineering under D010; DATA-02 full probe complete. Postal loss and post-cutoff information need downstream handling. D001/D006 formal eligibility pending; cleaning, warehouse, models and AI not accepted.
+- 项目状态说明：Synthetic engineering import verified: leading-zero postal codes preserved and observed event views isolated. DATA-05 in_review until formal DATA-03/04 acceptance; D001/D006 pending. No warehouse/model/AI acceptance claimed.
 - 正式主数据：尚未选定/核验。
-- 协调者：未指定: Codex released after DATA-02 (2026-11-09); next user continue selects successor。
+- 协调者：未指定: Codex released after engineering import stage (2026-11-10)。
 - 已选 85 项；done 8 项；blocked 2 项；其他未验收 75 项。
 
 ## 可认领的下一步

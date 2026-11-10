@@ -5,14 +5,14 @@
   "timezone": "Asia/Shanghai",
   "project_state": "local_synthetic_candidate_probed_formal_dataset_pending",
   "active_dataset": null,
-  "coordinator": "未指定: Codex released after DATA-02 (2026-11-09); next user continue selects successor",
+  "coordinator": "未指定: Codex released after engineering import stage (2026-11-10)",
   "milestones": {
     "proposal": "2026-11-09",
     "midterm": "2026-11-30",
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "Local synthetic data authorized for engineering under D010; DATA-02 full probe complete. Postal loss and post-cutoff information need downstream handling. D001/D006 formal eligibility pending; cleaning, warehouse, models and AI not accepted.",
+  "state_note": "Synthetic engineering import verified: leading-zero postal codes preserved and observed event views isolated. DATA-05 in_review until formal DATA-03/04 acceptance; D001/D006 pending. No warehouse/model/AI acceptance claimed.",
   "tasks": [
     {
       "id": "GOV-01",
@@ -347,7 +347,7 @@
       "priority": "core",
       "status": "done",
       "owner": "claude-opus-5-5",
-      "reviewer": "codex（D010影响复核）",
+      "reviewer": "codex D011 impact review",
       "review_mode": "self_review",
       "requirements": [
         "C03",
@@ -371,7 +371,7 @@
         "UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。"
       ],
       "evidence": [
-        "evidence/DATA-01/2026-11-09-d010-recheck.json"
+        "evidence/DATA-01/2026-11-10-d011-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -502,10 +502,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "in_review",
+      "owner": "codex",
+      "reviewer": "codex engineering self-review",
+      "review_mode": "self_review",
       "requirements": [
         "C03",
         "C07",
@@ -530,7 +530,7 @@
         "采集受限时如实记录，不能用生成数据替代正式数据规模。"
       ],
       "evidence": [],
-      "blocker": null,
+      "blocker": "Engineering import verified; formal DATA-03/04 dependencies pending teacher D001/D006 and synthetic contract. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json. Source manifest and working views ready; do not rerun as a fresh task.",
       "skip_reason": null,
       "execution_required": true
     },
@@ -3562,6 +3562,7 @@
     "path": "../ecommerce-sample-database-100k",
     "nature": "fully_synthetic",
     "authorization": "ops/DECISIONS.md#d010",
-    "status": "engineering_use_authorized_formal_course_approval_pending"
+    "status": "engineering_use_authorized_formal_course_approval_pending",
+    "engineering_manifest": "reports/data/source_manifest.json"
   }
 }

@@ -27,7 +27,7 @@
 | DATA-02 | 实读候选文件并探查字段 | proposal | done | DATA-01, GOV-07 |
 | DATA-03 | 确认唯一主数据路线 | proposal | todo | DATA-02, GOV-04 |
 | DATA-04 | 完成正式数据契约和字典 | proposal | todo | DATA-03 |
-| DATA-05 | 实现完整导入和原始数据登记 | proposal | todo | DATA-04 |
+| DATA-05 | 实现完整导入和原始数据登记 | proposal | in_review | DATA-04 |
 | DATA-06 | 全量质量剖析与问题基线 | proposal | todo | DATA-05 |
 | DATA-07 | 处理缺失、类型与重复导入 | proposal | todo | DATA-06 |
 | DATA-08 | 统一购买、取消、退款与金额规则 | proposal | todo | DATA-06 |
@@ -268,7 +268,7 @@
 2. 至少核验主候选和备选的可下载性；账号或权限需求明确记录，不绕过访问控制。
 3. UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。
 
-证据：evidence/DATA-01/2026-11-09-d010-recheck.json
+证据：evidence/DATA-01/2026-11-10-d011-recheck.json
 
 ### DATA-02 实读候选文件并探查字段
 
@@ -323,7 +323,7 @@
 
 ### DATA-05 实现完整导入和原始数据登记
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [ ] 状态：`in_review`；阶段：`proposal`；范围：已选核心。
 - 依据：C03, C07, C08, C20。
 - 前置：DATA-04。
 - 允许修改：`src/retail_bi/data`, `reports/data`, `data/raw`；另可写本任务证据/交接。
@@ -335,6 +335,8 @@
 1. 已冻结正式研究范围内的数据完整获取并校验大小/哈希，保留来源版本与日期；不必下载发布者所有无关域或文件，不能声称审计过未读取部分。
 2. 原始层只读保留，导入可重复执行；凭据不进入日志或仓库。
 3. 采集受限时如实记录，不能用生成数据替代正式数据规模。
+
+**当前阻塞：** Engineering import verified; formal DATA-03/04 dependencies pending teacher D001/D006 and synthetic contract. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json. Source manifest and working views ready; do not rerun as a fresh task.
 
 证据：尚无已登记验收证据。
 

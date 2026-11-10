@@ -1,0 +1,5 @@
+PASS all 10 history tables equal independent source cutoff; strings and leading zeros preserved
+PASS observed views independently contain no post-cutoff actual dates or final order status
+PASS repeated import idempotent, manifest byte-identical
+PASS wrong checksum, naive cutoff, source-output overlap, empty scope, active lock and corrupt output rejected without overwrite
+PASS source ZIP unchanged; no credentials or external calls
