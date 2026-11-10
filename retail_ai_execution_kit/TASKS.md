@@ -32,7 +32,7 @@
 | DATA-07 | 处理缺失、类型与重复导入 | proposal | done | DATA-06 |
 | DATA-08 | 统一购买、取消、退款与金额规则 | proposal | done | DATA-06 |
 | DATA-09 | 完成集成与冲突处理 | proposal | done | DATA-07, DATA-08 |
-| DATA-10 | 设计归约、转换与时间特征 | proposal | todo | DATA-09 |
+| DATA-10 | 设计归约、转换与时间特征 | proposal | done | DATA-09 |
 | DATA-11 | 执行清洗后质量门槛 | proposal | todo | DATA-10 |
 | DATA-12 | 发布阶段一数据包 | proposal | todo | DATA-11 |
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | todo | DATA-04, GOV-06 |
@@ -406,7 +406,7 @@
 
 ### DATA-10 设计归约、转换与时间特征
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C08, Q03。
 - 前置：DATA-09。
 - 允许修改：`docs`, `src/retail_bi/data`, `reports/data`；另可写本任务证据/交接。
@@ -419,7 +419,7 @@
 2. 数值变换、编码、时间派生可复现；模型相关拟合参数只从训练部分获得。
 3. 大数据抽样按用户保留完整历史，开发小样本明确标记；不以取文件前N行代替最终建模样本。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-10/2026-11-10-transform.json
 
 ### DATA-11 执行清洗后质量门槛
 

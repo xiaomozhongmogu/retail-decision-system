@@ -1,0 +1,20 @@
+$ .venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/a55d19147d1b0b3e-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json
+2026-11-10T14:54:46+08:00
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/transform.py:41: Pandas4Warning: Series.dt.dayofweek is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+  o['purchase_week_start'] = (p.dt.normalize() - pd.to_timedelta(p.dt.dayofweek, unit='D')).dt.date
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/transform.py:43: Pandas4Warning: Series.dt.dayofweek is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+  o['purchase_dow'] = p.dt.dayofweek            # Monday = 0
+{"row_count_preserved": true, "approval_lag_nulls_are_cancelled": true, "approval_lag_max_24h": "True", "log1p_reduces_skew": true, "fit_on_full_period_refused": true, "train_fit_uses_only_train_rows": true}
+exit=0
+--- rerun (reproducibility)
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/transform.py:41: Pandas4Warning: Series.dt.dayofweek is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+  o['purchase_week_start'] = (p.dt.normalize() - pd.to_timedelta(p.dt.dayofweek, unit='D')).dt.date
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/transform.py:43: Pandas4Warning: Series.dt.dayofweek is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+  o['purchase_dow'] = p.dt.dayofweek            # Monday = 0
+{"row_count_preserved": true, "approval_lag_nulls_are_cancelled": true, "approval_lag_max_24h": "True", "log1p_reduces_skew": true, "fit_on_full_period_refused": true, "train_fit_uses_only_train_rows": true, "rerun_reproducible": true}
+exit=0
+--- run 3 after replacing deprecated dayofweek and casting a numpy bool in the audit; output must stay byte-identical
+$ .venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/a55d19147d1b0b3e-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json
+2026-11-10T14:54:56+08:00
+{"row_count_preserved": true, "approval_lag_nulls_are_cancelled": true, "approval_lag_max_24h": true, "log1p_reduces_skew": true, "fit_on_full_period_refused": true, "train_fit_uses_only_train_rows": true, "rerun_reproducible": true}
+exit=0

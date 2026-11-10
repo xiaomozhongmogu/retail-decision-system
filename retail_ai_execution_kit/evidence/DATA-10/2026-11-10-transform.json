@@ -1,0 +1,93 @@
+{
+  "task_id": "DATA-10",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), pandas 3.1.1, numpy",
+    "data_mode": "fully_synthetic full scope (integrate-v1)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/a55d19147d1b0b3e-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json; .venv/bin/python evidence/DATA-10/verify_transform.py",
+  "exit_code": 0,
+  "summary": "preprocessing_methods.md 对清理、集成、归约、转换四类逐项给出处理或不适用理由及前后对比；transform.py 实现逐行确定性转换（时间派生、审批延迟、两种延迟口径、log1p）和只在训练期拟合的 TrainOnlyFit（传入截止后任何一行即拒绝）。重跑输出哈希一致。独立复算 12/12。",
+  "inputs": [
+    {
+      "path": "reports/data/profile_before.json",
+      "sha256": "015d01d93c42a7afe37f6b34698ded14f2907cc20f1e1d3d06ed1f7908dbbcdb"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "24fbd24ae82a4341c20facea1556e4d2a1849cdd5d26c14c71f3eb1e9c7b758a"
+    },
+    {
+      "path": "reports/data/integration_audit.json",
+      "sha256": "7a756e40ce076e16fbab888355d1c580b3998b987456a39f0e81ea2c226cb280"
+    },
+    {
+      "path": "reports/data/transaction_reconciliation.json",
+      "sha256": "195558cdabde7d3a48bcc4ee44b6cf5c6a79123f09f3e3b9332ba19bac31d6df"
+    },
+    {
+      "path": "evidence/DATA-10/verify_transform.py",
+      "sha256": "e560ed943de6ebeeccaae2e6ac5dbdad5613085bb951f142ab2bcd70ebd21b01"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/preprocessing_methods.md",
+      "sha256": "ff352c439510397a62d9cd11190943f96967ed479854cf791e6853ca26351947"
+    },
+    {
+      "path": "reports/data/transform_audit.json",
+      "sha256": "f1cb66ab3408d45e33dd0b687dc59fd022f83c40e2d354e88b46317eb326e2a2"
+    },
+    {
+      "path": "src/retail_bi/data/transform.py",
+      "sha256": "cccd4d792e6ed347510f83a9f3fba4d582d46cc004ec91a7513668190829329c"
+    },
+    {
+      "path": "evidence/DATA-10/transform_run.log",
+      "sha256": "2e55ecca9273bda88c931ad35f7db63ec2a1c629b92794e304ef1d91d522eff0"
+    },
+    {
+      "path": "evidence/DATA-10/verification_run.log",
+      "sha256": "a3ac2e4952acca028d4707007f889cde94917a5ede3e8d0fbb5ff32167b389da"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "文档第 1–4 节分别列出清理（类型、缺失不插补、重复保留理由、极端值只标记、延迟口径冲突、业务口径、隔离）、集成（来源内连接、支付先汇总及反例）、归约（列、粒度、行不抽样，PCA 不适用的理由，离散化放到训练期）、转换（确定性、训练期拟合、编码），每项附前后实测数字，不是只列算法名。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "时间派生、延迟天数、延迟标记、log1p 由代码逐行计算，核对脚本独立复算全部一致；同一输入重跑输出文件哈希相同（rerun_reproducible）。标准化、分箱、截尾通过 TrainOnlyFit 拟合：训练行加一行截止后数据即报错，拟合参数等于仅训练行的统计量；类别编码清单来自契约主数据，不来自标签。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "全量处理，不抽样（源 ZIP 1,310,750 字节，解压 7,974,631 字节）；文档写明以后若为开发抽样须按客户整体抽取、保留完整历史并标为开发样本，最终建模不取文件前 N 行。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "示例训练截止 2025-07-01 只用于测试防护，正式切分由 ML-04 冻结。",
+    "as_of 截断（送达、审批）在 ML-03 实现，本任务只规定规则。",
+    "转换输出被 Git 忽略。"
+  ],
+  "steps": [
+    "认领 DATA-10（台账 89b21731…）。",
+    "编写 transform.py 并运行两次（第二次验证可复现）；修正 pandas 弃用写法和审计中的 numpy 布尔值后第三次运行，输出文件不变。",
+    "撰写 preprocessing_methods.md，补充源数据字节数。",
+    "verify_transform.py 第 1 次 11/12：防护测试传入的“截止后 1 秒内”的行恰好为空，没有真正测到；改为训练行加一行截止后数据，12/12。"
+  ],
+  "task_spec_sha256": "beb43a3e7ae5a39d6ba5fe727cbe8ad2b0a43d065acb42c89630eb208b061d8c",
+  "performed_at": "2026-11-10T14:56:20.771566+08:00"
+}

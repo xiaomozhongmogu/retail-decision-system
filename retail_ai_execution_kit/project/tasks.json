@@ -704,10 +704,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C08",
         "Q03"
@@ -729,7 +729,9 @@
         "数值变换、编码、时间派生可复现；模型相关拟合参数只从训练部分获得。",
         "大数据抽样按用户保留完整历史，开发小样本明确标记；不以取文件前N行代替最终建模样本。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-10/2026-11-10-transform.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

@@ -1,0 +1,108 @@
+{
+  "task_id": "DATA-10",
+  "version": "transform-v1",
+  "key": "f720648ff79173d8-transform-v1",
+  "integrated_manifest_sha256": "f720648ff79173d895905dce035dc3f1a481f6684ff76038a32f5c85bc35ee71",
+  "rows_in": 9311,
+  "rows_out": 9311,
+  "new_columns": [
+    "purchase_date",
+    "purchase_week_start",
+    "purchase_month",
+    "purchase_dow",
+    "purchase_hour_utc",
+    "approval_lag_hours",
+    "delivery_days_floor",
+    "late_by_days",
+    "late_by_date",
+    "log1p_merch_usd",
+    "log1p_shipping_usd",
+    "log1p_order_value_usd",
+    "multi_payment",
+    "has_review"
+  ],
+  "deterministic_transforms": {
+    "time_parts": "下单日期、周起始日（周一）、月份、星期、UTC 小时：由 purchase_ts 逐行拆出，不学习参数",
+    "approval_lag_hours": {
+      "min": 0.0,
+      "max": 24.0,
+      "nulls_equal_cancelled": true
+    },
+    "delivery_days_floor": {
+      "delivered_orders": 8655,
+      "rule": "向下取整的（送达 - 下单）天数；DATA-06 实测与源 actual_delivery_days 完全一致"
+    },
+    "late_rates_on_delivered": {
+      "late_by_days(generator definition)": 0.1475,
+      "late_by_date": 0.6407
+    },
+    "log1p_amounts": {
+      "merch_usd": {
+        "skew_before": 2.3924,
+        "skew_after": -0.0394
+      },
+      "shipping_usd": {
+        "skew_before": 1.7528,
+        "skew_after": 0.5751
+      },
+      "order_value_usd": {
+        "skew_before": 2.3228,
+        "skew_after": 0.0728
+      }
+    }
+  },
+  "availability": "派生列只用同一订单已有字段；送达类特征在 as_of 使用前必须按 delivered_ts < as_of 截断（ML-03），审批类按 approved_ts < as_of",
+  "train_only_fitting": {
+    "example_train_end": "2025-07-01 00:00:00+00:00",
+    "train_rows": 4808,
+    "fit_on_full_period_refused": true,
+    "fitted_params_on_training_rows": {
+      "standard": {
+        "mean": 150.6945632279534,
+        "std": 145.52035784091746,
+        "fitted_rows": 4808,
+        "train_end": "2025-07-01 00:00:00+00:00",
+        "fit_time_max": "2025-06-30 19:49:38+00:00"
+      },
+      "quantile_bins": {
+        "edges": [
+          7.28,
+          44.87800000000001,
+          82.42000000000002,
+          133.282,
+          227.60800000000017,
+          1474.33
+        ],
+        "fitted_rows": 4808,
+        "train_end": "2025-07-01 00:00:00+00:00",
+        "fit_time_max": "2025-06-30 19:49:38+00:00"
+      },
+      "clip": {
+        "upper": 724.5117000000005,
+        "fitted_rows": 4808,
+        "train_end": "2025-07-01 00:00:00+00:00",
+        "fit_time_max": "2025-06-30 19:49:38+00:00"
+      }
+    },
+    "full_period_mean_for_comparison": 151.2836,
+    "note": "示例切分只用于测试防护；正式切分由 ML-04 冻结。拟合参数随训练期变化，验证/测试期只调用 transform"
+  },
+  "checks": {
+    "row_count_preserved": true,
+    "approval_lag_nulls_are_cancelled": true,
+    "approval_lag_max_24h": true,
+    "log1p_reduces_skew": true,
+    "fit_on_full_period_refused": true,
+    "train_fit_uses_only_train_rows": true,
+    "rerun_reproducible": true
+  },
+  "rerun_identical_to_existing": true,
+  "outputs": [
+    {
+      "path": "orders.parquet",
+      "sha256": "33e213060d14ef476e71e95a6be55b5e9f4cc03e5c92030a71a7f8beaacb638d",
+      "rows": 9311
+    }
+  ],
+  "all_checks_passed": true
+}

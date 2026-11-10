@@ -1,0 +1,37 @@
+$ .venv/bin/python evidence/DATA-10/verify_transform.py
+2026-11-10T14:55:52+08:00
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DATA-10/verify_transform.py:38: Pandas4Warning: Series.dt.weekday is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+  check('time parts recomputed', (out.purchase_dow == p.dt.weekday).all() and (out.purchase_month == p.dt.strftime('%Y-%m')).all()
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/DATA-10/verify_transform.py:39: Pandas4Warning: Series.dt.weekday is deprecated and will be removed in a future version. Use Series.dt.day_of_week instead.
+  and (pd.to_datetime(out.purchase_week_start) == (p.dt.tz_localize(None).dt.normalize() - pd.to_timedelta(p.dt.weekday, 'D'))).all())
+PASS doc covers four categories with handling 
+PASS doc gives not-applicable reasons (PCA) rather than only method names 
+PASS doc states sampling and dev-sample rule 
+PASS doc before/after numbers match reports 
+PASS time parts recomputed 
+PASS delivery days recomputed 
+PASS late_by_date recomputed 
+PASS log1p recomputed 
+PASS undelivered rows have null lateness 
+FAIL guard refuses a single row at/after train_end 
+PASS fitted params equal training-only stats 
+PASS audit records rerun reproducible 
+11/12 passed
+exit=1
+--- run 2 (run 1 guard check passed rows within 1 s after train_end, but no order falls there, so the guard was not exercised; now passes all training rows plus one later row)
+$ .venv/bin/python evidence/DATA-10/verify_transform.py
+2026-11-10T14:56:01+08:00
+PASS doc covers four categories with handling 
+PASS doc gives not-applicable reasons (PCA) rather than only method names 
+PASS doc states sampling and dev-sample rule 
+PASS doc before/after numbers match reports 
+PASS time parts recomputed 
+PASS delivery days recomputed 
+PASS late_by_date recomputed 
+PASS log1p recomputed 
+PASS undelivered rows have null lateness 
+PASS guard refuses training rows plus a single row after train_end 
+PASS fitted params equal training-only stats 
+PASS audit records rerun reproducible 
+12/12 passed
+exit=0
