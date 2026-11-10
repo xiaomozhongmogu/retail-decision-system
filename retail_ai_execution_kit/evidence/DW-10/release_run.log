@@ -18,3 +18,14 @@ $ .venv/bin/python src/retail_bi/warehouse/release.py publish
   ]
 }
 exit=0
+--- 2026-11-10T21:19:05+08:00 publish build wh-d3aaa559048c (adds ads.model_scores, ads.risk_summary_latest); earlier attempt with the scores written outside the pipeline was refused by verify_build (7 allowed views) — see evidence/ML-11/scoring_run.log
+{
+  "version": "wh-d3aaa559048c",
+  "file": "wh-d3aaa559048c.duckdb",
+  "sha256": "e89274924730795bd90a1e28a1a032a9f4a08d465327c4f931950d7749472aa6",
+  "bytes": 97267712,
+  "published_at": "2026-11-10T13:19:05.616295+00:00",
+  "source_build": "wh-d3aaa559048c.duckdb",
+  "previous": "wh-db316daf8021",
+  "allowed_views": [
+exit=0

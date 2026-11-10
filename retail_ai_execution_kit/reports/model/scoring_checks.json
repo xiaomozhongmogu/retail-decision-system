@@ -1,0 +1,77 @@
+{
+  "task_id": "ML-11",
+  "release": "wh-d3aaa559048c",
+  "model_version": "repurchase-logreg-v1",
+  "rows": 3332,
+  "in_population": 704,
+  "out_of_population": 2628,
+  "mean_p_repurchase_in_population": 0.0799,
+  "checks": [
+    {
+      "check": "ADS score table: one row per snapshot customer at the latest as_of, with model version",
+      "status": "passed",
+      "detail": "3332"
+    },
+    {
+      "check": "probabilities in [0,1] and complementary",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "out-of-population rows have no probability",
+      "status": "passed",
+      "detail": "2628"
+    },
+    {
+      "check": "service result for an in-population customer equals the ADS table and carries version/explanation",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "out-of-population customer -> unsupported / out_of_population, no probability",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "scoring service equals the evaluated frozen scorer (ML-09) on 500 test rows",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "feature order mismatch fails",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "missing feature fails",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "wrong type (text feature) fails",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "unexpected model version fails",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "model trained on another feature version fails",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "customer-level scores are not open to the AI query layer; summary view is",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "summary view answers through the read-only runtime",
+      "status": "passed",
+      "detail": "[['2026-11-02', 'repurchase-logreg-v1', '3332', '0.07993453074372793', '0.9200654692562715', '2628', 'model ranking within a week is near random on test (ML-09); use for average level only']]"
+    }
+  ],
+  "all_passed": true
+}

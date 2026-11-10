@@ -34,7 +34,7 @@ check('first run: all stages ok, ending with publish', first['status'] == 'ok' a
 st = {s['stage']: s for s in first['stages']}
 check('report records rows per layer, amounts, durations, input versions',
       st['checks']['rows']['dwd.fact_order'] == 9311 and st['checks']['values']['valid_merch_usd'] == '1380161.23'
-      and all('seconds' in s for s in first['stages']) and len(first['inputs']['files']) == 8 and first['inputs']['source_sha256'])
+      and all('seconds' in s for s in first['stages']) and len(first['inputs']['files']) >= 9 and first['inputs']['source_sha256'])
 latest_before = (B / 'latest.json').read_bytes()
 final = B / f"{first['version']}.duckdb"
 final_sha = sha(final)

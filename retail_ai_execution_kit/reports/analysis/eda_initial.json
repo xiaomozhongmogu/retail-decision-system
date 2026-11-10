@@ -1,7 +1,7 @@
 {
   "task_id": "EDA-01",
-  "release": "wh-db316daf8021",
-  "release_sha256": "207ead6b6cbcb9dc6b90243bbd8a35bfe00b4d510601df33f62a259af51be0ec",
+  "release": "wh-d3aaa559048c",
+  "release_sha256": "e89274924730795bd90a1e28a1a032a9f4a08d465327c4f931950d7749472aa6",
   "scope": {
     "data": "完全合成（D012/D013），不是真实企业或顾客",
     "period": "下单时间 2024-01-01 至 2026-11-07（截止 2026-11-08，不含）",

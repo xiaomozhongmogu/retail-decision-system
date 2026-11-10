@@ -11,3 +11,6 @@ PASS dormant customers handled by rules; behaviour-route redefinition stated
 PASS label window maturity matches the label table 
 9/9 passed
 exit=0
+--- 2026-11-10T21:20:39+08:00 rerun on release wh-d3aaa559048c (EDA-01 report regenerated: only the release id changed)
+9/9 passed
+exit=0

@@ -1,6 +1,6 @@
 # 初步描述性统计（EDA-01）
 
-> 由 `src/retail_bi/analysis/eda_initial.py` 从只读发布 `wh-db316daf8021` 生成，数字均来自 `reports/analysis/eda_initial.json`。
+> 由 `src/retail_bi/analysis/eda_initial.py` 从只读发布 `wh-d3aaa559048c` 生成，数字均来自 `reports/analysis/eda_initial.json`。
 
 **范围与口径**：data：完全合成（D012/D013），不是真实企业或顾客；period：下单时间 2024-01-01 至 2026-11-07（截止 2026-11-08，不含）；valid_purchase：截止前已审批的订单（transaction-rules-v1）；money：USD 商品金额，运费单列；sample：全量，未抽样；timezone：UTC 工程假设；not_live：这是模拟的历史区间，不代表 2026 年实时经营。
 

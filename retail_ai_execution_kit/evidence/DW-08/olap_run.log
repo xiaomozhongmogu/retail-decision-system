@@ -13,3 +13,6 @@ PASS q8 payment mix: paid amount adds up to order-level payments; orders_using_t
 PASS joining lines to payments would double count (why the set never does it) | expected > 1380161.23 | got 1493833.12
 11/11 passed
 exit=0
+--- 2026-11-10T21:19:57+08:00 rerun on release/build wh-d3aaa559048c (scores stage added; warehouse data unchanged)
+11/11 passed
+exit=0

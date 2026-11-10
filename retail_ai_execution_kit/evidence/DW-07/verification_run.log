@@ -21,3 +21,14 @@ PASS forced full rebuild succeeds with identical checked values and row counts
 PASS latest.json points to the published version 
 8/8 passed
 exit=0
+--- 2026-11-10T21:18:49+08:00 rerun after scores stage was added
+PASS first run: all stages ok, ending with publish 
+PASS report records rows per layer, amounts, durations, input versions 
+PASS rerun with same inputs is a no-op: same version, existing build verified, not rebuilt ['ingest', 'clean', 'verify_existing']
+PASS injected failure at dws: exit 1, failed stage named with error 
+PASS failed run leaves no half-built file []
+PASS failed run does not touch the published build or latest.json 
+PASS forced full rebuild succeeds with identical checked values and row counts 
+PASS latest.json points to the published version 
+8/8 passed
+exit=0

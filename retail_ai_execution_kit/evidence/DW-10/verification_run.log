@@ -14,3 +14,6 @@ PASS identity check: a release whose hash does not match the pointer is refused
 PASS rollback switches readers back to the previous release 
 12/12 passed
 exit=0
+--- 2026-11-10T21:19:05+08:00 rerun after release check accepts >= 6 allowed views and the new release
+12/12 passed
+exit=0

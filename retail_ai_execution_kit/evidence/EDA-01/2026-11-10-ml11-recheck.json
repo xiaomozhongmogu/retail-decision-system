@@ -1,0 +1,89 @@
+{
+  "task_id": "EDA-01",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic full scope; release wh-db316daf8021 read through runtime.py",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/analysis/eda_initial.py; .venv/bin/python evidence/EDA-01/verify_eda.py",
+  "exit_code": 0,
+  "summary": "初步描述统计：规模（有效 9,113 单、3,339 名购买客户、1,380,161.23 USD）、年度与月度趋势（12 月最高、2 月最低）、金额右偏与集中度（前 10% 客户占 27.3%）、复购结构（77.4% 买过两次以上，但 30 天内再次购买的间隔只占 11.4%）、品类与大区结构、时间分布、物流延迟与评价的相关、支付方式、异常（长期停留的处理中/已发货订单、不完整月）与数据不能回答的问题。所有数字由程序从只读发布生成；pandas 独立核对 13/13，并抓出一处错误措辞（已改为由数据生成）。",
+  "inputs": [
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "reports/warehouse/published_snapshot.json",
+      "sha256": "b9db1ae0a446c29ae649eac59fb210e99e836d97d15df519ca56e062563f9f72"
+    },
+    {
+      "path": "evidence/EDA-01/verify_eda.py",
+      "sha256": "12791311b691109b878e6b85c67e3ced68fbfe8677930e7e94322d0abb454390"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/analysis/eda_initial.md",
+      "sha256": "eef50d656bf52e156602e1d6b14388a853dcccbf670fa60e21948d05be921e9a"
+    },
+    {
+      "path": "reports/analysis/eda_initial.json",
+      "sha256": "3c0bd5f4369a546aae007ce0471becd3bbc092503e399991e9455be001dd2f65"
+    },
+    {
+      "path": "src/retail_bi/analysis/eda_initial.py",
+      "sha256": "8b55d0263cfdc6117c3600741af54dd4f0b7d7b3eeecacfbdc5ef8d50a254447"
+    },
+    {
+      "path": "evidence/EDA-01/eda_run.log",
+      "sha256": "c8d300cfe1a71835d7987160926b57b022eb7a13e7793dbbb42cb2eaaea11130"
+    },
+    {
+      "path": "evidence/EDA-01/verification_run.log",
+      "sha256": "9b56d676f214e8d19998630fde6046b305011ea9ba8f8bc436c8e768fdd05d12"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "报告统计订单数（全部、有效、取消）、金额（商品、运费，分位数与集中度）、客户（主数据、购买、复购、从未购买、按半年的新购买客户）和时间分布（35 个月、年度、自然月、星期、小时）；开头写明范围为完全合成、截止前全量未抽样、单位 USD、有效购买口径、UTC 假设，第 10 节列出数据不能覆盖的内容。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "不是 describe 截图：给出有业务含义的结论与异常，包括 12 月旺季与 2 月淡季、客户金额集中度、30 天内复购间隔只占 11.4%（说明 30 天目标是低基率）、新购买客户逐期减少源于合成人口封闭、品类差异来自单价、大区差异来自客户数、生成器口径延迟订单评价均分 2.91 对 4.14（标为相关）、长期停留在处理中/已发货的订单、2026-11 不完整月。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "所有数字由 eda_initial.py 从只读发布计算并写入 JSON，Markdown 由同一程序生成；核对脚本用 pandas 重算月度订单、集中度、复购占比、间隔占比、评价均值、大区金额并检查定性措辞。报告明确写“这是模拟的历史区间，不代表 2026 年实时经营”。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "数据完全合成，结论只描述生成器行为。",
+    "前 10% 客户占比使用 ntile 分组，与按人数向上取整的口径相差不到 0.3 个百分点。",
+    "本证据替代此前版本（流水线加入评分阶段后失效，旧证据保留为历史）。"
+  ],
+  "steps": [
+    "认领 EDA-01（台账 9ce16a6d…）。",
+    "编写 eda_initial.py 生成 JSON 与 Markdown。",
+    "verify_eda.py 第 1 次 11/12：报告中“品类占比都在个位数百分比”的措辞与数据不符（实际 1.6%–15.0%），改为由数据生成并补充品类与大区差异来源的检查；又修正客单价范围措辞，13/13。",
+    "2026-11-10 21:19 ML-11 把评分并入流水线（新增 scores 阶段，sql/scores.sql 与冻结模型哈希进入构建版本，发布检查改为至少 6 个允许视图），重建并发布 wh-d3aaa559048c；仓库数据本身不变。已审阅本任务结论不受影响，并重跑本任务核对，全部通过。"
+  ],
+  "task_spec_sha256": "01a8519ac03e15083fd9f8aad43c2a32c642bb157c9870ce5865353888d1efd3",
+  "performed_at": "2026-11-10T21:20:26.843029+08:00"
+}

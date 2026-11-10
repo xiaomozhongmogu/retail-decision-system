@@ -1098,7 +1098,7 @@
         "记录每层行数、金额、耗时、输入输出版本和异常。"
       ],
       "evidence": [
-        "evidence/DW-07/2026-11-10-pipeline.json"
+        "evidence/DW-07/2026-11-10-ml11-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1137,7 +1137,7 @@
         "无订单号的行为路线使用事件层下钻并明确单位，不能伪造订单。"
       ],
       "evidence": [
-        "evidence/DW-08/2026-11-10-olap.json"
+        "evidence/DW-08/2026-11-10-ml11-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1217,7 +1217,7 @@
         "记录数据库文件身份和恢复方法，发布中断不破坏上一可用版本。"
       ],
       "evidence": [
-        "evidence/DW-10/2026-11-10-release.json"
+        "evidence/DW-10/2026-11-10-ml11-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1255,7 +1255,7 @@
         "报告数字由可重跑程序产生，不把历史数据写成2026实时经营。"
       ],
       "evidence": [
-        "evidence/EDA-01/2026-11-10-eda.json"
+        "evidence/EDA-01/2026-11-10-ml11-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1481,7 +1481,7 @@
         "更久沉睡用户规则处理；数据改为行为路线时重新定义事件/购买日、窗口与标题。"
       ],
       "evidence": [
-        "evidence/ML-01/2026-11-10-target.json"
+        "evidence/ML-01/2026-11-10-ml11-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1847,10 +1847,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "U03",
         "Q01",
@@ -1874,7 +1874,9 @@
         "未复购概率与复购概率互补，越界客户明确unsupported，不强行输出校准概率。",
         "特征顺序、类型、缺失及版本不匹配会明确失败，不静默使用错误模型。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-11/2026-11-10-scoring.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

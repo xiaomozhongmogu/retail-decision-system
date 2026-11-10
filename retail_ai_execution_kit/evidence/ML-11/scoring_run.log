@@ -1,0 +1,16 @@
+$ .venv/bin/python src/retail_bi/model/scoring.py write && .venv/bin/python src/retail_bi/warehouse/release.py publish
+2026-11-10T21:18:08+08:00
+{"as_of": "2026-11-02 00:00:00+00", "rows": 3332, "in_population": 704, "out_of_population": 2628, "summary": [3332, 0.07993453074372793, 2628]}
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/release.py", line 138, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/release.py", line 128, in main
+    r = publish()
+        ^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/release.py", line 76, in publish
+    info = verify_build(build_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/warehouse/release.py", line 61, in verify_build
+    raise ValueError(f'build {path.name} is not publishable: allowed views {len(allowed)}, orders {n_orders}, loaded batches {loaded}')
+ValueError: build wh-db316daf8021.duckdb is not publishable: allowed views 7, orders 9311, loaded batches 1
+exit=1

@@ -1,0 +1,85 @@
+{
+  "task_id": "ML-01",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/ML-01/verify_target.py",
+  "exit_code": 0,
+  "summary": "冻结 target-v1：样本=客户×每周 as_of；母体=过去 90 天至少一次有效购买的已知客户；y=1 当 [as_of, as_of+30 天) 内有下单且在 as_of+31 天前审批；未复购风险=1−复购概率，不另造标签、不是永久流失；母体外客户进入规则队列。文档中的样本规模与基率（92,241 行、6,618 正例、7.17%、3,312 名客户，分年份）与 DW-05 标签表一致；并如实记录母体外 226,103 行复购率 6.9% 与母体内接近。核对 9/9。",
+  "inputs": [
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "reports/warehouse/snapshot_contract.json",
+      "sha256": "451076a9698a59a42e9fd913ba0069e98139f2416e219ce2f1cb61509f1521f9"
+    },
+    {
+      "path": "reports/analysis/eda_initial.json",
+      "sha256": "3c0bd5f4369a546aae007ce0471becd3bbc092503e399991e9455be001dd2f65"
+    },
+    {
+      "path": "evidence/ML-01/verify_target.py",
+      "sha256": "9a2a6bd11425acae173402616afac5bc246c3ab3efacc0cce429a78f9b9cdd41"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/model_target.md",
+      "sha256": "fd9e05db0069e983f53c1c9db8df14a77c3449bec4cfbcc7b531821a3eec1704"
+    },
+    {
+      "path": "evidence/ML-01/verification_run.log",
+      "sha256": "26012e1006998f1fe6d41beb686e4fc0edc722d999043ba05f8aaacc1c63eb7f"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "第 2、3 节：母体为 [as_of−90 天, as_of) 内有已审批有效购买的已知客户（快照 frequency_90d≥1）；[as_of, as_of+30 天) 内有有效购买（as_of+31 天前审批）为 1，左闭右开，未成熟 as_of 排除。核对脚本确认标签表成熟时间均为 as_of+31 天。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 4 节：未复购风险 = 1 − 复购概率，由同一模型输出换算，不另造标签；明确不是永久流失，也不是营销增量。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 5 节：近 90 天未购买的“沉默预警”与“沉睡”客户由规则队列处理，不给模型概率，并披露其实测复购率 6.9% 与母体内接近，不能默认视为已流失；第 7 节写明若改为行为路线需重新定义事件、购买日、窗口与标题。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "切分方案由 ML-04 冻结；本文件只记录 2026-Q4 不能单独作测试期的约束。",
+    "数据完全合成。",
+    "本证据替代首次证据（输入 eda_initial.json 变更后失效）。"
+  ],
+  "steps": [
+    "认领 ML-01（台账 d976b5c4…）。",
+    "从标签表查询分年份规模与母体外复购率。",
+    "撰写 docs/model_target.md；verify_target.py 9/9。",
+    "2026-11-10 21:19 新发布 wh-d3aaa559048c 后 EDA-01 报告重生成（仅发布版本号变化），重跑核对 9/9。"
+  ],
+  "task_spec_sha256": "11b3a67fedc37f043616541d2816c33782a136f63bd166c4eecf241a6c5a48ba",
+  "performed_at": "2026-11-10T21:20:39.900713+08:00"
+}

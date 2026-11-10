@@ -16,7 +16,7 @@
 
 ## 2. 查询规则
 
-- 只能查询发布时登记在 `meta.allowed_view` 中的 6 个 ADS 视图：`ads.kpi_daily`、`ads.kpi_monthly`、`ads.sales_month_category_region`、`ads.cohort_retention`、`ads.lifecycle_mix_weekly`、`ads.repurchase_rate_weekly`。
+- 只能查询发布时登记在 `meta.allowed_view` 中的 ADS 视图：`ads.kpi_daily`、`ads.kpi_monthly`、`ads.sales_month_category_region`、`ads.cohort_retention`、`ads.lifecycle_mix_weekly`、`ads.repurchase_rate_weekly`，以及有评分时的 `ads.risk_summary_latest`（ML-11，只有平均水平）。客户级的 `ads.model_scores` 和 `ads.customer_profile_latest` 不在清单内。
 - `query_view` 只接受视图名、列名（小写标识符）、等值条件和行数上限（最多 5,000 行），由程序拼成一条 SELECT；条件值走参数绑定。其他表返回 `unsupported`，非法列名返回 `invalid_argument`，没有结果返回 `empty`。
 - 结果带 `dataset_version` 和 `mode: live`，与 `contracts/interfaces.md` 的结果信封一致。
 

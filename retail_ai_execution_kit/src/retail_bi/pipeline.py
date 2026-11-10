@@ -26,7 +26,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-for sub in ('data', 'warehouse', 'features'):
+for sub in ('data', 'warehouse', 'features', 'model'):
     sys.path.insert(0, str(HERE / sub))
 from db import ROOT, connect, sql_blocks  # noqa: E402
 import ingest  # noqa: E402
@@ -34,6 +34,7 @@ import clean  # noqa: E402
 import ods  # noqa: E402
 import dwd  # noqa: E402
 import snapshot  # noqa: E402
+import scoring  # noqa: E402
 
 SOURCE = ROOT.parent / 'ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip'
 SOURCE_SHA = 'd50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16'
@@ -41,7 +42,8 @@ CUTOFF = '2026-11-08T00:00:00Z'
 AS_OF_SQL = '2026-11-08 00:00:00+00'
 CONTRACT = ROOT / 'contracts/data_contract.json'
 VERSIONED_FILES = ['sql/ddl.sql', 'sql/ods.sql', 'sql/dwd.sql', 'sql/dws.sql', 'sql/customer_snapshot.sql', 'sql/ads.sql',
-                   'contracts/data_contract.json', 'contracts/metrics.json']
+                   'sql/scores.sql', 'contracts/data_contract.json', 'contracts/metrics.json']
+MODEL_FILE = scoring.MODEL_FILE      # frozen model (ML-08); when present, its hash is part of the build version
 BUILDS = ROOT / 'warehouse/builds'
 
 
@@ -70,7 +72,10 @@ def checks(con, clean_dir: Path) -> dict:
     for t in ('orders_daily_region', 'sales_daily_category_region', 'customer_daily', 'product_daily'):
         c[f'dws_{t}_merch_equals_dwd_valid'] = con.execute(f'SELECT sum(merch_usd)::VARCHAR FROM dws.{t}').fetchone()[0] == o[3]
     c['ads_monthly_orders_equal_dwd_valid'] = con.execute('SELECT sum(valid_orders) FROM ads.kpi_monthly').fetchone()[0] == o[2]
-    c['allowed_views_registered'] = con.execute('SELECT count(*) FROM meta.allowed_view').fetchone()[0] == 6
+    has_scores = con.execute("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'ads' AND table_name = 'model_scores'").fetchone()[0] == 1
+    c['allowed_views_registered'] = con.execute('SELECT count(*) FROM meta.allowed_view').fetchone()[0] == (7 if has_scores else 6)
+    if has_scores:
+        c['scores_complementary'] = con.execute('SELECT count(*) FROM ads.model_scores WHERE abs(p_repurchase_30d + p_non_repurchase_30d - 1) > 1e-12').fetchone()[0] == 0
     c['no_immature_labels'] = con.execute(f"SELECT count(*) FROM dws.label_repurchase WHERE label_matured_at > TIMESTAMPTZ '{AS_OF_SQL}'").fetchone()[0] == 0
     c['single_loaded_batch'] = con.execute("SELECT count(*) FROM meta.load_batch WHERE status = 'loaded'").fetchone()[0] == 1
     return {'values': {'orders': o[0], 'merch_usd': o[1], 'valid_orders': o[2], 'valid_merch_usd': o[3]}, 'checks': c}
@@ -112,6 +117,8 @@ def run(force: bool = False, fail_at: str | None = None) -> dict:
         layer_manifest = json.loads((st['layer'] / 'manifest.json').read_text(encoding='utf-8'))
         batch_id = f'{clean.layer_fingerprint(layer_manifest)[:16]}-{layer_manifest["version"]}'
         files = {f: sha(ROOT / f) for f in VERSIONED_FILES}
+        if MODEL_FILE.exists():
+            files[str(MODEL_FILE.relative_to(ROOT))] = sha(MODEL_FILE)
         version = 'wh-' + hashlib.sha256(json.dumps({'batch': batch_id, 'files': files}, sort_keys=True).encode()).hexdigest()[:12]
         final = BUILDS / f'{version}.duckdb'
         report.update({'version': version, 'batch_id': batch_id, 'inputs': {'source_sha256': SOURCE_SHA, 'cutoff': CUTOFF, 'files': files}})
@@ -155,6 +162,10 @@ def run(force: bool = False, fail_at: str | None = None) -> dict:
                 con.close()
                 return {'ads_views': n}
             stage('ads', do_ads)
+            if MODEL_FILE.exists():
+                stage('scores', lambda: scoring.write_scores(tmp))
+            else:
+                report['warnings'] = ['frozen model file missing: scores stage skipped (train with ML-06..08 first)']
 
             def do_checks():
                 con = connect(tmp)

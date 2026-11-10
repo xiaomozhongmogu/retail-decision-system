@@ -1,0 +1,93 @@
+{
+  "task_id": "ML-11",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/pipeline.py build && .venv/bin/python src/retail_bi/warehouse/release.py publish && .venv/bin/python evidence/ML-11/verify_scoring.py",
+  "exit_code": 0,
+  "summary": "评分服务 scoring.py：严格校验特征顺序、类型、模型与特征版本后打分；服务接口 get_risk_score 按接口契约返回复购概率、1−概率、适用性、模型版本与模型因素说明，母体外客户返回 unsupported/out_of_population 且不给概率。评分作为流水线 scores 阶段写入 ADS 表 ads.model_scores（最新 as_of 3,332 名客户：母体内 704、母体外 2,628），并提供只含平均水平的 ads.risk_summary_latest（对 AI 开放），客户级评分不开放。核对 13/13。",
+  "inputs": [
+    {
+      "path": "models/repurchase-logreg-v1.json",
+      "sha256": "01b2b335e07bd51bd7f3da1bac0219089e04438aa8beb655e54f1dab3b0855d2"
+    },
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "src/retail_bi/features/customer_features.py",
+      "sha256": "593dd028913616bfce203798dff2735dc73cf160498b5c690dc47325e999fba8"
+    },
+    {
+      "path": "src/retail_bi/model/evaluate.py",
+      "sha256": "af1154aff362b38da1dc8784e355fbea6e92692a5b4056c8c3a2868c3f1d928a"
+    },
+    {
+      "path": "evidence/ML-11/verify_scoring.py",
+      "sha256": "83ba45b623475a908a2be79765fcec3c6498f4ee46b7aab9a93f4ce87c953437"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/model/scoring.py",
+      "sha256": "b0a51095ca37f59e33b09fda29277d8467df5982b914301fe11c6e6c605231ce"
+    },
+    {
+      "path": "reports/model/scoring_checks.json",
+      "sha256": "7dd990cb2de097dfcaad49a078e6c0772f062b8ab8385ee91508006b59a8e9a4"
+    },
+    {
+      "path": "sql/scores.sql",
+      "sha256": "5c5b051322e95cb3c329c605419fdc29a0e2bea4248d1f3129181f31169a3f58"
+    },
+    {
+      "path": "evidence/ML-11/scoring_run.log",
+      "sha256": "2b6b317b1cef7e9ad59a64ab380d38b48cb1062b78beb4d5e25f0e719f75c267"
+    },
+    {
+      "path": "evidence/ML-11/verification_run.log",
+      "sha256": "01e36036888b4052254c61257e4e46fc9ddf9ff924748c5107fdf10d16ce749e"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "ads.model_scores 每行含客户、as_of、模型版本、适用性、复购概率、未复购概率、排序分与前 3 个模型因素；get_risk_score 返回同样内容并附数据版本、mode=live 与“个体排序接近随机”的说明；服务结果与 ADS 表一致，与 ML-09 评估打分在 500 行测试样本上一致。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "未复购概率 = 1 − 复购概率（误差 < 1e-12）；近 90 天无购买的 2,628 名客户适用性为 out_of_population、概率为空，服务返回 unsupported 与错误码 out_of_population，不强行输出概率。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "特征顺序颠倒、缺少特征、特征为文本、期望模型版本不符、模型来自其他特征版本时均抛出 ScoringError，不静默打分（核对 5 项）。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "模型 JSON 在 models/（Git 忽略），ML-12 发布并登记。",
+    "评分先在流水线之外写入旧构建时被发布检查拒绝（允许视图数不符），因此改为流水线阶段；旧构建已删除，旧发布保留可回滚。",
+    "数据完全合成；模型区分力弱。"
+  ],
+  "steps": [
+    "认领 ML-11（台账 e68bfccb…→e7b8a362…）。",
+    "编写 sql/scores.sql 与 scoring.py；第一次把评分直接写入现有构建，发布被拒（7 个允许视图）。",
+    "把评分并入 pipeline.py（版本含评分 SQL 与模型哈希），发布检查放宽为至少 6 个，重建并发布 wh-d3aaa559048c。",
+    "verify_scoring.py 13/13；复核 DW-07、DW-08、DW-10、EDA-01 并重出证据。"
+  ],
+  "task_spec_sha256": "9a77e8a02fed472f50d00b650b3c75c772ad6d33d1c96ee0858f7604e6903971",
+  "performed_at": "2026-11-10T21:20:26.901387+08:00"
+}

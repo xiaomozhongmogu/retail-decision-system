@@ -33,3 +33,6 @@ exit=0
 --- run 3 after AOV range wording fix
 13/13 passed
 exit=0
+--- 2026-11-10T21:19:58+08:00 rerun on release wh-d3aaa559048c
+13/13 passed
+exit=0
