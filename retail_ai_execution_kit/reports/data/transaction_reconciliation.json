@@ -1,0 +1,391 @@
+{
+  "task_id": "DATA-08",
+  "rule_version": "transaction-rules-v1",
+  "generated_by": "src/retail_bi/data/transactions.py",
+  "clean_dir_manifest_sha256": "a55d19147d1b0b3e4090dd6435d805cb0bbdb86615cc04eab000c36fe4cad78a",
+  "cutoff_exclusive": "2026-11-08 00:00:00+00",
+  "raw_all_orders": {
+    "orders": 9311,
+    "item_lines": 15639,
+    "merch_usd": "1408601.73",
+    "shipping_usd": "132257.78",
+    "order_value_usd": "1540859.51"
+  },
+  "valid_orders_at_cutoff": {
+    "orders": 9113,
+    "item_lines": 15311,
+    "merch_usd": "1380161.23",
+    "shipping_usd": "129459.18",
+    "order_value_usd": "1509620.41"
+  },
+  "cancelled_orders": {
+    "orders": 194,
+    "item_lines": 319,
+    "merch_usd": "27778.26",
+    "shipping_usd": "2720.55",
+    "order_value_usd": "30498.81"
+  },
+  "pending_approval_at_cutoff": {
+    "orders": 4,
+    "item_lines": 9,
+    "merch_usd": "662.24",
+    "shipping_usd": "78.05",
+    "order_value_usd": "740.29"
+  },
+  "raw_minus_valid": {
+    "orders": 198,
+    "item_lines": 328,
+    "merch_usd": "28440.50",
+    "shipping_usd": "2798.60",
+    "order_value_usd": "31239.10"
+  },
+  "difference_explained": "原始与有效之间的差额逐项等于“已取消”加“截止时尚未审批”两部分（订单数、明细行、商品金额、运费、订单金额）。后者是截止前下单、源数据中截止后才审批的订单，按可观察规则截止时不计入；没有退款、冲销、负金额或隔离行",
+  "by_status": {
+    "delivered": {
+      "orders": 8655,
+      "item_lines": 14563,
+      "merch_usd": "1314019.64",
+      "shipping_usd": "123169.48",
+      "order_value_usd": "1437189.12"
+    },
+    "shipped": {
+      "orders": 179,
+      "item_lines": 300,
+      "merch_usd": "28349.51",
+      "shipping_usd": "2460.50",
+      "order_value_usd": "30810.01"
+    },
+    "processing": {
+      "orders": 283,
+      "item_lines": 457,
+      "merch_usd": "38454.32",
+      "shipping_usd": "3907.25",
+      "order_value_usd": "42361.57"
+    },
+    "cancelled": {
+      "orders": 194,
+      "item_lines": 319,
+      "merch_usd": "27778.26",
+      "shipping_usd": "2720.55",
+      "order_value_usd": "30498.81"
+    }
+  },
+  "delivered_only_sensitivity": {
+    "orders": 8655,
+    "merch_usd": "1314019.64",
+    "share_of_valid_merch": 0.9521,
+    "note": "若只算已送达，商品金额少 shipped+processing 部分；本项目采用“已审批”口径"
+  },
+  "payments": {
+    "total_usd": "1540859.51",
+    "valid_orders_usd": "1509620.41",
+    "pending_orders_usd": "740.29",
+    "cancelled_orders_usd": "30498.81",
+    "note": "取消单也有支付记录，但没有退款记录；支付只用于对账，不据此命名“已支付 GMV”或推断退款"
+  },
+  "approval_lag_hours_max": 24.0,
+  "label_maturity_days": 1,
+  "monthly": [
+    {
+      "month": "2024-01",
+      "valid_orders": 229,
+      "valid_merch_usd": "33874.18",
+      "cancelled_orders": 5,
+      "cancelled_merch_usd": "918.84"
+    },
+    {
+      "month": "2024-02",
+      "valid_orders": 258,
+      "valid_merch_usd": "38346.81",
+      "cancelled_orders": 3,
+      "cancelled_merch_usd": "690.99"
+    },
+    {
+      "month": "2024-03",
+      "valid_orders": 247,
+      "valid_merch_usd": "37035.53",
+      "cancelled_orders": 5,
+      "cancelled_merch_usd": "1142.35"
+    },
+    {
+      "month": "2024-04",
+      "valid_orders": 236,
+      "valid_merch_usd": "39378.27",
+      "cancelled_orders": 1,
+      "cancelled_merch_usd": "28.47"
+    },
+    {
+      "month": "2024-05",
+      "valid_orders": 250,
+      "valid_merch_usd": "38521.80",
+      "cancelled_orders": 5,
+      "cancelled_merch_usd": "1002.42"
+    },
+    {
+      "month": "2024-06",
+      "valid_orders": 226,
+      "valid_merch_usd": "33066.72",
+      "cancelled_orders": 7,
+      "cancelled_merch_usd": "778.03"
+    },
+    {
+      "month": "2024-07",
+      "valid_orders": 240,
+      "valid_merch_usd": "36689.91",
+      "cancelled_orders": 5,
+      "cancelled_merch_usd": "536.14"
+    },
+    {
+      "month": "2024-08",
+      "valid_orders": 269,
+      "valid_merch_usd": "43490.56",
+      "cancelled_orders": 9,
+      "cancelled_merch_usd": "1579.54"
+    },
+    {
+      "month": "2024-09",
+      "valid_orders": 258,
+      "valid_merch_usd": "40635.62",
+      "cancelled_orders": 4,
+      "cancelled_merch_usd": "666.21"
+    },
+    {
+      "month": "2024-10",
+      "valid_orders": 340,
+      "valid_merch_usd": "50806.86",
+      "cancelled_orders": 19,
+      "cancelled_merch_usd": "2255.60"
+    },
+    {
+      "month": "2024-11",
+      "valid_orders": 322,
+      "valid_merch_usd": "49376.41",
+      "cancelled_orders": 5,
+      "cancelled_merch_usd": "1192.63"
+    },
+    {
+      "month": "2024-12",
+      "valid_orders": 367,
+      "valid_merch_usd": "48499.85",
+      "cancelled_orders": 4,
+      "cancelled_merch_usd": "324.53"
+    },
+    {
+      "month": "2025-01",
+      "valid_orders": 260,
+      "valid_merch_usd": "40616.33",
+      "cancelled_orders": 3,
+      "cancelled_merch_usd": "119.68"
+    },
+    {
+      "month": "2025-02",
+      "valid_orders": 226,
+      "valid_merch_usd": "31363.42",
+      "cancelled_orders": 8,
+      "cancelled_merch_usd": "1103.98"
+    },
+    {
+      "month": "2025-03",
+      "valid_orders": 272,
+      "valid_merch_usd": "38588.44",
+      "cancelled_orders": 7,
+      "cancelled_merch_usd": "1234.29"
+    },
+    {
+      "month": "2025-04",
+      "valid_orders": 224,
+      "valid_merch_usd": "36221.21",
+      "cancelled_orders": 3,
+      "cancelled_merch_usd": "143.99"
+    },
+    {
+      "month": "2025-05",
+      "valid_orders": 233,
+      "valid_merch_usd": "36936.24",
+      "cancelled_orders": 7,
+      "cancelled_merch_usd": "1830.05"
+    },
+    {
+      "month": "2025-06",
+      "valid_orders": 250,
+      "valid_merch_usd": "35505.84",
+      "cancelled_orders": 1,
+      "cancelled_merch_usd": "37.72"
+    },
+    {
+      "month": "2025-07",
+      "valid_orders": 272,
+      "valid_merch_usd": "41459.91",
+      "cancelled_orders": 4,
+      "cancelled_merch_usd": "466.61"
+    },
+    {
+      "month": "2025-08",
+      "valid_orders": 272,
+      "valid_merch_usd": "40635.35",
+      "cancelled_orders": 8,
+      "cancelled_merch_usd": "841.86"
+    },
+    {
+      "month": "2025-09",
+      "valid_orders": 233,
+      "valid_merch_usd": "34936.66",
+      "cancelled_orders": 6,
+      "cancelled_merch_usd": "793.73"
+    },
+    {
+      "month": "2025-10",
+      "valid_orders": 329,
+      "valid_merch_usd": "49547.36",
+      "cancelled_orders": 6,
+      "cancelled_merch_usd": "633.71"
+    },
+    {
+      "month": "2025-11",
+      "valid_orders": 360,
+      "valid_merch_usd": "54130.65",
+      "cancelled_orders": 7,
+      "cancelled_merch_usd": "727.64"
+    },
+    {
+      "month": "2025-12",
+      "valid_orders": 375,
+      "valid_merch_usd": "54751.07",
+      "cancelled_orders": 8,
+      "cancelled_merch_usd": "977.09"
+    },
+    {
+      "month": "2026-01",
+      "valid_orders": 255,
+      "valid_merch_usd": "43190.91",
+      "cancelled_orders": 2,
+      "cancelled_merch_usd": "90.00"
+    },
+    {
+      "month": "2026-02",
+      "valid_orders": 187,
+      "valid_merch_usd": "28811.61",
+      "cancelled_orders": 6,
+      "cancelled_merch_usd": "627.98"
+    },
+    {
+      "month": "2026-03",
+      "valid_orders": 260,
+      "valid_merch_usd": "39615.72",
+      "cancelled_orders": 4,
+      "cancelled_merch_usd": "477.64"
+    },
+    {
+      "month": "2026-04",
+      "valid_orders": 230,
+      "valid_merch_usd": "37536.29",
+      "cancelled_orders": 3,
+      "cancelled_merch_usd": "268.78"
+    },
+    {
+      "month": "2026-05",
+      "valid_orders": 240,
+      "valid_merch_usd": "36344.11",
+      "cancelled_orders": 9,
+      "cancelled_merch_usd": "1444.95"
+    },
+    {
+      "month": "2026-06",
+      "valid_orders": 245,
+      "valid_merch_usd": "38602.10",
+      "cancelled_orders": 5,
+      "cancelled_merch_usd": "959.66"
+    },
+    {
+      "month": "2026-07",
+      "valid_orders": 251,
+      "valid_merch_usd": "36431.77",
+      "cancelled_orders": 7,
+      "cancelled_merch_usd": "1270.33"
+    },
+    {
+      "month": "2026-08",
+      "valid_orders": 243,
+      "valid_merch_usd": "37247.83",
+      "cancelled_orders": 4,
+      "cancelled_merch_usd": "514.68"
+    },
+    {
+      "month": "2026-09",
+      "valid_orders": 240,
+      "valid_merch_usd": "39190.70",
+      "cancelled_orders": 6,
+      "cancelled_merch_usd": "818.36"
+    },
+    {
+      "month": "2026-10",
+      "valid_orders": 336,
+      "valid_merch_usd": "47590.59",
+      "cancelled_orders": 6,
+      "cancelled_merch_usd": "1163.18"
+    },
+    {
+      "month": "2026-11",
+      "valid_orders": 82,
+      "valid_merch_usd": "11846.84",
+      "cancelled_orders": 2,
+      "cancelled_merch_usd": "116.60"
+    }
+  ],
+  "metric_examples": {
+    "2026-Q3 (complete period)": {
+      "valid_orders": 734,
+      "merchandise_sales_usd": "112870.30",
+      "shipping_usd": "10103.93",
+      "order_value_usd": "122974.23",
+      "buyers": 663,
+      "aov_usd": 153.7742506811989,
+      "cancelled_orders": 17,
+      "cancelled_merchandise_usd": "2603.37"
+    },
+    "full history": {
+      "valid_orders": 9113,
+      "merchandise_sales_usd": "1380161.23",
+      "shipping_usd": "129459.18",
+      "order_value_usd": "1509620.41",
+      "buyers": 3339,
+      "aov_usd": 151.44971249862834,
+      "cancelled_orders": 194,
+      "cancelled_merchandise_usd": "27778.26"
+    },
+    "2026-11-01..cutoff seen at 2026-11-05 (observability)": {
+      "valid_orders": 39,
+      "merchandise_sales_usd": "6516.57",
+      "shipping_usd": "481.68",
+      "order_value_usd": "6998.25",
+      "buyers": 39,
+      "aov_usd": 167.09153846153845,
+      "cancelled_orders": 0,
+      "cancelled_merchandise_usd": "0.00"
+    },
+    "empty window 2023-01 (zero denominator)": {
+      "valid_orders": 0,
+      "merchandise_sales_usd": "0.00",
+      "shipping_usd": "0.00",
+      "order_value_usd": "0.00",
+      "buyers": 0,
+      "aov_usd": null,
+      "cancelled_orders": 0,
+      "cancelled_merchandise_usd": "0.00"
+    }
+  },
+  "checks": {
+    "raw_minus_valid_equals_cancelled_plus_pending": true,
+    "valid_plus_pending_equals_delivered_shipped_processing": true,
+    "payments_equal_order_value_all_orders": true,
+    "payments_equal_order_value_valid_orders": true,
+    "merch_plus_shipping_equals_order_value": true,
+    "approval_rule_matches_non_cancelled_status_exactly": true,
+    "approval_lag_within_declared_max": true,
+    "no_negative_or_refund_amounts": true,
+    "metric_sql_full_history_matches_reconciliation": true,
+    "aov_is_sales_over_orders": true,
+    "zero_denominator_returns_null": true
+  },
+  "all_checks_passed": true
+}

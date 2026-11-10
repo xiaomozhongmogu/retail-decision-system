@@ -1,0 +1,20 @@
+$ .venv/bin/python src/retail_bi/data/transactions.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out reports/data/transaction_reconciliation.json
+2026-11-10T14:49:13+08:00
+{"checks": {"raw_minus_valid_equals_cancelled": true, "valid_equals_delivered_plus_shipped_plus_processing": true, "payments_equal_order_value_all_orders": true, "payments_equal_order_value_valid_orders": true, "merch_plus_shipping_equals_order_value": true, "approval_rule_matches_non_cancelled_status_exactly": true, "approval_lag_within_declared_max": true, "no_negative_or_refund_amounts": true, "metric_sql_full_history_matches_reconciliation": false, "aov_is_sales_over_orders": false, "zero_denominator_returns_null": true}, "raw": {"orders": 9311, "item_lines": 15639, "merch_usd": "1408601.73", "shipping_usd": "132257.78", "order_value_usd": "1540859.51"}, "valid": {"orders": 9117, "item_lines": 15320, "merch_usd": "1380823.47", "shipping_usd": "129537.23", "order_value_usd": "1510360.70"}}
+exit=1
+--- attempt 2: attempt 1 failed 2 checks: (a) reconciliation counted orders approved after the cutoff as valid while the metric SQL (approved_ts < as_of) did not — 4 orders; reconciliation now splits valid-at-cutoff / cancelled / pending-at-cutoff; (b) AOV compared a float with an exact Decimal; now tolerance 1e-9
+$ .venv/bin/python src/retail_bi/data/transactions.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out reports/data/transaction_reconciliation.json
+2026-11-10T14:49:42+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/transactions.py", line 175, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/transactions.py", line 170, in main
+    print(json.dumps({'checks': r['checks'], 'raw': r['raw_all_orders'], 'valid': r['valid_orders']}, ensure_ascii=False, default=str))
+                                                                                  ~^^^^^^^^^^^^^^^^
+KeyError: 'valid_orders'
+exit=1
+--- attempt 3: attempt 2 wrote the report but the final print used the old key 'valid_orders' (KeyError, exit 1); fixed
+$ .venv/bin/python src/retail_bi/data/transactions.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out reports/data/transaction_reconciliation.json
+2026-11-10T14:49:48+08:00
+{"checks": {"raw_minus_valid_equals_cancelled_plus_pending": true, "valid_plus_pending_equals_delivered_shipped_processing": true, "payments_equal_order_value_all_orders": true, "payments_equal_order_value_valid_orders": true, "merch_plus_shipping_equals_order_value": true, "approval_rule_matches_non_cancelled_status_exactly": true, "approval_lag_within_declared_max": true, "no_negative_or_refund_amounts": true, "metric_sql_full_history_matches_reconciliation": true, "aov_is_sales_over_orders": true, "zero_denominator_returns_null": true}, "raw": {"orders": 9311, "item_lines": 15639, "merch_usd": "1408601.73", "shipping_usd": "132257.78", "order_value_usd": "1540859.51"}, "valid": {"orders": 9113, "item_lines": 15311, "merch_usd": "1380161.23", "shipping_usd": "129459.18", "order_value_usd": "1509620.41"}}
+exit=0

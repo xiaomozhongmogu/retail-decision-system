@@ -1,0 +1,98 @@
+{
+  "task_id": "GOV-06",
+  "verification_status": "passed",
+  "method": "inspection",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "network": "未联网，只审阅本地文件"
+  },
+  "summary": "DATA-08 改写 contracts/metrics.json 后复核 GOV-06：接口信封的 metric_version 指向 metrics.json 冻结版本，单位 USD 在允许值内，分母为 0 返回 null 与新指标的零值规则一致；architecture.md §3 的 ADS 指标来源仍是 metrics.json。三条验收条件仍满足。",
+  "inputs": [
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "f8c49414864f348ac441eb44edc1e6d72ae2b2aabe42d1e1d4cb37890d37ad50"
+    },
+    {
+      "path": "reports/governance/workspace_inventory.md",
+      "sha256": "8c8492018ef411becc7c797c40d0a34acfa9da76effe50c4fd90a2f3fdf6a0c1"
+    },
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    },
+    {
+      "path": "docs/data_dictionary.md",
+      "sha256": "0e1708bc983a5a55cefd448fa3176fbe9c38b5bd2dcda10651b567413bd153f3"
+    },
+    {
+      "path": "reports/data/dataset_selection.md",
+      "sha256": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/architecture.md",
+      "sha256": "e064898441aef08a42e3410859cc124a3195c9d4cad611a1b91f4076dde291a1"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "evidence/GOV-06/requirements.in",
+      "sha256": "758b7d5443ec08550e73f7c6ee783ea875e546d3daf732a24e75ecff37f2b122"
+    },
+    {
+      "path": "evidence/GOV-06/resolve.txt",
+      "sha256": "bc570b9318641370fedf53951e9e72f9ce16e4d7d29356557b6db8eb489acc11"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "architecture.md §1 数据流与 §3 逐表粒度未变；§3 的路线 B 来源列（orders、order_items、customers、products、calendar、state/region、shipping+reviews）与新契约 10 张表及主键一致（契约实测主键零重复、外键零孤儿）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "技术栈与锁定方式未变；GOV-07 已完成安装验证，本次没有改动依赖。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "interfaces.md v0.2 信封仍含 as_of、版本、单位（USD 已在允许值内）、empty/unsupported/error 结构，并写明没有实现业务接口；新契约的 not_available 清单与接口错误码 capability_not_supported 对应。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "architecture.md 与 interfaces.md 仍保留路线 A 的列和 GBP 单位说明，属于已作废候选的历史描述；DW-01 设计数仓时收窄。",
+    "没有重新运行 uv 解析。"
+  ],
+  "steps": [
+    "核对 metrics.json 零分母规则、单位与 interfaces.md §1 数值规则一致。",
+    "确认结论不变，刷新输入与产物哈希。"
+  ],
+  "task_spec_sha256": "be5703bac6955cf9c3089b9cc7aab1fbc2de099229ad1301a5b4453b8502280d",
+  "performed_at": "2026-11-10T14:51:50.286946+08:00"
+}

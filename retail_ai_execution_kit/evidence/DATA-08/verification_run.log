@@ -1,0 +1,22 @@
+$ .venv/bin/python evidence/DATA-08/verify_rules.py
+2026-11-10T14:51:08+08:00
+PASS valid recount 9113 orders
+PASS valid row quoted in docs 
+PASS cancelled recount 194 orders
+PASS cancelled row quoted in docs 
+PASS pending recount 4 orders
+PASS pending row quoted in docs 
+PASS valid + cancelled + pending = all 
+PASS approval == not cancelled (pandas) 
+PASS approval lag <= 24h 
+PASS all reconciliation checks true 
+PASS payments total = order value 
+PASS Q3 orders/sales/buyers recount 
+PASS observability example recount (as_of 2026-11-05) 39
+PASS doc quotes Q3 and full-history examples 
+PASS metrics.json SQL identical to rule module 
+PASS every SQL metric has all approval fields 
+PASS no GBP / UCI semantics left in metrics 
+PASS forbidden names listed 
+18/18 passed
+exit=0

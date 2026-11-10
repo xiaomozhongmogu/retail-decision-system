@@ -30,7 +30,7 @@
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | done | DATA-04 |
 | DATA-06 | 全量质量剖析与问题基线 | proposal | done | DATA-05 |
 | DATA-07 | 处理缺失、类型与重复导入 | proposal | done | DATA-06 |
-| DATA-08 | 统一购买、取消、退款与金额规则 | proposal | todo | DATA-06 |
+| DATA-08 | 统一购买、取消、退款与金额规则 | proposal | done | DATA-06 |
 | DATA-09 | 完成集成与冲突处理 | proposal | todo | DATA-07, DATA-08 |
 | DATA-10 | 设计归约、转换与时间特征 | proposal | todo | DATA-09 |
 | DATA-11 | 执行清洗后质量门槛 | proposal | todo | DATA-10 |
@@ -195,7 +195,7 @@
 2. 主路线若只有交易数据，明确从首次可观测购买开始，不编造浏览漏斗、真实首购或渠道归因。
 3. 生命周期规则、价值聚类、未来未复购风险和营销增量效果分开定义。
 
-证据：evidence/GOV-05/2026-11-10-data04-recheck.json
+证据：evidence/GOV-05/2026-11-10-data08-recheck.json
 
 ### GOV-06 冻结轻量架构和公共接口草案
 
@@ -212,7 +212,7 @@
 2. 选择可运行的轻量技术栈，版本在安装验证后锁定；不为了工具数量增加集群。
 3. 接口包含as_of、版本、单位、空结果与错误结构；此时允许契约草案，不能假称业务实现。
 
-证据：evidence/GOV-06/2026-11-10-data04-recheck.json
+证据：evidence/GOV-06/2026-11-10-data08-recheck.json
 
 ### GOV-07 建立环境、目录和命令入口
 
@@ -300,7 +300,7 @@
 2. 确认采用交易路线还是行为路线，并列出被删除或调整的指标/模型/页面。
 3. 不得拼接无关来源用户ID；核验至少8个有意义的源业务字段，不以拆日期或模拟补列凑数；D012工作假设允许工程验收，不冒称教师实际确认。
 
-证据：evidence/DATA-03/2026-11-10-data04-recheck.json
+证据：evidence/DATA-03/2026-11-10-data08-recheck.json
 
 ### DATA-04 完成正式数据契约和字典
 
@@ -372,7 +372,7 @@
 
 ### DATA-08 统一购买、取消、退款与金额规则
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C08, Q01。
 - 前置：DATA-06。
 - 允许修改：`docs`, `src/retail_bi/data`, `contracts`, `reports/data`；另可写本任务证据/交接。
@@ -385,7 +385,7 @@
 2. 订单数使用有效交易标识去重，金额由精确数值计算；缺支付状态时不用支付成功GMV名称。
 3. 原始与清洗净额差异逐项解释；无法关联退款原单时按实际发生时间统计。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-08/2026-11-10-transaction-rules.json
 
 ### DATA-09 完成集成与冲突处理
 

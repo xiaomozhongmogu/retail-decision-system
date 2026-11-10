@@ -1,0 +1,103 @@
+{
+  "task_id": "DATA-08",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic full scope (DATA-07 clean-v1)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/data/transactions.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out reports/data/transaction_reconciliation.json; .venv/bin/python evidence/DATA-08/build_metrics.py; .venv/bin/python evidence/DATA-08/verify_rules.py",
+  "exit_code": 0,
+  "summary": "冻结 transaction-rules-v1：有效购买=已审批订单（与非取消逐单一致，且在任意时点可观察），按下单时间归属，as_of 只计已审批；取消单独报告、按下单时间归属；无退款数据，不提供退款类指标；商品金额不含运费，支付只对账。对账 11 项检查通过：原始与有效差额逐项等于已取消（194 单）加截止时未审批（4 单）。contracts/metrics.json 改写为同一份可执行 SQL。pandas 独立核对 18/18。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "reports/data/profile_before.json",
+      "sha256": "015d01d93c42a7afe37f6b34698ded14f2907cc20f1e1d3d06ed1f7908dbbcdb"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "24fbd24ae82a4341c20facea1556e4d2a1849cdd5d26c14c71f3eb1e9c7b758a"
+    },
+    {
+      "path": "evidence/DATA-08/build_metrics.py",
+      "sha256": "5cfcb612098212aecc969840774e1adeae19e3ace2d46afbd341f6be32501dac"
+    },
+    {
+      "path": "evidence/DATA-08/verify_rules.py",
+      "sha256": "d0d09cb19121c2cc7aa170167593ce8e3fed1db49cbd36b883985bf6300c18bb"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "reports/data/transaction_reconciliation.json",
+      "sha256": "195558cdabde7d3a48bcc4ee44b6cf5c6a79123f09f3e3b9332ba19bac31d6df"
+    },
+    {
+      "path": "src/retail_bi/data/transactions.py",
+      "sha256": "c3e98179fd87b3aea47aa91a11e9715b29dd7ca354ae6ea02fda2937c7b20047"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "f8c49414864f348ac441eb44edc1e6d72ae2b2aabe42d1e1d4cb37890d37ad50"
+    },
+    {
+      "path": "evidence/DATA-08/reconcile_run.log",
+      "sha256": "30041942c9c30be557576ea0114c7b987b2ebe993f79a408d61d0e48aa2f70d9"
+    },
+    {
+      "path": "evidence/DATA-08/build_metrics_run.log",
+      "sha256": "d300616793aee1bf70274bd7c2d3139ae3bc4b1c59140c343ab283b494db0c13"
+    },
+    {
+      "path": "evidence/DATA-08/verification_run.log",
+      "sha256": "b2c1e72dca6eea452611614b53c405594f31795860dfb701c9e7365f429f96c1"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "transaction_rules.md 第 1–7 节明确：正向购买=已审批订单（含已送达、已发货、处理中）；取消排除并单列；数据无退款、冲销或负金额，若出现进入隔离区；运费是非商品收费，单独报告；隔离规则沿用 DATA-07。客户身份条件只作用于购买客户数、RFM、复购等需要身份的指标，经营汇总不要求。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "订单数一律 count(distinct order_id)；金额在 DuckDB 中按 DECIMAL 精确求和，pandas 独立重算的订单数、明细行、商品金额、运费与对账逐分相等。数据没有支付状态和支付时间，指标命名为“商品金额”“订单金额（含运费）”，metrics.json 列出禁止名称（已支付 GMV、净收入、退款金额等）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "对账逐项解释原始与有效的差额：9,311→9,113 单、1,408,601.73→1,380,161.23 USD，差额等于已取消（194 单，27,778.26）加截止时尚未审批（4 单，662.24），检查 raw_minus_valid_equals_cancelled_plus_pending 为真。数据没有退款；取消没有发生时间，按下单时间归属并在指标说明中写明，只在完整历史期间使用取消指标。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "口径是 D012 授权下的工程选择，不是教师规定。",
+    "取消发生时间未知；as_of 早于截止时无法区分待审批与将取消。",
+    "时区为 UTC 工程假设。",
+    "复购/RFM 的 SQL 由 ML-02、DW-05 实现后补齐。"
+  ],
+  "steps": [
+    "认领 DATA-08（台账 2f259a9e… 之后）。实测审批延迟最长 24 小时，处理中/已发货订单分布在全部年份。",
+    "编写 transactions.py（视图与指标 SQL 同源）。第 1 次对账 2 项失败：对账把截止后才审批的 4 单算作有效，而指标 SQL 按 approved_ts < as_of 不算；客单价拿浮点和精确小数直接判等。改为按截止时状态分三类、客单价用容差；第 2 次报告已写出但打印摘要用了旧字段名报错；第 3 次通过。三次都保留在 reconcile_run.log。",
+    "用 build_metrics.py 从同一模块生成 contracts/metrics.json；撰写 docs/transaction_rules.md。",
+    "verify_rules.py 用 pandas 独立重算并核对文档数字，18/18。",
+    "metrics.json 变化使 GOV-05、GOV-06、DATA-03 证据失效，复核后出 data08-recheck 证据。"
+  ],
+  "task_spec_sha256": "14f85792a0df85a87445bb8debc698f492dafcbd63abf5de2e9b9ca70f70abd7",
+  "performed_at": "2026-11-10T14:51:50.397002+08:00"
+}

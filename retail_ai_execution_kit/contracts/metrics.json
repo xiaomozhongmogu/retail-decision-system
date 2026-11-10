@@ -1,62 +1,334 @@
 {
-  "status": "draft_not_executed",
-  "applies_to": "UCI交易候选；路线变化须重审",
+  "status": "frozen_v1",
+  "rule_version": "transaction-rules-v1",
+  "applies_to": "contracts/data_contract.json synthetic-transaction-v1（完全合成数据，USD）",
+  "superseded": "UCI 草案（GBP、invoice、quantity×unit_price）已作废（D013）",
+  "rules_doc": "docs/transaction_rules.md",
+  "reconciliation": "reports/data/transaction_reconciliation.json",
+  "views": {
+    "orders_all": "SELECT * FROM read_parquet('{d}/orders.parquet')",
+    "items_all": "SELECT * FROM read_parquet('{d}/order_items.parquet')",
+    "payments_all": "SELECT * FROM read_parquet('{d}/payments.parquet')",
+    "orders_valid": "SELECT * FROM orders_all WHERE approved_ts IS NOT NULL",
+    "orders_cancelled": "SELECT * FROM orders_all WHERE approved_ts IS NULL",
+    "order_amounts": "\n        SELECT o.order_id, o.customer_id, o.purchase_ts, o.approved_ts, o.order_status,\n               o.approved_ts IS NOT NULL AS is_valid,\n               sum(i.item_price_usd) AS merch_usd, sum(i.item_shipping_usd) AS shipping_usd,\n               sum(i.item_total_usd) AS order_value_usd, count(*) AS item_lines\n        FROM orders_all o JOIN items_all i USING (order_id)\n        GROUP BY ALL"
+  },
+  "observability": {
+    "approval_max_lag_hours": 24,
+    "label_maturity_days": 1,
+    "rule": "任何 as_of 时点只计 approved_ts < as_of 的订单；最终 order_status 不在 as_of 计算中使用"
+  },
+  "forbidden_names": [
+    "已支付 GMV",
+    "净收入",
+    "退款金额",
+    "利润",
+    "毛利",
+    "销量（件数）"
+  ],
   "metrics": [
     {
-      "id": "positive_sales",
-      "name": "正向商品开票金额",
-      "unit": "GBP if UCI",
-      "definition": "符合商品与正向交易纳入规则的quantity*unit_price之和；可含未知客户",
-      "sql": null
+      "id": "valid_orders",
+      "name": "有效订单数",
+      "unit": "orders",
+      "definition": "窗口内下单且截至 as_of 已审批的订单去重数",
+      "population": "全部订单",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "已取消（无审批）；截至 as_of 尚未审批",
+      "numerator": "count(distinct order_id)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT count(*) FROM order_amounts WHERE is_valid AND approved_ts < $as_of AND purchase_ts >= $start AND purchase_ts < $end",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"valid_orders\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": 734,
+        "full history": 9113,
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": 39,
+        "empty window 2023-01 (zero denominator)": 0
+      }
     },
     {
-      "id": "net_sales",
-      "name": "商品净开票金额",
-      "unit": "GBP if UCI",
-      "definition": "按事件发生时点纳入正向与已分类冲销金额；排除/隔离差额须对账",
-      "sql": null
+      "id": "merchandise_sales_usd",
+      "name": "有效订单商品金额",
+      "unit": "USD",
+      "definition": "有效订单明细 item_price_usd 之和；不含运费，不是已支付 GMV、净收入或利润",
+      "population": "有效订单的全部明细行",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "已取消与未审批订单；运费",
+      "numerator": "sum(item_price_usd)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT coalesce(sum(merch_usd), 0) FROM order_amounts WHERE is_valid AND approved_ts < $as_of AND purchase_ts >= $start AND purchase_ts < $end",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"merchandise_sales_usd\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": "112870.30",
+        "full history": "1380161.23",
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": "6516.57",
+        "empty window 2023-01 (zero denominator)": "0.00"
+      }
     },
     {
-      "id": "orders",
-      "name": "有效购买订单数",
-      "unit": "invoice count",
-      "definition": "至少包含一条有效正向商品明细的invoice_id去重数；客户级指标另要求customer_id已知",
-      "sql": null
+      "id": "shipping_usd",
+      "name": "有效订单运费",
+      "unit": "USD",
+      "definition": "有效订单明细运费之和，单独报告",
+      "population": "有效订单的全部明细行",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "已取消与未审批订单",
+      "numerator": "sum(item_shipping_usd)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT coalesce(sum(shipping_usd), 0) FROM order_amounts WHERE is_valid AND approved_ts < $as_of AND purchase_ts >= $start AND purchase_ts < $end",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"shipping_usd\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": "10103.93",
+        "full history": "129459.18",
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": "481.68",
+        "empty window 2023-01 (zero denominator)": "0.00"
+      }
     },
     {
-      "id": "customers",
-      "name": "已知购买客户数",
-      "unit": "distinct customer",
-      "definition": "指定期间有效购买的已知customer_id去重；不可跨日相加",
-      "sql": null
+      "id": "order_value_usd",
+      "name": "有效订单金额（含运费）",
+      "unit": "USD",
+      "definition": "商品金额＋运费；与支付记录逐单相等，只用于对账展示",
+      "population": "有效订单",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "已取消与未审批订单",
+      "numerator": "sum(item_total_usd)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT coalesce(sum(order_value_usd), 0) FROM order_amounts WHERE is_valid AND approved_ts < $as_of AND purchase_ts >= $start AND purchase_ts < $end",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"order_value_usd\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": "122974.23",
+        "full history": "1509620.41",
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": "6998.25",
+        "empty window 2023-01 (zero denominator)": "0.00"
+      }
     },
     {
-      "id": "aov",
-      "name": "正向订单客单价",
-      "unit": "GBP/invoice if UCI",
-      "definition": "对应正向订单金额/对应有效订单数；分子分母同一范围，0分母为null",
-      "sql": null
+      "id": "buyers",
+      "name": "购买客户数",
+      "unit": "customers",
+      "definition": "窗口内至少一单有效订单的已知客户去重；不同窗口不能相加",
+      "population": "已知 customer_id 的有效订单（本数据全部已知）",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "未知客户（本数据为 0）",
+      "numerator": "count(distinct customer_id)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT count(DISTINCT customer_id) FROM order_amounts WHERE is_valid AND approved_ts < $as_of AND customer_id IS NOT NULL AND purchase_ts >= $start AND purchase_ts < $end",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"buyers\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": 663,
+        "full history": 3339,
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": 39,
+        "empty window 2023-01 (zero denominator)": 0
+      }
+    },
+    {
+      "id": "aov_usd",
+      "name": "客单价（每单商品金额）",
+      "unit": "USD/order",
+      "definition": "有效订单商品金额 / 有效订单数；分子分母同一范围",
+      "population": "有效订单",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "已取消与未审批订单；运费",
+      "numerator": "merchandise_sales_usd",
+      "denominator": "valid_orders",
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT sum(merch_usd) / nullif(count(*), 0) FROM order_amounts WHERE is_valid AND approved_ts < $as_of AND purchase_ts >= $start AND purchase_ts < $end",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"aov_usd\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": 153.7742506811989,
+        "full history": 151.44971249862834,
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": 167.09153846153845,
+        "empty window 2023-01 (zero denominator)": null
+      }
+    },
+    {
+      "id": "cancelled_orders",
+      "name": "取消订单数",
+      "unit": "orders",
+      "definition": "窗口内下单、最终无审批的订单；取消发生时间未知，按下单时间归属",
+      "population": "全部订单",
+      "inclusions": "approved_ts 为空且 purchase_ts < as_of",
+      "exclusions": "有效订单",
+      "numerator": "count(distinct order_id)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT count(*) FROM order_amounts WHERE NOT is_valid AND purchase_ts >= $start AND purchase_ts < $end AND purchase_ts < $as_of",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"cancelled_orders\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": 17,
+        "full history": 194,
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": 0,
+        "empty window 2023-01 (zero denominator)": 0
+      },
+      "caveat": "最终状态含截止后信息；as_of 早于截止时，尚未审批的订单无法区分“待审批”和“将取消”，只在完整历史期间使用"
+    },
+    {
+      "id": "cancelled_merchandise_usd",
+      "name": "取消订单商品金额",
+      "unit": "USD",
+      "definition": "取消订单的 item_price_usd 之和；没有退款记录，不称退款金额",
+      "population": "取消订单",
+      "inclusions": "approved_ts 为空",
+      "exclusions": "有效订单",
+      "numerator": "sum(item_price_usd)",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "SELECT coalesce(sum(merch_usd), 0) FROM order_amounts WHERE NOT is_valid AND purchase_ts >= $start AND purchase_ts < $end AND purchase_ts < $as_of",
+      "sql_mapping": "src/retail_bi/data/transactions.py METRIC_SQL[\"cancelled_merchandise_usd\"]（参数 $start, $end, $as_of；视图见 VIEWS）",
+      "examples_and_checks": {
+        "2026-Q3 (complete period)": "2603.37",
+        "full history": "27778.26",
+        "2026-11-01..cutoff seen at 2026-11-05 (observability)": "0.00",
+        "empty window 2023-01 (zero denominator)": "0.00"
+      }
     },
     {
       "id": "repurchase_30d",
       "name": "未来30天复购概率",
       "unit": "probability",
-      "definition": "对观察窗符合母体的客户，P([t,t+30d)至少一次有效购买)",
-      "sql": null
+      "definition": "对 as_of 时母体客户，P([as_of, as_of+30d) 至少一单有效购买)",
+      "population": "默认母体：as_of 前 90 天有有效购买的已知客户（PROJECT_SPEC §5）；ML-01 冻结",
+      "inclusions": "标签按本文件有效购买规则；标签窗结束后再等 1 天让审批落定",
+      "exclusions": "生成器标签、最终状态、截止后信息不作特征",
+      "numerator": "模型输出",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "由 ML-02 样本构建实现",
+      "label_maturity_days": 1,
+      "owner": "ML-01/ML-02"
     },
     {
       "id": "non_repurchase_30d",
       "name": "未来30天未复购风险",
       "unit": "probability",
-      "definition": "1-repurchase_30d；不是永久流失，也不是营销增量响应",
-      "sql": null
+      "definition": "1 - repurchase_30d；不是永久流失，也不是营销增量",
+      "population": "同 repurchase_30d",
+      "inclusions": "同上",
+      "exclusions": "同上",
+      "numerator": "1 - repurchase_30d",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "由 ML-11 评分服务输出",
+      "owner": "ML-11"
     },
     {
       "id": "rfm",
-      "name": "RFM画像",
-      "unit": "days/invoices/GBP if UCI",
-      "definition": "R距最近有效购买，F过去90天订单去重，M同窗正向金额；非严格CLV",
-      "sql": null
+      "name": "RFM 画像",
+      "unit": "days / orders / USD",
+      "definition": "R：as_of 距最近一次有效购买的天数；F：[as_of-90d, as_of) 有效订单数；M：同窗有效订单商品金额（不含运费）；非严格 CLV",
+      "population": "至少一次有效购买的已知客户",
+      "inclusions": "有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口",
+      "exclusions": "已取消订单；运费",
+      "numerator": "R/F/M",
+      "denominator": null,
+      "windows": "左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z",
+      "zero_null_policy": "计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告",
+      "supported_dimensions": [
+        "purchase date/week/month",
+        "customer_state",
+        "customer_region",
+        "product_category",
+        "seller_id",
+        "payment_type"
+      ],
+      "sql": "由 DW-05 客户快照实现",
+      "owner": "DW-05/ML-05"
     }
   ],
   "required_for_approval": [
@@ -70,5 +342,6 @@
     "supported_dimensions",
     "sql_mapping",
     "examples_and_checks"
-  ]
+  ],
+  "approval_note": "可执行 SQL 的 8 个指标在 DATA-08 对账中实际运行；模型与快照类指标的 SQL 由所属任务实现后补齐"
 }
