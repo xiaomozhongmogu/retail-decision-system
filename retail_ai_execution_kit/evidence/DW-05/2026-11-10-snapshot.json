@@ -1,0 +1,95 @@
+{
+  "task_id": "DW-05",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic full scope",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/features/snapshot.py --db warehouse/build/dev.duckdb --contract-out reports/warehouse/snapshot_contract.json; .venv/bin/python evidence/DW-05/verify_snapshot.py",
+  "exit_code": 0,
+  "summary": "客户时点快照 snapshot-v1：每周一个 as_of（2024-04-01 至 2026-11-02，共 136 个），331,649 行，3,332 个客户；特征只用 as_of 前下单且已审批的订单。标签单独存表 label-repurchase-v1：132 个 as_of、成熟时间 as_of+31 天且不晚于截止；90 天母体 92,241 行、正例 6,618，与 DATA-11 门槛独立 SQL 完全一致。防泄漏测试：3 个 as_of 用截断到当时的订单在 pandas 中重算全部特征与生命周期状态，与快照一致。12/12。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "reports/data/profile_after.json",
+      "sha256": "49137528fbb3e1245cf8391b1a4b058cf2758b17c35f8b602c731fe44a60dcbe"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "5e348ba24dd1b759f31459049d9b410950db6d3e52fdeafb646d5b7c02ef8f65"
+    },
+    {
+      "path": "evidence/DW-05/verify_snapshot.py",
+      "sha256": "e0448d1b5c71c1593a9e28c9b7380a45ad6f6dec9acea9fb7ba5089692f04255"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sql/customer_snapshot.sql",
+      "sha256": "b8708facf3773fec24eee828e8223fdee910943aee344f6200a82621cae86b29"
+    },
+    {
+      "path": "src/retail_bi/features/snapshot.py",
+      "sha256": "87ee5cb3164537c73f4c57fbf22f776ea3ccc7cf6d9c21307da1c657129d4c38"
+    },
+    {
+      "path": "reports/warehouse/snapshot_contract.json",
+      "sha256": "451076a9698a59a42e9fd913ba0069e98139f2416e219ce2f1cb61509f1521f9"
+    },
+    {
+      "path": "evidence/DW-05/snapshot_run.log",
+      "sha256": "3557245e0b37b7f5fb336be52e455df8351b1f7eeda7de72e8637612f034b228"
+    },
+    {
+      "path": "evidence/DW-05/verification_run.log",
+      "sha256": "c6e3852b700349b01deb3e57ebdfc3297b17607620be978162d12afc9a7ae5fd"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "dws.customer_snapshot 一行是客户×as_of（主键唯一）；snapshot_contract.json 与表内列说明特征截止（as_of，左闭右开）、观察窗起点 feature_window_start=as_of-90 天、as_of 网格（136 个点、首末日期）、覆盖客户数与 90 天母体行数，并写明数据截止和时区假设。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "快照 SQL 只读取 purchase_ts < as_of 且 approved_ts < as_of 的订单，不读最终状态、物流结果、评价或生成器标签（核对脚本检查 SQL 文本）。在 2024-07-01、2025-06-02、2026-09-07 三个 as_of，用只保留当时可见订单的数据重算全部数值特征与生命周期状态，与快照逐客户一致（1,153 / 2,539 / 3,301 人）。本数据没有退货记录，属性只用静态维度。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "标签在 dws.label_repurchase 单独管理，主键 (customer_id, as_of, horizon_days, label_version)，有成熟时间 label_matured_at，只为成熟时间不晚于截止的 as_of 生成（不成熟标签 0）；与快照通过 (customer_id, as_of) 连接，版本 snapshot-v1 / label-repurchase-v1 分开。三个 as_of 的标签由后续 30 天窗口独立重算一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "生命周期状态用默认阈值 lifecycle-default-v0，EDA-05 校准后更新版本。",
+    "模型母体（90 天内有购买）由 ML-01 冻结；快照覆盖所有曾购买的客户，母体用 frequency_90d>=1 过滤。"
+  ],
+  "steps": [
+    "认领 DW-05（台账 d686d887…）。",
+    "编写 sql/customer_snapshot.sql 与 snapshot.py，构建快照与标签。",
+    "verify_snapshot.py 第 1 次 11/12：标签独立性检查在快照 SQL 中查找列名（实际按位置插入），改为检查 DDL 后 12/12。"
+  ],
+  "task_spec_sha256": "15ef630a0d23e62f76452fcdc26fa4beed6ab00be0aff4c2bb71192413c906cd",
+  "performed_at": "2026-11-10T15:16:34.127178+08:00"
+}

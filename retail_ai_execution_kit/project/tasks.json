@@ -987,10 +987,10 @@
       "category": "DW",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "U02",
         "U03",
@@ -1013,7 +1013,9 @@
         "快照只使用当时可得的交易/退货/属性，不混入未来标签。",
         "标签数据单独管理，接入建模层时有明确主键与版本。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DW-05/2026-11-10-snapshot.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

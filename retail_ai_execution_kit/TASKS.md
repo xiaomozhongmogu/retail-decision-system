@@ -39,7 +39,7 @@
 | DW-02 | 实现ODS与加载审计 | midterm | done | DW-01, DATA-12 |
 | DW-03 | 实现DWD事实及维表 | midterm | done | DW-02 |
 | DW-04 | 实现DWS业务汇总 | midterm | done | DW-03 |
-| DW-05 | 建立时点客户快照接口 | midterm | todo | DW-03 |
+| DW-05 | 建立时点客户快照接口 | midterm | done | DW-03 |
 | DW-06 | 实现ADS与指标语义 | midterm | todo | DW-04, DW-05 |
 | DW-07 | 实现可重跑ETL编排 | midterm | todo | DW-06, GOV-07 |
 | DW-08 | 完成OLAP标准查询集 | midterm | todo | DW-06 |
@@ -528,7 +528,7 @@
 
 ### DW-05 建立时点客户快照接口
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：U02, U03, Q03。
 - 前置：DW-03。
 - 允许修改：`sql`, `src/retail_bi/features`, `reports/warehouse`；另可写本任务证据/交接。
@@ -541,7 +541,7 @@
 2. 快照只使用当时可得的交易/退货/属性，不混入未来标签。
 3. 标签数据单独管理，接入建模层时有明确主键与版本。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-05/2026-11-10-snapshot.json
 
 ### DW-06 实现ADS与指标语义
 

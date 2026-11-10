@@ -1,0 +1,4 @@
+$ .venv/bin/python src/retail_bi/features/snapshot.py --db warehouse/build/dev.duckdb --contract-out reports/warehouse/snapshot_contract.json
+2026-11-10T15:15:34+08:00
+{"coverage": {"as_of_points": 136, "first_as_of": "2024-04-01 00:00:00+00", "last_as_of": "2026-11-02 00:00:00+00", "rows": 331649, "customers": 3332, "rows_in_90d_population": 94999}, "labels": {"as_of_points": 132, "first_as_of": "2024-04-01 00:00:00+00", "last_as_of": "2026-10-05 00:00:00+00", "rows": 318344, "positives": 22270, "rows_in_90d_population": 92241, "positives_in_90d_population": 6618}, "mix": {"active": 83180, "at_risk": 73170, "dormant": 163480, "new": 11819}}
+exit=0

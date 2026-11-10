@@ -1,0 +1,19 @@
+$ .venv/bin/python evidence/DW-05/verify_snapshot.py
+2026-11-10T15:16:03+08:00
+PASS as_of 2024-07-01: snapshot equals recomputation from orders truncated to as_of (no future data) 1153 customers
+PASS as_of 2024-07-01: labels equal recomputation from the following 30-day window 75 positives
+PASS as_of 2025-06-02: snapshot equals recomputation from orders truncated to as_of (no future data) 2539 customers
+PASS as_of 2025-06-02: labels equal recomputation from the following 30-day window 177 positives
+PASS as_of 2026-09-07: snapshot equals recomputation from orders truncated to as_of (no future data) 3301 customers
+PASS as_of 2026-09-07: labels equal recomputation from the following 30-day window 227 positives
+PASS snapshot SQL never reads final status, delivery outcomes or generator labels 
+FAIL labels live in a separate table with their own version and maturity time 
+PASS snapshot key (customer_id, as_of) unique 
+PASS no snapshot after the cutoff and no immature label 
+PASS 90-day population labels equal the DATA-11 gate (independent SQL) 92241 rows / 6618 positives
+PASS coverage queryable: as_of points, window start, version 
+11/12 passed
+exit=1
+--- run 2 (run 1: the separate-label check looked for the column name in the snapshot SQL, where inserts are positional; now checks the DDL)
+12/12 passed
+exit=0
