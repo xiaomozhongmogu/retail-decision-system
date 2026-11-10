@@ -1,0 +1,56 @@
+$ .venv/bin/python tests/data/quality_gate.py
+2026-11-10T14:58:23+08:00
+PASSED scale: order_items >= 10,000 records (course rule) | 15639
+PASSED fields: >= 8 effective business fields (course rule) | 17
+PASSED time: explicit purchase timestamp with coverage | 2024-01-01 09:06:48+00 .. 2026-11-07 22:15:48+00, 35 months
+PASSED no silent row loss: every input row is output or quarantined | quarantined 0
+PASSED reconciliation: all transaction-rule checks true | 11/11
+PASSED amounts: no negative / refund rows | 0
+PASSED label: positives >= 1,000 (project) | 6618
+PASSED label: negatives >= 1,000 (project) | 85623
+FAILED label: every quarter has >= 100 positives (project; time-based test sets stay usable) | 72
+PASSED rule tests pass (tests/data) | 19 passed in 0.98s
+gate failed 9/10
+exit=1
+$ .venv/bin/python -m pytest tests/data -v -p no:cacheprovider
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collecting ... collected 19 items
+
+tests/data/test_rules.py::test_unparseable_timestamp_goes_to_quarantine_with_line_and_reason PASSED [  5%]
+tests/data/test_rules.py::test_duplicate_primary_key_is_quarantined PASSED [ 10%]
+tests/data/test_rules.py::test_clean_fixture_has_no_quarantine PASSED    [ 15%]
+tests/data/test_rules.py::test_rerun_reuses_output_and_tampering_is_refused PASSED [ 21%]
+tests/data/test_rules.py::test_changed_input_file_is_refused PASSED      [ 26%]
+tests/data/test_rules.py::test_valid_cancelled_pending_classification PASSED [ 31%]
+tests/data/test_rules.py::test_zero_denominator_returns_null PASSED      [ 36%]
+tests/data/test_rules.py::test_reconciliation_differences_are_exact PASSED [ 42%]
+tests/data/test_rules.py::test_negative_amount_is_flagged_by_reconciliation PASSED [ 47%]
+tests/data/test_rules.py::test_time_parsing[timestamp-2025-01-10T10:00:00-2025-01-10T10:00:00+00:00] PASSED [ 52%]
+tests/data/test_rules.py::test_time_parsing[timestamp-2025-01-10 10:00:00-2025-01-10T10:00:00+00:00] PASSED [ 57%]
+tests/data/test_rules.py::test_time_parsing[date-2025-01-15T00:00:00-2025-01-15] PASSED [ 63%]
+tests/data/test_rules.py::test_time_parsing[timestamp--None] PASSED      [ 68%]
+tests/data/test_rules.py::test_invalid_values_raise[date-2025-01-15T08:00:00] PASSED [ 73%]
+tests/data/test_rules.py::test_invalid_values_raise[timestamp-2025-13-01T00:00:00] PASSED [ 78%]
+tests/data/test_rules.py::test_invalid_values_raise[integer-5.5] PASSED  [ 84%]
+tests/data/test_rules.py::test_invalid_values_raise[decimal(12,2)-1.234] PASSED [ 89%]
+tests/data/test_rules.py::test_invalid_values_raise[boolean-yes] PASSED  [ 94%]
+tests/data/test_rules.py::test_output_types PASSED                       [100%]
+
+============================== 19 passed in 0.67s ==============================
+exit=0
+--- run 2: quarter check redefined to complete quarters (>= 12 weekly snapshots), threshold 100 unchanged; partial 2026-Q4 reported as a warning for ML-04. Run 1 failure above is kept.
+$ .venv/bin/python tests/data/quality_gate.py
+2026-11-10T14:58:50+08:00
+PASSED scale: order_items >= 10,000 records (course rule) | 15639
+PASSED fields: >= 8 effective business fields (course rule) | 17
+PASSED time: explicit purchase timestamp with coverage | 2024-01-01 09:06:48+00 .. 2026-11-07 22:15:48+00, 35 months
+PASSED no silent row loss: every input row is output or quarantined | quarantined 0
+PASSED reconciliation: all transaction-rule checks true | 11/11
+PASSED amounts: no negative / refund rows | 0
+PASSED label: positives >= 1,000 (project) | 6618
+PASSED label: negatives >= 1,000 (project) | 85623
+PASSED label: every complete quarter (>= 12 weekly snapshots) has >= 100 positives (project; time-based test sets stay usable) | min 527 over 10 complete quarters
+PASSED rule tests pass (tests/data) | 19 passed in 1.14s
+gate passed 10/10
+exit=0

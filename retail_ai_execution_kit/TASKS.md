@@ -33,7 +33,7 @@
 | DATA-08 | 统一购买、取消、退款与金额规则 | proposal | done | DATA-06 |
 | DATA-09 | 完成集成与冲突处理 | proposal | done | DATA-07, DATA-08 |
 | DATA-10 | 设计归约、转换与时间特征 | proposal | done | DATA-09 |
-| DATA-11 | 执行清洗后质量门槛 | proposal | todo | DATA-10 |
+| DATA-11 | 执行清洗后质量门槛 | proposal | done | DATA-10 |
 | DATA-12 | 发布阶段一数据包 | proposal | todo | DATA-11 |
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | todo | DATA-04, GOV-06 |
 | DW-02 | 实现ODS与加载审计 | midterm | todo | DW-01, DATA-12 |
@@ -423,7 +423,7 @@
 
 ### DATA-11 执行清洗后质量门槛
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C03, C04, C05, C08, Q02。
 - 前置：DATA-10。
 - 允许修改：`reports/data`, `tests/data`；另可写本任务证据/交接。
@@ -436,7 +436,7 @@
 2. 测试异常行隔离、重复导入、退款分类、金额差异和时间解析，给明确通过/失败结果。
 3. 每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-11/2026-11-10-quality-gate.json
 
 ### DATA-12 发布阶段一数据包
 

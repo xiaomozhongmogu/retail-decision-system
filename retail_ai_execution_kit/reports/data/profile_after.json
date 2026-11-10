@@ -1,0 +1,170 @@
+{
+  "task_id": "DATA-11",
+  "clean_key": "a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1",
+  "cutoff_exclusive": "2026-11-08 00:00:00+00",
+  "rows": {
+    "customers": 3647,
+    "sellers": 800,
+    "products": 8000,
+    "seller_products": 13966,
+    "orders": 9311,
+    "order_items": 15639,
+    "payments": 10010,
+    "shipping": 9311,
+    "reviews": 6190,
+    "calendar": 1042
+  },
+  "columns_per_table": {
+    "customers": 9,
+    "sellers": 11,
+    "products": 9,
+    "seller_products": 7,
+    "orders": 17,
+    "order_items": 9,
+    "payments": 6,
+    "shipping": 13,
+    "reviews": 8,
+    "calendar": 12
+  },
+  "effective_business_fields": 17,
+  "time": {
+    "purchase_first": "2024-01-01 09:06:48+00",
+    "purchase_last": "2026-11-07 22:15:48+00",
+    "months": 35,
+    "timezone": "UTC engineering assumption"
+  },
+  "rows_before_vs_after": {
+    "customers": {
+      "before": 3647,
+      "after": 3647
+    },
+    "sellers": {
+      "before": 800,
+      "after": 800
+    },
+    "products": {
+      "before": 8000,
+      "after": 8000
+    },
+    "seller_products": {
+      "before": 13966,
+      "after": 13966
+    },
+    "orders": {
+      "before": 9311,
+      "after": 9311
+    },
+    "order_items": {
+      "before": 15639,
+      "after": 15639
+    },
+    "payments": {
+      "before": 10010,
+      "after": 10010
+    },
+    "shipping": {
+      "before": 9311,
+      "after": 9311
+    },
+    "reviews": {
+      "before": 6190,
+      "after": 6190
+    },
+    "calendar": {
+      "before": 1042,
+      "after": 1042
+    }
+  },
+  "quarantine": {
+    "dir": null,
+    "counts": {}
+  },
+  "valid_orders_at_cutoff": {
+    "orders": 9113,
+    "item_lines": 15311,
+    "merch_usd": "1380161.23",
+    "shipping_usd": "129459.18",
+    "order_value_usd": "1509620.41"
+  },
+  "model_usable_customers": {
+    "customers_with_valid_purchase": 3339,
+    "customers_in_any_snapshot": 3312
+  },
+  "label_30d_with_frozen_rule": {
+    "weekly_snapshots": 132,
+    "first_as_of": "2024-04-01 00:00:00+00",
+    "last_as_of": "2026-10-05 00:00:00+00",
+    "rows": 92241,
+    "positives": 6618,
+    "negatives": 85623,
+    "positive_rate": 0.0717,
+    "by_quarter": [
+      {
+        "quarter": "2024-Q2",
+        "rows": 8213,
+        "positives": 562,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2024-Q3",
+        "rows": 9065,
+        "positives": 611,
+        "snapshots": 14
+      },
+      {
+        "quarter": "2024-Q4",
+        "rows": 10044,
+        "positives": 882,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2025-Q1",
+        "rows": 10108,
+        "positives": 663,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2025-Q2",
+        "rows": 8600,
+        "positives": 555,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2025-Q3",
+        "rows": 8599,
+        "positives": 625,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2025-Q4",
+        "rows": 10110,
+        "positives": 903,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2026-Q1",
+        "rows": 10149,
+        "positives": 576,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2026-Q2",
+        "rows": 8217,
+        "positives": 527,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2026-Q3",
+        "rows": 8493,
+        "positives": 642,
+        "snapshots": 13
+      },
+      {
+        "quarter": "2026-Q4",
+        "rows": 643,
+        "positives": 72,
+        "snapshots": 1
+      }
+    ]
+  }
+}

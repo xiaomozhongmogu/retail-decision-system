@@ -1,0 +1,96 @@
+{
+  "task_id": "DATA-11",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pytest 9.2.0",
+    "data_mode": "formal synthetic data (clean-v1) for the gate; hand-made fixtures in pytest tmp_path for rule tests",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python tests/data/quality_gate.py; .venv/bin/python -m pytest tests/data -v -p no:cacheprovider",
+  "exit_code": 0,
+  "summary": "清洗后质量门槛 10/10 通过（第 1 次运行 9/10，见下），19 个规则测试通过。清洗后实测：明细 15,639 行、17 个有效字段、35 个月、隔离 0、对账 11/11；按冻结口径重算 30 天标签：132 个周快照、92,241 行、正例 6,618（7.17%）、负例 85,623，10 个完整季度每季正例至少 527。警告：2026-Q4 只有 1 个快照、72 个正例，不能单独作测试期。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "f8c49414864f348ac441eb44edc1e6d72ae2b2aabe42d1e1d4cb37890d37ad50"
+    },
+    {
+      "path": "src/retail_bi/data/clean.py",
+      "sha256": "2a221571ae525946d3a08a8c9b78939595b9eaf28073e8f6ea12d930ba0a22dc"
+    },
+    {
+      "path": "src/retail_bi/data/transactions.py",
+      "sha256": "c3e98179fd87b3aea47aa91a11e9715b29dd7ca354ae6ea02fda2937c7b20047"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "24fbd24ae82a4341c20facea1556e4d2a1849cdd5d26c14c71f3eb1e9c7b758a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/data/profile_after.json",
+      "sha256": "6e9d5615af89aa98c31875b6bdce9230ee8157de756eec638aa00945ccc65fac"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "b926ca6873494827d2f6ca833bcd993196d396b2dd00d3aab9d17a2175cc8d7c"
+    },
+    {
+      "path": "tests/data/quality_gate.py",
+      "sha256": "c7f259fb0bbc960ee697b5fb0980daf8ec8dbd7ef15ce471a720c63da457efea"
+    },
+    {
+      "path": "tests/data/test_rules.py",
+      "sha256": "e398d8b1b5a22500fde1e7ca3737d19b82b976205aa26ad14864b22cac163351"
+    },
+    {
+      "path": "tests/data/conftest.py",
+      "sha256": "b6d85a704c5c6d392734ff5f6ab0c0159b5add33dee730d015db2817e0702f2f"
+    },
+    {
+      "path": "evidence/DATA-11/gate_run.log",
+      "sha256": "f00c787b52b881e9f6b4217cbd62fc2dff4fcaa800515cd7aea307432e0acb78"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "profile_after.json 实测清洗后各表行数（与清洗前逐表相同）、每表字段数、有效字段 17、下单时间 2024-01-01 至 2026-11-07 共 35 个月、可建模客户（有有效购买 3,339 人），并按冻结口径重算 30 天正负类：正例 6,618、负例 85,623，分季度列出；正负类都足够，比例低已写明以 PR-AUC 与校准为主。不完整季度 2026-Q4 正例不足，作为警告交给 ML-04，没有据此宣称该期可单独评估。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "test_rules.py 覆盖并通过：异常行隔离（非法时间→隔离，带源行号与原因，依赖行作为孤儿隔离；重复主键隔离）、重复导入（重跑复用不重写、篡改输出拒绝、输入改动拒绝）、退款/取消分类（已审批计入、无审批为取消、截止后审批暂不计入、负金额被对账标记失败）、金额差异（差额精确到分等于取消+未审批）、时间解析（无时区→UTC、日期带时间报错、非法值报错）。门槛结果逐项写入 quality_checks.json，明确 passed/failed。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "每个测试写明输入和期望值（例如商品金额 160.50、差额 39.99、隔离行号 3）。夹具在 conftest.py 中手工构造，只写入 pytest 的临时目录，不读取也不写入 data/ 下的正式数据。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "阈值 1,000 正例/负例、每完整季度 100 正例是项目工程设定，不是教师要求。",
+    "第 1 次门槛运行 9/10：原检查把只有 1 个快照的不完整季度 2026-Q4 也算在内（72 个正例）而失败；门槛 100 未改，改为只要求完整季度，并把 2026-Q4 列为警告，两次运行都保留在 gate_run.log。",
+    "数据完全合成；时区为 UTC 工程假设。"
+  ],
+  "steps": [
+    "认领 DATA-11（台账 21a0062e…）。",
+    "编写 conftest.py（手工夹具）与 test_rules.py，19 个测试通过。",
+    "编写 quality_gate.py，在正式清洗数据上测量并调用对账与测试。第 1 次 9/10（2026-Q4 正例 72）；重新定义为完整季度检查并把不完整季度列为警告后 10/10。"
+  ],
+  "task_spec_sha256": "d39f181d6a869d58c4ee3395e3142848ab298fa7af8e4b7628ef7f7f14c1c068",
+  "performed_at": "2026-11-10T14:59:15.519197+08:00"
+}

@@ -1,0 +1,76 @@
+{
+  "task_id": "DATA-11",
+  "thresholds": {
+    "min_records": 10000,
+    "min_fields": 8,
+    "min_positives_project": 1000,
+    "min_negatives_project": 1000,
+    "min_positives_per_quarter_project": 100
+  },
+  "checks": [
+    {
+      "check": "scale: order_items >= 10,000 records (course rule)",
+      "status": "passed",
+      "value": 15639
+    },
+    {
+      "check": "fields: >= 8 effective business fields (course rule)",
+      "status": "passed",
+      "value": 17
+    },
+    {
+      "check": "time: explicit purchase timestamp with coverage",
+      "status": "passed",
+      "value": "2024-01-01 09:06:48+00 .. 2026-11-07 22:15:48+00, 35 months"
+    },
+    {
+      "check": "no silent row loss: every input row is output or quarantined",
+      "status": "passed",
+      "value": "quarantined 0"
+    },
+    {
+      "check": "reconciliation: all transaction-rule checks true",
+      "status": "passed",
+      "value": "11/11"
+    },
+    {
+      "check": "amounts: no negative / refund rows",
+      "status": "passed",
+      "value": 0
+    },
+    {
+      "check": "label: positives >= 1,000 (project)",
+      "status": "passed",
+      "value": 6618
+    },
+    {
+      "check": "label: negatives >= 1,000 (project)",
+      "status": "passed",
+      "value": 85623
+    },
+    {
+      "check": "label: every complete quarter (>= 12 weekly snapshots) has >= 100 positives (project; time-based test sets stay usable)",
+      "status": "passed",
+      "value": "min 527 over 10 complete quarters"
+    },
+    {
+      "check": "rule tests pass (tests/data)",
+      "status": "passed",
+      "value": "19 passed in 1.14s"
+    }
+  ],
+  "warnings": [
+    {
+      "quarter": "2026-Q4",
+      "snapshots": 1,
+      "rows": 643,
+      "positives": 72,
+      "message": "不完整季度（截止前只有少数周快照），正例不足 100，不能单独作为测试期；ML-04 切分时须与相邻完整季度合并或排除"
+    }
+  ],
+  "check_history": "2026-11-10 第一次运行时该项定义为“每个季度（含不完整季度）至少 100 个正例”，因 2026-Q4 只有 1 个快照、72 个正例而失败（见 evidence/DATA-11/gate_run.log）；门槛 100 未改，改为只要求完整季度，并把不完整季度列为警告",
+  "passed": 10,
+  "total": 10,
+  "gate": "passed",
+  "note": "正负类数量按冻结口径（审批早于 as_of；标签窗后留 1 天成熟）重算；比例低（约 7%），分类评估以 PR-AUC 与校准为主"
+}

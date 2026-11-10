@@ -743,10 +743,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C03",
         "C04",
@@ -770,7 +770,9 @@
         "测试异常行隔离、重复导入、退款分类、金额差异和时间解析，给明确通过/失败结果。",
         "每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-11/2026-11-10-quality-gate.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
