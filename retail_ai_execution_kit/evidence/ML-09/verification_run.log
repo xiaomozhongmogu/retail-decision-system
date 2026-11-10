@@ -1,0 +1,10 @@
+$ .venv/bin/python evidence/ML-09/verify_evaluation.py
+2026-11-10T21:11:17+08:00
+PASS model file unchanged since freeze 
+PASS test ROC-AUC / PR-AUC / Brier recomputed 
+PASS test set size, customers, class ratio, time range reported 
+PASS required metrics present for the model, plus baselines 
+PASS customer-block interval brackets the estimate and is reported 
+PASS evaluated after freeze; no promised score; weak result stated 
+6/6 passed
+exit=0

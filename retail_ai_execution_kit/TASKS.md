@@ -59,7 +59,7 @@
 | ML-06 | 训练规则与逻辑回归基线 | midterm | done | ML-04 |
 | ML-07 | 训练并有限调优LightGBM | midterm | done | ML-06 |
 | ML-08 | 冻结模型、校准与阈值 | midterm | done | ML-07 |
-| ML-09 | 完成最终时间外评估 | midterm | todo | ML-08 |
+| ML-09 | 完成最终时间外评估 | midterm | done | ML-08 |
 | ML-10 | 解释误差与适用限制 | midterm | todo | ML-09, ML-05 |
 | ML-11 | 实现评分服务与适用性输出 | midterm | todo | ML-10, DW-10 |
 | ML-12 | 发布模型文件与模型卡 | midterm | todo | ML-11 |
@@ -874,7 +874,7 @@
 
 ### ML-09 完成最终时间外评估
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C13, Q04。
 - 前置：ML-08。
 - 允许修改：`reports/model`, `src/retail_bi/model`；另可写本任务证据/交接。
@@ -887,7 +887,7 @@
 2. 实际样本量、独立客户数、类别比例和时间范围完整；单类分段指标不可算时说明。
 3. 不承诺分数；若计算区间估计应按客户/时间分块，不把相关快照视为独立。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-09/2026-11-10-evaluation.json
 
 ### ML-10 解释误差与适用限制
 

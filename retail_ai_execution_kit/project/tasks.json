@@ -1766,10 +1766,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C13",
         "Q04"
@@ -1790,7 +1790,9 @@
         "实际样本量、独立客户数、类别比例和时间范围完整；单类分段指标不可算时说明。",
         "不承诺分数；若计算区间估计应按客户/时间分块，不把相关快照视为独立。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-09/2026-11-10-evaluation.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

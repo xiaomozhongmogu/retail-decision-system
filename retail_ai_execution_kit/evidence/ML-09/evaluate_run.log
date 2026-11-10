@@ -1,0 +1,10 @@
+$ .venv/bin/python src/retail_bi/model/evaluate.py
+2026-11-10T21:10:20+08:00
+p_model {'roc_auc': 0.515273, 'pr_auc': 0.074124, 'brier': 0.066037, 'weekly_lift@10%': 0.843, 'mean_weekly_roc_auc': 0.5003, 'roc_auc_95ci': [0.483, 0.5455], 'ece': 0.0082}
+rule_frequency_90d {'roc_auc': 0.504783, 'pr_auc': 0.072646, 'brier': None, 'weekly_lift@10%': 1.0243, 'mean_weekly_roc_auc': 0.5074, 'roc_auc_95ci': [0.4759, 0.534], 'ece': None}
+rule_recency {'roc_auc': 0.500561, 'pr_auc': 0.072898, 'brier': None, 'weekly_lift@10%': 1.0729, 'mean_weekly_roc_auc': 0.5007, 'roc_auc_95ci': [0.4717, 0.5288], 'ece': None}
+base_rate {'roc_auc': 0.5, 'pr_auc': None, 'brier': 0.065955, 'weekly_lift@10%': None, 'mean_weekly_roc_auc': None, 'roc_auc_95ci': None, 'ece': None}
+exit=0
+--- run 2: conclusion wording corrected (run 1 claimed credible per-week risk probabilities although Brier did not beat the constant); metrics unchanged
+2026-11-10T21:10:46+08:00
+exit=0

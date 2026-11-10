@@ -1,0 +1,92 @@
+{
+  "task_id": "ML-09",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), scikit-learn 1.9.1",
+    "data_mode": "fully_synthetic; test set of split-v1 used once",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/model/evaluate.py; .venv/bin/python evidence/ML-09/verify_evaluation.py",
+  "exit_code": 0,
+  "summary": "一次性时间外评估（测试期 2026-03-30 至 2026-10-05，28 周，18,002 行，1,661 名客户，正例 7.10%）。冻结逻辑回归：ROC-AUC 0.515（客户分块 95% 区间 0.483–0.546）、PR-AUC 0.074（基率 0.071）、KS 0.033、周内平均 ROC-AUC 0.500、周内 Lift@10% 0.84、ECE 0.008、Brier 0.06604（基率常数 0.06595）。冻结排序规则周内 Lift@10% 1.02。结论：平均水平可信，个体区分不可靠，如实报告为负结果。独立复算 6/6。",
+  "inputs": [
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/model/feature_build.json",
+      "sha256": "7109464eced64a9cf13a0035407c134061f7a418a338757e02c7b65c9cb04077"
+    },
+    {
+      "path": "src/retail_bi/model/common.py",
+      "sha256": "7c85e6dfefd016199e16fdf06baff71d1fccaefbb6698a2300ba9f3659a38ca2"
+    },
+    {
+      "path": "evidence/ML-09/verify_evaluation.py",
+      "sha256": "c9659743a23b9f7a9079dc858cb581c5be0cd4a53b5a8c685fd01fadc859c800"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "reports/model/evaluation.md",
+      "sha256": "de4c6843c3c7615645ad5926a671951b6953d481fc1601ef59cca77f29445f26"
+    },
+    {
+      "path": "src/retail_bi/model/evaluate.py",
+      "sha256": "af1154aff362b38da1dc8784e355fbea6e92692a5b4056c8c3a2868c3f1d928a"
+    },
+    {
+      "path": "evidence/ML-09/evaluate_run.log",
+      "sha256": "bb4bc1097583065ec7700ea163e78bdcc5c1525620b787fd19c652ca764d91c0"
+    },
+    {
+      "path": "evidence/ML-09/verification_run.log",
+      "sha256": "9ee263c20725de7cccc4dce46ca594a971d7cd9cccb9d6754cd826c819573397"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "报告 ROC-AUC、PR-AUC、KS、每周前 10% 的 F1/Precision/Recall、合并与周内 Lift@10%、Recall@10%、Brier、ECE 与十分位校准表，并与排序规则、最近购买规则、基率常数比较；正类为 30 天内复购，阈值为每周前 K=10%（ML-08 冻结），不使用 0.5。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "测试集 18,002 行、1,661 名独立客户、正例 1,278 / 负例 16,724（7.10%）、28 个 as_of，范围与含不完整 2026-Q4 一周均写明；周内指标对单类周跳过并计数（本次为 0）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "不承诺分数；ROC-AUC 与 PR-AUC 区间按客户整体重抽样 500 次（同一客户的快照一起抽），不把相关快照当独立样本；结论如实写明区间包含 0.5、周内排序接近随机。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "报告文字第一次把个体概率说成可信，已改为“平均水平可信、个体区分不可靠”，指标不变（种子固定）；修改不涉及任何模型决定。",
+    "数据完全合成；不代表真实市场。"
+  ],
+  "steps": [
+    "认领 ML-09（台账 4038011e…→cfc129ac…）。",
+    "编写 evaluate.py，读取冻结 JSON 模型，对测试集评分一次并生成报告。",
+    "修正结论措辞后重新生成（指标相同）。",
+    "verify_evaluation.py 6/6（含模型哈希与冻结时一致）。"
+  ],
+  "task_spec_sha256": "d0c2ddb94b924fd3c0e81feae9a704f7992fb4cfd6035a75ea6aef0148124702",
+  "performed_at": "2026-11-10T21:11:37.953603+08:00"
+}
