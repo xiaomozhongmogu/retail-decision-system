@@ -2,7 +2,7 @@
   "task_id": "DATA-08",
   "rule_version": "transaction-rules-v1",
   "generated_by": "src/retail_bi/data/transactions.py",
-  "clean_dir_manifest_sha256": "a55d19147d1b0b3e4090dd6435d805cb0bbdb86615cc04eab000c36fe4cad78a",
+  "clean_dir_manifest_sha256": "f4f1d4c30d91d6a0f248281ab4d6cdd2b9cce09f110258fb472010a4ba7df1f3",
   "cutoff_exclusive": "2026-11-08 00:00:00+00",
   "raw_all_orders": {
     "orders": 9311,

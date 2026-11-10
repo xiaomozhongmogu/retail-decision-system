@@ -34,7 +34,7 @@
 | DATA-09 | 完成集成与冲突处理 | proposal | done | DATA-07, DATA-08 |
 | DATA-10 | 设计归约、转换与时间特征 | proposal | done | DATA-09 |
 | DATA-11 | 执行清洗后质量门槛 | proposal | done | DATA-10 |
-| DATA-12 | 发布阶段一数据包 | proposal | todo | DATA-11 |
+| DATA-12 | 发布阶段一数据包 | proposal | in_progress | DATA-11 |
 | DW-01 | 完成概念、逻辑和物理数仓设计 | midterm | todo | DATA-04, GOV-06 |
 | DW-02 | 实现ODS与加载审计 | midterm | todo | DW-01, DATA-12 |
 | DW-03 | 实现DWD事实及维表 | midterm | todo | DW-02 |
@@ -368,7 +368,7 @@
 2. 解析失败进入隔离数据，保留来源行与原因，不能静默消失。
 3. 文件哈希防重复导入；原始重复行是否删除有业务理由，不假定发票加商品唯一。
 
-证据：evidence/DATA-07/2026-11-10-clean.json
+证据：evidence/DATA-07/2026-11-10-clean-v2.json
 
 ### DATA-08 统一购买、取消、退款与金额规则
 
@@ -385,7 +385,7 @@
 2. 订单数使用有效交易标识去重，金额由精确数值计算；缺支付状态时不用支付成功GMV名称。
 3. 原始与清洗净额差异逐项解释；无法关联退款原单时按实际发生时间统计。
 
-证据：evidence/DATA-08/2026-11-10-transaction-rules.json
+证据：evidence/DATA-08/2026-11-10-transaction-rules-v2.json
 
 ### DATA-09 完成集成与冲突处理
 
@@ -402,7 +402,7 @@
 2. 商品属性等关联须验证主键、覆盖率和连接前后行数金额，不产生事实放大。
 3. 不需要跨来源集成时说明来源内整合方式与适用性，不人工拼接无关用户。
 
-证据：evidence/DATA-09/2026-11-10-integration.json
+证据：evidence/DATA-09/2026-11-10-integration-v2.json
 
 ### DATA-10 设计归约、转换与时间特征
 
@@ -419,7 +419,7 @@
 2. 数值变换、编码、时间派生可复现；模型相关拟合参数只从训练部分获得。
 3. 大数据抽样按用户保留完整历史，开发小样本明确标记；不以取文件前N行代替最终建模样本。
 
-证据：evidence/DATA-10/2026-11-10-transform.json
+证据：evidence/DATA-10/2026-11-10-transform-v2.json
 
 ### DATA-11 执行清洗后质量门槛
 
@@ -436,11 +436,11 @@
 2. 测试异常行隔离、重复导入、退款分类、金额差异和时间解析，给明确通过/失败结果。
 3. 每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。
 
-证据：evidence/DATA-11/2026-11-10-quality-gate.json
+证据：evidence/DATA-11/2026-11-10-quality-gate-v2.json
 
 ### DATA-12 发布阶段一数据包
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [ ] 状态：`in_progress`；阶段：`proposal`；范围：已选核心。
 - 依据：C03, C04, C05, C07, C20, C24。
 - 前置：DATA-11。
 - 允许修改：`reports/data`, `docs`；另可写本任务证据/交接。

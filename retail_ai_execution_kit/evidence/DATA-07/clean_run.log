@@ -36,3 +36,7 @@ $ .venv/bin/python src/retail_bi/data/clean.py --layer data/processed/engineerin
 2026-11-10T14:46:58+08:00
 {"target": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1", "reused":
 exit=0
+--- 2026-11-10T15:00:59+08:00 re-key run (clean-v2: content-fingerprint version keys, no absolute paths; data unchanged)
+$ .venv/bin/python src/retail_bi/data/clean.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --out-root data/processed/clean --quarantine-root data/quarantine --report reports/data/cleaning_missing_duplicates.json
+{"target": "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/data/processed/clean/9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2", "reused": false, "tables": {"customers": {"rows_in": 3647, "rows_after_type_and_pk": 3647, "rows_out": 3647, "rows_quarantined": 0}, "sellers": {"rows_in": 800, "rows_after_type_and_pk": 800, "rows_out": 800, "rows_quarantined": 0}, "products": {"rows_in": 8000, "rows_after_type_and_pk": 8000, "rows_out": 8000, "rows_quarantined": 0}, "seller_products": {"rows_in": 13966, "rows_after_type_and_pk": 13966, "
+exit=0

@@ -30,7 +30,7 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-CLEAN_VERSION = 'clean-v1'
+CLEAN_VERSION = 'clean-v2'   # v2: version key from content fingerprint, no absolute paths (same data as v1)
 ARROW = {'string': pa.string(), 'integer': pa.int64(), 'decimal(12,2)': pa.decimal128(12, 2),
          'double': pa.float64(), 'boolean': pa.bool_(), 'date': pa.date32(),
          'timestamp': pa.timestamp('ms', tz='UTC')}
@@ -87,17 +87,25 @@ def verify_existing(target: Path, identity: dict) -> dict:
     return m
 
 
+def layer_fingerprint(layer_manifest: dict) -> str:
+    """Content fingerprint of an import layer. The import manifest also stores an absolute
+    archive path, which differs between machines, so only content fields are hashed."""
+    content = {k: layer_manifest.get(k) for k in ('source_sha256', 'as_of_exclusive', 'version')}
+    content['outputs'] = sorted((o['path'], o['sha256']) for o in layer_manifest['outputs'])
+    return hashlib.sha256(json.dumps(content, sort_keys=True).encode('utf-8')).hexdigest()
+
+
 def build(layer: Path, contract_path: Path, out_root: Path, quarantine_root: Path):
     layer, out_root, quarantine_root = layer.resolve(), out_root.resolve(), quarantine_root.resolve()
     contract = json.loads(contract_path.read_text(encoding='utf-8'))
-    layer_sha = sha(layer / 'manifest.json')
     layer_manifest = json.loads((layer / 'manifest.json').read_text(encoding='utf-8'))
     for item in layer_manifest['outputs']:   # input files must still match the import manifest
         if sha(layer / item['path']) != item['sha256']:
             raise ValueError(f'input layer file changed after import: {item["path"]}')
-    identity ={'layer_manifest_sha256': layer_sha, 'contract_version': contract['contract_version'],
+    layer_fp = layer_fingerprint(layer_manifest)
+    identity = {'layer_content_sha256': layer_fp, 'contract_version': contract['contract_version'],
                 'contract_sha256': sha(contract_path), 'clean_version': CLEAN_VERSION}
-    key = f'{layer_sha[:16]}-{contract["contract_version"]}-{CLEAN_VERSION}'
+    key = f'{layer_fp[:16]}-{contract["contract_version"]}-{CLEAN_VERSION}'
     out_root.mkdir(parents=True, exist_ok=True)
     target, lock = out_root / key, out_root / f'{key}.lock'
     lock.mkdir()   # exclusive writer; a leftover lock must be checked by a person, never stolen
@@ -174,14 +182,14 @@ def build(layer: Path, contract_path: Path, out_root: Path, quarantine_root: Pat
                     w = csv.DictWriter(f, fieldnames=['source_line', 'column', 'value', 'reason'])
                     w.writeheader()
                     w.writerows(items)
-        manifest = {'identity': identity, 'key': key, 'layer': str(layer), 'as_of_exclusive': contract['as_of_exclusive'],
+        manifest = {'identity': identity, 'key': key, 'as_of_exclusive': contract['as_of_exclusive'],
                     'synthetic': True, 'timezone': 'UTC engineering assumption (D011)',
                     'tables': stats, 'outputs': outputs,
-                    'quarantine': {'dir': str(qdir) if any(quarantine.values()) else None,
+                    'quarantine': {'dir': f'{quarantine_root.name}/{key}' if any(quarantine.values()) else None,
                                    'counts': {t: Counter(i['reason'].split(':')[0] for i in v) for t, v in quarantine.items() if v}},
                     'imputation': 'none'}
         (stage / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2, default=dict) + '\n', encoding='utf-8')
-        if sha(layer / 'manifest.json') != layer_sha:
+        if any(sha(layer / o['path']) != o['sha256'] for o in layer_manifest['outputs']):
             raise ValueError('input layer changed during cleaning')
         if qstage is not None:
             qstage.rename(qdir)
@@ -236,7 +244,7 @@ def report(target: Path, manifest: dict, reused: bool, contract: dict, out: Path
             'same_product_rule': '保留。同单重复商品是同一上架、每行价格不同的独立明细（DATA-06），不是重复导入；主键是 order_id+order_item_seq，不假定订单+商品唯一，也不把重复行合并成数量',
             'same_customer_same_day_orders': '保留。订单号不同、时间不同，是独立订单',
         },
-        'duplicate_import_guard': '输出目录键 = 输入层清单哈希前 16 位 + 契约版本 + clean-v1；同一输入重跑会校验已有输出哈希后直接返回，不重写；身份不一致或文件被改则拒绝；独占锁防并发写入',
+        'duplicate_import_guard': '输出目录键 = 输入层内容指纹前 16 位（源哈希、截止、导入版本、各文件哈希；不含机器相关的绝对路径）+ 契约版本 + clean-v2；同一输入重跑会校验已有输出哈希后直接返回，不重写；身份不一致或文件被改则拒绝；独占锁防并发写入',
         'type_conversion': {c_type: str(a) for c_type, a in ARROW.items()},
         'standard_names': '输出列使用契约 standard_name（如 order_purchase_timestamp → purchase_ts）',
     }

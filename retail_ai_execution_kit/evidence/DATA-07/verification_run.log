@@ -57,3 +57,7 @@ PASS fixture: lock left in place for a person to inspect
 PASS real data untouched by fixture tests 
 25/25 passed
 exit=0
+--- 2026-11-10T15:01:32+08:00 rerun after clean-v2 re-key
+$ .venv/bin/python evidence/DATA-07/verify_clean.py
+25/25 passed
+exit=0

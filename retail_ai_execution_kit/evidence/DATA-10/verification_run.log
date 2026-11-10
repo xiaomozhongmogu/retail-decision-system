@@ -35,3 +35,11 @@ PASS fitted params equal training-only stats
 PASS audit records rerun reproducible 
 12/12 passed
 exit=0
+--- 2026-11-10T15:01:35+08:00 rerun after clean-v2 re-key
+$ .venv/bin/python evidence/DATA-10/verify_transform.py
+FAIL audit records rerun reproducible 
+11/12 passed
+exit=1
+--- 2026-11-10T15:01:48+08:00 rerun after recording reproducibility on the new key (previous run: 11/12 because the audit had no rerun yet)
+12/12 passed
+exit=0

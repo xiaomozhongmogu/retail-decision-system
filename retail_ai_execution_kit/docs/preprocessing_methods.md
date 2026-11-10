@@ -76,11 +76,11 @@
 ```
 
 ```bash
-.venv/bin/python src/retail_bi/data/integrate.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out-root data/processed/integrated --audit reports/data/integration_audit.json
+.venv/bin/python src/retail_bi/data/integrate.py --clean-dir data/processed/clean/9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2 --out-root data/processed/integrated --audit reports/data/integration_audit.json
 ```
 
 ```bash
-.venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/a55d19147d1b0b3e-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json
+.venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/f4f1d4c30d91d6a0-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json
 ```
 
 每一步的输出目录名包含上一步清单哈希和版本号；同一输入重跑得到同一文件（转换重跑哈希一致已实测），转换逻辑改变时必须提升版本号。

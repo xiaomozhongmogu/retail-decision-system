@@ -1,8 +1,8 @@
 {
   "task_id": "DATA-09",
   "version": "integrate-v1",
-  "key": "a55d19147d1b0b3e-integrate-v1",
-  "clean_manifest_sha256": "a55d19147d1b0b3e4090dd6435d805cb0bbdb86615cc04eab000c36fe4cad78a",
+  "key": "f4f1d4c30d91d6a0-integrate-v1",
+  "clean_manifest_sha256": "f4f1d4c30d91d6a0f248281ab4d6cdd2b9cce09f110258fb472010a4ba7df1f3",
   "source_count": 1,
   "naming_and_types": {
     "rule": "10 张表全部经契约统一为标准列名与类型（DATA-07）；同一概念在不同表中名称一致",
@@ -221,7 +221,7 @@
   },
   "cross_source": "只有一个来源，不需要跨来源集成；没有拼接任何外部用户 ID（D013）。来源内整合方式：按契约主外键连接，支付先按订单汇总，评价左连接（只有部分订单有评价）。",
   "all_checks_passed": true,
-  "reused_existing_output": true,
+  "reused_existing_output": false,
   "outputs": [
     {
       "path": "order_lines.parquet",

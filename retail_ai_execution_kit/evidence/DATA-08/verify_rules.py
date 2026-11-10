@@ -15,7 +15,7 @@ from transactions import METRIC_SQL  # noqa: E402
 R = json.loads((ROOT / 'reports/data/transaction_reconciliation.json').read_text(encoding='utf-8'))
 M = json.loads((ROOT / 'contracts/metrics.json').read_text(encoding='utf-8'))
 doc = (ROOT / 'docs/transaction_rules.md').read_text(encoding='utf-8')
-clean = next((ROOT / 'data/processed/clean').glob('*-clean-v1'))
+clean = next((ROOT / 'data/processed/clean').glob('*-clean-v2'))
 o = pd.read_parquet(clean / 'orders.parquet')
 it = pd.read_parquet(clean / 'order_items.parquet')
 pay = pd.read_parquet(clean / 'payments.parquet')

@@ -1,0 +1,81 @@
+{
+  "task_id": "DATA-09",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic full scope (clean-v2)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/data/integrate.py --clean-dir data/processed/clean/9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2 --out-root data/processed/integrated --audit reports/data/integration_audit.json; .venv/bin/python evidence/DATA-09/verify_integration.py",
+  "exit_code": 0,
+  "summary": "单一来源内整合：10 张表经契约统一列名和类型，共享键类型一致；每表一个文件、无重复键，日历覆盖全部下单日。明细依次连接订单、商品、卖家、上架、物流（全部 100% 覆盖）与评价（左连接，66.8%），每一步行数 15,639、商品金额 1,408,601.73 不变。支付先按订单汇总再连接；直接连接会多出 1,212 行、虚增 114,614.67 USD，已在审计中示范。pandas validate=many_to_one 独立核对 13/13。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "cffc581052da5ed6f9ebbf879b09c33204844733e654472363a5d783dd65058a"
+    },
+    {
+      "path": "evidence/DATA-09/verify_integration.py",
+      "sha256": "3b72942dfe07d7b22eddcc98afb76fd9158f06659da1aa34b81f1cfd020a5c19"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/data/integrate.py",
+      "sha256": "f6d10fdd6f353aa793c00677e7ad670be330931c4162de2f54d7379172f46e68"
+    },
+    {
+      "path": "reports/data/integration_audit.json",
+      "sha256": "a500de0a4f058fbfa8a163a3546656096c4715d3a03c8558953ee56f3f9b4296"
+    },
+    {
+      "path": "evidence/DATA-09/integrate_run.log",
+      "sha256": "727487f5070c39bffaeced5bdd24b54b55008039d14924269d7f1a9ff74a4ebe"
+    },
+    {
+      "path": "evidence/DATA-09/verification_run.log",
+      "sha256": "523aaa508fd5a7ccb1efcbeb4a03ad6f780e4de7dc433d94ac6c38d4793e9383"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "同一来源每张表只有一个文件，全部经 DATA-07 按契约统一为标准列名和类型；order_id、customer_id、product_id、seller_id、seller_product_id 在各表中类型一致。时间重叠与重复：日历覆盖全部下单日，评价不早于下单，订单、物流、评价、客户、商品键清洗后无重复。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "商品、卖家、上架、物流、评价属性的连接逐一记录右表键重复数（0）、左表覆盖率和连接前后行数与商品金额，全部不变（no_fact_inflation）；pandas merge(validate='many_to_one') 独立复核。支付是一对多（699 单两次支付），先按订单汇总再连接；直接连接的放大量写入审计作为反例。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "审计 cross_source 字段说明：只有一个来源，不需要跨来源集成，没有拼接任何外部用户 ID（D013）；来源内整合方式为按契约主外键连接、支付先汇总、评价左连接，并说明其适用性。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "集成输出（data/processed/integrated）被 Git 忽略。",
+    "审计文件由第二次运行写入（reused_existing_output=true，校验了已有输出的哈希）。",
+    "本证据替代同目录下 2026-11-10 首次证据（因版本键修订而失效，保留为历史）。"
+  ],
+  "steps": [
+    "认领 DATA-09（台账 78130842…）。",
+    "编写 integrate.py。第 1 次运行失败：DuckDB 把带时区时间戳取回 Python 需要 pytz（未安装），改为在 SQL 中转文本；第 2 次通过，重跑命中已有输出。两次都保留在 integrate_run.log。",
+    "verify_integration.py 用 pandas 独立复核 13/13。",
+    "2026-11-10 15:00 版本键修订：全新目录重建时发现 DATA-05 导入清单含本机绝对路径，清洗步骤用该清单哈希命名输出目录，换机器后目录名不同（数据内容相同）。clean.py 改为按内容指纹（源哈希、截止、导入版本、各文件哈希）生成键并去掉清单中的绝对路径，版本升为 clean-v2；删除本会话生成的 v1 派生目录后重跑整条链，并在另一路径从原始 ZIP 完整重建，16 个输出文件（含目录名）哈希完全一致（evidence/DATA-07/cross_path_rebuild_hashes_*.txt）。所有核对重跑通过。"
+  ],
+  "task_spec_sha256": "92c768a6e9279446d8751ffc8f6d589b0d34fd6bdf519a4aa6c1360f924bc864",
+  "performed_at": "2026-11-10T15:02:06.477261+08:00"
+}

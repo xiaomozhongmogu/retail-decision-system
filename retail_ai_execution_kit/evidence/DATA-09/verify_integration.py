@@ -10,7 +10,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 A = json.loads((ROOT / 'reports/data/integration_audit.json').read_text(encoding='utf-8'))
-clean = next((ROOT / 'data/processed/clean').glob('*-clean-v1'))
+clean = next((ROOT / 'data/processed/clean').glob('*-clean-v2'))
 integ = ROOT / 'data/processed/integrated' / A['key']
 T = {t: pd.read_parquet(clean / f'{t}.parquet') for t in ['orders', 'order_items', 'payments', 'products', 'sellers', 'seller_products', 'shipping', 'reviews', 'customers']}
 ok = []

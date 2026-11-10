@@ -21,7 +21,7 @@ from transactions import LABEL_MATURITY_DAYS, reconcile  # noqa: E402
 
 CUTOFF = '2026-11-08 00:00:00+00'
 contract = json.loads((ROOT / 'contracts/data_contract.json').read_text(encoding='utf-8'))
-clean = next((ROOT / 'data/processed/clean').glob('*-clean-v1'))
+clean = next((ROOT / 'data/processed/clean').glob('*-clean-v2'))
 cman = json.loads((clean / 'manifest.json').read_text(encoding='utf-8'))
 con = duckdb.connect()
 con.execute("SET timezone='UTC'")

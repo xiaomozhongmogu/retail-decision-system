@@ -54,3 +54,7 @@ PASSED label: every complete quarter (>= 12 weekly snapshots) has >= 100 positiv
 PASSED rule tests pass (tests/data) | 19 passed in 1.14s
 gate passed 10/10
 exit=0
+--- 2026-11-10T15:01:35+08:00 rerun after clean-v2 re-key
+$ .venv/bin/python tests/data/quality_gate.py
+gate passed 10/10
+exit=0

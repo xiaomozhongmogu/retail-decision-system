@@ -18,3 +18,11 @@ $ .venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/process
 2026-11-10T14:54:56+08:00
 {"row_count_preserved": true, "approval_lag_nulls_are_cancelled": true, "approval_lag_max_24h": true, "log1p_reduces_skew": true, "fit_on_full_period_refused": true, "train_fit_uses_only_train_rows": true, "rerun_reproducible": true}
 exit=0
+--- 2026-11-10T15:01:01+08:00 re-key run (clean-v2: content-fingerprint version keys, no absolute paths; data unchanged)
+$ .venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/f4f1d4c30d91d6a0-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json
+{"row_count_preserved": true, "approval_lag_nulls_are_cancelled": true, "approval_lag_max_24h": true, "log1p_reduces_skew": true, "fit_on_full_period_refused": true, "train_fit_uses_only_train_rows": true}
+exit=0
+--- 2026-11-10T15:01:47+08:00 second run on the new key to record reproducibility
+$ .venv/bin/python src/retail_bi/data/transform.py --integrated-dir data/processed/integrated/f4f1d4c30d91d6a0-integrate-v1 --out-root data/processed/transformed --audit reports/data/transform_audit.json
+{"row_count_preserved": true, "approval_lag_nulls_are_cancelled": true, "approval_lag_max_24h": true, "log1p_reduces_skew": true, "fit_on_full_period_refused": true, "train_fit_uses_only_train_rows": true, "rerun_reproducible": true}
+exit=0

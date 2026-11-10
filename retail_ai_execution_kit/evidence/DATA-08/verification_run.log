@@ -20,3 +20,7 @@ PASS no GBP / UCI semantics left in metrics
 PASS forbidden names listed 
 18/18 passed
 exit=0
+--- 2026-11-10T15:01:34+08:00 rerun after clean-v2 re-key
+$ .venv/bin/python evidence/DATA-08/verify_rules.py
+18/18 passed
+exit=0

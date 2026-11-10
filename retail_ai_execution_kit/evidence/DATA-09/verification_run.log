@@ -15,3 +15,7 @@ PASS every order line customer in master
 PASS audit all checks true 
 13/13 passed
 exit=0
+--- 2026-11-10T15:01:34+08:00 rerun after clean-v2 re-key
+$ .venv/bin/python evidence/DATA-09/verify_integration.py
+13/13 passed
+exit=0

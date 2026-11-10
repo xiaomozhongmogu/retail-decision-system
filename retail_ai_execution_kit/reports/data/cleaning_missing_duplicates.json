@@ -1,14 +1,14 @@
 {
   "task_id": "DATA-07",
   "generated_by": "src/retail_bi/data/clean.py",
-  "clean_key": "a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1",
+  "clean_key": "9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2",
   "identity": {
-    "layer_manifest_sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10",
+    "layer_content_sha256": "9f5ba7d8e03a46b4f375e324d0ff2aae9a3db3e75907f2bff0a40dcc575c0a77",
     "contract_version": "synthetic-transaction-v1",
     "contract_sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac",
-    "clean_version": "clean-v1"
+    "clean_version": "clean-v2"
   },
-  "reused_existing_output": true,
+  "reused_existing_output": false,
   "row_counts": {
     "customers": {
       "rows_in": 3647,
@@ -115,7 +115,7 @@
     "same_product_rule": "保留。同单重复商品是同一上架、每行价格不同的独立明细（DATA-06），不是重复导入；主键是 order_id+order_item_seq，不假定订单+商品唯一，也不把重复行合并成数量",
     "same_customer_same_day_orders": "保留。订单号不同、时间不同，是独立订单"
   },
-  "duplicate_import_guard": "输出目录键 = 输入层清单哈希前 16 位 + 契约版本 + clean-v1；同一输入重跑会校验已有输出哈希后直接返回，不重写；身份不一致或文件被改则拒绝；独占锁防并发写入",
+  "duplicate_import_guard": "输出目录键 = 输入层内容指纹前 16 位（源哈希、截止、导入版本、各文件哈希；不含机器相关的绝对路径）+ 契约版本 + clean-v2；同一输入重跑会校验已有输出哈希后直接返回，不重写；身份不一致或文件被改则拒绝；独占锁防并发写入",
   "type_conversion": {
     "string": "string",
     "integer": "int64",

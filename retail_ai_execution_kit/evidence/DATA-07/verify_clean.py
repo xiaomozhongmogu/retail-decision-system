@@ -15,7 +15,7 @@ import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'src/retail_bi/data'))
-from clean import build, parse  # noqa: E402
+from clean import build, layer_fingerprint, parse  # noqa: E402
 
 LAYER = ROOT / 'data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1'
 CONTRACT = ROOT / 'contracts/data_contract.json'
@@ -101,13 +101,13 @@ with tempfile.TemporaryDirectory() as tmp:
     fx, bad_order = make_fixture(root)
     out, qr = root / 'out', root / 'quarantine'
     tgt, man, reused = build(fx, CONTRACT, out, qr)
-    q_orders = rows(Path(man['quarantine']['dir']) / 'orders.csv')
-    q_cust = rows(Path(man['quarantine']['dir']) / 'customers.csv')
+    q_orders = rows(root / man['quarantine']['dir'] / 'orders.csv')
+    q_cust = rows(root / man['quarantine']['dir'] / 'customers.csv')
     check('fixture: bad timestamp quarantined with source line and reason',
           any(r['source_line'] == '6' and r['column'] == 'order_purchase_timestamp' and 'timestamp' in r['reason'] for r in q_orders))
     check('fixture: duplicate primary key quarantined', any('duplicate primary key' in r['reason'] for r in q_cust))
     check('fixture: dependent rows of the bad order quarantined as orphans, not silently dropped',
-          any(r['value'] == bad_order and 'orphan' in r['reason'] for r in rows(Path(man['quarantine']['dir']) / 'order_items.csv')))
+          any(r['value'] == bad_order and 'orphan' in r['reason'] for r in rows(root / man['quarantine']['dir'] / 'order_items.csv')))
     check('fixture: every input row is either output or quarantined',
           all(v['rows_in'] == v['rows_out'] + v['rows_quarantined'] for v in man['tables'].values())
           and man['tables']['orders']['rows_out'] == 9310 and man['tables']['customers']['rows_out'] == 3647)
@@ -127,11 +127,11 @@ with tempfile.TemporaryDirectory() as tmp:
     fx2, _ = make_fixture(root / 'b') if (root / 'b').mkdir() is None else (None, None)
     key_dir = root / 'out4'
     key_dir.mkdir()
-    lay_sha = sha(fx2 / 'manifest.json')
-    (key_dir / f'{lay_sha[:16]}-{C["contract_version"]}-clean-v1.lock').mkdir()
+    lay_sha = layer_fingerprint(json.loads((fx2 / 'manifest.json').read_text(encoding='utf-8')))
+    (key_dir / f'{lay_sha[:16]}-{C["contract_version"]}-clean-v2.lock').mkdir()
     check('fixture: active lock refused', reject(lambda: build(fx2, CONTRACT, key_dir, root / 'q4'), ''))
-    check('fixture: lock left in place for a person to inspect', (key_dir / f'{lay_sha[:16]}-{C["contract_version"]}-clean-v1.lock').is_dir())
+    check('fixture: lock left in place for a person to inspect', (key_dir / f'{lay_sha[:16]}-{C["contract_version"]}-clean-v2.lock').is_dir())
 
-check('real data untouched by fixture tests', sha(LAYER / 'manifest.json') == REPORT['identity']['layer_manifest_sha256'])
+check('real data untouched by fixture tests', layer_fingerprint(json.loads((LAYER / 'manifest.json').read_text(encoding='utf-8'))) == REPORT['identity']['layer_content_sha256'])
 print(f'{sum(ok)}/{len(ok)} passed')
 sys.exit(0 if all(ok) else 1)

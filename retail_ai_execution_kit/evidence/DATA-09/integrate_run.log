@@ -35,3 +35,7 @@ exit=0
 --- rerun
 {"naming_types_consistent": true, "calendar_covers_purchase_days": true, "no_duplicate_keys": true, "all_joins_full_coverage": true, "no_fact_inflation_on_any_join": true, "order_level_rows_and_amount_preserved": true, "naive_payment_join_would_inflate": true}
 exit=0
+--- 2026-11-10T15:01:01+08:00 re-key run (clean-v2: content-fingerprint version keys, no absolute paths; data unchanged)
+$ .venv/bin/python src/retail_bi/data/integrate.py --clean-dir data/processed/clean/9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2 --out-root data/processed/integrated --audit reports/data/integration_audit.json
+{"naming_types_consistent": true, "calendar_covers_purchase_days": true, "no_duplicate_keys": true, "all_joins_full_coverage": true, "no_fact_inflation_on_any_join": true, "order_level_rows_and_amount_preserved": true, "naive_payment_join_would_inflate": true}
+exit=0

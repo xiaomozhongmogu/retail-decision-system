@@ -613,7 +613,7 @@
         "文件哈希防重复导入；原始重复行是否删除有业务理由，不假定发票加商品唯一。"
       ],
       "evidence": [
-        "evidence/DATA-07/2026-11-10-clean.json"
+        "evidence/DATA-07/2026-11-10-clean-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -653,7 +653,7 @@
         "原始与清洗净额差异逐项解释；无法关联退款原单时按实际发生时间统计。"
       ],
       "evidence": [
-        "evidence/DATA-08/2026-11-10-transaction-rules.json"
+        "evidence/DATA-08/2026-11-10-transaction-rules-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -691,7 +691,7 @@
         "不需要跨来源集成时说明来源内整合方式与适用性，不人工拼接无关用户。"
       ],
       "evidence": [
-        "evidence/DATA-09/2026-11-10-integration.json"
+        "evidence/DATA-09/2026-11-10-integration-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -730,7 +730,7 @@
         "大数据抽样按用户保留完整历史，开发小样本明确标记；不以取文件前N行代替最终建模样本。"
       ],
       "evidence": [
-        "evidence/DATA-10/2026-11-10-transform.json"
+        "evidence/DATA-10/2026-11-10-transform-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -771,7 +771,7 @@
         "每条关键规则有输入例和期望输出，测试夹具与正式数据物理分开。"
       ],
       "evidence": [
-        "evidence/DATA-11/2026-11-10-quality-gate.json"
+        "evidence/DATA-11/2026-11-10-quality-gate-v2.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -784,8 +784,8 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
+      "status": "in_progress",
+      "owner": "claude-opus-5-5",
       "reviewer": null,
       "review_mode": null,
       "requirements": [

@@ -21,8 +21,8 @@ def run_clean(tmp_path, layer):
     return target, manifest, reused
 
 
-def qrows(manifest, table):
-    p = Path(manifest['quarantine']['dir']) / f'{table}.csv'
+def qrows(manifest, table, base):
+    p = base / manifest['quarantine']['dir'] / f'{table}.csv'
     with open(p, encoding='utf-8') as f:
         return list(csv.DictReader(f))
 
@@ -32,18 +32,18 @@ def test_unparseable_timestamp_goes_to_quarantine_with_line_and_reason(tmp_path)
     # input: order o2 has purchase time "2025-13-01T99:00:00"
     layer = write_layer(tmp_path, lambda t: t['orders'][1].update(order_purchase_timestamp='2025-13-01T99:00:00'))
     _, m, _ = run_clean(tmp_path, layer)
-    rows = qrows(m, 'orders')
+    rows = qrows(m, 'orders', tmp_path)
     # expected: one quarantine row for CSV line 3 (header=1, o1=2, o2=3); o2's item/payment/shipping become orphans
     assert [(r['source_line'], r['column']) for r in rows] == [('3', 'order_purchase_timestamp')]
     assert m['tables']['orders'] == {'rows_in': 4, 'rows_after_type_and_pk': 3, 'rows_out': 3, 'rows_quarantined': 1}
-    assert any(r['value'] == 'o2' and 'orphan' in r['reason'] for r in qrows(m, 'order_items'))
+    assert any(r['value'] == 'o2' and 'orphan' in r['reason'] for r in qrows(m, 'order_items', tmp_path))
     assert all(v['rows_in'] == v['rows_out'] + v['rows_quarantined'] for v in m['tables'].values())
 
 
 def test_duplicate_primary_key_is_quarantined(tmp_path):
     layer = write_layer(tmp_path, lambda t: t['customers'].append(dict(t['customers'][0])))
     _, m, _ = run_clean(tmp_path, layer)
-    assert [r['reason'] for r in qrows(m, 'customers')] == ['duplicate primary key']
+    assert [r['reason'] for r in qrows(m, 'customers', tmp_path)] == ['duplicate primary key']
     assert m['tables']['customers']['rows_out'] == 2
 
 
