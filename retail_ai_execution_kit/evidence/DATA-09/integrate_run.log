@@ -1,0 +1,37 @@
+$ .venv/bin/python src/retail_bi/data/integrate.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out-root data/processed/integrated --audit reports/data/integration_audit.json
+2026-11-10T14:52:56+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/integrate.py", line 186, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/integrate.py", line 179, in main
+    audit = build(a.clean_dir, a.out_root)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/integrate.py", line 70, in build
+    'orders_purchase_range': [str(x) for x in con.execute('SELECT min(purchase_ts), max(purchase_ts) FROM orders').fetchone()],
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.InvalidInputException: Invalid Input Error: Required module 'pytz' failed to import, due to the following Python exception:
+ModuleNotFoundError: No module named 'pytz'
+
+exit=1
+--- rerun
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/integrate.py", line 186, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/integrate.py", line 179, in main
+    audit = build(a.clean_dir, a.out_root)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/data/integrate.py", line 70, in build
+    'orders_purchase_range': [str(x) for x in con.execute('SELECT min(purchase_ts), max(purchase_ts) FROM orders').fetchone()],
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.InvalidInputException: Invalid Input Error: Required module 'pytz' failed to import, due to the following Python exception:
+ModuleNotFoundError: No module named 'pytz'
+
+exit=1
+--- attempt 2 (attempt 1: fetching TIMESTAMPTZ into Python needs pytz, which is not installed; now cast to VARCHAR in SQL)
+$ .venv/bin/python src/retail_bi/data/integrate.py --clean-dir data/processed/clean/a1a1b3d332fdc456-synthetic-transaction-v1-clean-v1 --out-root data/processed/integrated --audit reports/data/integration_audit.json
+2026-11-10T14:53:04+08:00
+{"naming_types_consistent": true, "calendar_covers_purchase_days": true, "no_duplicate_keys": true, "all_joins_full_coverage": true, "no_fact_inflation_on_any_join": true, "order_level_rows_and_amount_preserved": true, "naive_payment_join_would_inflate": true}
+exit=0
+--- rerun
+{"naming_types_consistent": true, "calendar_covers_purchase_days": true, "no_duplicate_keys": true, "all_joins_full_coverage": true, "no_fact_inflation_on_any_join": true, "order_level_rows_and_amount_preserved": true, "naive_payment_join_would_inflate": true}
+exit=0

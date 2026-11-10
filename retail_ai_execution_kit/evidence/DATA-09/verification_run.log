@@ -1,0 +1,17 @@
+$ .venv/bin/python evidence/DATA-09/verify_integration.py
+2026-11-10T14:53:21+08:00
+PASS join orders: many-to-one validated, rows and amount unchanged 
+PASS join products: many-to-one validated, rows and amount unchanged 
+PASS join sellers: many-to-one validated, rows and amount unchanged 
+PASS join seller_products: many-to-one validated, rows and amount unchanged 
+PASS join shipping: many-to-one validated, rows and amount unchanged 
+PASS join reviews: many-to-one validated, rows and amount unchanged 
+PASS integrated order_lines rows/amount = items 
+PASS integrated orders rows = orders, merch = items 
+PASS integrated orders payment = order value (exact) 
+PASS naive payments join inflates as reported 
+PASS review coverage as reported 
+PASS every order line customer in master 
+PASS audit all checks true 
+13/13 passed
+exit=0

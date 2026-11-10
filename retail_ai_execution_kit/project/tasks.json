@@ -666,10 +666,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C08",
         "Q01"
@@ -690,7 +690,9 @@
         "商品属性等关联须验证主键、覆盖率和连接前后行数金额，不产生事实放大。",
         "不需要跨来源集成时说明来源内整合方式与适用性，不人工拼接无关用户。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-09/2026-11-10-integration.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

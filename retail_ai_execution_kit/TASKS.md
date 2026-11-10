@@ -31,7 +31,7 @@
 | DATA-06 | 全量质量剖析与问题基线 | proposal | done | DATA-05 |
 | DATA-07 | 处理缺失、类型与重复导入 | proposal | done | DATA-06 |
 | DATA-08 | 统一购买、取消、退款与金额规则 | proposal | done | DATA-06 |
-| DATA-09 | 完成集成与冲突处理 | proposal | todo | DATA-07, DATA-08 |
+| DATA-09 | 完成集成与冲突处理 | proposal | done | DATA-07, DATA-08 |
 | DATA-10 | 设计归约、转换与时间特征 | proposal | todo | DATA-09 |
 | DATA-11 | 执行清洗后质量门槛 | proposal | todo | DATA-10 |
 | DATA-12 | 发布阶段一数据包 | proposal | todo | DATA-11 |
@@ -389,7 +389,7 @@
 
 ### DATA-09 完成集成与冲突处理
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C08, Q01。
 - 前置：DATA-07, DATA-08。
 - 允许修改：`src/retail_bi/data`, `reports/data`；另可写本任务证据/交接。
@@ -402,7 +402,7 @@
 2. 商品属性等关联须验证主键、覆盖率和连接前后行数金额，不产生事实放大。
 3. 不需要跨来源集成时说明来源内整合方式与适用性，不人工拼接无关用户。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-09/2026-11-10-integration.json
 
 ### DATA-10 设计归约、转换与时间特征
 

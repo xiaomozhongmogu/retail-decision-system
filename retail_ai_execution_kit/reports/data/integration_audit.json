@@ -1,0 +1,237 @@
+{
+  "task_id": "DATA-09",
+  "version": "integrate-v1",
+  "key": "a55d19147d1b0b3e-integrate-v1",
+  "clean_manifest_sha256": "a55d19147d1b0b3e4090dd6435d805cb0bbdb86615cc04eab000c36fe4cad78a",
+  "source_count": 1,
+  "naming_and_types": {
+    "rule": "10 张表全部经契约统一为标准列名与类型（DATA-07）；同一概念在不同表中名称一致",
+    "shared_columns": {
+      "order_id": {
+        "tables": [
+          "orders",
+          "order_items",
+          "payments",
+          "shipping",
+          "reviews"
+        ],
+        "types": [
+          "VARCHAR"
+        ]
+      },
+      "customer_id": {
+        "tables": [
+          "customers",
+          "orders"
+        ],
+        "types": [
+          "VARCHAR"
+        ]
+      },
+      "product_id": {
+        "tables": [
+          "products",
+          "seller_products",
+          "order_items"
+        ],
+        "types": [
+          "VARCHAR"
+        ]
+      },
+      "seller_id": {
+        "tables": [
+          "sellers",
+          "seller_products",
+          "order_items"
+        ],
+        "types": [
+          "VARCHAR"
+        ]
+      },
+      "seller_product_id": {
+        "tables": [
+          "seller_products",
+          "order_items"
+        ],
+        "types": [
+          "VARCHAR"
+        ]
+      }
+    },
+    "consistent": true
+  },
+  "time_and_duplicates": {
+    "files_per_table": 1,
+    "calendar_covers_purchase_days": true,
+    "orders_purchase_range": [
+      "2024-01-01 09:06:48+00",
+      "2026-11-07 22:15:48+00"
+    ],
+    "calendar_range": [
+      "2024-01-01",
+      "2026-11-07"
+    ],
+    "reviews_after_purchase": true,
+    "duplicate_keys_after_clean": {
+      "orders": 0,
+      "shipping": 0,
+      "reviews": 0,
+      "customers": 0,
+      "products": 0
+    }
+  },
+  "order_level": {
+    "orders_rows": 9311,
+    "orders_enriched_rows": 9311,
+    "merch_usd_items": "1408601.73",
+    "merch_usd_orders_enriched": "1408601.73",
+    "payment_equals_order_value": true,
+    "naive_items_join_payments": {
+      "rows": 16851,
+      "merch_usd": "1523216.40",
+      "inflated_rows": 1212,
+      "inflated_merch_usd": "114614.67",
+      "note": "直接把明细与支付连接，699 个两次支付订单的明细会翻倍；因此支付先按订单汇总再连接"
+    }
+  },
+  "joins": [
+    {
+      "join": "order_items ⨝ orders ON order_id",
+      "cardinality": "m:1",
+      "type": "JOIN",
+      "right_key_duplicates": 0,
+      "left_rows_matched": 15639,
+      "left_rows": 15639,
+      "coverage": 1.0,
+      "before": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "after": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "no_fact_inflation": true
+    },
+    {
+      "join": "order_items ⨝ products ON product_id",
+      "cardinality": "m:1",
+      "type": "JOIN",
+      "right_key_duplicates": 0,
+      "left_rows_matched": 15639,
+      "left_rows": 15639,
+      "coverage": 1.0,
+      "before": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "after": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "no_fact_inflation": true
+    },
+    {
+      "join": "order_items ⨝ sellers ON seller_id",
+      "cardinality": "m:1",
+      "type": "JOIN",
+      "right_key_duplicates": 0,
+      "left_rows_matched": 15639,
+      "left_rows": 15639,
+      "coverage": 1.0,
+      "before": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "after": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "no_fact_inflation": true
+    },
+    {
+      "join": "order_items ⨝ seller_products ON seller_product_id",
+      "cardinality": "m:1",
+      "type": "JOIN",
+      "right_key_duplicates": 0,
+      "left_rows_matched": 15639,
+      "left_rows": 15639,
+      "coverage": 1.0,
+      "before": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "after": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "no_fact_inflation": true
+    },
+    {
+      "join": "order_items ⨝ shipping ON order_id",
+      "cardinality": "m:1 (1:1 with orders)",
+      "type": "JOIN",
+      "right_key_duplicates": 0,
+      "left_rows_matched": 15639,
+      "left_rows": 15639,
+      "coverage": 1.0,
+      "before": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "after": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "no_fact_inflation": true
+    },
+    {
+      "join": "order_items ⨝ reviews ON order_id",
+      "cardinality": "m:0..1",
+      "type": "LEFT JOIN",
+      "right_key_duplicates": 0,
+      "left_rows_matched": 10450,
+      "left_rows": 15639,
+      "coverage": 0.668201,
+      "before": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "after": {
+        "rows": 15639,
+        "amount": "1408601.73"
+      },
+      "no_fact_inflation": true
+    },
+    {
+      "join": "order_lines ⨝ customers ON customer_id (coverage only; customer attributes join in the warehouse)",
+      "left_rows_matched": 15639,
+      "left_rows": 15639,
+      "coverage": 1.0
+    }
+  ],
+  "checks": {
+    "naming_types_consistent": true,
+    "calendar_covers_purchase_days": true,
+    "no_duplicate_keys": true,
+    "all_joins_full_coverage": true,
+    "no_fact_inflation_on_any_join": true,
+    "order_level_rows_and_amount_preserved": true,
+    "naive_payment_join_would_inflate": true
+  },
+  "cross_source": "只有一个来源，不需要跨来源集成；没有拼接任何外部用户 ID（D013）。来源内整合方式：按契约主外键连接，支付先按订单汇总，评价左连接（只有部分订单有评价）。",
+  "all_checks_passed": true,
+  "reused_existing_output": true,
+  "outputs": [
+    {
+      "path": "order_lines.parquet",
+      "sha256": "0b2bf1e9a1dcea0ddafcbad4c0452d65b397353250ccbe04df010351ac49eb8c",
+      "rows": 15639
+    },
+    {
+      "path": "orders.parquet",
+      "sha256": "f8631ae1f9b83ed1c89e98d6abbbb9bfbf34dfc8d28ded3381bdddc55f6f0e70",
+      "rows": 9311
+    }
+  ]
+}
