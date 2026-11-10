@@ -1,0 +1,36 @@
+$ .venv/bin/python src/retail_bi/data/ingest.py --source ../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip --raw-root data/raw/archives --work-root data/processed/engineering --cutoff 2026-11-08T00:00:00Z --expected-sha256 d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16
+2026-11-10T14:40:06+08:00
+exit=0
+manifest sha before=a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10 after=a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10
+$ .venv/bin/python evidence/DATA-05/verify_import.py
+PASS all 10 history tables equal independent source cutoff; strings and leading zeros preserved
+PASS observed views independently contain no post-cutoff actual dates or final order status
+PASS repeated import idempotent, manifest byte-identical
+PASS wrong checksum, naive cutoff, source-output overlap, empty scope, active lock and corrupt output rejected without overwrite
+PASS source ZIP unchanged; no credentials or external calls
+exit=0
+$ .venv/bin/python evidence/DATA-05/verify_against_contract.py
+2026-11-10T14:40:32+08:00
+PASS reports/data/source_manifest.json is byte-identical to layer manifest 
+PASS manifest source hash = contract source hash 
+PASS source ZIP hash unchanged 
+PASS read-only archive copy has same hash 
+PASS cutoff = contract as_of 
+PASS layer version = contract engineering version 
+PASS all 12 ZIP CSV members recorded with matching hash 12 members
+PASS all layer outputs match manifest hashes 12 files
+PASS customers: in scope, rows and columns match contract 
+PASS sellers: in scope, rows and columns match contract 
+PASS products: in scope, rows and columns match contract 
+PASS seller_products: in scope, rows and columns match contract 
+PASS orders: in scope, rows and columns match contract 
+PASS order_items: in scope, rows and columns match contract 
+PASS payments: in scope, rows and columns match contract 
+PASS shipping: in scope, rows and columns match contract 
+PASS reviews: in scope, rows and columns match contract 
+PASS calendar: in scope, rows and columns match contract 
+PASS import code reads no credentials or network 
+PASS no .env file in project 
+PASS raw and processed data are git-ignored 
+21/21 passed
+exit=0

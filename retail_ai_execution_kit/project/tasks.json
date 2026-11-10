@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "DATA-03/04 done (2026-11-10, claude-opus-5-5): synthetic transaction package frozen (D013) and contract synthetic-transaction-v1 approved per D012 user authorization, not teacher confirmation. Next: review DATA-05 import against the contract, then DATA-06 quality profile, DATA-08 purchase/amount rules (metrics.json still UCI draft).",
+  "state_note": "DATA-03/04/05 done (2026-11-10): synthetic transaction package frozen (D013), contract synthetic-transaction-v1 approved per D012 user authorization (not teacher), engineering import accepted. Next: DATA-06 quality profile, then DATA-07/08 (metrics.json still UCI draft).",
   "tasks": [
     {
       "id": "GOV-01",
@@ -506,10 +506,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "in_review",
-      "owner": "codex",
-      "reviewer": "codex engineering self-review",
-      "review_mode": "self_review",
+      "status": "done",
+      "owner": "claude-opus-5-5（2026-11-10 从已释放的 codex 接手复核；实现者 codex）",
+      "reviewer": "claude-opus-5-5（复核 codex 实现）",
+      "review_mode": "independent",
       "requirements": [
         "C03",
         "C07",
@@ -533,8 +533,10 @@
         "原始层只读保留，导入可重复执行；凭据不进入日志或仓库。",
         "采集受限时如实记录，不能用生成数据替代正式数据规模。"
       ],
-      "evidence": [],
-      "blocker": "Engineering import verified; awaiting DATA-03 selection and DATA-04 technical contract under D012 user-authorized eligibility assumption. Teacher reply is not a blocker. Partial evidence: evidence/DATA-05/2026-11-10-engineering-import.json.",
+      "evidence": [
+        "evidence/DATA-05/2026-11-10-acceptance-review.json"
+      ],
+      "blocker": null,
       "skip_reason": null,
       "execution_required": true
     },

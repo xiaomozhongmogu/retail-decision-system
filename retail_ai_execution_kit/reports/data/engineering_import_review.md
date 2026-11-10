@@ -27,3 +27,10 @@ USD金额含义、无数量限制、暂不生成有效购买/复购真值见 sou
 ## 下一步建议
 
 先准备合成数据字段字典、有效购买/退款/金额与时间窗口的候选口径，明确缺少状态变更与付款时间造成的不可验证边界，再推进质量报告和数仓。与修改原目录相比，版本化工作层能兼顾复现、接力和回滚，本阶段采用此必要导入机制；未扩展业务功能。
+
+## 补充：DATA-05 验收复核（2026-11-10，claude-opus-5-5）
+
+- DATA-03 已冻结研究范围（截止前全部历史，D013），DATA-04 已批准契约 `synthetic-transaction-v1`。本次复核 Codex 的实现，没有改动 `ingest.py`。
+- 实际重跑导入命令：退出码 0，命中已有版本目录，清单字节不变（幂等）；`verify_import.py` 5 组 PASS；新增 `evidence/DATA-05/verify_against_contract.py` 21/21 PASS（清单副本一致、源与存档哈希、12 个 ZIP 成员、10 张表行数与列对照契约、不读凭据、数据目录被 Git 忽略）。日志见 `evidence/DATA-05/review_run_2026-11-10_claude.log`。
+- 来源版本与日期：生成器运行 `simulation_run_20260721_003414_baseline_seed42`（生成于 2026-07-21），源 ZIP SHA-256 `d50ee64a…7a16`，本地副本由 DATA-01 于 2026-11-09 与官网下载件逐文件比对一致。
+- 清单中的 `status: engineering_verified_formal_approval_pending` 与 `policy.formal_gate` 是生成时的文字快照。修改它们需要提升导入版本并重建工作层，本次不做；当前批准状态以 `contracts/data_contract.json` 为准。上文“正式 contracts 仍为待切换的候选草案”同样是 2026-11-10 14:19 的快照。
