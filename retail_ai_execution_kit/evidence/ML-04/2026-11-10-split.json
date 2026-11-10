@@ -1,0 +1,89 @@
+{
+  "task_id": "ML-04",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), pandas 3.1.1, pytest 9.2.0",
+    "data_mode": "fully_synthetic; features-v1 on release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/model/split.py && .venv/bin/python -m pytest tests/model/test_split.py -v -p no:cacheprovider",
+  "exit_code": 0,
+  "summary": "冻结 split-v1：训练 2024-04-01 至 2025-08-25（74 周，51,250 行，7.14%），验证 2025-09-29 至 2026-02-23（22 周，17,432 行，7.66%），测试 2026-03-30 至 2026-10-05（28 周，18,002 行，7.10%），两段 5 周间隔使前一集合标签在下一集合首次预测前成熟；不完整的 2026-Q4 并入测试。泄漏审计列出 7 类风险与控制，并披露测试客户 74.4% 在训练中出现、样本不独立。测试 6/6。",
+  "inputs": [
+    {
+      "path": "docs/model_target.md",
+      "sha256": "fd9e05db0069e983f53c1c9db8df14a77c3449bec4cfbcc7b531821a3eec1704"
+    },
+    {
+      "path": "docs/feature_dictionary.md",
+      "sha256": "67c22084cfbc076ba48e72cd158dea4518da519be29ddf579c5e4fbf7e9433a2"
+    },
+    {
+      "path": "reports/model/feature_build.json",
+      "sha256": "7109464eced64a9cf13a0035407c134061f7a418a338757e02c7b65c9cb04077"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "5e348ba24dd1b759f31459049d9b410950db6d3e52fdeafb646d5b7c02ef8f65"
+    },
+    {
+      "path": "src/retail_bi/data/transform.py",
+      "sha256": "cccd4d792e6ed347510f83a9f3fba4d582d46cc004ec91a7513668190829329c"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/model/leakage_audit.md",
+      "sha256": "fe32e3ed07d97056b94dc96e341e97a8675d0d4db695686b9c02f9bbf2ff28a7"
+    },
+    {
+      "path": "src/retail_bi/model/split.py",
+      "sha256": "9103e1546ae719fe842070e1aa58baf5e0f3e0377cfa3ac596aa0dd7bdcfa00f"
+    },
+    {
+      "path": "tests/model/test_split.py",
+      "sha256": "4acc72ed06665027a698eedb34830fd4d1d3f7ea5dca60df71737f74c7c6b0a7"
+    },
+    {
+      "path": "evidence/ML-04/split_run.log",
+      "sha256": "76d7dce47758640e0631b60befc971c4916a2acb4550b3b8fb0dc57b25883a6b"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "训练、验证、测试按 as_of 先后排列且不重叠；训练最后标签 2025-09-25 成熟早于验证首个 as_of 2025-09-29，验证最后标签 2026-03-26 成熟早于测试首个 as_of 2026-03-30（测试断言）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "本数据为合成交易包（D013），UCI 月份示例不适用；实际覆盖先核验：成熟 as_of 为 2024-04-01 至 2026-10-05（132 周），据此采用每周快照与上述区间，2026-Q4 不完整季度并入测试（DATA-11 警告）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "拟合型预处理只在训练集拟合：测试中用训练集拟合 TrainOnlyFit 成功、用训练+验证拟合被拒绝；审计文档列出填补、标准化、截尾、分箱、聚类、特征选择均只用训练集。同一客户多快照与跨集合重叠（测试客户 74.4% 见于训练，训练集每客户约 19 个快照）已披露，评估按客户或时间分块。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "切分固定后不得因测试结果调整；变化需新版本与新的评估方案。"
+  ],
+  "steps": [
+    "认领 ML-04（台账 6ff44b20…）。",
+    "编写 split.py 生成切分清单；撰写泄漏审计；编写切分测试，6/6。"
+  ],
+  "task_spec_sha256": "28bb00d29ff2c44cbf52c5d390accb62a649d5ff24f525195fde6eda72f7c6f0",
+  "performed_at": "2026-11-10T15:36:44.867330+08:00"
+}

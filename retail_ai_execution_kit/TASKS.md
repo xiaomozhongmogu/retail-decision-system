@@ -54,7 +54,7 @@
 | ML-01 | 冻结预测目标与适用母体 | midterm | done | DATA-12, GOV-05 |
 | ML-02 | 实现按时点构建监督样本 | midterm | done | ML-01, DW-05 |
 | ML-03 | 实现历史特征与缺失策略 | midterm | done | ML-02 |
-| ML-04 | 固定时间切分并审计泄漏 | midterm | todo | ML-03 |
+| ML-04 | 固定时间切分并审计泄漏 | midterm | done | ML-03 |
 | ML-05 | 完成RFM规则与K-Means分群 | midterm | todo | EDA-05, ML-04 |
 | ML-06 | 训练规则与逻辑回归基线 | midterm | todo | ML-04 |
 | ML-07 | 训练并有限调优LightGBM | midterm | todo | ML-06 |
@@ -789,7 +789,7 @@
 
 ### ML-04 固定时间切分并审计泄漏
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C13, Q03, Q04。
 - 前置：ML-03。
 - 允许修改：`reports/model`, `src/retail_bi/model`, `tests/model`；另可写本任务证据/交接。
@@ -802,7 +802,7 @@
 2. UCI可采用2010-04至2011-03训练、2011-04至07验证、2011-08至11测试的月初快照，实际覆盖先核验。
 3. 归一化、编码、截尾、特征选择只拟合允许数据；同客多快照场景及非独立性披露。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-04/2026-11-10-split.json
 
 ### ML-05 完成RFM规则与K-Means分群
 

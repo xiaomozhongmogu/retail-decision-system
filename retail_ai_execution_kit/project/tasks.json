@@ -1573,10 +1573,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C13",
         "Q03",
@@ -1599,7 +1599,9 @@
         "UCI可采用2010-04至2011-03训练、2011-04至07验证、2011-08至11测试的月初快照，实际覆盖先核验。",
         "归一化、编码、截尾、特征选择只拟合允许数据；同客多快照场景及非独立性披露。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-04/2026-11-10-split.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

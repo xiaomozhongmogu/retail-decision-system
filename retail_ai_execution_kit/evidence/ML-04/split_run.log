@@ -1,0 +1,12 @@
+$ .venv/bin/python src/retail_bi/model/split.py && .venv/bin/python -m pytest tests/model/test_split.py -v -p no:cacheprovider
+2026-11-10T15:36:25+08:00
+
+tests/model/test_split.py::test_sets_are_time_ordered_and_disjoint PASSED [ 16%]
+tests/model/test_split.py::test_labels_of_each_set_mature_before_next_set_predicts PASSED [ 33%]
+tests/model/test_split.py::test_partial_quarter_is_inside_test_not_alone PASSED [ 50%]
+tests/model/test_split.py::test_embargo_rows_excluded_from_all_sets PASSED [ 66%]
+tests/model/test_split.py::test_fitting_preprocessing_on_validation_rows_is_refused PASSED [ 83%]
+tests/model/test_split.py::test_manifest_counts_match_data PASSED        [100%]
+
+============================== 6 passed in 0.42s ===============================
+exit=0

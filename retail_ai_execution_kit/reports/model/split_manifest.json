@@ -1,0 +1,77 @@
+{
+  "task_id": "ML-04",
+  "split_version": "split-v1",
+  "target": "target-v1",
+  "feature_version": "features-v1",
+  "feature_file_sha256": "f409d9a9145e6326f110548613f00a0ae8255a98f58f906a766309ef1bfb5408",
+  "unit": "customer x weekly as_of",
+  "embargo_weeks": 5,
+  "label_maturity_days": 31,
+  "sets": {
+    "train": {
+      "as_of_range": [
+        "2024-04-01",
+        "2025-08-25"
+      ],
+      "as_of_points": 74,
+      "rows": 51250,
+      "customers": 2733,
+      "positives": 3661,
+      "positive_rate": 0.0714
+    },
+    "validation": {
+      "as_of_range": [
+        "2025-09-29",
+        "2026-02-23"
+      ],
+      "as_of_points": 22,
+      "rows": 17432,
+      "customers": 1667,
+      "positives": 1335,
+      "positive_rate": 0.0766
+    },
+    "test": {
+      "as_of_range": [
+        "2026-03-30",
+        "2026-10-05"
+      ],
+      "as_of_points": 28,
+      "rows": 18002,
+      "customers": 1661,
+      "positives": 1278,
+      "positive_rate": 0.071
+    },
+    "embargo": {
+      "as_of_range": null,
+      "as_of_points": 8,
+      "rows": 5557,
+      "customers": 1492,
+      "positives": 344,
+      "positive_rate": 0.0619
+    }
+  },
+  "order_checks": {
+    "train_labels_mature_before_validation": {
+      "last_label_matures": "2025-09-25",
+      "next_first_as_of": "2025-09-29",
+      "ok": true
+    },
+    "validation_labels_mature_before_test": {
+      "last_label_matures": "2026-03-26",
+      "next_first_as_of": "2026-03-30",
+      "ok": true
+    }
+  },
+  "customer_overlap": {
+    "train_validation": 1314,
+    "train_test": 1235,
+    "validation_test": 885,
+    "test_customers_seen_in_train_share": 0.7435
+  },
+  "notes": [
+    "同一客户在多个 as_of 和多个集合中出现：样本不独立，评估区间估计按客户或时间分块（ML-09）",
+    "测试集包含不完整的 2026-Q4（仅 2026-10-05 一个成熟 as_of），不单独评估",
+    "验收条件中的 UCI 月份示例不适用于本数据（合成交易包，D013）",
+    "拟合型预处理（填补中位数、标准化、截尾、分箱、聚类、特征选择）只在 train 拟合；验证/测试只调用 transform"
+  ]
+}
