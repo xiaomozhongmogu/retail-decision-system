@@ -1,0 +1,94 @@
+{
+  "task_id": "DW-09",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pytest 9.2.0",
+    "data_mode": "published build wh-db316daf8021 (read-only) + hand-made fixture warehouse in pytest tmp_path",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python tests/warehouse/recon.py && .venv/bin/python -m pytest tests/warehouse -v -p no:cacheprovider",
+  "exit_code": 0,
+  "summary": "数仓约束与对账：32 项查询式检查（维度与事实键唯一、10 条外键无孤儿、6 个关键字段非空、星型连接不膨胀、订单头与明细粒度一致、4 张 DWS 粒度唯一、DWS=DWD 有效口径）在已发布构建上全部通过；原始 ZIP→ADS 10 步对账链逐项相符。pytest 6/6：真实构建通过；不带约束的夹具数仓分别注入重复维键、空日期键、错误粒度、孤儿外键后，对应检查失败。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "sql/dwd.sql",
+      "sha256": "aa3d90f95897472c2ff46eea241fdde54038a404369586227d2fe9e93b507dd8"
+    },
+    {
+      "path": "sql/dws.sql",
+      "sha256": "abbcf09295693c12ee8760c127138a5a0c10be941bd751d01bde4d0ff6e9bdb2"
+    },
+    {
+      "path": "src/retail_bi/warehouse/ods.py",
+      "sha256": "748da3e306af993e1502d6918609391453dd7a6288b31b4225a9e969fedfa5fc"
+    },
+    {
+      "path": "src/retail_bi/warehouse/dwd.py",
+      "sha256": "5aee28a0fd63e4318788e7671ebca6d03c655873277568a16306b87e19b6d4c1"
+    },
+    {
+      "path": "tests/data/conftest.py",
+      "sha256": "b6d85a704c5c6d392734ff5f6ab0c0159b5add33dee730d015db2817e0702f2f"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "cffc581052da5ed6f9ebbf879b09c33204844733e654472363a5d783dd65058a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "tests/warehouse/test_reconciliation.py",
+      "sha256": "370b34ee60e9ee83b519d6390ad47893b58fe87b0953fed9017b73e03ab3f01f"
+    },
+    {
+      "path": "tests/warehouse/recon.py",
+      "sha256": "10a821b6dd08c9a8324c4bad16a4fa96fa51ed62887e2a3e179a3a8b709937e1"
+    },
+    {
+      "path": "reports/warehouse/reconciliation.json",
+      "sha256": "85e9fd49b69dcc12fe1efff9b4dec089f13040fd74f428744332109b5ceb0053"
+    },
+    {
+      "path": "evidence/DW-09/recon_run.log",
+      "sha256": "674fdfb5637fd077c48f597c1eeae9b1c7f7891674f8b6ed47896250f1c67915"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "维度键（日期、地理、客户、商品、卖家）与事实主键唯一；孤儿策略：外键孤儿在清洗阶段隔离，DWD 中任何孤儿都判失败，10 条外键检查为 0；明细与 5 个维度及物流连接后行数 15,639、金额 1,408,601.73 不变；订单头的明细行数与金额逐单等于明细汇总。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "对账链：ZIP 10,000 单 / 1,502,504.01 → 截止后排除 689 单 / 93,902.28 → 历史 9,311 / 1,408,601.73 → 清洗隔离 0 → DWD 9,311 / 1,408,601.73 → 取消 194 / 27,778.26 与截止后才审批 4 / 662.24 排除 → 有效 9,113 / 1,380,161.23 → DWS 与 ADS 相同；每一步差额都有归因。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "测试从手工夹具构建小数仓并复制为无约束副本：插入重复客户维度行时 unique_key:dim_customer 与 star_join_no_inflation 失败；把订单日期键置空时 not_null 失败；复制一条明细并复制一行 DWS 时 fact_order_line 唯一键、订单头与明细粒度、DWS 粒度检查失败；改出孤儿商品键时孤儿检查失败。干净夹具与真实构建全部通过。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "夹具 DWS 以 2025-02-05 为 as_of 构建，与真实截止不同，因此夹具测试忽略“DWS=DWD 有效口径”这一项；该项在真实构建上检查通过。"
+  ],
+  "steps": [
+    "认领 DW-09（台账 1d36aa38…）。",
+    "编写 recon.py（查询式检查与对账链），在已发布构建上 32/32、对账通过；把清洗隔离数改为读取 DATA-07 报告。",
+    "编写 test_reconciliation.py 注入故障测试，6/6。"
+  ],
+  "task_spec_sha256": "79de20b2f6df3505eae961b5c880b5a6dc893598f2309176248ebfa80a8495a4",
+  "performed_at": "2026-11-10T15:25:05.547670+08:00"
+}

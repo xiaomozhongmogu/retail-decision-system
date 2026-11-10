@@ -1,0 +1,16 @@
+$ .venv/bin/python tests/warehouse/recon.py && .venv/bin/python -m pytest tests/warehouse -v -p no:cacheprovider
+2026-11-10T15:24:42+08:00
+checks 32 / 32 chain True
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collecting ... collected 6 items
+
+tests/warehouse/test_reconciliation.py::test_published_build_passes_all_checks_and_reconciles PASSED [ 16%]
+tests/warehouse/test_reconciliation.py::test_fixture_is_clean PASSED     [ 33%]
+tests/warehouse/test_reconciliation.py::test_duplicate_dimension_key_fails PASSED [ 50%]
+tests/warehouse/test_reconciliation.py::test_null_date_key_fails PASSED  [ 66%]
+tests/warehouse/test_reconciliation.py::test_wrong_grain_fails PASSED    [ 83%]
+tests/warehouse/test_reconciliation.py::test_orphan_fact_row_fails PASSED [100%]
+
+============================== 6 passed in 1.58s ===============================
+exit=0

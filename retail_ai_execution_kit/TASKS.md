@@ -43,7 +43,7 @@
 | DW-06 | 实现ADS与指标语义 | midterm | done | DW-04, DW-05 |
 | DW-07 | 实现可重跑ETL编排 | midterm | done | DW-06, GOV-07 |
 | DW-08 | 完成OLAP标准查询集 | midterm | done | DW-06 |
-| DW-09 | 校验数仓约束和对账 | midterm | todo | DW-07, DW-08 |
+| DW-09 | 校验数仓约束和对账 | midterm | done | DW-07, DW-08 |
 | DW-10 | 发布只读查询快照 | midterm | todo | DW-09 |
 | EDA-01 | 完成初步描述性统计 | proposal | todo | DATA-12 |
 | EDA-02 | 分析经营趋势和结构 | midterm | todo | DW-08, EDA-01 |
@@ -596,7 +596,7 @@
 
 ### DW-09 校验数仓约束和对账
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C09, U02, Q02。
 - 前置：DW-07, DW-08。
 - 允许修改：`tests/warehouse`, `reports/warehouse`；另可写本任务证据/交接。
@@ -609,7 +609,7 @@
 2. 原始→隔离/排除/纳入→事实→聚合差异可解释。
 3. 故意注入重复维键、空日期和错误粒度夹具应使检查失败。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-09/2026-11-10-reconciliation.json
 
 ### DW-10 发布只读查询快照
 
