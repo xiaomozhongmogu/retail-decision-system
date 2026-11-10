@@ -1,0 +1,96 @@
+{
+  "task_id": "DW-10",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/warehouse/release.py publish; .venv/bin/python evidence/DW-10/verify_runtime.py",
+  "exit_code": 0,
+  "summary": "发布只读快照 wh-db316daf8021（95,694,848 字节，SHA-256 207ead6b…，文件权限 0444），current.json 记录身份与上一版本。runtime.py 是应用与 AI 的唯一查询入口：只读连接、只允许 6 个 ADS 视图、按版本缓存、打开前核对哈希。核对 12/12：写入被拒、非白名单表被拒、非法列名被拒、空结果为 empty、读者持有连接时离线构建成功且发布文件不变、同版本缓存命中、新版本缓存失效、发布中断不影响旧版本、哈希不符拒绝、回滚生效。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/pipeline.py",
+      "sha256": "6022f0a50318568f97f346e93c28312f8f5e2afdfc4e5549117702c62d631abf"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "evidence/DW-10/verify_runtime.py",
+      "sha256": "52dba3bd3f573e1fa81d64b77e04d600deaaaa212d1dd261a343d2a96250d8a8"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/warehouse/published_snapshot.json",
+      "sha256": "16945794f960c0891b3aa3a44f0c00216919cbdf2d6780b76067fc246999743c"
+    },
+    {
+      "path": "docs/query_runtime.md",
+      "sha256": "4b4a589300fc0bc8d811c3ac55ca4cdea231e574ecb11d1dbfd38bf90ecf36d9"
+    },
+    {
+      "path": "src/retail_bi/warehouse/release.py",
+      "sha256": "d589368f56e526b93da3ad8737b42e0d52c0e9805ae925dc94e1202c878b01b9"
+    },
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "evidence/DW-10/release_run.log",
+      "sha256": "2e090af20ac90bb70a4c9ddc49bf52f8ff048ecbdb842d9cfc91fee014ba0dec"
+    },
+    {
+      "path": "evidence/DW-10/verification_run.log",
+      "sha256": "07e6b66d93473ae3a2528e123b3827296a3369e2dd889050191684a09447e004"
+    },
+    {
+      "path": "evidence/DW-10/etl_while_reading.json",
+      "sha256": "eee320a82083073beca490de8d222ad8e5df9484b4839633ed8cf6aadbca1489"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "离线构建只写 warehouse/builds，发布只写 warehouse/releases，均为命令行进程；应用经 runtime 以 read_only=True 读取 current.json 指向的版本化发布文件。实测：读者持有连接时 pipeline --force 构建成功，读者查询不受影响，发布文件哈希不变。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "只读：在运行时连接上建表被拒（InvalidInputException），发布文件权限 0444。允许视图：ads.kpi_monthly 返回 2025-07 订单 272，dwd.fact_order 返回 unsupported，带分号的列名返回 invalid_argument。缓存失效：同一版本第二次查询命中缓存；发布 v2 后同一查询未命中并返回 dataset_version=v2。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "published_snapshot.json 记录发布文件路径、重算 SHA-256、字节数、权限与指针一致性，以及恢复方法（rollback；或重建并重新发布）。在临时发布目录中模拟指针切换前失败：current.json 仍为 v2，查询正常，无临时复制文件残留；篡改指针哈希后拒绝打开；rollback 切回 v1。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "发布与回滚场景在临时目录中测试，正式发布目录只读取。",
+    "DuckDB 文件字节在两次构建间可能不同，版本一致性以内容检查为准。"
+  ],
+  "steps": [
+    "认领 DW-10（台账 13981e57…）。",
+    "编写 release.py 与 runtime.py，发布当前构建。",
+    "verify_runtime.py 12/12 一次通过。",
+    "撰写 docs/query_runtime.md，生成 published_snapshot.json。"
+  ],
+  "task_spec_sha256": "7ac614fd610fc1d1fecfd6667cf34a2be9604281f64f13594919f8e9d1068f1c",
+  "performed_at": "2026-11-10T15:27:15.735784+08:00"
+}

@@ -1,0 +1,20 @@
+$ .venv/bin/python src/retail_bi/warehouse/release.py publish
+2026-11-10T15:26:03+08:00
+{
+  "version": "wh-db316daf8021",
+  "file": "wh-db316daf8021.duckdb",
+  "sha256": "207ead6b6cbcb9dc6b90243bbd8a35bfe00b4d510601df33f62a259af51be0ec",
+  "bytes": 95694848,
+  "published_at": "2026-11-10T07:26:04.123293+00:00",
+  "source_build": "wh-db316daf8021.duckdb",
+  "previous": null,
+  "allowed_views": [
+    "ads.cohort_retention",
+    "ads.kpi_daily",
+    "ads.kpi_monthly",
+    "ads.lifecycle_mix_weekly",
+    "ads.repurchase_rate_weekly",
+    "ads.sales_month_category_region"
+  ]
+}
+exit=0

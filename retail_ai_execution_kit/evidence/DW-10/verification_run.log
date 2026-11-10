@@ -1,0 +1,16 @@
+$ .venv/bin/python evidence/DW-10/verify_runtime.py
+2026-11-10T15:26:30+08:00
+PASS runtime connection is read-only (write refused) InvalidInputException
+PASS release file is read-only on disk (0444) 
+PASS allowed view answers with dataset_version and live mode [['2025-07', '272']]
+PASS non-allowed table refused as unsupported unknown_field
+PASS bad column text refused (no SQL injection path) invalid_argument
+PASS valid query with no rows returns status empty 
+PASS offline build succeeds while a reader is open; reader unaffected; release unchanged ["dws", "ok", 0.079], ["snapshot", "ok", 0.951], ["ads", "ok", 0.026], ["checks", "ok", 0.034], ["publish", "ok", 0.0]]}
+PASS repeat query served from cache within one release CacheInfo(hits=1, misses=1, maxsize=256, currsize=1)
+PASS new release invalidates cached results (version in cache key) CacheInfo(hits=1, misses=2, maxsize=256, currsize=2)
+PASS interrupted publish: pointer still on v2, queries still work, no temp copy left v2
+PASS identity check: a release whose hash does not match the pointer is refused 
+PASS rollback switches readers back to the previous release 
+12/12 passed
+exit=0

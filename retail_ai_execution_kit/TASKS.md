@@ -44,7 +44,7 @@
 | DW-07 | 实现可重跑ETL编排 | midterm | done | DW-06, GOV-07 |
 | DW-08 | 完成OLAP标准查询集 | midterm | done | DW-06 |
 | DW-09 | 校验数仓约束和对账 | midterm | done | DW-07, DW-08 |
-| DW-10 | 发布只读查询快照 | midterm | todo | DW-09 |
+| DW-10 | 发布只读查询快照 | midterm | done | DW-09 |
 | EDA-01 | 完成初步描述性统计 | proposal | todo | DATA-12 |
 | EDA-02 | 分析经营趋势和结构 | midterm | todo | DW-08, EDA-01 |
 | EDA-03 | 构建首观测购买cohort与留存 | midterm | todo | DW-06 |
@@ -613,7 +613,7 @@
 
 ### DW-10 发布只读查询快照
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C20, U02, Q06。
 - 前置：DW-09。
 - 允许修改：`reports/warehouse`, `docs`, `src/retail_bi/warehouse`；另可写本任务证据/交接。
@@ -626,7 +626,7 @@
 2. 只读访问、允许视图和缓存失效机制实际验证。
 3. 记录数据库文件身份和恢复方法，发布中断不破坏上一可用版本。
 
-证据：尚无已登记验收证据。
+证据：evidence/DW-10/2026-11-10-release.json
 
 
 ## EDA — 业务分析

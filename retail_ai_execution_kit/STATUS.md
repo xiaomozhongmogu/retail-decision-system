@@ -2,14 +2,13 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：DATA-01..12 done (2026-11-10): stage-1 synthetic data package released (reports/data/dataset_release.json, docs/data_readme.md), per D012 user authorization (no teacher confirmation). Next: DW-01 warehouse design, then DW-02..; EDA-01; UI-01; AI-01; DOC-04.
+- 项目状态说明：DATA-01..12 and DW-01..10 done (2026-11-10, claude-opus-5-5): synthetic data (D012/D013, no teacher confirmation), warehouse release wh-db316daf8021 read-only via runtime.py. Next: EDA-01..06, ML-01.., UI-01.., AI-01..; DOC-04.
 - 正式主数据：合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认。
 - 协调者：claude-opus-5-5（Claude Code 桌面端，对话“电商项目接力｜说继续即可”）；2026-11-10 14:30 起按用户“继续”接手，接手台账 fbff0147…。
-- 已选 85 项；done 27 项；blocked 1 项；其他未验收 57 项。
+- 已选 85 项；done 28 项；blocked 1 项；其他未验收 56 项。
 
 ## 可认领的下一步
 
-- DW-10：发布只读查询快照
 - EDA-01：完成初步描述性统计
 - EDA-03：构建首观测购买cohort与留存
 - EDA-05：实现互斥生命周期规则
@@ -27,8 +26,8 @@
 | 关卡 | 已验收/需验收任务 | 状态 |
 | --- | --- | --- |
 | proposal-ready | 18/23 | 未就绪 |
-| midterm-ready | 27/56 | 未就绪 |
-| final-ready | 27/84 | 未就绪 |
-| final-submitted | 27/85 | 未就绪 |
+| midterm-ready | 28/56 | 未就绪 |
+| final-ready | 28/84 | 未就绪 |
+| final-submitted | 28/85 | 未就绪 |
 
 状态勾选与结构校验不等于已满足教师要求。通过就绪关卡也不等于已提交或已答辩；最终以真实回执和实际结果记录。
