@@ -1,0 +1,84 @@
+{
+  "task_id": "EDA-05",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic; release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/analysis/lifecycle.py",
+  "exit_code": 0,
+  "summary": "lifecycle-v1：按优先级的 7 个互斥状态（匿名、尚无购买、观察期不足、新客、活跃、预警、沉睡），阈值 30/90/180 天以购买间隔分布（P25 70、中位数 172 天）和业务约定说明，独立于聚类与生成器标签。检查：13 个边界用例通过；495,992 个客户×as_of 每行恰好一个状态；与数仓快照 331,649 行完全一致。关键事实：各状态未来 180 天复购率都约 35%，状态只描述距上次购买时间，不代表流失。",
+  "inputs": [
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "reports/warehouse/snapshot_contract.json",
+      "sha256": "451076a9698a59a42e9fd913ba0069e98139f2416e219ce2f1cb61509f1521f9"
+    },
+    {
+      "path": "sql/customer_snapshot.sql",
+      "sha256": "b8708facf3773fec24eee828e8223fdee910943aee344f6200a82621cae86b29"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/lifecycle_rules.md",
+      "sha256": "b3b50509e1f88f9a28dbcb4c01ade3e6fd23cf260fe7f044538967e3b4f0eff3"
+    },
+    {
+      "path": "reports/analysis/lifecycle_checks.json",
+      "sha256": "8d3af8bc480ef13b14481048b00f319871ea631fcdfe1d7e22e603dbbcbabe68"
+    },
+    {
+      "path": "src/retail_bi/analysis/lifecycle.py",
+      "sha256": "bba3486d362b22c5b378d92a79638724a3e125015433c66e632eded1a4671819"
+    },
+    {
+      "path": "evidence/EDA-05/lifecycle_run.log",
+      "sha256": "0317d2ecad0a6215027b4972c588678840fefe7999a82bdd87a78eb14922b193"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "docs/lifecycle_rules.md 第 1 节以优先级表定义匿名、尚无购买、观察期不足三种未知状态以及新客、活跃、预警、沉睡，每个状态有左闭右开时间边界。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 2 节用实测购买间隔分位数（70/172/323/501 天）和业务假设说明 30/90/180 天阈值，并如实写出各状态未来 180 天复购率几乎相同；规则只用购买时间，不依赖 K-Means 编号或生成器标签。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "边界用例覆盖恰在 30/90/180 天及相差 1 秒、匿名（优先级最高）、尚无购买、观察期不足（含起点前购买的演示）与 700 天未购买，全部通过；全量 495,992 行每行恰好一个状态，覆盖全部客户与 as_of；与数仓快照逐行一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "数仓快照与 ADS 视图仍标注 lifecycle-default-v0（阈值相同、结果一致），不含三种未知状态。",
+    "边界测试写在模块内并记录于检查 JSON（任务写入范围不含 tests 目录）。"
+  ],
+  "steps": [
+    "认领 EDA-05（台账 da7ba56c…→74defe3a…）。",
+    "查询间隔分位数与各距今区间的未来复购率。",
+    "编写 lifecycle.py。第 1 次：SQL 字符串替换产生错误列名；第 2 次：一个边界用例的预期写错（160 天应为预警）；修正后通过。",
+    "撰写 docs/lifecycle_rules.md。"
+  ],
+  "task_spec_sha256": "73ee84bbe1148e9abc60118177f76dc323ec911139b6c7c242ed5d91059091d9",
+  "performed_at": "2026-11-10T21:14:04.732408+08:00"
+}

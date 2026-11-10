@@ -1376,10 +1376,10 @@
       "category": "EDA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "U01",
         "U03",
@@ -1403,7 +1403,9 @@
         "最近购买间隔阈值由分布和业务假设说明，规则独立于K-Means编号。",
         "测试边界时刻、匿名客户、首次观测不足和长期无购买用户；规则不重叠且覆盖母体。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/EDA-05/2026-11-10-lifecycle.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

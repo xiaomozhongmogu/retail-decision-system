@@ -49,7 +49,7 @@
 | EDA-02 | 分析经营趋势和结构 | midterm | todo | DW-08, EDA-01 |
 | EDA-03 | 构建首观测购买cohort与留存 | midterm | todo | DW-06 |
 | EDA-04 | 完成经营诊断与证据分解 | midterm | todo | EDA-02 |
-| EDA-05 | 实现互斥生命周期规则 | midterm | todo | DW-05, GOV-05 |
+| EDA-05 | 实现互斥生命周期规则 | midterm | done | DW-05, GOV-05 |
 | EDA-06 | 形成面向决策的分析结论 | midterm | todo | EDA-03, EDA-04, EDA-05 |
 | ML-01 | 冻结预测目标与适用母体 | midterm | done | DATA-12, GOV-05 |
 | ML-02 | 实现按时点构建监督样本 | midterm | done | ML-01, DW-05 |
@@ -701,7 +701,7 @@
 
 ### EDA-05 实现互斥生命周期规则
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：U01, U03, Q01。
 - 前置：DW-05, GOV-05。
 - 允许修改：`docs`, `src/retail_bi/analysis`, `reports/analysis`；另可写本任务证据/交接。
@@ -714,7 +714,7 @@
 2. 最近购买间隔阈值由分布和业务假设说明，规则独立于K-Means编号。
 3. 测试边界时刻、匿名客户、首次观测不足和长期无购买用户；规则不重叠且覆盖母体。
 
-证据：尚无已登记验收证据。
+证据：evidence/EDA-05/2026-11-10-lifecycle.json
 
 ### EDA-06 形成面向决策的分析结论
 

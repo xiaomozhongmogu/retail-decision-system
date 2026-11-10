@@ -1,0 +1,25 @@
+$ .venv/bin/python src/retail_bi/analysis/lifecycle.py
+2026-11-10T21:13:03+08:00
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/analysis/lifecycle.py", line 126, in <module>
+    main()
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/src/retail_bi/analysis/lifecycle.py", line 82, in main
+    full = con.execute(f"""WITH g AS (SELECT CAST(as_of AS TIMESTAMPTZ) AS as_of FROM g_df)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.BinderException: Binder Error: Table "o" does not have a column named "o"
+
+Candidate bindings: : "order_id", "order_status", "order_value_usd", "approved_ts", "carrier_handoff_ts"
+
+LINE 5: ... JOIN dwd.fact_order o ON o.customer_id = c.customer_id AND o.o.approved_ts < g.as_of AND o.purchase_ts < g.as_of
+                                                                       ^^^^^^^^^^^^^^^
+exit=1
+--- run 2 (run 1: SQL join condition built by string replace produced 'o.o.approved_ts'; written explicitly)
+2026-11-10T21:13:12+08:00
+{"coverage": {"customer_x_as_of_rows": 495992, "as_of_points": 136, "customers": 3647, "state_counts": {"unknown_no_purchase": 164343, "dormant": 163480, "active": 83180, "at_risk": 73170, "new": 11819}, "every_row_has_exactly_one_state": true}, "agreement_with_warehouse_snapshot": {"rows_compared": 331649, "agree": 331649, "note": "数仓快照只含有可见购买的客户，其 lifecycle_state 用相同阈值（默认值），与 lifecycle-v1 一致"}, "all_checks_passed": false}
+[{'case': 'dormant needs 180 days of history -> unknown_short_history', 'expected': 'unknown_short_history', 'got': 'at_risk', 'passed': False}]
+exit=1
+--- run 3 (run 2: one boundary case had a wrong expectation — recency 160 days with 161 days of history is at_risk; replaced, and a case with a pre-start purchase shows the guard)
+2026-11-10T21:13:27+08:00
+{"coverage": {"customer_x_as_of_rows": 495992, "as_of_points": 136, "customers": 3647, "state_counts": {"unknown_no_purchase": 164343, "dormant": 163480, "active": 83180, "at_risk": 73170, "new": 11819}, "every_row_has_exactly_one_state": true}, "agreement_with_warehouse_snapshot": {"rows_compared":
+[]
+exit=0
