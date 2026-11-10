@@ -1,0 +1,15 @@
+$ .venv/bin/python evidence/EDA-02/verify_trends.py
+2026-11-10T21:24:43+08:00
+PASS 2024 Jan-Oct orders/merch/buyers recomputed 
+PASS 2025 Jan-Oct orders/merch/buyers recomputed 
+PASS 2026 Jan-Oct orders/merch/buyers recomputed 
+PASS volume x price parts add up to the total change 
+PASS category changes add up to the total change 
+PASS region changes add up to the total change 
+PASS no percentage of a near-zero total is produced 
+PASS growth status rule: ok only with base >= 30 orders 
+PASS incomplete month 2026-11 excluded from the comparable period 
+PASS refund and non-merchandise rules stated 
+PASS at least 3 findings, each naming a stored query ['ytd_by_year', 'ytd_by_year', 'category_ytd', 'seasonality']
+11/11 passed
+exit=0

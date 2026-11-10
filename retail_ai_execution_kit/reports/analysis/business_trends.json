@@ -1,0 +1,955 @@
+{
+  "task_id": "EDA-02",
+  "release": "wh-d3aaa559048c",
+  "comparable_period": "每年 1–10 月（2026-11 不完整，排除）",
+  "min_base_orders": 30,
+  "rules": {
+    "merchandise": "USD 商品金额；运费为非商品收费，单列",
+    "refunds": "数据中没有退款",
+    "cancellations": "取消订单不计入，单列统计"
+  },
+  "queries": {
+    "ytd_by_year": {
+      "sql": "SELECT year(o.purchase_ts) AS year, count(*) AS orders, sum(o.merch_usd)::DOUBLE AS merch_usd, sum(o.shipping_usd)::DOUBLE AS shipping_usd, count(DISTINCT o.customer_id) AS buyers, (sum(o.merch_usd) / count(*))::DOUBLE AS aov_usd, (count(*)::DOUBLE / count(DISTINCT o.customer_id)) AS orders_per_buyer FROM dwd.fact_order o WHERE o.approved_ts < TIMESTAMPTZ '2026-11-08 00:00:00+00' AND month(o.purchase_ts) <= 10 GROUP BY 1 ORDER BY 1",
+      "rows": [
+        {
+          "year": 2024,
+          "orders": 2553,
+          "merch_usd": 391846.26,
+          "shipping_usd": 35859.58,
+          "buyers": 1804,
+          "aov_usd": 153.48462984723855,
+          "orders_per_buyer": 1.415188470066519
+        },
+        {
+          "year": 2025,
+          "orders": 2571,
+          "merch_usd": 385810.76,
+          "shipping_usd": 35603.24,
+          "buyers": 1840,
+          "aov_usd": 150.0625281991443,
+          "orders_per_buyer": 1.3972826086956522
+        },
+        {
+          "year": 2026,
+          "orders": 2487,
+          "merch_usd": 384561.63,
+          "shipping_usd": 35434.12,
+          "buyers": 1785,
+          "aov_usd": 154.62872135102532,
+          "orders_per_buyer": 1.3932773109243697
+        }
+      ]
+    },
+    "cancelled_ytd_by_year": {
+      "sql": "SELECT year(o.purchase_ts) AS year, count(*) AS cancelled_orders, sum(o.merch_usd)::DOUBLE AS cancelled_merch_usd FROM dwd.fact_order o WHERE o.approved_ts IS NULL AND month(o.purchase_ts) <= 10 GROUP BY 1 ORDER BY 1",
+      "rows": [
+        {
+          "year": 2024,
+          "cancelled_orders": 63,
+          "cancelled_merch_usd": 9598.59
+        },
+        {
+          "year": 2025,
+          "cancelled_orders": 53,
+          "cancelled_merch_usd": 7205.62
+        },
+        {
+          "year": 2026,
+          "cancelled_orders": 52,
+          "cancelled_merch_usd": 7635.56
+        }
+      ]
+    },
+    "quarterly": {
+      "sql": "SELECT year(o.purchase_ts) || '-Q' || quarter(o.purchase_ts) AS quarter, count(*) AS orders, sum(o.merch_usd)::DOUBLE AS merch_usd, count(DISTINCT o.customer_id) AS buyers FROM dwd.fact_order o WHERE o.approved_ts < TIMESTAMPTZ '2026-11-08 00:00:00+00' AND o.purchase_ts < TIMESTAMPTZ '2026-10-01 00:00:00+00' GROUP BY 1 ORDER BY 1",
+      "rows": [
+        {
+          "quarter": "2024-Q1",
+          "orders": 734,
+          "merch_usd": 109256.52,
+          "buyers": 633
+        },
+        {
+          "quarter": "2024-Q2",
+          "orders": 712,
+          "merch_usd": 110966.79,
+          "buyers": 635
+        },
+        {
+          "quarter": "2024-Q3",
+          "orders": 767,
+          "merch_usd": 120816.09,
+          "buyers": 699
+        },
+        {
+          "quarter": "2024-Q4",
+          "orders": 1029,
+          "merch_usd": 148683.12,
+          "buyers": 878
+        },
+        {
+          "quarter": "2025-Q1",
+          "orders": 758,
+          "merch_usd": 110568.19,
+          "buyers": 690
+        },
+        {
+          "quarter": "2025-Q2",
+          "orders": 707,
+          "merch_usd": 108663.29,
+          "buyers": 638
+        },
+        {
+          "quarter": "2025-Q3",
+          "orders": 777,
+          "merch_usd": 117031.92,
+          "buyers": 693
+        },
+        {
+          "quarter": "2025-Q4",
+          "orders": 1064,
+          "merch_usd": 158429.08,
+          "buyers": 923
+        },
+        {
+          "quarter": "2026-Q1",
+          "orders": 702,
+          "merch_usd": 111618.24,
+          "buyers": 642
+        },
+        {
+          "quarter": "2026-Q2",
+          "orders": 715,
+          "merch_usd": 112482.5,
+          "buyers": 653
+        },
+        {
+          "quarter": "2026-Q3",
+          "orders": 734,
+          "merch_usd": 112870.3,
+          "buyers": 663
+        }
+      ]
+    },
+    "category_ytd": {
+      "sql": "SELECT p.product_category, year(o.purchase_ts) AS year, count(*) AS lines, count(DISTINCT l.order_id) AS orders_containing, sum(l.item_price_usd)::DOUBLE AS merch_usd FROM dwd.fact_order_line l JOIN dwd.fact_order o USING (order_id) JOIN dwd.dim_product p USING (product_id) WHERE o.approved_ts < TIMESTAMPTZ '2026-11-08 00:00:00+00' AND month(o.purchase_ts) <= 10 AND year(o.purchase_ts) IN (2025, 2026) GROUP BY 1, 2 ORDER BY 1, 2",
+      "rows": [
+        {
+          "product_category": "Automotive",
+          "year": 2025,
+          "lines": 285,
+          "orders_containing": 264,
+          "merch_usd": 28707.77
+        },
+        {
+          "product_category": "Automotive",
+          "year": 2026,
+          "lines": 264,
+          "orders_containing": 249,
+          "merch_usd": 29032.64
+        },
+        {
+          "product_category": "Baby Products",
+          "year": 2025,
+          "lines": 308,
+          "orders_containing": 280,
+          "merch_usd": 21680.61
+        },
+        {
+          "product_category": "Baby Products",
+          "year": 2026,
+          "lines": 284,
+          "orders_containing": 252,
+          "merch_usd": 19835.73
+        },
+        {
+          "product_category": "Books & Media",
+          "year": 2025,
+          "lines": 277,
+          "orders_containing": 246,
+          "merch_usd": 6945.01
+        },
+        {
+          "product_category": "Books & Media",
+          "year": 2026,
+          "lines": 253,
+          "orders_containing": 237,
+          "merch_usd": 6005.25
+        },
+        {
+          "product_category": "Electronics & Accessories",
+          "year": 2025,
+          "lines": 268,
+          "orders_containing": 253,
+          "merch_usd": 45349.12
+        },
+        {
+          "product_category": "Electronics & Accessories",
+          "year": 2026,
+          "lines": 277,
+          "orders_containing": 255,
+          "merch_usd": 48456.13
+        },
+        {
+          "product_category": "Fashion",
+          "year": 2025,
+          "lines": 247,
+          "orders_containing": 234,
+          "merch_usd": 18240.61
+        },
+        {
+          "product_category": "Fashion",
+          "year": 2026,
+          "lines": 223,
+          "orders_containing": 210,
+          "merch_usd": 18425.75
+        },
+        {
+          "product_category": "Furniture & Decor",
+          "year": 2025,
+          "lines": 261,
+          "orders_containing": 240,
+          "merch_usd": 56595.47
+        },
+        {
+          "product_category": "Furniture & Decor",
+          "year": 2026,
+          "lines": 265,
+          "orders_containing": 242,
+          "merch_usd": 58054.06
+        },
+        {
+          "product_category": "Garden & Outdoor",
+          "year": 2025,
+          "lines": 252,
+          "orders_containing": 239,
+          "merch_usd": 22698.8
+        },
+        {
+          "product_category": "Garden & Outdoor",
+          "year": 2026,
+          "lines": 254,
+          "orders_containing": 234,
+          "merch_usd": 24111.17
+        },
+        {
+          "product_category": "Health & Beauty",
+          "year": 2025,
+          "lines": 307,
+          "orders_containing": 282,
+          "merch_usd": 10078.7
+        },
+        {
+          "product_category": "Health & Beauty",
+          "year": 2026,
+          "lines": 275,
+          "orders_containing": 248,
+          "merch_usd": 9025.52
+        },
+        {
+          "product_category": "Home & Bedding",
+          "year": 2025,
+          "lines": 248,
+          "orders_containing": 226,
+          "merch_usd": 20015.2
+        },
+        {
+          "product_category": "Home & Bedding",
+          "year": 2026,
+          "lines": 258,
+          "orders_containing": 237,
+          "merch_usd": 21644.64
+        },
+        {
+          "product_category": "Home Goods",
+          "year": 2025,
+          "lines": 220,
+          "orders_containing": 202,
+          "merch_usd": 15248.56
+        },
+        {
+          "product_category": "Home Goods",
+          "year": 2026,
+          "lines": 237,
+          "orders_containing": 219,
+          "merch_usd": 15976.85
+        },
+        {
+          "product_category": "Mobile & Telecom",
+          "year": 2025,
+          "lines": 319,
+          "orders_containing": 288,
+          "merch_usd": 52784.4
+        },
+        {
+          "product_category": "Mobile & Telecom",
+          "year": 2026,
+          "lines": 267,
+          "orders_containing": 245,
+          "merch_usd": 41736.56
+        },
+        {
+          "product_category": "Office Supplies",
+          "year": 2025,
+          "lines": 240,
+          "orders_containing": 220,
+          "merch_usd": 8048.75
+        },
+        {
+          "product_category": "Office Supplies",
+          "year": 2026,
+          "lines": 254,
+          "orders_containing": 222,
+          "merch_usd": 9227.55
+        },
+        {
+          "product_category": "Pet Supplies",
+          "year": 2025,
+          "lines": 275,
+          "orders_containing": 248,
+          "merch_usd": 12945.79
+        },
+        {
+          "product_category": "Pet Supplies",
+          "year": 2026,
+          "lines": 295,
+          "orders_containing": 273,
+          "merch_usd": 14706.7
+        },
+        {
+          "product_category": "Sports & Outdoors",
+          "year": 2025,
+          "lines": 239,
+          "orders_containing": 230,
+          "merch_usd": 20447.84
+        },
+        {
+          "product_category": "Sports & Outdoors",
+          "year": 2026,
+          "lines": 263,
+          "orders_containing": 241,
+          "merch_usd": 23446.29
+        },
+        {
+          "product_category": "Toys & Games",
+          "year": 2025,
+          "lines": 214,
+          "orders_containing": 198,
+          "merch_usd": 10248.85
+        },
+        {
+          "product_category": "Toys & Games",
+          "year": 2026,
+          "lines": 240,
+          "orders_containing": 212,
+          "merch_usd": 11368.28
+        },
+        {
+          "product_category": "Watches & Gifts",
+          "year": 2025,
+          "lines": 306,
+          "orders_containing": 278,
+          "merch_usd": 35775.28
+        },
+        {
+          "product_category": "Watches & Gifts",
+          "year": 2026,
+          "lines": 294,
+          "orders_containing": 267,
+          "merch_usd": 33508.51
+        }
+      ]
+    },
+    "region_ytd": {
+      "sql": "SELECT c.customer_region, year(o.purchase_ts) AS year, count(*) AS orders, count(DISTINCT o.customer_id) AS buyers, sum(o.merch_usd)::DOUBLE AS merch_usd FROM dwd.fact_order o JOIN dwd.dim_customer c USING (customer_id) WHERE o.approved_ts < TIMESTAMPTZ '2026-11-08 00:00:00+00' AND month(o.purchase_ts) <= 10 AND year(o.purchase_ts) IN (2025, 2026) GROUP BY 1, 2 ORDER BY 1, 2",
+      "rows": [
+        {
+          "customer_region": "Midwest",
+          "year": 2025,
+          "orders": 555,
+          "buyers": 389,
+          "merch_usd": 85479.11
+        },
+        {
+          "customer_region": "Midwest",
+          "year": 2026,
+          "orders": 548,
+          "buyers": 379,
+          "merch_usd": 85083.96
+        },
+        {
+          "customer_region": "Northeast",
+          "year": 2025,
+          "orders": 464,
+          "buyers": 345,
+          "merch_usd": 69488.99
+        },
+        {
+          "customer_region": "Northeast",
+          "year": 2026,
+          "orders": 461,
+          "buyers": 320,
+          "merch_usd": 72221.67
+        },
+        {
+          "customer_region": "South",
+          "year": 2025,
+          "orders": 941,
+          "buyers": 674,
+          "merch_usd": 138647.84
+        },
+        {
+          "customer_region": "South",
+          "year": 2026,
+          "orders": 893,
+          "buyers": 661,
+          "merch_usd": 135470.69
+        },
+        {
+          "customer_region": "West",
+          "year": 2025,
+          "orders": 611,
+          "buyers": 432,
+          "merch_usd": 92194.82
+        },
+        {
+          "customer_region": "West",
+          "year": 2026,
+          "orders": 585,
+          "buyers": 425,
+          "merch_usd": 91785.31
+        }
+      ]
+    },
+    "seasonality": {
+      "sql": "SELECT month(o.purchase_ts) AS month, year(o.purchase_ts) AS year, count(*) AS orders FROM dwd.fact_order o WHERE o.approved_ts < TIMESTAMPTZ '2026-11-08 00:00:00+00' AND o.purchase_ts < TIMESTAMPTZ '2026-11-01 00:00:00+00' GROUP BY 1, 2 ORDER BY 1, 2",
+      "rows": [
+        {
+          "month": 1,
+          "year": 2024,
+          "orders": 229
+        },
+        {
+          "month": 1,
+          "year": 2025,
+          "orders": 260
+        },
+        {
+          "month": 1,
+          "year": 2026,
+          "orders": 255
+        },
+        {
+          "month": 2,
+          "year": 2024,
+          "orders": 258
+        },
+        {
+          "month": 2,
+          "year": 2025,
+          "orders": 226
+        },
+        {
+          "month": 2,
+          "year": 2026,
+          "orders": 187
+        },
+        {
+          "month": 3,
+          "year": 2024,
+          "orders": 247
+        },
+        {
+          "month": 3,
+          "year": 2025,
+          "orders": 272
+        },
+        {
+          "month": 3,
+          "year": 2026,
+          "orders": 260
+        },
+        {
+          "month": 4,
+          "year": 2024,
+          "orders": 236
+        },
+        {
+          "month": 4,
+          "year": 2025,
+          "orders": 224
+        },
+        {
+          "month": 4,
+          "year": 2026,
+          "orders": 230
+        },
+        {
+          "month": 5,
+          "year": 2024,
+          "orders": 250
+        },
+        {
+          "month": 5,
+          "year": 2025,
+          "orders": 233
+        },
+        {
+          "month": 5,
+          "year": 2026,
+          "orders": 240
+        },
+        {
+          "month": 6,
+          "year": 2024,
+          "orders": 226
+        },
+        {
+          "month": 6,
+          "year": 2025,
+          "orders": 250
+        },
+        {
+          "month": 6,
+          "year": 2026,
+          "orders": 245
+        },
+        {
+          "month": 7,
+          "year": 2024,
+          "orders": 240
+        },
+        {
+          "month": 7,
+          "year": 2025,
+          "orders": 272
+        },
+        {
+          "month": 7,
+          "year": 2026,
+          "orders": 251
+        },
+        {
+          "month": 8,
+          "year": 2024,
+          "orders": 269
+        },
+        {
+          "month": 8,
+          "year": 2025,
+          "orders": 272
+        },
+        {
+          "month": 8,
+          "year": 2026,
+          "orders": 243
+        },
+        {
+          "month": 9,
+          "year": 2024,
+          "orders": 258
+        },
+        {
+          "month": 9,
+          "year": 2025,
+          "orders": 233
+        },
+        {
+          "month": 9,
+          "year": 2026,
+          "orders": 240
+        },
+        {
+          "month": 10,
+          "year": 2024,
+          "orders": 340
+        },
+        {
+          "month": 10,
+          "year": 2025,
+          "orders": 329
+        },
+        {
+          "month": 10,
+          "year": 2026,
+          "orders": 336
+        },
+        {
+          "month": 11,
+          "year": 2024,
+          "orders": 322
+        },
+        {
+          "month": 11,
+          "year": 2025,
+          "orders": 360
+        },
+        {
+          "month": 12,
+          "year": 2024,
+          "orders": 367
+        },
+        {
+          "month": 12,
+          "year": 2025,
+          "orders": 375
+        }
+      ]
+    },
+    "small_cells_example": {
+      "sql": "SELECT c.customer_region, p.product_category, count(DISTINCT l.order_id) AS orders FROM dwd.fact_order_line l JOIN dwd.fact_order o USING (order_id) JOIN dwd.dim_product p USING (product_id) JOIN dwd.dim_customer c ON c.customer_id = l.customer_id WHERE o.approved_ts < TIMESTAMPTZ '2026-11-08 00:00:00+00' AND strftime(o.purchase_ts, '%Y-%m') = '2025-10' GROUP BY 1, 2 HAVING count(DISTINCT l.order_id) < 30 ORDER BY 3 LIMIT 10",
+      "rows": [
+        {
+          "customer_region": "West",
+          "product_category": "Sports & Outdoors",
+          "orders": 1
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Home Goods",
+          "orders": 3
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Pet Supplies",
+          "orders": 3
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Toys & Games",
+          "orders": 3
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Health & Beauty",
+          "orders": 3
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Garden & Outdoor",
+          "orders": 3
+        },
+        {
+          "customer_region": "Midwest",
+          "product_category": "Watches & Gifts",
+          "orders": 4
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Mobile & Telecom",
+          "orders": 4
+        },
+        {
+          "customer_region": "Midwest",
+          "product_category": "Sports & Outdoors",
+          "orders": 4
+        },
+        {
+          "customer_region": "Northeast",
+          "product_category": "Baby Products",
+          "orders": 4
+        }
+      ]
+    }
+  },
+  "yoy": {
+    "2025_vs_2024": {
+      "orders": {
+        "status": "ok",
+        "value": 0.0071
+      },
+      "merch_usd": {
+        "status": "ok",
+        "value": -0.0154
+      },
+      "buyers": {
+        "status": "ok",
+        "value": 0.02
+      },
+      "aov_usd": {
+        "status": "ok",
+        "value": -0.0223
+      },
+      "orders_per_buyer": {
+        "status": "ok",
+        "value": -0.0127
+      }
+    },
+    "2026_vs_2025": {
+      "orders": {
+        "status": "ok",
+        "value": -0.0327
+      },
+      "merch_usd": {
+        "status": "ok",
+        "value": -0.0032
+      },
+      "buyers": {
+        "status": "ok",
+        "value": -0.0299
+      },
+      "aov_usd": {
+        "status": "ok",
+        "value": 0.0304
+      },
+      "orders_per_buyer": {
+        "status": "ok",
+        "value": -0.0029
+      }
+    }
+  },
+  "decomposition_2026_vs_2025": {
+    "delta_merch_usd": -1249.13,
+    "due_to_buyers_usd": -11689.3,
+    "due_to_orders_per_buyer_usd": -1105.72,
+    "due_to_aov_usd": 11545.88,
+    "method": "商品金额 = 购买客户数 × 人均订单数 × 客单价，按对数分解，三部分之和等于总变化"
+  },
+  "category_contribution": [
+    {
+      "category": "Mobile & Telecom",
+      "merch_2025": 52784.4,
+      "merch_2026": 41736.56,
+      "delta": -11047.84,
+      "delta_vs_2025_total": -0.0286,
+      "growth": {
+        "status": "ok",
+        "value": -0.2093
+      }
+    },
+    {
+      "category": "Watches & Gifts",
+      "merch_2025": 35775.28,
+      "merch_2026": 33508.51,
+      "delta": -2266.77,
+      "delta_vs_2025_total": -0.0059,
+      "growth": {
+        "status": "ok",
+        "value": -0.0634
+      }
+    },
+    {
+      "category": "Baby Products",
+      "merch_2025": 21680.61,
+      "merch_2026": 19835.73,
+      "delta": -1844.88,
+      "delta_vs_2025_total": -0.0048,
+      "growth": {
+        "status": "ok",
+        "value": -0.0851
+      }
+    },
+    {
+      "category": "Health & Beauty",
+      "merch_2025": 10078.7,
+      "merch_2026": 9025.52,
+      "delta": -1053.18,
+      "delta_vs_2025_total": -0.0027,
+      "growth": {
+        "status": "ok",
+        "value": -0.1045
+      }
+    },
+    {
+      "category": "Books & Media",
+      "merch_2025": 6945.01,
+      "merch_2026": 6005.25,
+      "delta": -939.76,
+      "delta_vs_2025_total": -0.0024,
+      "growth": {
+        "status": "ok",
+        "value": -0.1353
+      }
+    },
+    {
+      "category": "Fashion",
+      "merch_2025": 18240.61,
+      "merch_2026": 18425.75,
+      "delta": 185.14,
+      "delta_vs_2025_total": 0.0005,
+      "growth": {
+        "status": "ok",
+        "value": 0.0101
+      }
+    },
+    {
+      "category": "Automotive",
+      "merch_2025": 28707.77,
+      "merch_2026": 29032.64,
+      "delta": 324.87,
+      "delta_vs_2025_total": 0.0008,
+      "growth": {
+        "status": "ok",
+        "value": 0.0113
+      }
+    },
+    {
+      "category": "Home Goods",
+      "merch_2025": 15248.56,
+      "merch_2026": 15976.85,
+      "delta": 728.29,
+      "delta_vs_2025_total": 0.0019,
+      "growth": {
+        "status": "ok",
+        "value": 0.0478
+      }
+    },
+    {
+      "category": "Toys & Games",
+      "merch_2025": 10248.85,
+      "merch_2026": 11368.28,
+      "delta": 1119.43,
+      "delta_vs_2025_total": 0.0029,
+      "growth": {
+        "status": "ok",
+        "value": 0.1092
+      }
+    },
+    {
+      "category": "Office Supplies",
+      "merch_2025": 8048.75,
+      "merch_2026": 9227.55,
+      "delta": 1178.8,
+      "delta_vs_2025_total": 0.0031,
+      "growth": {
+        "status": "ok",
+        "value": 0.1465
+      }
+    },
+    {
+      "category": "Garden & Outdoor",
+      "merch_2025": 22698.8,
+      "merch_2026": 24111.17,
+      "delta": 1412.37,
+      "delta_vs_2025_total": 0.0037,
+      "growth": {
+        "status": "ok",
+        "value": 0.0622
+      }
+    },
+    {
+      "category": "Furniture & Decor",
+      "merch_2025": 56595.47,
+      "merch_2026": 58054.06,
+      "delta": 1458.59,
+      "delta_vs_2025_total": 0.0038,
+      "growth": {
+        "status": "ok",
+        "value": 0.0258
+      }
+    },
+    {
+      "category": "Home & Bedding",
+      "merch_2025": 20015.2,
+      "merch_2026": 21644.64,
+      "delta": 1629.44,
+      "delta_vs_2025_total": 0.0042,
+      "growth": {
+        "status": "ok",
+        "value": 0.0814
+      }
+    },
+    {
+      "category": "Pet Supplies",
+      "merch_2025": 12945.79,
+      "merch_2026": 14706.7,
+      "delta": 1760.91,
+      "delta_vs_2025_total": 0.0046,
+      "growth": {
+        "status": "ok",
+        "value": 0.136
+      }
+    },
+    {
+      "category": "Sports & Outdoors",
+      "merch_2025": 20447.84,
+      "merch_2026": 23446.29,
+      "delta": 2998.45,
+      "delta_vs_2025_total": 0.0078,
+      "growth": {
+        "status": "ok",
+        "value": 0.1466
+      }
+    },
+    {
+      "category": "Electronics & Accessories",
+      "merch_2025": 45349.12,
+      "merch_2026": 48456.13,
+      "delta": 3107.01,
+      "delta_vs_2025_total": 0.0081,
+      "growth": {
+        "status": "ok",
+        "value": 0.0685
+      }
+    }
+  ],
+  "region_contribution": [
+    {
+      "region": "Midwest",
+      "merch_2025": 85479.11,
+      "merch_2026": 85083.96,
+      "delta": -395.15,
+      "buyers_2025": 389,
+      "buyers_2026": 379,
+      "delta_vs_2025_total": -0.001,
+      "growth": {
+        "status": "ok",
+        "value": -0.0046
+      }
+    },
+    {
+      "region": "Northeast",
+      "merch_2025": 69488.99,
+      "merch_2026": 72221.67,
+      "delta": 2732.68,
+      "buyers_2025": 345,
+      "buyers_2026": 320,
+      "delta_vs_2025_total": 0.0071,
+      "growth": {
+        "status": "ok",
+        "value": 0.0393
+      }
+    },
+    {
+      "region": "South",
+      "merch_2025": 138647.84,
+      "merch_2026": 135470.69,
+      "delta": -3177.15,
+      "buyers_2025": 674,
+      "buyers_2026": 661,
+      "delta_vs_2025_total": -0.0082,
+      "growth": {
+        "status": "ok",
+        "value": -0.0229
+      }
+    },
+    {
+      "region": "West",
+      "merch_2025": 92194.82,
+      "merch_2026": 91785.31,
+      "delta": -409.51,
+      "buyers_2025": 432,
+      "buyers_2026": 425,
+      "delta_vs_2025_total": -0.0011,
+      "growth": {
+        "status": "ok",
+        "value": -0.0044
+      }
+    }
+  ],
+  "seasonality_index": {
+    "1": 0.933,
+    "2": 0.842,
+    "3": 0.977,
+    "4": 0.866,
+    "5": 0.907,
+    "6": 0.904,
+    "7": 0.957,
+    "8": 0.983,
+    "9": 0.917,
+    "10": 1.261,
+    "11": 1.283,
+    "12": 1.396
+  }
+}

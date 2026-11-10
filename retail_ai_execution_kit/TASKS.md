@@ -46,7 +46,7 @@
 | DW-09 | 校验数仓约束和对账 | midterm | done | DW-07, DW-08 |
 | DW-10 | 发布只读查询快照 | midterm | done | DW-09 |
 | EDA-01 | 完成初步描述性统计 | proposal | done | DATA-12 |
-| EDA-02 | 分析经营趋势和结构 | midterm | todo | DW-08, EDA-01 |
+| EDA-02 | 分析经营趋势和结构 | midterm | done | DW-08, EDA-01 |
 | EDA-03 | 构建首观测购买cohort与留存 | midterm | done | DW-06 |
 | EDA-04 | 完成经营诊断与证据分解 | midterm | todo | EDA-02 |
 | EDA-05 | 实现互斥生命周期规则 | midterm | done | DW-05, GOV-05 |
@@ -650,7 +650,7 @@
 
 ### EDA-02 分析经营趋势和结构
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C11, C14, U01。
 - 前置：DW-08, EDA-01。
 - 允许修改：`reports/analysis`, `src/retail_bi/analysis`；另可写本任务证据/交接。
@@ -663,7 +663,7 @@
 2. 分母为0、不完整月或小样本给明确状态，不生成无意义百分比。
 3. 至少3个实际发现可追溯到查询与结果文件，不预设发现方向。
 
-证据：尚无已登记验收证据。
+证据：evidence/EDA-02/2026-11-10-trends.json
 
 ### EDA-03 构建首观测购买cohort与留存
 

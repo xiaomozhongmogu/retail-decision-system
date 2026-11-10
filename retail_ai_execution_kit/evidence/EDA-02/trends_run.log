@@ -1,0 +1,7 @@
+$ .venv/bin/python src/retail_bi/analysis/trends.py
+2026-11-10T21:24:02+08:00
+{"yoy": {"2025_vs_2024": {"orders": {"status": "ok", "value": 0.0071}, "merch_usd": {"status": "ok", "value": -0.0154}, "buyers": {"status": "ok", "value": 0.02}, "aov_usd": {"status": "ok", "value": -0.0223}, "orders_per_buyer": {"status": "ok", "value": -0.0127}}, "2026_vs_2025": {"orders": {"status": "ok", "value": -0.0327}, "merch_usd": {"status": "ok", "value": -0.0032}, "buyers": {"status": "ok", "value": -0.0299}, "aov_usd": {"status": "ok", "value": 0.0304}, "orders_per_buyer": {"status": "ok", "value": -0.0029}}}, "decomp": {"delta_merch_usd": -1249.13, "due_to_buyers_usd": -11689.3, "due_to_orders_per_buyer_usd": -1105.72, "due_to_aov_usd": 11545.88, "method": "商品金额 = 购买客户数 × 人均订单数 × 客单价，按对数分解，三部分之和等于总变化"}}
+exit=0
+--- run 2: findings 1-3 corrected (merchandise is flat: buyer decline offset by AOV; share-of-a-near-zero-total replaced by share of 2025 total; removed an untested claim)
+2026-11-10T21:24:25+08:00
+exit=0

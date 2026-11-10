@@ -1,0 +1,91 @@
+{
+  "task_id": "EDA-02",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pandas 3.1.1",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/analysis/trends.py; .venv/bin/python evidence/EDA-02/verify_trends.py",
+  "exit_code": 0,
+  "summary": "可比期间（各年 1–10 月）经营趋势：2026 对 2025 商品金额 −0.3%（基本持平），订单 −3.3%，购买客户 −3.0%，客单价 +3.0%；量价分解显示客户数减少（−11,689 USD）几乎被客单价上升（+11,546）抵消。品类与大区贡献（以 2025 总额为基准）、季度趋势与季节指数（12 月 1.40、2 月 0.84）；增长率只在基期 ≥30 单时计算。4 条发现均引用 JSON 中保存的查询与结果。pandas 核对 11/11。",
+  "inputs": [
+    {
+      "path": "sql/olap_examples.sql",
+      "sha256": "91f3c73ef81eec81a9b02ce8d00b6b314a7bd84ee9d5e2ccfeba1b4d829c2247"
+    },
+    {
+      "path": "reports/analysis/eda_initial.json",
+      "sha256": "3c0bd5f4369a546aae007ce0471becd3bbc092503e399991e9455be001dd2f65"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/analysis/business_trends.md",
+      "sha256": "754010244de9a029b8c39a3ee4e92ac0dd6c6c2abcb95a3a2d562b56959ad7da"
+    },
+    {
+      "path": "reports/analysis/business_trends.json",
+      "sha256": "0bca6642f35fdc97a06e8ac4b3aeaa14947fe3c13d9d674754d447481e1867ec"
+    },
+    {
+      "path": "src/retail_bi/analysis/trends.py",
+      "sha256": "58840e45bc522efa90c943cdb3309b2b3831052e884220a64b731d0639286225"
+    },
+    {
+      "path": "evidence/EDA-02/trends_run.log",
+      "sha256": "90b373c536c2f305f820d34a9af22a1f83b55a3666156d0385ca108b830cbe16"
+    },
+    {
+      "path": "evidence/EDA-02/verification_run.log",
+      "sha256": "dc2cf1f2e47013bc98cc79e4b8df86b91d3a03215dbdd6c0ab0803655ddfe19c"
+    },
+    {
+      "path": "evidence/EDA-02/verify_trends.py",
+      "sha256": "a640596c98a47fea99f8e11b62dddb476146c20411f3258c961aa5568fe257d1"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "用完整可比期间（1–10 月，排除不完整的 2026-11）比较三年趋势与季度序列，给出 16 个品类与 4 个大区的金额贡献（本数据无国家维度），写明运费为非商品收费单列、数据中无退款、取消单列。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "增长率在基期订单 <30 时标“样本不足”、基期为 0 时标“无基期”；以 2025-10 为例列出小于 30 单的月×大区×品类格子不计算增长；把“占近零总变化的百分比”改为“占 2025 总额”，不输出无意义百分比；视图分母为 0 返回空值。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "4 条发现（金额持平而客户数与客单价反向变化、量价分解、品类升降相互抵消、年末季节性）各标明对应查询名，查询 SQL 与结果保存在 business_trends.json；核对脚本确认每条引用的查询都存在。初稿有 3 处不被数据支持的表述，已在第 2 次运行中改正。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "相关描述，不是因果；客单价上升原因数据无法说明（EDA-04 标为待验证）。",
+    "数据完全合成。"
+  ],
+  "steps": [
+    "认领 EDA-02（台账 35a84646…→48f83c54…）。",
+    "编写 trends.py；第 1 次输出中“主要来自客户数下降”、占近零总变化的 884%、未检验的“高单价品类波动更大”三处不当，第 2 次改正。",
+    "verify_trends.py 11/11。"
+  ],
+  "task_spec_sha256": "f95d458c97f38440b703b702c033db875f2fb6512d0c07e31064f0241043f293",
+  "performed_at": "2026-11-10T21:25:03.133162+08:00"
+}

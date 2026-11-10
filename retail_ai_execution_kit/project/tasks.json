@@ -1268,10 +1268,10 @@
       "category": "EDA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C11",
         "C14",
@@ -1293,7 +1293,9 @@
         "分母为0、不完整月或小样本给明确状态，不生成无意义百分比。",
         "至少3个实际发现可追溯到查询与结果文件，不预设发现方向。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/EDA-02/2026-11-10-trends.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
