@@ -1,0 +1,83 @@
+{
+  "task_id": "EDA-04",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/EDA-04/diagnosis_facts.py (facts) + inline verification recorded in evidence/EDA-04/verification_run.log",
+  "exit_code": 0,
+  "summary": "经营诊断：2026 对 2025（1–10 月）金额基本持平由两个反向变化构成——当年新购买客户 783→309（订单 −674，数据人口封闭造成）与回头客户 1,057→1,476（订单 +590），以及客单价 +4.57（每单行数贡献 +2.78、平均每行金额 +1.79；后者为品类结构 −0.54 与品类内单价 +1.60）。地区、品类、物流与评价不足以解释。5 条建议各有触发条件、负责角色与步骤、评价方式与数据限制。核对 8/8。",
+  "inputs": [
+    {
+      "path": "reports/analysis/business_trends.json",
+      "sha256": "0bca6642f35fdc97a06e8ac4b3aeaa14947fe3c13d9d674754d447481e1867ec"
+    },
+    {
+      "path": "reports/analysis/eda_initial.json",
+      "sha256": "3c0bd5f4369a546aae007ce0471becd3bbc092503e399991e9455be001dd2f65"
+    },
+    {
+      "path": "docs/lifecycle_rules.md",
+      "sha256": "b3b50509e1f88f9a28dbcb4c01ade3e6fd23cf260fe7f044538967e3b4f0eff3"
+    },
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "evidence/EDA-04/diagnosis_facts.py",
+      "sha256": "7b573a41eeca06e80af0269067fb8d00664c99c9d2ed55a49da861d966987040"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/analysis/diagnosis.md",
+      "sha256": "e13e8002fbdaf8c40b35760b9dc86947230e96be463f82cec1a228179efb2bd2"
+    },
+    {
+      "path": "reports/analysis/diagnosis_facts.json",
+      "sha256": "11c067a1d06d9ba5d2ecd992d33a9eefcf8c1dd1ca331fd68de5ecab1e430da9"
+    },
+    {
+      "path": "evidence/EDA-04/verification_run.log",
+      "sha256": "e0701fafc993b84a21603beba165a1a07e49ed3ca5e45b7690735a01c506e1ba"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "用客户结构（新/回头客户）、量价（客户数×人均订单×客单价）、客单价构成（每单行数×平均每行金额，再分为品类结构与品类内单价）以及地区和品类贡献分解指标变化；本数据无国家维度，用大区代替；各分解项之和与总变化一致（核对）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "标题和结论写明“相关与分解，不是因果”；渠道、价格与折扣、成本、竞争、营销触达缺失，相关解释（如同品类单价上升）标为待验证；新客户减少明确为数据边界而非获客能力证据。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "5 条建议在表中逐条列出触发条件、负责人（角色）与执行步骤、评价方式（含随机对照试验）和数据限制；负责人用角色表示并注明实际人员待 GOV-03 分工表。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "负责人以角色表示，团队分工未提供。",
+    "数据完全合成。"
+  ],
+  "steps": [
+    "认领 EDA-04（台账 6ebf1303…→c7ff2a34…）。",
+    "编写 diagnosis_facts.py 计算客户结构与客单价分解。",
+    "撰写诊断报告；核对第 1 次把前面表格的年份行算作建议，限定到第 4 节后 8/8。"
+  ],
+  "task_spec_sha256": "ed5cfcc5049835cff9727608eb44b789d30b4c1568330e9235cb53f07ab146c7",
+  "performed_at": "2026-11-10T21:26:31.229904+08:00"
+}

@@ -48,7 +48,7 @@
 | EDA-01 | 完成初步描述性统计 | proposal | done | DATA-12 |
 | EDA-02 | 分析经营趋势和结构 | midterm | done | DW-08, EDA-01 |
 | EDA-03 | 构建首观测购买cohort与留存 | midterm | done | DW-06 |
-| EDA-04 | 完成经营诊断与证据分解 | midterm | todo | EDA-02 |
+| EDA-04 | 完成经营诊断与证据分解 | midterm | done | EDA-02 |
 | EDA-05 | 实现互斥生命周期规则 | midterm | done | DW-05, GOV-05 |
 | EDA-06 | 形成面向决策的分析结论 | midterm | todo | EDA-03, EDA-04, EDA-05 |
 | ML-01 | 冻结预测目标与适用母体 | midterm | done | DATA-12, GOV-05 |
@@ -684,7 +684,7 @@
 
 ### EDA-04 完成经营诊断与证据分解
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C12, C27。
 - 前置：EDA-02。
 - 允许修改：`reports/analysis`；另可写本任务证据/交接。
@@ -697,7 +697,7 @@
 2. 相关性和贡献分解不写成因果；缺渠道、成本或竞争信息的解释标待验证。
 3. 每条运营建议注明触发条件、负责人或执行步骤、评价方式和数据限制。
 
-证据：尚无已登记验收证据。
+证据：evidence/EDA-04/2026-11-10-diagnosis.json
 
 ### EDA-05 实现互斥生命周期规则
 

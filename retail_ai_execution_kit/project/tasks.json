@@ -1346,10 +1346,10 @@
       "category": "EDA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C12",
         "C27"
@@ -1368,7 +1368,9 @@
         "相关性和贡献分解不写成因果；缺渠道、成本或竞争信息的解释标待验证。",
         "每条运营建议注明触发条件、负责人或执行步骤、评价方式和数据限制。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/EDA-04/2026-11-10-diagnosis.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

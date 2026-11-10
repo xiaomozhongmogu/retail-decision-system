@@ -1,0 +1,56 @@
+{
+  "task_id": "EDA-04",
+  "release": "wh-d3aaa559048c",
+  "period": "Jan-Oct, 2026 vs 2025",
+  "customer_structure": [
+    {
+      "year": 2025,
+      "type": "new_this_year",
+      "buyers": 783,
+      "orders": 1104,
+      "merch_usd": 164200.76
+    },
+    {
+      "year": 2025,
+      "type": "returning",
+      "buyers": 1057,
+      "orders": 1467,
+      "merch_usd": 221610.0
+    },
+    {
+      "year": 2026,
+      "type": "new_this_year",
+      "buyers": 309,
+      "orders": 430,
+      "merch_usd": 67084.97
+    },
+    {
+      "year": 2026,
+      "type": "returning",
+      "buyers": 1476,
+      "orders": 2057,
+      "merch_usd": 317476.66
+    }
+  ],
+  "avg_line_value": {
+    "2025": 90.4385,
+    "2026": 91.4969
+  },
+  "avg_line_change": 1.0584,
+  "mix_effect": -0.541,
+  "within_category_price_effect": 1.5994,
+  "lines_per_order": {
+    "2025": 1.6593,
+    "2026": 1.69
+  },
+  "delivery_and_review": {
+    "2025": {
+      "late_by_date_rate": 0.6401,
+      "avg_review_score": 3.9748
+    },
+    "2026": {
+      "late_by_date_rate": 0.6379,
+      "avg_review_score": 3.972
+    }
+  }
+}

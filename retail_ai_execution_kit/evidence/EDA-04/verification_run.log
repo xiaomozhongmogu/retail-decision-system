@@ -1,0 +1,12 @@
+PASS customer structure numbers quoted
+PASS order change split: new -674, returning +590, net -84
+PASS AOV = lines x line value and the two effects add up
+PASS mix + price effects add up to the line-value change
+PASS volume-price numbers match EDA-02
+PASS max category change within +-3% of 2025 total
+PASS correlation not causation; missing info marked as to be verified
+FAIL 5 recommendations each with trigger, owner/steps, evaluation, limits
+7/8 passed
+--- run 2 (run 1 counted year rows of earlier tables as recommendations; now section 4 only)
+FAIL 5 recommendations each with trigger, owner/steps, evaluation, limits 5
+7/8 passed
