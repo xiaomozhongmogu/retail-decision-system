@@ -1,0 +1,82 @@
+{
+  "task_id": "EDA-03",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), pandas 3.1.1",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c via runtime.query_view",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/EDA-03/cohort_report.py",
+  "exit_code": 0,
+  "summary": "首次可观测有效购买 cohort 留存：35 个月度 cohort，口径（cohort、月龄、留存分子分母、成熟规则、左截断）写明；按半年加权比较 +1/+3/+6/+12 的成熟窗口（客户数 ≥100 的组合留存 3.9%–9.2%，无“首月高后下降”形状），留存矩阵空白表示未观察到。检查 9/9：5 个格子由 pandas 独立重算一致、成熟 cohort 的 k=0 为 100%、未成熟格子为缺失而非 0、没有超出数据月份的格子、cohort 规模合计等于全部购买客户。",
+  "inputs": [
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "docs/lifecycle_rules.md",
+      "sha256": "b3b50509e1f88f9a28dbcb4c01ade3e6fd23cf260fe7f044538967e3b4f0eff3"
+    },
+    {
+      "path": "reports/analysis/eda_initial.json",
+      "sha256": "3c0bd5f4369a546aae007ce0471becd3bbc092503e399991e9455be001dd2f65"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/analysis/cohort.md",
+      "sha256": "fd5e04e98150524868e7b9cefe68e82493c8d7daaa6ae9e07fbda648bb83b3fa"
+    },
+    {
+      "path": "reports/analysis/cohort_checks.json",
+      "sha256": "8fed72bba2a3e5990af934e981e83b9325b606bfdc473c07079019174a8740bf"
+    },
+    {
+      "path": "evidence/EDA-03/cohort_report.py",
+      "sha256": "f8b3d106a4a71bc3150854b884464abd6d147ef22d10516662e8b14854feb616"
+    },
+    {
+      "path": "evidence/EDA-03/cohort_run.log",
+      "sha256": "4ad39dc44d94a124e05995c9cd7b1dfb59b9f9b0595bfd0f84b991c380f0c1f3"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "cohort 定义为首次可观测有效购买的自然月，明确不是终身首次购买；说明本数据客户 2024 年上半年建档、起点前无交易因此不存在左截断，并说明换用真实数据时需要预热期。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "月龄 k=距首购月月数；留存=第 k 月有有效购买的客户/cohort 客户数；购买口径为已审批订单；比较表只用成熟格子（第 k 月在截止前完整结束）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "未成熟格子（2026-11 及以后，共 35 个）在视图中为空值，矩阵中显示空白，核对确认不是 0；成熟 cohort 的 k=0 都是 100%。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "后期 cohort 规模小，留存率波动大。",
+    "任务写入范围只有 reports/analysis 与 sql，报告脚本放在 evidence 目录。"
+  ],
+  "steps": [
+    "认领 EDA-03（台账 4ff4104b…→73c4437f…）。",
+    "编写报告脚本，经只读运行时读取 ADS 视图并独立重算。第 1 次 8/9：k=0 检查包含了未成熟 cohort；并把一句不准确的发现改为由数据计算；第 2 次 9/9。"
+  ],
+  "task_spec_sha256": "b2edf472e05cc9f62c601d28165e8bea5c1898c4843015d1dfbefdf0f7abe118",
+  "performed_at": "2026-11-10T21:22:57.722162+08:00"
+}

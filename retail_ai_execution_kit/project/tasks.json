@@ -1305,10 +1305,10 @@
       "category": "EDA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C11",
         "U01",
@@ -1330,7 +1330,9 @@
         "年龄、留存分子分母和购买口径明确，只比较成熟窗口。",
         "尚未观察到的未来格子显示缺失状态，不填0。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/EDA-03/2026-11-10-cohort.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

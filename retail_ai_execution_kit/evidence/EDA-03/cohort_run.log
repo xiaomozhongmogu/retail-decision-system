@@ -1,0 +1,8 @@
+$ .venv/bin/python evidence/EDA-03/cohort_report.py
+2026-11-10T21:22:25+08:00
+{"checks": ["passed", "passed", "passed", "passed", "passed", "failed", "passed", "passed", "passed"], "summary": [{"k": 1, "half": "2024-H1", "cohorts": 6, "customers": 1158, "weighted_retention": 0.0872}, {"k": 1, "half": "2024-H2", "cohorts": 6, "customers": 944, "weighted_retention": 0.0773}, {"k": 1, "half": "2025-H1", "cohorts": 6, "customers": 502, "weighted_retention": 0.0697}, {"k": 1, "half": "2025-H2", "cohorts": 6, "customers": 419, "weighted_retention": 0.0788}]}
+exit=1
+--- run 2 (run 1: the k=0 check included the immature 2026-11 cohort; finding wording now computed from mature groups with >= 100 customers)
+2026-11-10T21:22:39+08:00
+{"checks": ["passed", "passed", "passed", "passed", "passed", "passed", "passed", "passed", "passed"], "summary": [{"k": 1, "half": "2024-H1", "cohorts": 6, "customers": 1158, "weighted_retention": 0.
+exit=0

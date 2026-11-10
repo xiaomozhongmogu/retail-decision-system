@@ -1,0 +1,209 @@
+{
+  "task_id": "EDA-03",
+  "release": "wh-d3aaa559048c",
+  "definition": {
+    "cohort": "首次可观测有效购买（已审批）的自然月；不是终身首次购买",
+    "age": "距首购月的月数 k（k=0 为首购月）",
+    "retention": "第 k 个月有至少一次有效购买的客户数 / cohort 客户数",
+    "maturity": "第 k 个月在截止（2026-11-08）前已完整结束才算成熟；2026-11 及以后为缺失",
+    "left_truncation": "客户 2024-01-01 至 2024-06-29 建档，数据起点之前没有交易，本数据不存在左截断；若换用有历史的真实数据，2024 年初的 cohort 会混入老客户，需要预热期"
+  },
+  "summary_mature_by_half_year": [
+    {
+      "k": 1,
+      "half": "2024-H1",
+      "cohorts": 6,
+      "customers": 1158,
+      "weighted_retention": 0.0872
+    },
+    {
+      "k": 1,
+      "half": "2024-H2",
+      "cohorts": 6,
+      "customers": 944,
+      "weighted_retention": 0.0773
+    },
+    {
+      "k": 1,
+      "half": "2025-H1",
+      "cohorts": 6,
+      "customers": 502,
+      "weighted_retention": 0.0697
+    },
+    {
+      "k": 1,
+      "half": "2025-H2",
+      "cohorts": 6,
+      "customers": 419,
+      "weighted_retention": 0.0788
+    },
+    {
+      "k": 1,
+      "half": "2026-H1",
+      "cohorts": 6,
+      "customers": 225,
+      "weighted_retention": 0.0667
+    },
+    {
+      "k": 1,
+      "half": "2026-H2",
+      "cohorts": 3,
+      "customers": 63,
+      "weighted_retention": 0.0794
+    },
+    {
+      "k": 3,
+      "half": "2024-H1",
+      "cohorts": 6,
+      "customers": 1158,
+      "weighted_retention": 0.0587
+    },
+    {
+      "k": 3,
+      "half": "2024-H2",
+      "cohorts": 6,
+      "customers": 944,
+      "weighted_retention": 0.0826
+    },
+    {
+      "k": 3,
+      "half": "2025-H1",
+      "cohorts": 6,
+      "customers": 502,
+      "weighted_retention": 0.0657
+    },
+    {
+      "k": 3,
+      "half": "2025-H2",
+      "cohorts": 6,
+      "customers": 419,
+      "weighted_retention": 0.0835
+    },
+    {
+      "k": 3,
+      "half": "2026-H1",
+      "cohorts": 6,
+      "customers": 225,
+      "weighted_retention": 0.08
+    },
+    {
+      "k": 3,
+      "half": "2026-H2",
+      "cohorts": 1,
+      "customers": 28,
+      "weighted_retention": 0.1071
+    },
+    {
+      "k": 6,
+      "half": "2024-H1",
+      "cohorts": 6,
+      "customers": 1158,
+      "weighted_retention": 0.0717
+    },
+    {
+      "k": 6,
+      "half": "2024-H2",
+      "cohorts": 6,
+      "customers": 944,
+      "weighted_retention": 0.0583
+    },
+    {
+      "k": 6,
+      "half": "2025-H1",
+      "cohorts": 6,
+      "customers": 502,
+      "weighted_retention": 0.0916
+    },
+    {
+      "k": 6,
+      "half": "2025-H2",
+      "cohorts": 6,
+      "customers": 419,
+      "weighted_retention": 0.074
+    },
+    {
+      "k": 6,
+      "half": "2026-H1",
+      "cohorts": 4,
+      "customers": 153,
+      "weighted_retention": 0.0392
+    },
+    {
+      "k": 12,
+      "half": "2024-H1",
+      "cohorts": 6,
+      "customers": 1158,
+      "weighted_retention": 0.0751
+    },
+    {
+      "k": 12,
+      "half": "2024-H2",
+      "cohorts": 6,
+      "customers": 944,
+      "weighted_retention": 0.0826
+    },
+    {
+      "k": 12,
+      "half": "2025-H1",
+      "cohorts": 6,
+      "customers": 502,
+      "weighted_retention": 0.0637
+    },
+    {
+      "k": 12,
+      "half": "2025-H2",
+      "cohorts": 4,
+      "customers": 281,
+      "weighted_retention": 0.0925
+    }
+  ],
+  "cohorts": 35,
+  "checks": [
+    {
+      "check": "cell 2024-01 +1: cohort size and active customers equal pandas recount",
+      "status": "passed",
+      "detail": "(216, 20)"
+    },
+    {
+      "check": "cell 2024-03 +6: cohort size and active customers equal pandas recount",
+      "status": "passed",
+      "detail": "(195, 15)"
+    },
+    {
+      "check": "cell 2024-09 +12: cohort size and active customers equal pandas recount",
+      "status": "passed",
+      "detail": "(153, 12)"
+    },
+    {
+      "check": "cell 2025-06 +3: cohort size and active customers equal pandas recount",
+      "status": "passed",
+      "detail": "(65, 5)"
+    },
+    {
+      "check": "cell 2026-02 +1: cohort size and active customers equal pandas recount",
+      "status": "passed",
+      "detail": "(32, 3)"
+    },
+    {
+      "check": "k = 0 retention is 100% for every mature cohort (definition check)",
+      "status": "passed",
+      "detail": "34"
+    },
+    {
+      "check": "immature cells (month not finished at cutoff) are missing, not 0",
+      "status": "passed",
+      "detail": "35"
+    },
+    {
+      "check": "no cell beyond the data month exists",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "cohort sizes add up to all buyers",
+      "status": "passed",
+      "detail": "3339"
+    }
+  ],
+  "all_passed": true
+}

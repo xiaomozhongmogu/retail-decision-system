@@ -47,7 +47,7 @@
 | DW-10 | 发布只读查询快照 | midterm | done | DW-09 |
 | EDA-01 | 完成初步描述性统计 | proposal | done | DATA-12 |
 | EDA-02 | 分析经营趋势和结构 | midterm | todo | DW-08, EDA-01 |
-| EDA-03 | 构建首观测购买cohort与留存 | midterm | todo | DW-06 |
+| EDA-03 | 构建首观测购买cohort与留存 | midterm | done | DW-06 |
 | EDA-04 | 完成经营诊断与证据分解 | midterm | todo | EDA-02 |
 | EDA-05 | 实现互斥生命周期规则 | midterm | done | DW-05, GOV-05 |
 | EDA-06 | 形成面向决策的分析结论 | midterm | todo | EDA-03, EDA-04, EDA-05 |
@@ -667,7 +667,7 @@
 
 ### EDA-03 构建首观测购买cohort与留存
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C11, U01, Q03。
 - 前置：DW-06。
 - 允许修改：`reports/analysis`, `sql`；另可写本任务证据/交接。
@@ -680,7 +680,7 @@
 2. 年龄、留存分子分母和购买口径明确，只比较成熟窗口。
 3. 尚未观察到的未来格子显示缺失状态，不填0。
 
-证据：尚无已登记验收证据。
+证据：evidence/EDA-03/2026-11-10-cohort.json
 
 ### EDA-04 完成经营诊断与证据分解
 
