@@ -1,0 +1,87 @@
+{
+  "task_id": "ML-05",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), scikit-learn 1.9.1",
+    "data_mode": "fully_synthetic; release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/model/segments.py; .venv/bin/python evidence/ML-05/verify_segments.py",
+  "exit_code": 0,
+  "summary": "segments-v1：R/F/M 同一 as_of 与 90 天窗口（F 按订单去重，M 为商品金额，非利润/CLV），母体为近 90 天有购买的客户；先给 4 个可解释规则分群（近期/较早 × 高价值/一般），再比较 k=3–6 的 K-Means（log1p+标准化）：k=4 唯一同时满足最小群 ≥5% 与重抽样 ARI ≥0.8 中轮廓最高（0.413，ARI 0.93），按实际中位数命名为 4 个群。切分点、标准化与聚类只在训练期最后一个 as_of 拟合后应用到最新快照。核对 6/6。",
+  "inputs": [
+    {
+      "path": "docs/lifecycle_rules.md",
+      "sha256": "b3b50509e1f88f9a28dbcb4c01ade3e6fd23cf260fe7f044538967e3b4f0eff3"
+    },
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/warehouse/snapshot_contract.json",
+      "sha256": "451076a9698a59a42e9fd913ba0069e98139f2416e219ce2f1cb61509f1521f9"
+    },
+    {
+      "path": "evidence/ML-05/verify_segments.py",
+      "sha256": "09d5fed9ab10202283c0c2aea37681caa435dfbe13d7980b820b6cad141d8e21"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/rfm_segments.md",
+      "sha256": "b2ab4811bda1d9013f6d6aab8bd2b4d12f0b11b42e340d7ecc8aa19624faa33c"
+    },
+    {
+      "path": "reports/model/cluster_metrics.json",
+      "sha256": "8d577f1a1e955f5e72283cc1edd5ec5e3e0c6a85c4346714eef3ee219d38cb40"
+    },
+    {
+      "path": "src/retail_bi/model/segments.py",
+      "sha256": "ace14afff03fe29030d3355a97f4eb49d7513cf3edb245f4ebc2718ac6e28d3d"
+    },
+    {
+      "path": "evidence/ML-05/segments_run.log",
+      "sha256": "b2d6b76eba1cda09cf7d155ad0ba30c9d078aebd614108da931f90607d835ca2"
+    },
+    {
+      "path": "evidence/ML-05/verification_run.log",
+      "sha256": "28ee2fb619a08c3daf05dce1731aa14e9c607c453bbb80a90c967cae99622b5a"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "R=距最近一次有效购买天数、F=近 90 天有效订单数（订单去重）、M=同窗有效订单商品金额（正向消费），同一 as_of；核对脚本从订单独立重算 704 名客户的 R/F/M 一致。近 90 天无购买者不参与分群，交给 lifecycle-v1 规则。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "先给出规则分群（切分点：30 天、拟合时点 M 第 75 百分位 203.19、F≥2），再比较 log1p+标准化后 k=3、4、5、6 的轮廓系数、最小群占比与 10 次重抽样 ARI；k=3 稳定性差（ARI 0.49），选 k=4（轮廓 0.413、ARI 0.93）；记录后续时点群体占比变化。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "群名由群体 R 与 M 中位数相对拟合时点总体中位数和平均 F 生成（核对通过），如“较早·单单·高金额”；文档写明 M 不是利润或严格 CLV；规则切分点、标准化参数与聚类中心只在训练期最后一个 as_of（2025-08-25）拟合，聚类未被用作复购特征。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "分群描述结构，不预测复购（ML-09）。",
+    "数据完全合成。"
+  ],
+  "steps": [
+    "认领 ML-05（台账 ced18b40…）。",
+    "编写 segments.py 并运行。",
+    "verify_segments.py 6/6。"
+  ],
+  "task_spec_sha256": "05770e2262c58e3c53fc7c90f96f11bb8d14397856ebeffbd5c42e661f1232db",
+  "performed_at": "2026-11-10T21:16:01.863752+08:00"
+}

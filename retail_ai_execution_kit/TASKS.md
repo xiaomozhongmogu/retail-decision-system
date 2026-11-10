@@ -55,7 +55,7 @@
 | ML-02 | 实现按时点构建监督样本 | midterm | done | ML-01, DW-05 |
 | ML-03 | 实现历史特征与缺失策略 | midterm | done | ML-02 |
 | ML-04 | 固定时间切分并审计泄漏 | midterm | done | ML-03 |
-| ML-05 | 完成RFM规则与K-Means分群 | midterm | todo | EDA-05, ML-04 |
+| ML-05 | 完成RFM规则与K-Means分群 | midterm | done | EDA-05, ML-04 |
 | ML-06 | 训练规则与逻辑回归基线 | midterm | done | ML-04 |
 | ML-07 | 训练并有限调优LightGBM | midterm | done | ML-06 |
 | ML-08 | 冻结模型、校准与阈值 | midterm | done | ML-07 |
@@ -806,7 +806,7 @@
 
 ### ML-05 完成RFM规则与K-Means分群
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C13, U03, Q03。
 - 前置：EDA-05, ML-04。
 - 允许修改：`src/retail_bi/model`, `reports/model`；另可写本任务证据/交接。
@@ -819,7 +819,7 @@
 2. 先给可解释规则分群，再比较log变换/缩放后k=3至6聚类的轮廓、规模、稳定性。
 3. 根据实际群体特征命名，历史M不称严格CLV；若用于预测特征，聚类只能训练期拟合。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-05/2026-11-10-segments.json
 
 ### ML-06 训练规则与逻辑回归基线
 

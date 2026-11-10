@@ -1615,10 +1615,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C13",
         "U03",
@@ -1641,7 +1641,9 @@
         "先给可解释规则分群，再比较log变换/缩放后k=3至6聚类的轮廓、规模、稳定性。",
         "根据实际群体特征命名，历史M不称严格CLV；若用于预测特征，聚类只能训练期拟合。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-05/2026-11-10-segments.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

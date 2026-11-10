@@ -1,0 +1,12 @@
+$ .venv/bin/python evidence/ML-05/verify_segments.py
+2026-11-10T21:15:27+08:00
+/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/ML-05/verify_segments.py:35: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  chk = app.set_index('customer_id').join(g, rsuffix='_x', how='left')
+PASS R/F/M at apply as_of recomputed from orders (same as_of, same 90-day window) 704 customers
+PASS scaler parameters come from the fit as_of only 
+PASS k choice follows the stated rule (k = 3..6 compared) [4, 5]
+PASS rule segments and clusters cover the whole population 
+PASS cluster names follow measured medians 
+PASS M not called profit or CLV 
+6/6 passed
+exit=0

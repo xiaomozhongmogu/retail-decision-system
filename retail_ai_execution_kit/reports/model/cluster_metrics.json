@@ -1,0 +1,268 @@
+{
+  "task_id": "ML-05",
+  "version": "segments-v1",
+  "release": "wh-db316daf8021",
+  "definition": {
+    "as_of_fit": "2025-08-25 00:00:00+00",
+    "as_of_apply": "2026-11-02 00:00:00+00",
+    "R": "距最近一次有效购买天数",
+    "F": "近 90 天有效订单数（按订单去重）",
+    "M": "近 90 天有效订单商品金额 USD（正向消费，不含运费，不是利润或严格 CLV）",
+    "population": "F >= 1（近 90 天有购买）",
+    "excluded": "近 90 天无购买的客户由生命周期规则（EDA-05）管理"
+  },
+  "rule_segments": {
+    "cut_points_fitted_on_fit_as_of": {
+      "r_recent_days": 30.0,
+      "m_high_usd": 203.19
+    },
+    "fit_as_of_profile": [
+      {
+        "segment": "较早一般（30–90 天前买过，单单且金额一般）",
+        "customers": 317,
+        "share": 0.4662,
+        "r_median_days": 60.2,
+        "f_mean": 1.0,
+        "m_median_usd": 84.09,
+        "m_total_share": 0.2561
+      },
+      {
+        "segment": "较早高价值（30–90 天前买过，且多单或高金额）",
+        "customers": 115,
+        "share": 0.1691,
+        "r_median_days": 56.5,
+        "f_mean": 1.29,
+        "m_median_usd": 294.52,
+        "m_total_share": 0.3606
+      },
+      {
+        "segment": "近期一般（30 天内买过，单单且金额一般）",
+        "customers": 161,
+        "share": 0.2368,
+        "r_median_days": 15.1,
+        "f_mean": 1.0,
+        "m_median_usd": 66.16,
+        "m_total_share": 0.1221
+      },
+      {
+        "segment": "近期高价值（30 天内买过，且多单或高金额）",
+        "customers": 87,
+        "share": 0.1279,
+        "r_median_days": 14.6,
+        "f_mean": 1.54,
+        "m_median_usd": 279.11,
+        "m_total_share": 0.2612
+      }
+    ],
+    "apply_as_of_profile": [
+      {
+        "segment": "较早一般（30–90 天前买过，单单且金额一般）",
+        "customers": 250,
+        "share": 0.3551,
+        "r_median_days": 60.4,
+        "f_mean": 1.0,
+        "m_median_usd": 74.93,
+        "m_total_share": 0.1741
+      },
+      {
+        "segment": "较早高价值（30–90 天前买过，且多单或高金额）",
+        "customers": 144,
+        "share": 0.2045,
+        "r_median_days": 58.8,
+        "f_mean": 1.22,
+        "m_median_usd": 292.78,
+        "m_total_share": 0.4014
+      },
+      {
+        "segment": "近期一般（30 天内买过，单单且金额一般）",
+        "customers": 205,
+        "share": 0.2912,
+        "r_median_days": 16.6,
+        "f_mean": 1.0,
+        "m_median_usd": 69.98,
+        "m_total_share": 0.1397
+      },
+      {
+        "segment": "近期高价值（30 天内买过，且多单或高金额）",
+        "customers": 105,
+        "share": 0.1491,
+        "r_median_days": 14.6,
+        "f_mean": 1.56,
+        "m_median_usd": 283.77,
+        "m_total_share": 0.2848
+      }
+    ]
+  },
+  "kmeans": {
+    "preprocessing": "log1p 后按拟合 as_of 的均值、标准差标准化",
+    "mu": [
+      3.491473,
+      0.739983,
+      4.695729
+    ],
+    "sd": [
+      0.919931,
+      0.13514,
+      0.931414
+    ],
+    "k_comparison": {
+      "3": {
+        "silhouette": 0.4187,
+        "min_cluster_share": 0.1103,
+        "bootstrap_ari_mean": 0.4899,
+        "bootstrap_ari_min": 0.2132,
+        "inertia": 907.2
+      },
+      "4": {
+        "silhouette": 0.4127,
+        "min_cluster_share": 0.1103,
+        "bootstrap_ari_mean": 0.9302,
+        "bootstrap_ari_min": 0.8049,
+        "inertia": 591.2
+      },
+      "5": {
+        "silhouette": 0.373,
+        "min_cluster_share": 0.1103,
+        "bootstrap_ari_mean": 0.8429,
+        "bootstrap_ari_min": 0.4423,
+        "inertia": 498.4
+      },
+      "6": {
+        "silhouette": 0.3706,
+        "min_cluster_share": 0.0338,
+        "bootstrap_ari_mean": 0.805,
+        "bootstrap_ari_min": 0.4986,
+        "inertia": 424.8
+      }
+    },
+    "selection_rule": "最小群占比 ≥ 5% 且重抽样平均 ARI ≥ 0.8 的 k 中轮廓系数最高者",
+    "k_chosen": 4,
+    "centers_scaled": [
+      [
+        0.4892,
+        -0.3466,
+        0.5922
+      ],
+      [
+        -1.6547,
+        -0.3466,
+        0.0516
+      ],
+      [
+        0.3309,
+        -0.3466,
+        -1.0511
+      ],
+      [
+        -0.5332,
+        2.7957,
+        0.8295
+      ]
+    ],
+    "names": {
+      "0": "较早·单单·高金额",
+      "1": "近期·单单·低金额",
+      "2": "较早·单单·低金额",
+      "3": "近期·多单·高金额"
+    },
+    "fit_as_of_profile": [
+      {
+        "segment": "0",
+        "customers": 280,
+        "share": 0.4118,
+        "r_median_days": 56.4,
+        "f_mean": 1.0,
+        "m_median_usd": 168.69,
+        "m_total_share": 0.5566,
+        "name": "较早·单单·高金额"
+      },
+      {
+        "segment": "1",
+        "customers": 103,
+        "share": 0.1515,
+        "r_median_days": 7.2,
+        "f_mean": 1.0,
+        "m_median_usd": 113.7,
+        "m_total_share": 0.1454,
+        "name": "近期·单单·低金额"
+      },
+      {
+        "segment": "2",
+        "customers": 222,
+        "share": 0.3265,
+        "r_median_days": 47.9,
+        "f_mean": 1.0,
+        "m_median_usd": 44.26,
+        "m_total_share": 0.0907,
+        "name": "较早·单单·低金额"
+      },
+      {
+        "segment": "3",
+        "customers": 75,
+        "share": 0.1103,
+        "r_median_days": 26.2,
+        "f_mean": 2.07,
+        "m_median_usd": 235.39,
+        "m_total_share": 0.2073,
+        "name": "近期·多单·高金额"
+      }
+    ],
+    "apply_as_of_profile": [
+      {
+        "segment": "较早·单单·低金额",
+        "customers": 226,
+        "share": 0.321,
+        "r_median_days": 42.7,
+        "f_mean": 1.0,
+        "m_median_usd": 45.98,
+        "m_total_share": 0.089
+      },
+      {
+        "segment": "较早·单单·高金额",
+        "customers": 275,
+        "share": 0.3906,
+        "r_median_days": 52.4,
+        "f_mean": 1.0,
+        "m_median_usd": 205.81,
+        "m_total_share": 0.5641
+      },
+      {
+        "segment": "近期·单单·低金额",
+        "customers": 118,
+        "share": 0.1676,
+        "r_median_days": 9.4,
+        "f_mean": 1.0,
+        "m_median_usd": 110.62,
+        "m_total_share": 0.1499
+      },
+      {
+        "segment": "近期·多单·高金额",
+        "customers": 85,
+        "share": 0.1207,
+        "r_median_days": 22.6,
+        "f_mean": 2.07,
+        "m_median_usd": 240.56,
+        "m_total_share": 0.197
+      }
+    ],
+    "share_by_cluster_later_as_of": {
+      "2025-12-01 00:00:00+00": {
+        "较早·单单·高金额": 0.4198,
+        "近期·单单·低金额": 0.163,
+        "较早·单单·低金额": 0.3062,
+        "近期·多单·高金额": 0.1111
+      },
+      "2026-06-01 00:00:00+00": {
+        "较早·单单·高金额": 0.4281,
+        "近期·单单·低金额": 0.1654,
+        "较早·单单·低金额": 0.3246,
+        "近期·多单·高金额": 0.0819
+      }
+    }
+  },
+  "leakage_note": "规则切分点、标准化参数与聚类中心只用训练期最后一个 as_of 拟合；若作为模型特征必须保持这一做法",
+  "rows": {
+    "fit": 680,
+    "apply": 704
+  }
+}

@@ -1,0 +1,4 @@
+$ .venv/bin/python src/retail_bi/model/segments.py
+2026-11-10T21:15:06+08:00
+{"k": {"3": {"silhouette": 0.4187, "min_cluster_share": 0.1103, "bootstrap_ari_mean": 0.4899, "bootstrap_ari_min": 0.2132, "inertia": 907.2}, "4": {"silhouette": 0.4127, "min_cluster_share": 0.1103, "bootstrap_ari_mean": 0.9302, "bootstrap_ari_min": 0.8049, "inertia": 591.2}, "5": {"silhouette": 0.373, "min_cluster_share": 0.1103, "bootstrap_ari_mean": 0.8429, "bootstrap_ari_min": 0.4423, "inertia": 498.4}, "6": {"silhouette": 0.3706, "min_cluster_share": 0.0338, "bootstrap_ari_mean": 0.805, "bootstrap_ari_min": 0.4986, "inertia": 424.8}}, "chosen": 4, "names": {"0": "较早·单单·高金额", "1": "近期·单单·低金额", "2": "较早·单单·低金额", "3": "近期·多单·高金额"}}
+exit=0
