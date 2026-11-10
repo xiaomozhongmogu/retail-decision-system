@@ -26,7 +26,7 @@
 | DATA-01 | 核验候选数据来源与许可 | proposal | done | GOV-05 |
 | DATA-02 | 实读候选文件并探查字段 | proposal | done | DATA-01, GOV-07 |
 | DATA-03 | 确认唯一主数据路线 | proposal | done | DATA-02 |
-| DATA-04 | 完成正式数据契约和字典 | proposal | todo | DATA-03 |
+| DATA-04 | 完成正式数据契约和字典 | proposal | done | DATA-03 |
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | in_review | DATA-04 |
 | DATA-06 | 全量质量剖析与问题基线 | proposal | todo | DATA-05 |
 | DATA-07 | 处理缺失、类型与重复导入 | proposal | todo | DATA-06 |
@@ -195,7 +195,7 @@
 2. 主路线若只有交易数据，明确从首次可观测购买开始，不编造浏览漏斗、真实首购或渠道归因。
 3. 生命周期规则、价值聚类、未来未复购风险和营销增量效果分开定义。
 
-证据：evidence/GOV-05/2026-11-09-scope-review-recheck.json
+证据：evidence/GOV-05/2026-11-10-data04-recheck.json
 
 ### GOV-06 冻结轻量架构和公共接口草案
 
@@ -212,7 +212,7 @@
 2. 选择可运行的轻量技术栈，版本在安装验证后锁定；不为了工具数量增加集群。
 3. 接口包含as_of、版本、单位、空结果与错误结构；此时允许契约草案，不能假称业务实现。
 
-证据：evidence/GOV-06/2026-11-09-architecture.json
+证据：evidence/GOV-06/2026-11-10-data04-recheck.json
 
 ### GOV-07 建立环境、目录和命令入口
 
@@ -266,7 +266,7 @@
 2. 至少核验主候选和备选的可下载性；账号或权限需求明确记录，不绕过访问控制。
 3. UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。
 
-证据：evidence/DATA-01/2026-11-10-d013-recheck.json
+证据：evidence/DATA-01/2026-11-10-data04-recheck.json
 
 ### DATA-02 实读候选文件并探查字段
 
@@ -300,11 +300,11 @@
 2. 确认采用交易路线还是行为路线，并列出被删除或调整的指标/模型/页面。
 3. 不得拼接无关来源用户ID；核验至少8个有意义的源业务字段，不以拆日期或模拟补列凑数；D012工作假设允许工程验收，不冒称教师实际确认。
 
-证据：evidence/DATA-03/2026-11-10-route-selection.json
+证据：evidence/DATA-03/2026-11-10-data04-recheck.json
 
 ### DATA-04 完成正式数据契约和字典
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C04, C05, C08, Q01。
 - 前置：DATA-03。
 - 允许修改：`contracts`, `docs`；另可写本任务证据/交接。
@@ -317,7 +317,7 @@
 2. 合同状态由candidate改为approved需要DATA-03证据；核验的有效业务字段至少8，并区分源字段与可验证的真实关联字段。
 3. 交易数据不能虚构渠道/毛利；行为数据缺订单/金额时使用明确代理指标并同步规格。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-04/2026-11-10-contract.json
 
 ### DATA-05 实现完整导入和原始数据登记
 

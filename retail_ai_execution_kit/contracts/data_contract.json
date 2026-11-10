@@ -1,104 +1,2755 @@
 {
-  "status": "candidate_not_approved",
-  "selected_dataset": null,
-  "candidate_baseline": "Online Retail II; 仅在教师认可历史交易时正式采用",
+  "status": "approved",
+  "approval_basis": {
+    "route_decision": "reports/data/dataset_selection.md",
+    "route_evidence": "evidence/DATA-03/2026-11-10-route-selection.json",
+    "decisions": [
+      "ops/DECISIONS.md#d012",
+      "ops/DECISIONS.md#d013"
+    ],
+    "nature": "依据 D012 用户授权的工程工作假设批准；不是教师确认"
+  },
+  "contract_version": "synthetic-transaction-v1",
+  "superseded": "UCI Online Retail II 候选契约（GBP、invoice、quantity×unit_price）已作废，见 D013",
+  "selected_dataset": {
+    "name": "Synthetic Ecommerce Dataset baseline_10000_seed42",
+    "nature": "fully_synthetic",
+    "source_archive_sha256": "d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16",
+    "generator_run": "simulation_run_20260721_003414_baseline_seed42",
+    "engineering_layer_version": "engineering-import-v1",
+    "engineering_manifest": "reports/data/source_manifest.json",
+    "license_note": "网站下载件未标明数据许可；同作者仓库同类样例为 CC0，代码为 MIT；原始数据只用于课程，不对外发布（C07）"
+  },
   "source_manifest": "reports/data/source_manifest.json",
-  "freshness_decision": "ops/DECISIONS.md#d001",
-  "event_timezone": null,
+  "freshness_decision": "ops/DECISIONS.md#d012",
+  "event_timezone": "naive source; UTC engineering assumption; display in Asia/Shanghai only after explicit conversion",
+  "as_of_exclusive": "2026-11-08T00:00:00+00:00",
+  "business_currency": "USD",
+  "grain": {
+    "orders": "一行一个订单",
+    "order_items": "一行一个订单明细（订单内序号）；没有数量列",
+    "payments": "一行一次支付（订单内序号 1–2）",
+    "shipping": "一行一个订单的物流记录",
+    "reviews": "一行一条评价；每单至多一条"
+  },
   "size_rule": {
     "min_records": 10000,
-    "or_min_bytes": 10000000
+    "or_min_bytes": 10000000,
+    "measured": {
+      "order_items_rows": 15639,
+      "orders_rows": 9311
+    },
+    "passed": true
   },
-  "grain": "invoice line; 候选路线，实际读取后验证",
-  "business_currency": "GBP for UCI route only",
-  "fields": [
+  "effective_business_field_min": 8,
+  "effective_business_fields": [
+    "customers.customer_state",
+    "customers.customer_region",
+    "products.product_category",
+    "orders.order_id",
+    "orders.customer_id",
+    "orders.order_status",
+    "orders.order_purchase_timestamp",
+    "orders.order_delivered_customer_date",
+    "order_items.product_id",
+    "order_items.seller_id",
+    "order_items.item_price_usd",
+    "order_items.shipping_cost_usd",
+    "payments.payment_type",
+    "payments.payment_installments",
+    "payments.payment_value_usd",
+    "shipping.estimated_delivery_days",
+    "reviews.review_score"
+  ],
+  "effective_business_field_count": 17,
+  "field_counting_policy": "只计业务含义独立的源字段；同一标识只在事实表外键处计一次；不计日期拆分列、scenario_name、生成器标签、由其他列推出的派生列、冗余拷贝、与主键 1:1 的冗余标识。通过已校验主键到达的字段列在 verified_related_fields，不重复计数。",
+  "verified_related_fields": [
     {
-      "name": "invoice_id",
-      "source_aliases": [
-        "Invoice",
-        "InvoiceNo"
-      ],
-      "type": "string",
-      "meaning": "发票交易标识，保留取消前缀"
+      "field": "products.product_category",
+      "reached_from": "order_items.product_id",
+      "coverage_rows": 15639,
+      "child_rows": 15639
     },
     {
-      "name": "product_id",
-      "source_aliases": [
-        "StockCode"
-      ],
-      "type": "string",
-      "meaning": "商品编码"
+      "field": "customers.customer_state / customer_region",
+      "reached_from": "orders.customer_id",
+      "coverage_rows": 9311,
+      "child_rows": 9311
     },
     {
-      "name": "product_name",
-      "source_aliases": [
-        "Description"
-      ],
-      "type": "string",
-      "nullable": true,
-      "meaning": "商品描述"
+      "field": "sellers.seller_state / seller_region",
+      "reached_from": "order_items.seller_id",
+      "coverage_rows": 15639,
+      "child_rows": 15639
     },
     {
-      "name": "quantity",
-      "source_aliases": [
-        "Quantity"
-      ],
-      "type": "integer",
-      "meaning": "明细数量，负值单独分类"
+      "field": "reviews.review_score",
+      "reached_from": "reviews.order_id -> orders",
+      "coverage_rows": 6190,
+      "child_rows": 9311,
+      "note": "只有部分订单有评价（不是缺失值，是没有评价）"
     },
     {
-      "name": "invoice_time",
-      "source_aliases": [
-        "InvoiceDate"
-      ],
-      "type": "timestamp",
-      "meaning": "发票发生时间，源时区待核"
-    },
-    {
-      "name": "unit_price",
-      "source_aliases": [
-        "Price",
-        "UnitPrice"
-      ],
-      "type": "decimal(18,4)",
-      "meaning": "源币种单价"
-    },
-    {
-      "name": "customer_id",
-      "source_aliases": [
-        "Customer ID",
-        "CustomerID"
-      ],
-      "type": "string",
-      "nullable": true,
-      "meaning": "客户标识，不均值填充"
-    },
-    {
-      "name": "country",
-      "source_aliases": [
-        "Country"
-      ],
-      "type": "string",
-      "meaning": "源国家字段"
+      "field": "payments.payment_type / payment_installments",
+      "reached_from": "payments.order_id -> orders",
+      "coverage_rows": 9311,
+      "child_rows": 9311
     }
   ],
+  "keys": {
+    "pk:customers": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:sellers": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:products": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:seller_products": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:orders": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:order_items": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:payments": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:shipping": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:reviews": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "pk:calendar": {
+      "duplicates": 0,
+      "nulls": 0
+    },
+    "unique:reviews.order_id": {
+      "duplicates": 0
+    },
+    "unique:customers.customer_unique_id": {
+      "duplicates": 0
+    },
+    "fk:orders.customer_id->customers.customer_id": {
+      "orphans": 0,
+      "child_rows": 9311
+    },
+    "fk:order_items.order_id->orders.order_id": {
+      "orphans": 0,
+      "child_rows": 15639
+    },
+    "fk:order_items.product_id->products.product_id": {
+      "orphans": 0,
+      "child_rows": 15639
+    },
+    "fk:order_items.seller_id->sellers.seller_id": {
+      "orphans": 0,
+      "child_rows": 15639
+    },
+    "fk:order_items.seller_product_id->seller_products.seller_product_id": {
+      "orphans": 0,
+      "child_rows": 15639
+    },
+    "fk:seller_products.seller_id->sellers.seller_id": {
+      "orphans": 0,
+      "child_rows": 13966
+    },
+    "fk:seller_products.product_id->products.product_id": {
+      "orphans": 0,
+      "child_rows": 13966
+    },
+    "fk:payments.order_id->orders.order_id": {
+      "orphans": 0,
+      "child_rows": 10010
+    },
+    "fk:shipping.order_id->orders.order_id": {
+      "orphans": 0,
+      "child_rows": 9311
+    },
+    "fk:reviews.order_id->orders.order_id": {
+      "orphans": 0,
+      "child_rows": 6190
+    }
+  },
+  "consistency_checks": {
+    "order_items listing matches seller and product": 0,
+    "item_total = item_price + item_shipping": 0,
+    "sum(payment_value) = sum(item_total) per order": 0,
+    "shipping.order_shipping = sum(item_shipping) per order": 0,
+    "shipping.destination_state = customers.customer_state": 0,
+    "shipping.destination_region = customers.customer_region": 0,
+    "shipping.origin_state = sellers.seller_state": 0,
+    "order_status implied by approved/carrier/delivered timestamps": 0,
+    "orders with >1 distinct seller": 0,
+    "purchase_ts year/month equal order_year/order_month": 0
+  },
+  "availability_rules": {
+    "history_source": "DATA-05 历史层：按下单时间截止，保留源字符串和期末/未来字段；不是安全特征表",
+    "observed": "DATA-05 观察视图：截止后的审批/发货/送达/答复时间置空，截止后创建的评价排除",
+    "feature_policy_values": {
+      "key": "连接键，不作特征",
+      "static": "主数据属性，可直接使用",
+      "as_of": "只能使用 as_of 之前已发生/已可得的值",
+      "label_source": "只用于构造指标或标签（DATA-08、ML-01），不作特征",
+      "blocked": "不得入模；部分可在页面展示并标注"
+    }
+  },
+  "not_available": [
+    "购买数量",
+    "退款金额与时间",
+    "取消发生时间",
+    "订单状态历史",
+    "支付时间",
+    "获客渠道",
+    "浏览/加购/曝光",
+    "营销触达与同意",
+    "优惠券",
+    "成本与毛利",
+    "库存",
+    "投诉",
+    "年龄与性别"
+  ],
   "forbidden_assumptions": [
-    "没有数据支持的渠道/毛利/年龄/同意/投诉/库存",
-    "将更新日当交易日",
-    "将无关数据集用户ID合并",
-    "金额代理冒充实际净销售额"
+    "把 order_item_id 当数量或假设每行 1 件",
+    "把 order_status 最终状态当作下单时可知",
+    "把生成器标签（customer_segment、customer_lifecycle_stage、review_sentiment_label、seller_* 参数）当特征或真值",
+    "把 payment_value_usd 称为已实现收入或退款后收入",
+    "虚构渠道、毛利、库存、营销同意或投诉",
+    "把合成建档日期称为真实注册或获客时间",
+    "把合成数据结论写成真实企业或真实顾客行为",
+    "拼接其他数据集的用户 ID"
   ],
-  "required_after_selection": [
-    "actual_headers",
-    "source_versions_and_hashes",
-    "actual_time_coverage",
-    "key_validation",
-    "field_nullability",
-    "scope_rules",
-    "freshness_evidence"
-  ],
-  "effective_business_field_min": 8,
-  "field_counting_policy": "区分真实源字段、可验证关联字段与派生/模拟字段；至少8个有效业务字段，不能拆日期或加导入元数据凑数。",
+  "tables": {
+    "customers": {
+      "rows": 3647,
+      "primary_key": [
+        "customer_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "customer_id",
+          "standard_name": "customer_id",
+          "type": "string",
+          "meaning": "客户标识",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": "在 orders.customer_id 处计有效字段",
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 3647,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_unique_id",
+          "standard_name": "customer_unique_id",
+          "type": "string",
+          "meaning": "客户稳定身份标识；实测与 customer_id 一一对应",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": "与 customer_id 1:1，不提供额外信息，不计有效字段",
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 3647,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_state",
+          "standard_name": "customer_state",
+          "type": "string",
+          "meaning": "客户所在州（美国州缩写）",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 51,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_city",
+          "standard_name": "customer_city",
+          "type": "string",
+          "meaning": "客户所在城市",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "合成城市，基数高，只作展示",
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 103,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_region",
+          "standard_name": "customer_region",
+          "type": "string",
+          "meaning": "客户所在大区（人口普查口径四区）",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "Midwest": 779,
+              "Northeast": 659,
+              "South": 1367,
+              "West": 842
+            }
+          }
+        },
+        {
+          "raw_name": "customer_zip_prefix",
+          "standard_name": "customer_zip_prefix",
+          "type": "string",
+          "meaning": "五位邮编前缀，按字符串保留前导零",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "近似唯一，不作分析维度",
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 3589,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_segment",
+          "standard_name": "customer_segment",
+          "type": "string",
+          "meaning": "生成器预设的客户分群",
+          "unit": null,
+          "role": "generator_label",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "生成器标签：不作特征、不作真值",
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 5,
+            "type_parse_failures": 0,
+            "values": {
+              "category_loyal": 359,
+              "discount_sensitive": 552,
+              "high_value_buyer": 360,
+              "occasional_buyer": 1041,
+              "one_time_buyer": 1335
+            }
+          }
+        },
+        {
+          "raw_name": "customer_lifecycle_stage",
+          "standard_name": "customer_lifecycle_stage",
+          "type": "string",
+          "meaning": "生成器预设的生命周期阶段",
+          "unit": null,
+          "role": "generator_label",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": "期末快照值，不知道变化时间",
+          "note": "生成器标签且为期末值；生命周期状态由 EDA-05 按规则重算",
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "active": 1511,
+              "at_risk": 438,
+              "new": 705,
+              "returning": 993
+            }
+          }
+        },
+        {
+          "raw_name": "created_at",
+          "standard_name": "customer_created_date",
+          "type": "date",
+          "meaning": "合成客户建档日期",
+          "unit": null,
+          "role": "master_time",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": "日粒度；只能称“合成建档”，不是真实注册或获客时间；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/customers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 3647,
+            "null_count": 0,
+            "distinct_nonnull": 181,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 00:00:00",
+            "max": "2024-06-29 00:00:00"
+          }
+        }
+      ]
+    },
+    "sellers": {
+      "rows": 800,
+      "primary_key": [
+        "seller_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "seller_id",
+          "standard_name": "seller_id",
+          "type": "string",
+          "meaning": "卖家标识",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": "在 order_items.seller_id 处计有效字段",
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 800,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_state",
+          "standard_name": "seller_state",
+          "type": "string",
+          "meaning": "卖家所在州",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 51,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_city",
+          "standard_name": "seller_city",
+          "type": "string",
+          "meaning": "卖家所在城市",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 102,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_region",
+          "standard_name": "seller_region",
+          "type": "string",
+          "meaning": "卖家所在大区",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "Midwest": 154,
+              "Northeast": 185,
+              "South": 272,
+              "West": 189
+            }
+          }
+        },
+        {
+          "raw_name": "seller_zip_prefix",
+          "standard_name": "seller_zip_prefix",
+          "type": "string",
+          "meaning": "卖家邮编前缀，按字符串保留前导零",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 795,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_segment",
+          "standard_name": "seller_segment",
+          "type": "string",
+          "meaning": "生成器预设的卖家分群",
+          "unit": null,
+          "role": "generator_label",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 5,
+            "type_parse_failures": 0,
+            "values": {
+              "at_risk": 80,
+              "growth_seller": 104,
+              "high_volume": 40,
+              "long_tail": 360,
+              "premium": 216
+            }
+          }
+        },
+        {
+          "raw_name": "seller_quality_score",
+          "standard_name": "seller_quality_score",
+          "type": "double",
+          "meaning": "生成器的卖家质量参数（0–1）",
+          "unit": "ratio 0-1",
+          "role": "generator_label",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 711,
+            "type_parse_failures": 0,
+            "min": "0.45",
+            "max": "0.988"
+          }
+        },
+        {
+          "raw_name": "seller_fulfillment_capacity",
+          "standard_name": "seller_fulfillment_capacity",
+          "type": "double",
+          "meaning": "生成器的履约能力参数（0–1）",
+          "unit": "ratio 0-1",
+          "role": "generator_label",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 686,
+            "type_parse_failures": 0,
+            "min": "0.2",
+            "max": "0.8185"
+          }
+        },
+        {
+          "raw_name": "seller_active_flag",
+          "standard_name": "seller_active_flag",
+          "type": "boolean",
+          "meaning": "期末是否活跃",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": "期末快照值，不知道变化时间",
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "True": 800
+            }
+          }
+        },
+        {
+          "raw_name": "created_at",
+          "standard_name": "seller_created_date",
+          "type": "date",
+          "meaning": "合成卖家创建日期（全部为 2024-01-01）",
+          "unit": null,
+          "role": "master_time",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": "日粒度；单一值；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 800,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 00:00:00",
+            "max": "2024-01-01 00:00:00"
+          }
+        },
+        {
+          "raw_name": "deactivated_at",
+          "standard_name": "seller_deactivated_date",
+          "type": "date",
+          "meaning": "卖家停用日期（本场景全部为空）",
+          "unit": null,
+          "role": "master_time",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": "全空；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/sellers.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": true,
+          "profile": {
+            "rows": 800,
+            "null_count": 800,
+            "distinct_nonnull": 0,
+            "type_parse_failures": 0
+          }
+        }
+      ]
+    },
+    "products": {
+      "rows": 8000,
+      "primary_key": [
+        "product_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "product_id",
+          "standard_name": "product_id",
+          "type": "string",
+          "meaning": "商品标识",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": "在 order_items.product_id 处计有效字段",
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 8000,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "product_category",
+          "standard_name": "product_category",
+          "type": "string",
+          "meaning": "商品品类（16 类，英文通用名）",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 16,
+            "type_parse_failures": 0,
+            "values": {
+              "Automotive": 524,
+              "Baby Products": 487,
+              "Books & Media": 525,
+              "Electronics & Accessories": 500,
+              "Fashion": 517,
+              "Furniture & Decor": 470,
+              "Garden & Outdoor": 513,
+              "Health & Beauty": 488,
+              "Home & Bedding": 510,
+              "Home Goods": 473,
+              "Mobile & Telecom": 527,
+              "Office Supplies": 485,
+              "Pet Supplies": 518,
+              "Sports & Outdoors": 496,
+              "Toys & Games": 428,
+              "Watches & Gifts": 539
+            }
+          }
+        },
+        {
+          "raw_name": "product_name",
+          "standard_name": "product_name",
+          "type": "string",
+          "meaning": "通用无品牌商品名",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "每个商品唯一，只作展示",
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 8000,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "product_weight_g",
+          "standard_name": "product_weight_g",
+          "type": "integer",
+          "meaning": "商品重量",
+          "unit": "g",
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 3668,
+            "type_parse_failures": 0,
+            "min": "50",
+            "max": "30000"
+          }
+        },
+        {
+          "raw_name": "product_length_cm",
+          "standard_name": "product_length_cm",
+          "type": "double",
+          "meaning": "商品长度",
+          "unit": "cm",
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 156,
+            "type_parse_failures": 0,
+            "min": "4.0",
+            "max": "21.8"
+          }
+        },
+        {
+          "raw_name": "product_height_cm",
+          "standard_name": "product_height_cm",
+          "type": "double",
+          "meaning": "商品高度",
+          "unit": "cm",
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 108,
+            "type_parse_failures": 0,
+            "min": "2.0",
+            "max": "16.4"
+          }
+        },
+        {
+          "raw_name": "product_width_cm",
+          "standard_name": "product_width_cm",
+          "type": "double",
+          "meaning": "商品宽度",
+          "unit": "cm",
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 129,
+            "type_parse_failures": 0,
+            "min": "3.0",
+            "max": "17.8"
+          }
+        },
+        {
+          "raw_name": "product_price_base_usd",
+          "standard_name": "product_price_base_usd",
+          "type": "decimal(12,2)",
+          "meaning": "商品基准价（目录价，不是成交价）",
+          "unit": "USD",
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 6236,
+            "type_parse_failures": 0,
+            "min": "5.93",
+            "max": "1176.47"
+          }
+        },
+        {
+          "raw_name": "created_at",
+          "standard_name": "product_created_date",
+          "type": "date",
+          "meaning": "商品创建日期（全部为 2024-01-01）",
+          "unit": null,
+          "role": "master_time",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": "日粒度；单一值；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 8000,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 00:00:00",
+            "max": "2024-01-01 00:00:00"
+          }
+        }
+      ]
+    },
+    "seller_products": {
+      "rows": 13966,
+      "primary_key": [
+        "seller_product_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "seller_product_id",
+          "standard_name": "seller_product_id",
+          "type": "string",
+          "meaning": "卖家上架商品标识",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 13966,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_id",
+          "standard_name": "seller_id",
+          "type": "string",
+          "meaning": "上架卖家",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 800,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "product_id",
+          "standard_name": "product_id",
+          "type": "string",
+          "meaning": "上架商品",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 8000,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_price_usd",
+          "standard_name": "seller_price_usd",
+          "type": "decimal(12,2)",
+          "meaning": "卖家标价（不是成交价）",
+          "unit": "USD",
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 9431,
+            "type_parse_failures": 0,
+            "min": "5.72",
+            "max": "1187.35"
+          }
+        },
+        {
+          "raw_name": "listing_created_at",
+          "standard_name": "listing_created_date",
+          "type": "date",
+          "meaning": "上架日期（全部为 2024-01-01）",
+          "unit": null,
+          "role": "master_time",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": "日粒度；单一值；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 00:00:00",
+            "max": "2024-01-01 00:00:00"
+          }
+        },
+        {
+          "raw_name": "listing_active_flag",
+          "standard_name": "listing_active_flag",
+          "type": "boolean",
+          "meaning": "期末是否仍上架",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": "期末快照值，不知道变化时间",
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "True": 13966
+            }
+          }
+        },
+        {
+          "raw_name": "scenario_name",
+          "standard_name": "scenario_name",
+          "type": "string",
+          "meaning": "生成场景名（全部 baseline）",
+          "unit": null,
+          "role": "scenario",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/seller_products.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 13966,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "baseline": 13966
+            }
+          }
+        }
+      ]
+    },
+    "orders": {
+      "rows": 9311,
+      "primary_key": [
+        "order_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "order_id",
+          "standard_name": "order_id",
+          "type": "string",
+          "meaning": "订单标识",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": true,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 9311,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_id",
+          "standard_name": "customer_id",
+          "type": "string",
+          "meaning": "下单客户",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": true,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 3356,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "order_status",
+          "standard_name": "order_status",
+          "type": "string",
+          "meaning": "订单最终状态：delivered / shipped / processing / cancelled",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "label_source",
+          "time_semantics": "期末快照值，不知道变化时间；没有取消发生时间",
+          "note": "只用于指标口径（DATA-08），不作特征。实测与时间戳严格对应：cancelled=无审批，processing=已审批未交承运，shipped=已交承运未送达，delivered=已送达；as_of 时的非取消状态可由时间戳重建，取消时间未知",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "cancelled": 194,
+              "delivered": 8655,
+              "processing": 283,
+              "shipped": 179
+            }
+          }
+        },
+        {
+          "raw_name": "order_purchase_timestamp",
+          "standard_name": "purchase_ts",
+          "type": "timestamp",
+          "meaning": "下单时间；订单事实的业务时间",
+          "unit": null,
+          "role": "event_time",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": "秒粒度；事件时间；下单时即可得；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 9310,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 09:06:48",
+            "max": "2026-11-07 22:15:48"
+          }
+        },
+        {
+          "raw_name": "order_approved_at",
+          "standard_name": "approved_ts",
+          "type": "timestamp",
+          "meaning": "支付审批时间",
+          "unit": null,
+          "role": "event_time",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "秒粒度；事件发生时可得；截止后发生的在 observed 视图置空；历史层空值 194 条全部是 cancelled；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": true,
+          "profile": {
+            "rows": 9311,
+            "null_count": 194,
+            "distinct_nonnull": 9116,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 12:24:55",
+            "max": "2026-11-08 21:05:07"
+          }
+        },
+        {
+          "raw_name": "order_estimated_delivery_date",
+          "standard_name": "estimated_delivery_date",
+          "type": "date",
+          "meaning": "预计送达日期（计划值）",
+          "unit": null,
+          "role": "plan_time",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": "日粒度；计划值，生成/告知时点未知，暂不开放为特征；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 1044,
+            "type_parse_failures": 0,
+            "min": "2024-01-08 00:00:00",
+            "max": "2026-11-16 00:00:00"
+          }
+        },
+        {
+          "raw_name": "order_delivered_carrier_date",
+          "standard_name": "carrier_handoff_ts",
+          "type": "timestamp",
+          "meaning": "交给承运商时间",
+          "unit": null,
+          "role": "event_time",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "秒粒度；截止后发生的在 observed 视图置空；历史层空值=processing 或 cancelled；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": true,
+          "profile": {
+            "rows": 9311,
+            "null_count": 477,
+            "distinct_nonnull": 8833,
+            "type_parse_failures": 0,
+            "min": "2024-01-03 12:24:55",
+            "max": "2026-11-11 15:03:52"
+          }
+        },
+        {
+          "raw_name": "order_delivered_customer_date",
+          "standard_name": "delivered_ts",
+          "type": "timestamp",
+          "meaning": "实际送达客户时间",
+          "unit": null,
+          "role": "event_time",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": "秒粒度；截止后发生的在 observed 视图置空；历史层空值=shipped、processing 或 cancelled；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": true,
+          "profile": {
+            "rows": 9311,
+            "null_count": 656,
+            "distinct_nonnull": 8655,
+            "type_parse_failures": 0,
+            "min": "2024-01-08 11:33:00",
+            "max": "2026-11-21 14:05:07"
+          }
+        },
+        {
+          "raw_name": "order_year",
+          "standard_name": "order_year",
+          "type": "integer",
+          "meaning": "下单年（由下单时间拆出）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "日期拆分列，不计有效字段；数仓用日期维代替",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 3,
+            "type_parse_failures": 0,
+            "min": "2024",
+            "max": "2026",
+            "values": {
+              "2024": 3314,
+              "2025": 3374,
+              "2026": 2623
+            }
+          }
+        },
+        {
+          "raw_name": "order_quarter",
+          "standard_name": "order_quarter",
+          "type": "integer",
+          "meaning": "下单季度（由下单时间拆出）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "日期拆分列，不计有效字段；数仓用日期维代替",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "4",
+            "values": {
+              "1": 2237,
+              "2": 2175,
+              "3": 2331,
+              "4": 2568
+            }
+          }
+        },
+        {
+          "raw_name": "order_month",
+          "standard_name": "order_month",
+          "type": "integer",
+          "meaning": "下单月（由下单时间拆出）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "日期拆分列，不计有效字段；数仓用日期维代替",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 12,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "12",
+            "values": {
+              "1": 754,
+              "10": 1036,
+              "11": 778,
+              "12": 754,
+              "2": 688,
+              "3": 795,
+              "4": 697,
+              "5": 744,
+              "6": 734,
+              "7": 779,
+              "8": 805,
+              "9": 747
+            }
+          }
+        },
+        {
+          "raw_name": "order_week",
+          "standard_name": "order_week",
+          "type": "integer",
+          "meaning": "ISO 周（由下单时间拆出）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "日期拆分列，不计有效字段；数仓用日期维代替",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 52,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "52"
+          }
+        },
+        {
+          "raw_name": "order_day_of_week",
+          "standard_name": "order_day_of_week",
+          "type": "integer",
+          "meaning": "星期（周一=0）（由下单时间拆出）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "日期拆分列，不计有效字段；数仓用日期维代替",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 7,
+            "type_parse_failures": 0,
+            "min": "0",
+            "max": "6",
+            "values": {
+              "0": 1243,
+              "1": 1333,
+              "2": 1316,
+              "3": 1328,
+              "4": 1281,
+              "5": 1397,
+              "6": 1413
+            }
+          }
+        },
+        {
+          "raw_name": "is_weekend",
+          "standard_name": "is_weekend",
+          "type": "boolean",
+          "meaning": "是否周末下单（由下单时间推出）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "用日期维代替",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 6501,
+              "True": 2810
+            }
+          }
+        },
+        {
+          "raw_name": "is_holiday_period",
+          "standard_name": "is_holiday_period",
+          "type": "boolean",
+          "meaning": "是否生成器设定的节日期间",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "生成器设定的日历标记",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 8181,
+              "True": 1130
+            }
+          }
+        },
+        {
+          "raw_name": "is_promotion_period",
+          "standard_name": "is_promotion_period",
+          "type": "boolean",
+          "meaning": "是否生成器设定的促销期间",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "生成器设定，不是真实营销记录",
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 8543,
+              "True": 768
+            }
+          }
+        },
+        {
+          "raw_name": "scenario_name",
+          "standard_name": "scenario_name",
+          "type": "string",
+          "meaning": "生成场景名（全部 baseline）",
+          "unit": null,
+          "role": "scenario",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/orders.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "baseline": 9311
+            }
+          }
+        }
+      ]
+    },
+    "order_items": {
+      "rows": 15639,
+      "primary_key": [
+        "order_id",
+        "order_item_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "order_id",
+          "standard_name": "order_id",
+          "type": "string",
+          "meaning": "所属订单",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 9311,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "order_item_id",
+          "standard_name": "order_item_seq",
+          "type": "integer",
+          "meaning": "订单内明细序号（从 1 开始）",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": "不是数量；不假设每行 1 件",
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 5,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "5",
+            "values": {
+              "1": 9311,
+              "2": 3910,
+              "3": 1563,
+              "4": 613,
+              "5": 242
+            }
+          }
+        },
+        {
+          "raw_name": "seller_product_id",
+          "standard_name": "seller_product_id",
+          "type": "string",
+          "meaning": "购买的上架商品",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 7808,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "product_id",
+          "standard_name": "product_id",
+          "type": "string",
+          "meaning": "购买的商品",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": true,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 5418,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_id",
+          "standard_name": "seller_id",
+          "type": "string",
+          "meaning": "履约卖家",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": true,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 766,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "item_price_usd",
+          "standard_name": "item_price_usd",
+          "type": "decimal(12,2)",
+          "meaning": "明细商品金额（成交价，不含运费）",
+          "unit": "USD",
+          "role": "measure",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 10133,
+            "type_parse_failures": 0,
+            "min": "5.42",
+            "max": "1325.46"
+          }
+        },
+        {
+          "raw_name": "shipping_cost_usd",
+          "standard_name": "item_shipping_usd",
+          "type": "decimal(12,2)",
+          "meaning": "分摊到明细的运费",
+          "unit": "USD",
+          "role": "measure",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 1431,
+            "type_parse_failures": 0,
+            "min": "3.5",
+            "max": "31.27"
+          }
+        },
+        {
+          "raw_name": "item_total_usd",
+          "standard_name": "item_total_usd",
+          "type": "decimal(12,2)",
+          "meaning": "商品金额＋运费（实测逐行相等）",
+          "unit": "USD",
+          "role": "derived",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": null,
+          "note": "由前两列相加，不计有效字段",
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 10208,
+            "type_parse_failures": 0,
+            "min": "11.47",
+            "max": "1333.17"
+          }
+        },
+        {
+          "raw_name": "scenario_name",
+          "standard_name": "scenario_name",
+          "type": "string",
+          "meaning": "生成场景名",
+          "unit": null,
+          "role": "scenario",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/order_items.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 15639,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "baseline": 15639
+            }
+          }
+        }
+      ]
+    },
+    "payments": {
+      "rows": 10010,
+      "primary_key": [
+        "order_id",
+        "payment_sequential"
+      ],
+      "columns": [
+        {
+          "raw_name": "order_id",
+          "standard_name": "order_id",
+          "type": "string",
+          "meaning": "支付的订单",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/payments.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 10010,
+            "null_count": 0,
+            "distinct_nonnull": 9311,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "payment_sequential",
+          "standard_name": "payment_seq",
+          "type": "integer",
+          "meaning": "订单内支付序号（1–2）",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/payments.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 10010,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "2",
+            "values": {
+              "1": 9311,
+              "2": 699
+            }
+          }
+        },
+        {
+          "raw_name": "payment_type",
+          "standard_name": "payment_type",
+          "type": "string",
+          "meaning": "支付方式（5 类）",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": "没有支付时间；按下单时可得的工程假设使用",
+          "note": null,
+          "source": "baseline_10000_seed42/payments.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 10010,
+            "null_count": 0,
+            "distinct_nonnull": 5,
+            "type_parse_failures": 0,
+            "values": {
+              "bank_transfer": 818,
+              "credit_card": 4672,
+              "debit_card": 1334,
+              "digital_wallet": 2771,
+              "gift_card": 415
+            }
+          }
+        },
+        {
+          "raw_name": "payment_installments",
+          "standard_name": "payment_installments",
+          "type": "integer",
+          "meaning": "分期数",
+          "unit": "count",
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": "同上",
+          "note": null,
+          "source": "baseline_10000_seed42/payments.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 10010,
+            "null_count": 0,
+            "distinct_nonnull": 12,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "12",
+            "values": {
+              "1": 6964,
+              "10": 29,
+              "11": 26,
+              "12": 21,
+              "2": 1653,
+              "3": 552,
+              "4": 265,
+              "5": 204,
+              "6": 115,
+              "7": 82,
+              "8": 60,
+              "9": 39
+            }
+          }
+        },
+        {
+          "raw_name": "payment_value_usd",
+          "standard_name": "payment_value_usd",
+          "type": "decimal(12,2)",
+          "meaning": "支付金额；与订单明细合计对账",
+          "unit": "USD",
+          "role": "measure",
+          "effective_business_field": true,
+          "feature_policy": "label_source",
+          "time_semantics": null,
+          "note": "只作对账，不称已实现收入或退款",
+          "source": "baseline_10000_seed42/payments.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 10010,
+            "null_count": 0,
+            "distinct_nonnull": 8489,
+            "type_parse_failures": 0,
+            "min": "4.7",
+            "max": "1672.39"
+          }
+        },
+        {
+          "raw_name": "scenario_name",
+          "standard_name": "scenario_name",
+          "type": "string",
+          "meaning": "生成场景名",
+          "unit": null,
+          "role": "scenario",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/payments.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 10010,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "baseline": 10010
+            }
+          }
+        }
+      ]
+    },
+    "shipping": {
+      "rows": 9311,
+      "primary_key": [
+        "order_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "order_id",
+          "standard_name": "order_id",
+          "type": "string",
+          "meaning": "物流对应订单（与订单 1:1）",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 9311,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_state",
+          "standard_name": "origin_state",
+          "type": "string",
+          "meaning": "发货州（冗余拷贝）",
+          "unit": null,
+          "role": "denormalized",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "以 sellers 主数据为准",
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 51,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "customer_state",
+          "standard_name": "destination_state",
+          "type": "string",
+          "meaning": "收货州（冗余拷贝）",
+          "unit": null,
+          "role": "denormalized",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "以 customers 主数据为准",
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 51,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "seller_region",
+          "standard_name": "origin_region",
+          "type": "string",
+          "meaning": "发货大区（冗余拷贝）",
+          "unit": null,
+          "role": "denormalized",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "Midwest": 1574,
+              "Northeast": 1678,
+              "South": 3667,
+              "West": 2392
+            }
+          }
+        },
+        {
+          "raw_name": "customer_region",
+          "standard_name": "destination_region",
+          "type": "string",
+          "meaning": "收货大区（冗余拷贝）",
+          "unit": null,
+          "role": "denormalized",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "Midwest": 1989,
+              "Northeast": 1714,
+              "South": 3475,
+              "West": 2133
+            }
+          }
+        },
+        {
+          "raw_name": "shipping_distance_band",
+          "standard_name": "shipping_distance_band",
+          "type": "string",
+          "meaning": "距离档：same_state / same_region / cross_region / remote",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "cross_region": 6507,
+              "remote": 204,
+              "same_region": 2193,
+              "same_state": 407
+            }
+          }
+        },
+        {
+          "raw_name": "shipping_zone",
+          "standard_name": "shipping_zone",
+          "type": "string",
+          "meaning": "合成线路区（zone_1–4）",
+          "unit": null,
+          "role": "attribute",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "zone_1": 407,
+              "zone_2": 2193,
+              "zone_3": 6507,
+              "zone_4": 204
+            }
+          }
+        },
+        {
+          "raw_name": "estimated_delivery_days",
+          "standard_name": "estimated_delivery_days",
+          "type": "integer",
+          "meaning": "预计送达天数",
+          "unit": "days",
+          "role": "attribute",
+          "effective_business_field": true,
+          "feature_policy": "blocked",
+          "time_semantics": "计划值，可得时点未知，同 estimated_delivery_date",
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 10,
+            "type_parse_failures": 0,
+            "min": "4",
+            "max": "13",
+            "values": {
+              "10": 563,
+              "11": 31,
+              "12": 157,
+              "13": 16,
+              "4": 117,
+              "5": 255,
+              "6": 585,
+              "7": 1447,
+              "8": 1857,
+              "9": 4283
+            }
+          }
+        },
+        {
+          "raw_name": "actual_delivery_days",
+          "standard_name": "actual_delivery_days",
+          "type": "integer",
+          "meaning": "实际送达天数；源文本为 x.0",
+          "unit": "days",
+          "role": "derived",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "送达后才可得；按 delivered_ts < as_of 截断",
+          "note": "由下单与送达时间推出",
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": true,
+          "profile": {
+            "rows": 9311,
+            "null_count": 656,
+            "distinct_nonnull": 15,
+            "type_parse_failures": 0,
+            "min": "3",
+            "max": "17",
+            "values": {
+              "10.0": 532,
+              "11.0": 300,
+              "12.0": 311,
+              "13.0": 210,
+              "14.0": 163,
+              "15.0": 18,
+              "16.0": 13,
+              "17.0": 6,
+              "3.0": 24,
+              "4.0": 129,
+              "5.0": 281,
+              "6.0": 658,
+              "7.0": 1266,
+              "8.0": 1983,
+              "9.0": 2761
+            }
+          }
+        },
+        {
+          "raw_name": "delivery_delay_days",
+          "standard_name": "delivery_delay_days",
+          "type": "integer",
+          "meaning": "晚于预计的天数；源文本为 x.0",
+          "unit": "days",
+          "role": "derived",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "送达后才可得",
+          "note": "派生值，不计有效字段",
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": true,
+          "profile": {
+            "rows": 9311,
+            "null_count": 656,
+            "distinct_nonnull": 6,
+            "type_parse_failures": 0,
+            "min": "0",
+            "max": "5",
+            "values": {
+              "0.0": 7378,
+              "1.0": 255,
+              "2.0": 251,
+              "3.0": 246,
+              "4.0": 277,
+              "5.0": 248
+            }
+          }
+        },
+        {
+          "raw_name": "late_delivery_flag",
+          "standard_name": "late_delivery_flag",
+          "type": "boolean",
+          "meaning": "是否晚于预计送达",
+          "unit": null,
+          "role": "derived",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "送达后才可得；未送达订单为 False 不代表准时",
+          "note": "派生值",
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 8034,
+              "True": 1277
+            }
+          }
+        },
+        {
+          "raw_name": "shipping_cost_usd",
+          "standard_name": "order_shipping_usd",
+          "type": "decimal(12,2)",
+          "meaning": "订单运费；实测等于该单明细运费之和",
+          "unit": "USD",
+          "role": "measure",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": null,
+          "note": "与明细运费重复，不计有效字段",
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 2719,
+            "type_parse_failures": 0,
+            "min": "3.5",
+            "max": "82.75"
+          }
+        },
+        {
+          "raw_name": "scenario_name",
+          "standard_name": "scenario_name",
+          "type": "string",
+          "meaning": "生成场景名",
+          "unit": null,
+          "role": "scenario",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/shipping.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 9311,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "baseline": 9311
+            }
+          }
+        }
+      ]
+    },
+    "reviews": {
+      "rows": 6190,
+      "primary_key": [
+        "review_id"
+      ],
+      "columns": [
+        {
+          "raw_name": "review_id",
+          "standard_name": "review_id",
+          "type": "string",
+          "meaning": "评价标识",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 6190,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "order_id",
+          "standard_name": "order_id",
+          "type": "string",
+          "meaning": "被评价订单（每单至多一条）",
+          "unit": null,
+          "role": "fk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 6190,
+            "type_parse_failures": 0
+          }
+        },
+        {
+          "raw_name": "review_score",
+          "standard_name": "review_score",
+          "type": "integer",
+          "meaning": "评价分数 1–5",
+          "unit": "score 1-5",
+          "role": "measure",
+          "effective_business_field": true,
+          "feature_policy": "as_of",
+          "time_semantics": "按评价创建日可得的工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 5,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "5",
+            "values": {
+              "1": 46,
+              "2": 294,
+              "3": 1189,
+              "4": 2969,
+              "5": 1692
+            }
+          }
+        },
+        {
+          "raw_name": "review_creation_date",
+          "standard_name": "review_created_date",
+          "type": "date",
+          "meaning": "评价创建日期",
+          "unit": null,
+          "role": "event_time",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "日粒度；截止后创建的评价不进入 observed 视图；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 1046,
+            "type_parse_failures": 0,
+            "min": "2024-01-11 00:00:00",
+            "max": "2026-11-26 00:00:00"
+          }
+        },
+        {
+          "raw_name": "review_answer_timestamp",
+          "standard_name": "review_answered_ts",
+          "type": "timestamp",
+          "meaning": "评价答复时间",
+          "unit": null,
+          "role": "event_time",
+          "effective_business_field": false,
+          "feature_policy": "as_of",
+          "time_semantics": "秒粒度；截止后发生的在 observed 视图置空；源值无时区；按 UTC 解释是工程假设（D011）",
+          "note": null,
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 5465,
+            "type_parse_failures": 0,
+            "min": "2024-01-11 09:00:00",
+            "max": "2026-11-27 04:00:00"
+          }
+        },
+        {
+          "raw_name": "review_sentiment_label",
+          "standard_name": "review_sentiment_label",
+          "type": "string",
+          "meaning": "情感标签（由分数映射）",
+          "unit": null,
+          "role": "generator_label",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "由分数推出，不独立",
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 3,
+            "type_parse_failures": 0,
+            "values": {
+              "negative": 340,
+              "neutral": 1189,
+              "positive": 4661
+            }
+          }
+        },
+        {
+          "raw_name": "satisfaction_risk_flag",
+          "standard_name": "satisfaction_risk_flag",
+          "type": "boolean",
+          "meaning": "分数为 1 或 2",
+          "unit": null,
+          "role": "derived",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": "由分数推出",
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 5850,
+              "True": 340
+            }
+          }
+        },
+        {
+          "raw_name": "scenario_name",
+          "standard_name": "scenario_name",
+          "type": "string",
+          "meaning": "生成场景名",
+          "unit": null,
+          "role": "scenario",
+          "effective_business_field": false,
+          "feature_policy": "blocked",
+          "time_semantics": null,
+          "note": null,
+          "source": "baseline_10000_seed42/reviews.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 6190,
+            "null_count": 0,
+            "distinct_nonnull": 1,
+            "type_parse_failures": 0,
+            "values": {
+              "baseline": 6190
+            }
+          }
+        }
+      ]
+    },
+    "calendar": {
+      "rows": 1042,
+      "primary_key": [
+        "date"
+      ],
+      "columns": [
+        {
+          "raw_name": "date",
+          "standard_name": "date",
+          "type": "date",
+          "meaning": "日历日期",
+          "unit": null,
+          "role": "pk",
+          "effective_business_field": false,
+          "feature_policy": "key",
+          "time_semantics": "日粒度；覆盖 2024-01-01 至截止前一日",
+          "note": null,
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 1042,
+            "type_parse_failures": 0,
+            "min": "2024-01-01 00:00:00",
+            "max": "2026-11-07 00:00:00"
+          }
+        },
+        {
+          "raw_name": "year",
+          "standard_name": "year",
+          "type": "integer",
+          "meaning": "年",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 3,
+            "type_parse_failures": 0,
+            "min": "2024",
+            "max": "2026",
+            "values": {
+              "2024": 366,
+              "2025": 365,
+              "2026": 311
+            }
+          }
+        },
+        {
+          "raw_name": "quarter",
+          "standard_name": "quarter",
+          "type": "integer",
+          "meaning": "季度",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "4",
+            "values": {
+              "1": 271,
+              "2": 273,
+              "3": 276,
+              "4": 222
+            }
+          }
+        },
+        {
+          "raw_name": "month",
+          "standard_name": "month",
+          "type": "integer",
+          "meaning": "月",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 12,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "12",
+            "values": {
+              "1": 93,
+              "10": 93,
+              "11": 67,
+              "12": 62,
+              "2": 85,
+              "3": 93,
+              "4": 90,
+              "5": 93,
+              "6": 90,
+              "7": 93,
+              "8": 93,
+              "9": 90
+            }
+          }
+        },
+        {
+          "raw_name": "month_name",
+          "standard_name": "month_name",
+          "type": "string",
+          "meaning": "月名",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 12,
+            "type_parse_failures": 0,
+            "values": {
+              "April": 90,
+              "August": 93,
+              "December": 62,
+              "February": 85,
+              "January": 93,
+              "July": 93,
+              "June": 90,
+              "March": 93,
+              "May": 93,
+              "November": 67,
+              "October": 93,
+              "September": 90
+            }
+          }
+        },
+        {
+          "raw_name": "week",
+          "standard_name": "week",
+          "type": "integer",
+          "meaning": "ISO 周",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 52,
+            "type_parse_failures": 0,
+            "min": "1",
+            "max": "52"
+          }
+        },
+        {
+          "raw_name": "day_of_week",
+          "standard_name": "day_of_week",
+          "type": "integer",
+          "meaning": "星期（周一=0）",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 7,
+            "type_parse_failures": 0,
+            "min": "0",
+            "max": "6",
+            "values": {
+              "0": 149,
+              "1": 149,
+              "2": 149,
+              "3": 149,
+              "4": 149,
+              "5": 149,
+              "6": 148
+            }
+          }
+        },
+        {
+          "raw_name": "day_name",
+          "standard_name": "day_name",
+          "type": "string",
+          "meaning": "星期名",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 7,
+            "type_parse_failures": 0,
+            "values": {
+              "Friday": 149,
+              "Monday": 149,
+              "Saturday": 149,
+              "Sunday": 148,
+              "Thursday": 149,
+              "Tuesday": 149,
+              "Wednesday": 149
+            }
+          }
+        },
+        {
+          "raw_name": "is_weekend",
+          "standard_name": "is_weekend",
+          "type": "boolean",
+          "meaning": "是否周末",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 745,
+              "True": 297
+            }
+          }
+        },
+        {
+          "raw_name": "is_holiday_period",
+          "standard_name": "is_holiday_period",
+          "type": "boolean",
+          "meaning": "生成器节日期间",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 948,
+              "True": 94
+            }
+          }
+        },
+        {
+          "raw_name": "is_promotion_period",
+          "standard_name": "is_promotion_period",
+          "type": "boolean",
+          "meaning": "生成器促销期间",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 2,
+            "type_parse_failures": 0,
+            "values": {
+              "False": 977,
+              "True": 65
+            }
+          }
+        },
+        {
+          "raw_name": "season",
+          "standard_name": "season",
+          "type": "string",
+          "meaning": "气象季节",
+          "unit": null,
+          "role": "calendar",
+          "effective_business_field": false,
+          "feature_policy": "static",
+          "time_semantics": null,
+          "note": "日期维属性",
+          "source": "baseline_10000_seed42/calendar.csv（源 ZIP 成员；经 DATA-05 history_source 按字符串读取）",
+          "nullable": false,
+          "profile": {
+            "rows": 1042,
+            "null_count": 0,
+            "distinct_nonnull": 4,
+            "type_parse_failures": 0,
+            "values": {
+              "fall": 250,
+              "spring": 276,
+              "summer": 276,
+              "winter": 240
+            }
+          }
+        }
+      ]
+    }
+  },
+  "pending_downstream": {
+    "DATA-08": "有效购买（delivered/shipped/processing 是否计入）、取消处理、金额是否含运费",
+    "ML-01": "预测母体与 30 天标签",
+    "metrics": "contracts/metrics.json 仍为 UCI 草案，由 DATA-08 改写"
+  },
+  "required_after_selection_status": {
+    "actual_headers": "passed",
+    "source_versions_and_hashes": "passed",
+    "actual_time_coverage": "passed",
+    "key_validation": "passed",
+    "field_nullability": "passed",
+    "scope_rules": "passed（reports/data/dataset_selection.md）",
+    "freshness_evidence": "D012 用户授权的工作假设；无教师答复"
+  },
   "course_material_manifest": "sources/manifest.json",
-  "research_scope": "尚未冻结；全量指满足规模及窗口要求的正式研究范围，不要求无差别下载发布者全部文件。"
+  "generated_by": "evidence/DATA-04/build_contract.py",
+  "layer_manifest_sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10",
+  "check_failures": []
 }

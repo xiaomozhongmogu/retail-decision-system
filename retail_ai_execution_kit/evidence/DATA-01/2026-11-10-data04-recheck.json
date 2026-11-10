@@ -1,0 +1,83 @@
+{
+  "task_id": "DATA-01",
+  "verification_status": "passed",
+  "method": "inspection",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "network": "本次复核未联网，只审阅本地文件"
+  },
+  "summary": "DATA-04 改写数据契约、修订 business_scope.md 后复核：两处改动只涉及选定主数据的字段口径与业务范围表述，没有改变任何候选的来源、许可、访问或时间事实；DATA-01 原产物哈希不变。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "sha256": "77eee0e551165dffecce6e83a2823346f4dd8600905ad671a085d0652f942edc"
+    },
+    {
+      "path": "reports/data/dataset_selection.md",
+      "sha256": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a"
+    },
+    {
+      "path": "docs/data_dictionary.md",
+      "sha256": "0e1708bc983a5a55cefd448fa3176fbe9c38b5bd2dcda10651b567413bd153f3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    },
+    {
+      "path": "evidence/DATA-01/source_checks.log",
+      "sha256": "d3ac6d4ecc7b50ff17457d83bfb9358799b1d25ea8b613f8bf63fed400041a2a"
+    },
+    {
+      "path": "evidence/DATA-01/synthetic_download_manifest.json",
+      "sha256": "0a3863f85ddc3565ff6904c79136b9a2fb3ea53352551bfaf4932e5aa21cdcbe"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "data_candidates.md 未改动（哈希与前次证据一致）；第 1 节 A–D 的下载入口、发布者、许可、事件时间、首次发布与最近更新及来源层次标注仍然有效。D013 没有引入新的来源事实。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "访问方式的记录（A 读到 PK 签名、B 完整下载哈希一致、C 未跟进 302、D gated=false）未改动；本次复核没有重新访问任何网站，也没有绕过访问控制。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "D013 明确写为依据 D012 用户授权的工程工作假设，并写明没有教师答复；data_candidates.md 第 2 节“只列事实，不判断是否合规”的立场不受影响，D001/D006 的教师层面状态未被改写。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "只复核本地文件影响，没有重新联网核验来源页面。",
+    "A、C、D 仍未全量下载。"
+  ],
+  "steps": [
+    "读取新的 data_contract.json（契约中许可说明与 data_candidates.md 第 3 节一致）与 business_scope.md v2。",
+    "逐条对照 DATA-01 三条验收条件，确认来源、访问、时间事实未改变。",
+    "核对三个原产物哈希不变，刷新输入哈希。"
+  ],
+  "task_spec_sha256": "076cb517df179bd1140eaad673d92c04c080929d02470daa5e8e75d52c147956",
+  "performed_at": "2026-11-10T14:38:29.244456+08:00"
+}

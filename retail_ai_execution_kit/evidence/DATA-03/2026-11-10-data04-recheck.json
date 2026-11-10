@@ -1,0 +1,108 @@
+{
+  "task_id": "DATA-03",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; DATA-05 engineering-import-v1 layer (git-ignored, rebuilt from source ZIP d50ee64a…)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DATA-03/verify_selection.py",
+  "exit_code": 0,
+  "summary": "DATA-04 改写数据契约、修订 business_scope.md 后复核 DATA-03：路线结论、字段核验与删除/调整清单不受影响；verify_selection.py 重跑 54/54 通过。报告第 5、7 节“契约仍是 UCI 草案、由 DATA-04 改写”是 2026-11-10 14:35 的快照，DATA-04 已完成改写。",
+  "inputs": [
+    {
+      "path": "evidence/DATA-03/route_facts.py",
+      "sha256": "deefd15a38e5e2bc2766c1adaeb58ac842644b08834374ff69b3148a7d24255c"
+    },
+    {
+      "path": "evidence/DATA-03/verify_selection.py",
+      "sha256": "365ca665c8e6f3ea7617ad962bcd85695a74dda6dab9bd5d804fc84c76794c40"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "reports/data/candidate_probe.json",
+      "sha256": "c789f146234861e507c1f0d534d0068223b637db1dd5e5b1b0885444e2625459"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "sha256": "77eee0e551165dffecce6e83a2823346f4dd8600905ad671a085d0652f942edc"
+    },
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "c16ef365aa1a6a7887d8e10c709a0c542e2f1d077c489f5c65b1676ee321f46a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/data/dataset_selection.md",
+      "sha256": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a"
+    },
+    {
+      "path": "reports/data/dataset_selection_facts.json",
+      "sha256": "17b0f7456229fcda164ad418d513f9854bb6a6c208c0d0fd3adb6eabda8daa65"
+    },
+    {
+      "path": "evidence/DATA-03/route_facts_run.log",
+      "sha256": "4091c523ea38c20ea349f79035647b43aaa5ba0fac99521fc7aeb2df9251e4de"
+    },
+    {
+      "path": "evidence/DATA-03/verification_run.log",
+      "sha256": "56c4f1ba8568f4c138240f9e4cc075c09d055348a329558494fc7e382c434b31"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "dataset_selection.md 第 1 节冻结主数据（源 ZIP SHA-256、DATA-05 工作层版本、截止、币种、研究范围行数），授权依据写为 D012 用户原话并引用 D010/D011；明确写“没有收到教师对 D001/D006 的实际答复”和“不能写成‘教师已确认’”。D013 登记在 ops/DECISIONS.md。核对脚本检查了这些措辞。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 2 节选交易路线，逐个说明 UCI、Cosmetics、T-ECD 不采用的理由；第 5 节分指标（positive_sales/net_sales/orders/customers/aov/rfm 调整，销量件数和国家维度删除）、模型（删除退货发票特征，列出禁止入模字段）、页面（不做漏斗/归因，加合成标注，州/大区替代国家）列出删除或调整项。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "只用一个包内部的标识，7 条关联（orders→customers、items→orders/products/sellers、payments/shipping/reviews→orders）孤儿数全为 0。实测 17 个有业务含义的源字段（订单、客户、状态、下单与送达时间、商品、卖家、商品金额、运费、品类、支付方式、分期、支付金额、州、大区、预计送达天数、评分），不含日期拆列、scenario_name 和生成器标签；verify_selection.py 逐字段核对非空数和不同值数与报告一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "数据完全合成；结论只说明工程可行性，不证明真实市场规律或真实模型效果。",
+    "30 天复购基率只是可行性描述，未冻结有效购买和标签（DATA-08、ML-01）。",
+    "工作层目录被 Git 忽略，没有作为证据输入哈希绑定；其他机器需先按 DATA-05 从原 ZIP 重建。证据中绑定的是层清单的哈希（写在 facts JSON 里）和已跟踪的 source_manifest.json。",
+    "contracts/data_contract.json 与 metrics.json 仍是 UCI 草案，由 DATA-04/DATA-08 改写；本任务只登记影响。",
+    "docs/business_scope.md 删去路线 A 的工作不在本任务写入范围，已交给 DATA-04。",
+    "没有教师答复；GOV-04 仍为非阻塞 in_review。",
+    "报告中关于契约“仍是 UCI 草案”的描述是写作时快照，以 contracts/data_contract.json 当前内容为准。"
+  ],
+  "steps": [
+    "读取 DATA-04 生成的 data_contract.json 与 business_scope.md v2，确认其主数据、截止、17 个有效字段与 dataset_selection.md 一致（DATA-04 verify_contract.py 也断言两者字段集合相同）。",
+    "重跑 verify_selection.py，54/54 通过，结果追加到 verification_run.log。",
+    "刷新输入与产物哈希；主证据 2026-11-10-route-selection.json 保留为首次通过记录。"
+  ],
+  "task_spec_sha256": "4003fa81de31e327244005ed631a80a675fc1b44247334a864e7670400166b35",
+  "performed_at": "2026-11-10T14:39:01.886192+08:00"
+}

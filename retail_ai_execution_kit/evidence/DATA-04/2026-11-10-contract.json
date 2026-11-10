@@ -1,0 +1,104 @@
+{
+  "task_id": "DATA-04",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; DATA-05 engineering-import-v1 layer (git-ignored)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DATA-04/build_contract.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --dictionary docs/data_dictionary.md; .venv/bin/python evidence/DATA-04/verify_contract.py",
+  "exit_code": 0,
+  "summary": "数据契约改写为合成交易路线 synthetic-transaction-v1 并批准（依据 DATA-03 证据和 D012/D013 用户授权，非教师确认）；10 张表 101 列逐列记录原始名、标准名、类型、含义、实测空值、单位、来源、角色、入模规则和时间语义；主键、外键、9 项一致性检查全部为 0 不一致；17 个有效业务字段与 DATA-03 一致。独立核对 47/47 通过，反向测试能发现改错的空值数。另按约定把 business_scope.md 改为 v2（删去路线 A）。",
+  "inputs": [
+    {
+      "path": "evidence/DATA-04/build_contract.py",
+      "sha256": "28ed3beae26ba678ca78158959fa8c0a7d2e7bcbb26200044b97124ad3f8cb74"
+    },
+    {
+      "path": "evidence/DATA-04/verify_contract.py",
+      "sha256": "0ae758b4a546dcd78fd974be228fff7af49e5ddc35a1579d4e2cdee88461a548"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "reports/data/dataset_selection.md",
+      "sha256": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a"
+    },
+    {
+      "path": "reports/data/dataset_selection_facts.json",
+      "sha256": "17b0f7456229fcda164ad418d513f9854bb6a6c208c0d0fd3adb6eabda8daa65"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "sha256": "77eee0e551165dffecce6e83a2823346f4dd8600905ad671a085d0652f942edc"
+    },
+    {
+      "path": "project/requirements.json",
+      "sha256": "ac79e0b4359c11c6ba63457526b593f3dbabfabe6085ea8cefa5a72d56cb2389"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "docs/data_dictionary.md",
+      "sha256": "0e1708bc983a5a55cefd448fa3176fbe9c38b5bd2dcda10651b567413bd153f3"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "evidence/DATA-04/build_run.log",
+      "sha256": "91f2c0642f0653056d8151b54aad9b17591037c5747f1455f2f2b20f2b274aca"
+    },
+    {
+      "path": "evidence/DATA-04/verification_run.log",
+      "sha256": "52be80df90146df6cf638627ef5c12e91c490cb54308ca328c193fcaf591adfa"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "contract.tables 覆盖工作层 10 张表全部 101 列（verify_contract 断言列名与文件表头逐一同序），每列有 raw_name、standard_name、type、meaning、nullable（与独立重数的空值一致）、unit、source、role（pk/fk 即主外键假设）、feature_policy、time_semantics；所有 date/timestamp 列都有时间语义（粒度、可得时点、observed 视图规则、UTC 工程假设）。主键与 10 条外键在 keys 中实测零重复、零孤儿。data_dictionary.md 由同一脚本生成并逐列列出。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "status 由 candidate_not_approved 改为 approved，approval_basis 指向 DATA-03 证据 evidence/DATA-03/2026-11-10-route-selection.json（DATA-03 已 done）与 D012/D013，并写明不是教师确认。有效业务字段 17 个（门槛 8），与 DATA-03 核验集合相同；不计日期拆分、场景、生成器标签、派生列和冗余拷贝；经已校验主键到达的字段另列 verified_related_fields（商品品类、客户州/大区、卖家州/大区、评价、支付方式），覆盖率实测为 100%（评价只覆盖有评价的订单并注明）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "没有虚构渠道、毛利、库存、数量等列（核对脚本按词检查标准名）；not_available 列出购买数量、退款、取消时间、支付时间、渠道、浏览、营销同意、优惠券、毛利、库存、投诉、年龄性别；forbidden_assumptions 禁止把明细序号当数量、把最终状态当下单时可知、把生成器标签当特征或真值。本路线是交易数据，不需要行为代理指标；PROJECT_SPEC 无需改动。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "数据完全合成；时区为 UTC 工程假设。",
+    "有效购买、取消处理、金额是否含运费未冻结（DATA-08）；contracts/metrics.json 仍为 UCI 草案。",
+    "architecture.md、interfaces.md 仍保留路线 A 的历史描述，DW-01 收窄。",
+    "工作层被 Git 忽略；其他机器需先按 DATA-05 重建再运行命令。"
+  ],
+  "steps": [
+    "认领 DATA-04（台账 e666ddbb…）。读取源字典、DATA-05 清单与观察规则、接口契约。",
+    "编写 build_contract.py：手写逐列注释，实测空值、范围、类型解析、主外键与一致性。先输出到临时目录两次检查：第一次有效字段算成 20 个（主表主键与事实表外键重复计数），改为只在外键处计数后为 17 个；发现订单状态与审批/交承运/送达时间严格对应，增加该一致性检查与说明。",
+    "写入契约与字典（build_run.log 第 1 次），补每列 source 字段后重写（第 2 次）。",
+    "按约定把 business_scope.md 修订为 v2。",
+    "编写 verify_contract.py 独立重数。第 1 次 2 项失败均为核对脚本自身写法问题（关联字段重叠判定与计数规则矛盾；子串 age 误匹配 customer_lifecycle_stage），修正后 47/47 通过，两次都保留在 verification_run.log；把一列空值数改错的反向测试报 FAIL。",
+    "契约和 business_scope 变化使 GOV-05、GOV-06、DATA-01、DATA-03 证据失效，逐个审阅后出 2026-11-10-data04-recheck 证据。"
+  ],
+  "task_spec_sha256": "1851a356ad2bca889a5b894788c5e4ee9b683f53ae3e1314006778171492506d",
+  "performed_at": "2026-11-10T14:39:01.931971+08:00"
+}

@@ -56,3 +56,10 @@ PASS route decision stated
 PASS adjusted/deleted items listed 
 54/54 passed
 exit=0
+--- rerun after DATA-04 changed contracts/data_contract.json and docs/business_scope.md (impact review)
+$ .venv/bin/python evidence/DATA-03/verify_selection.py
+2026-11-10T14:38:28+08:00
+54/54 passed
+exit=0
+note: the exit=0 line above is the exit status of 'tail', not of the verifier. Direct rerun:
+verify_selection.py exit=0

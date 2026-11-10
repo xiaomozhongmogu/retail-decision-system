@@ -1,0 +1,103 @@
+$ .venv/bin/python evidence/DATA-04/verify_contract.py
+2026-11-10T14:37:05+08:00
+PASS status approved with DATA-03 evidence 
+PASS approval states user authorization, not teacher 
+PASS layer manifest unchanged 
+PASS builder recorded no failures 
+PASS currency USD, synthetic 
+PASS customers: columns match file header in order 
+PASS customers: row count 3647
+PASS customers: primary key ['customer_id'] unique (recounted) 
+PASS sellers: columns match file header in order 
+PASS sellers: row count 800
+PASS sellers: primary key ['seller_id'] unique (recounted) 
+PASS products: columns match file header in order 
+PASS products: row count 8000
+PASS products: primary key ['product_id'] unique (recounted) 
+PASS seller_products: columns match file header in order 
+PASS seller_products: row count 13966
+PASS seller_products: primary key ['seller_product_id'] unique (recounted) 
+PASS orders: columns match file header in order 
+PASS orders: row count 9311
+PASS orders: primary key ['order_id'] unique (recounted) 
+PASS order_items: columns match file header in order 
+PASS order_items: row count 15639
+PASS order_items: primary key ['order_id', 'order_item_id'] unique (recounted) 
+PASS payments: columns match file header in order 
+PASS payments: row count 10010
+PASS payments: primary key ['order_id', 'payment_sequential'] unique (recounted) 
+PASS shipping: columns match file header in order 
+PASS shipping: row count 9311
+PASS shipping: primary key ['order_id'] unique (recounted) 
+PASS reviews: columns match file header in order 
+PASS reviews: row count 6190
+PASS reviews: primary key ['review_id'] unique (recounted) 
+PASS calendar: columns match file header in order 
+PASS calendar: row count 1042
+PASS calendar: primary key ['date'] unique (recounted) 
+PASS all columns passed field checks 101 columns
+PASS 101 columns across 10 tables 
+PASS every fk column has a key check []
+PASS all key checks zero 
+PASS consistency checks zero 
+PASS >= 8 effective fields 17
+PASS effective fields exclude labels/calendar/derived/scenario/denormalized 
+PASS effective fields equal DATA-03 checked fields 
+FAIL related fields listed separately with full coverage 
+FAIL no channel/margin/quantity-like column invented 
+PASS not_available lists channel, margin, quantity 
+PASS UCI candidate superseded 
+45/47 passed
+exit=1
+--- run 2 (run 1: 2 FAIL caused by verifier logic — related-field overlap check contradicted the counting policy; substring 'age' matched customer_lifecycle_stage. Fixed to token match.)
+$ .venv/bin/python evidence/DATA-04/verify_contract.py
+2026-11-10T14:37:26+08:00
+PASS status approved with DATA-03 evidence 
+PASS approval states user authorization, not teacher 
+PASS layer manifest unchanged 
+PASS builder recorded no failures 
+PASS currency USD, synthetic 
+PASS customers: columns match file header in order 
+PASS customers: row count 3647
+PASS customers: primary key ['customer_id'] unique (recounted) 
+PASS sellers: columns match file header in order 
+PASS sellers: row count 800
+PASS sellers: primary key ['seller_id'] unique (recounted) 
+PASS products: columns match file header in order 
+PASS products: row count 8000
+PASS products: primary key ['product_id'] unique (recounted) 
+PASS seller_products: columns match file header in order 
+PASS seller_products: row count 13966
+PASS seller_products: primary key ['seller_product_id'] unique (recounted) 
+PASS orders: columns match file header in order 
+PASS orders: row count 9311
+PASS orders: primary key ['order_id'] unique (recounted) 
+PASS order_items: columns match file header in order 
+PASS order_items: row count 15639
+PASS order_items: primary key ['order_id', 'order_item_id'] unique (recounted) 
+PASS payments: columns match file header in order 
+PASS payments: row count 10010
+PASS payments: primary key ['order_id', 'payment_sequential'] unique (recounted) 
+PASS shipping: columns match file header in order 
+PASS shipping: row count 9311
+PASS shipping: primary key ['order_id'] unique (recounted) 
+PASS reviews: columns match file header in order 
+PASS reviews: row count 6190
+PASS reviews: primary key ['review_id'] unique (recounted) 
+PASS calendar: columns match file header in order 
+PASS calendar: row count 1042
+PASS calendar: primary key ['date'] unique (recounted) 
+PASS all columns passed field checks 101 columns
+PASS 101 columns across 10 tables 
+PASS every fk column has a key check []
+PASS all key checks zero 
+PASS consistency checks zero 
+PASS >= 8 effective fields 17
+PASS effective fields exclude labels/calendar/derived/scenario/denormalized 
+PASS effective fields equal DATA-03 checked fields 
+PASS related fields listed separately with full key coverage (listing does not add to the count) 
+PASS no channel/margin/quantity-like column invented 
+PASS not_available lists channel, margin, quantity 
+PASS UCI candidate superseded 
+47/47 passed
+exit=0

@@ -1,0 +1,9 @@
+$ .venv/bin/python evidence/DATA-04/build_contract.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --dictionary docs/data_dictionary.md
+2026-11-10T14:35:37+08:00
+{"tables": 10, "columns": 101, "effective_fields": 17, "checks": {"order_items listing matches seller and product": 0, "item_total = item_price + item_shipping": 0, "sum(payment_value) = sum(item_total) per order": 0, "shipping.order_shipping = sum(item_shipping) per order": 0, "shipping.destination_state = customers.customer_state": 0, "shipping.destination_region = customers.customer_region": 0, "shipping.origin_state = sellers.seller_state": 0, "order_status implied by approved/carrier/delivered timestamps": 0, "orders with >1 distinct seller": 0, "purchase_ts year/month equal order_year/order_month": 0}, "failures": []}
+exit=0
+--- run 2 (added per-column source field; run 1 output replaced)
+$ .venv/bin/python evidence/DATA-04/build_contract.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --dictionary docs/data_dictionary.md
+2026-11-10T14:36:41+08:00
+{"tables": 10, "columns": 101, "effective_fields": 17, "checks": {"order_items listing matches seller and product": 0, "item_total = item_price + item_shipping": 0, "sum(payment_value) = sum(item_total) per order": 0, "shipping.order_shipping = sum(item_shipping) per order": 0, "shipping.destination_state = customers.customer_state": 0, "shipping.destination_region = customers.customer_region": 0, "shipping.origin_state = sellers.seller_state": 0, "order_status implied by approved/carrier/delivered timestamps": 0, "orders with >1 distinct seller": 0, "purchase_ts year/month equal order_year/order_month": 0}, "failures": []}
+exit=0
