@@ -1453,10 +1453,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C13",
         "U03",
@@ -1478,7 +1478,9 @@
         "未复购风险=1-复购概率，不能当作第二套独立标签或永久流失事实。",
         "更久沉睡用户规则处理；数据改为行为路线时重新定义事件/购买日、窗口与标题。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-01/2026-11-10-target.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

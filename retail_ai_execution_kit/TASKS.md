@@ -51,7 +51,7 @@
 | EDA-04 | 完成经营诊断与证据分解 | midterm | todo | EDA-02 |
 | EDA-05 | 实现互斥生命周期规则 | midterm | todo | DW-05, GOV-05 |
 | EDA-06 | 形成面向决策的分析结论 | midterm | todo | EDA-03, EDA-04, EDA-05 |
-| ML-01 | 冻结预测目标与适用母体 | midterm | todo | DATA-12, GOV-05 |
+| ML-01 | 冻结预测目标与适用母体 | midterm | done | DATA-12, GOV-05 |
 | ML-02 | 实现按时点构建监督样本 | midterm | todo | ML-01, DW-05 |
 | ML-03 | 实现历史特征与缺失策略 | midterm | todo | ML-02 |
 | ML-04 | 固定时间切分并审计泄漏 | midterm | todo | ML-03 |
@@ -738,7 +738,7 @@
 
 ### ML-01 冻结预测目标与适用母体
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C13, U03, Q03。
 - 前置：DATA-12, GOV-05。
 - 允许修改：`docs`, `contracts`；另可写本任务证据/交接。
@@ -751,7 +751,7 @@
 2. 未复购风险=1-复购概率，不能当作第二套独立标签或永久流失事实。
 3. 更久沉睡用户规则处理；数据改为行为路线时重新定义事件/购买日、窗口与标题。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-01/2026-11-10-target.json
 
 ### ML-02 实现按时点构建监督样本
 

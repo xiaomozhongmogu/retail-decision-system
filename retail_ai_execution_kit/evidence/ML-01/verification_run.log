@@ -1,0 +1,13 @@
+$ .venv/bin/python evidence/ML-01/verify_target.py
+2026-11-10T15:31:08+08:00
+PASS 2024 row in doc 
+PASS 2025 row in doc 
+PASS 2026 row in doc 
+PASS total row in doc 
+PASS out-of-population rows and rate quoted (226103, 0.069225087681278)
+PASS population = 90-day buyers, label window [t, t+30d), maturity +31d 
+PASS risk = 1 - probability, not a second label or permanent churn 
+PASS dormant customers handled by rules; behaviour-route redefinition stated 
+PASS label window maturity matches the label table 
+9/9 passed
+exit=0
