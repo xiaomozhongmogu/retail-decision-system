@@ -1888,10 +1888,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C20",
         "U03",
@@ -1914,7 +1914,9 @@
         "新进程加载团队产生的模型并复现固定样本评分，精度容差说明。",
         "模型卡覆盖目标、数据、评估、限制、版本和维护方式，未取得的效果不写入。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-12/2026-11-10-model.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

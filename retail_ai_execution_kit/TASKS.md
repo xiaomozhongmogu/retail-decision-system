@@ -62,7 +62,7 @@
 | ML-09 | 完成最终时间外评估 | midterm | done | ML-08 |
 | ML-10 | 解释误差与适用限制 | midterm | done | ML-09, ML-05 |
 | ML-11 | 实现评分服务与适用性输出 | midterm | done | ML-10, DW-10 |
-| ML-12 | 发布模型文件与模型卡 | midterm | todo | ML-11 |
+| ML-12 | 发布模型文件与模型卡 | midterm | done | ML-11 |
 | AI-01 | 实现LLM适配与配置边界 | final | todo | GOV-07, GOV-06 |
 | AI-02 | 建立业务知识库与检索 | final | todo | DW-06, ML-12 |
 | AI-03 | 评测知识检索和依据引用 | final | todo | AI-02, AI-01 |
@@ -925,7 +925,7 @@
 
 ### ML-12 发布模型文件与模型卡
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C20, U03, Q02。
 - 前置：ML-11。
 - 允许修改：`reports/model`, `docs`, `models`；另可写本任务证据/交接。
@@ -938,7 +938,7 @@
 2. 新进程加载团队产生的模型并复现固定样本评分，精度容差说明。
 3. 模型卡覆盖目标、数据、评估、限制、版本和维护方式，未取得的效果不写入。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-12/2026-11-10-model.json
 
 
 ## AI — 三个AI模块

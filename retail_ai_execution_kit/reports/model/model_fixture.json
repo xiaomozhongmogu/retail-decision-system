@@ -1,0 +1,106 @@
+{
+  "model_version": "repurchase-logreg-v1",
+  "tolerance": 1e-09,
+  "rows": [
+    {
+      "customer_id": "customer_000499",
+      "as_of": "2026-03-30 00:00:00+00",
+      "p_repurchase_30d": 0.06525020232942419
+    },
+    {
+      "customer_id": "customer_002496",
+      "as_of": "2026-03-30 00:00:00+00",
+      "p_repurchase_30d": 0.0531797390994477
+    },
+    {
+      "customer_id": "customer_002556",
+      "as_of": "2026-03-30 00:00:00+00",
+      "p_repurchase_30d": 0.07311675563849092
+    },
+    {
+      "customer_id": "customer_003442",
+      "as_of": "2026-03-30 00:00:00+00",
+      "p_repurchase_30d": 0.06446558167977691
+    },
+    {
+      "customer_id": "customer_002912",
+      "as_of": "2026-04-06 00:00:00+00",
+      "p_repurchase_30d": 0.06703745955162263
+    },
+    {
+      "customer_id": "customer_001534",
+      "as_of": "2026-04-27 00:00:00+00",
+      "p_repurchase_30d": 0.06767651328495643
+    },
+    {
+      "customer_id": "customer_002614",
+      "as_of": "2026-05-11 00:00:00+00",
+      "p_repurchase_30d": 0.06986780448513773
+    },
+    {
+      "customer_id": "customer_001897",
+      "as_of": "2026-05-25 00:00:00+00",
+      "p_repurchase_30d": 0.07674114835490581
+    },
+    {
+      "customer_id": "customer_002339",
+      "as_of": "2026-05-25 00:00:00+00",
+      "p_repurchase_30d": 0.07301683615826238
+    },
+    {
+      "customer_id": "customer_001265",
+      "as_of": "2026-06-15 00:00:00+00",
+      "p_repurchase_30d": 0.08230711638665637
+    },
+    {
+      "customer_id": "customer_002070",
+      "as_of": "2026-06-22 00:00:00+00",
+      "p_repurchase_30d": 0.06570969344665212
+    },
+    {
+      "customer_id": "customer_001735",
+      "as_of": "2026-06-29 00:00:00+00",
+      "p_repurchase_30d": 0.06203370780951455
+    },
+    {
+      "customer_id": "customer_001678",
+      "as_of": "2026-07-27 00:00:00+00",
+      "p_repurchase_30d": 0.0843915748914029
+    },
+    {
+      "customer_id": "customer_002868",
+      "as_of": "2026-07-27 00:00:00+00",
+      "p_repurchase_30d": 0.06845550935893782
+    },
+    {
+      "customer_id": "customer_002200",
+      "as_of": "2026-08-10 00:00:00+00",
+      "p_repurchase_30d": 0.07595051657273641
+    },
+    {
+      "customer_id": "customer_002744",
+      "as_of": "2026-08-17 00:00:00+00",
+      "p_repurchase_30d": 0.08124757869694277
+    },
+    {
+      "customer_id": "customer_000935",
+      "as_of": "2026-08-24 00:00:00+00",
+      "p_repurchase_30d": 0.06639078266920391
+    },
+    {
+      "customer_id": "customer_002193",
+      "as_of": "2026-08-24 00:00:00+00",
+      "p_repurchase_30d": 0.07470355001544533
+    },
+    {
+      "customer_id": "customer_000148",
+      "as_of": "2026-10-05 00:00:00+00",
+      "p_repurchase_30d": 0.08051375227683961
+    },
+    {
+      "customer_id": "customer_003636",
+      "as_of": "2026-10-05 00:00:00+00",
+      "p_repurchase_30d": 0.07230892238262522
+    }
+  ]
+}

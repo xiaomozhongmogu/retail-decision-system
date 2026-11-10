@@ -1,0 +1,95 @@
+{
+  "task_id": "ML-12",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/ML-12/publish_model.py && .venv/bin/python evidence/ML-12/publish_model.py reproduce",
+  "exit_code": 0,
+  "summary": "发布模型 repurchase-logreg-v1：单个 JSON 同时保存特征顺序、预处理参数（中位数、log1p 列、均值、标准差）、系数、截距、超参数、校准与数据身份，SHA-256 01b2b335…（与 ML-08 冻结时、ML-09 评估时一致），按交付要求强制加入私有仓库。新进程加载模型、对固定 20 个测试样本重新计算特征并打分，最大差 2.8e-17（容差 1e-9）。模型卡覆盖用途、数据、模型、评估、限制、版本与维护，只写实测效果。",
+  "inputs": [
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "reports/model/training_runs.json",
+      "sha256": "71656bff1bdabba69dfe36014001e4b8da2fab151eca1bce2c10c462116f06b5"
+    },
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "reports/model/error_analysis.md",
+      "sha256": "14e1b64974fd32d30784179dac12382a6bc1e5eec5565c9e85ef7b2f0928fc46"
+    },
+    {
+      "path": "src/retail_bi/model/scoring.py",
+      "sha256": "b0a51095ca37f59e33b09fda29277d8467df5982b914301fe11c6e6c605231ce"
+    },
+    {
+      "path": "evidence/ML-12/publish_model.py",
+      "sha256": "f201644cd595a24a3b572956ec4a9765e0ec18b5ce5b955a44a7dc233ea4933d"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/model_manifest.json",
+      "sha256": "5680f62d25458a509a6c55f9b31da3e8bfb5ff52e615e5d0d9a7c95472075fc0"
+    },
+    {
+      "path": "docs/model_card.md",
+      "sha256": "74bf33f4430c64dd1349f2d3cbdfb13ef205fa684df2387e783fe8292dc491e5"
+    },
+    {
+      "path": "models/repurchase-logreg-v1.json",
+      "sha256": "01b2b335e07bd51bd7f3da1bac0219089e04438aa8beb655e54f1dab3b0855d2"
+    },
+    {
+      "path": "reports/model/model_fixture.json",
+      "sha256": "dcbdf41849c1314e8ae64d86b13cb8680ccd87d3040e7ba37a79f963f800a593"
+    },
+    {
+      "path": "evidence/ML-12/publish_run.log",
+      "sha256": "3239ba4f7b46d685b273661c8f62ffb137f71e90b0b4a71c9332f176cd34f55a"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "模型、预处理器参数、特征顺序与超参数在同一 JSON 中保存；model_manifest.json 记录文件哈希与字节数，并指向训练记录（model_selection.json 冻结时间、baselines.json、training_runs.json 与库版本）；哈希与 ML-08 冻结时打印的值一致。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "publish_model.py reproduce 在新进程中校验模型哈希，经 scoring.load_model() 加载，从只读发布重新计算 20 个固定样本的特征并打分，与 model_fixture.json 登记的概率最大差 2.8e-17，容差 1e-9 写在清单与模型卡中。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "docs/model_card.md 覆盖目标、母体、数据与特征、切分、模型与候选比较、测试评估（含基率对照与客户分块区间）、限制（区分力接近随机、客户重叠、非因果、无营销增量）、版本与维护；明确写“没有写入任何未取得的效果”。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "models/ 默认被 Git 忽略，本文件以强制添加方式纳入私有仓库（几 KB 参数文件）。",
+    "复现针对本机；其他电脑由 REL-02 验证。"
+  ],
+  "steps": [
+    "认领 ML-12（台账 9cd2ce34…→98d811b2…）。",
+    "生成清单与固定样本，新进程复现通过。",
+    "撰写模型卡；强制把模型 JSON 加入 Git。"
+  ],
+  "task_spec_sha256": "f7878bdf2eed7b502ddde333927a42024776ca07a9295dad41b3d1fc248b25bc",
+  "performed_at": "2026-11-10T21:21:46.723926+08:00"
+}
