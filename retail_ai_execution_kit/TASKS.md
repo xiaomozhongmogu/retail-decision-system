@@ -28,7 +28,7 @@
 | DATA-03 | 确认唯一主数据路线 | proposal | done | DATA-02 |
 | DATA-04 | 完成正式数据契约和字典 | proposal | done | DATA-03 |
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | done | DATA-04 |
-| DATA-06 | 全量质量剖析与问题基线 | proposal | todo | DATA-05 |
+| DATA-06 | 全量质量剖析与问题基线 | proposal | done | DATA-05 |
 | DATA-07 | 处理缺失、类型与重复导入 | proposal | todo | DATA-06 |
 | DATA-08 | 统一购买、取消、退款与金额规则 | proposal | todo | DATA-06 |
 | DATA-09 | 完成集成与冲突处理 | proposal | todo | DATA-07, DATA-08 |
@@ -338,7 +338,7 @@
 
 ### DATA-06 全量质量剖析与问题基线
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C03, C04, C05, C08。
 - 前置：DATA-05。
 - 允许修改：`src/retail_bi/data`, `reports/data`；另可写本任务证据/交接。
@@ -351,7 +351,7 @@
 2. 报告实际客户覆盖、时间覆盖与正类潜力；若跨度不足预测，回到选型处理。
 3. 字段有效性和质量问题有样本证据，但不泄露不必要的个人信息。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-06/2026-11-10-profile.json
 
 ### DATA-07 处理缺失、类型与重复导入
 

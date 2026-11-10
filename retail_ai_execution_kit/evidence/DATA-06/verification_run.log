@@ -1,0 +1,17 @@
+$ .venv/bin/python evidence/DATA-06/verify_profile.py
+2026-11-10T14:44:07+08:00
+PASS volume 
+PASS customers with orders 
+PASS products sold 
+PASS missing counts {'sellers.deactivated_at': 800, 'orders.order_approved_at': 194, 'orders.order_delivered_carrier_date': 477, 'orders.order_delivered_customer_date': 656, 'shipping.actual_delivery_days': 656, 'shipping.delivery_delay_days': 656}
+PASS no exact duplicate rows 
+PASS same product repeated rows 
+PASS status counts 
+PASS order_items.item_price_usd negatives/zeros/max 
+PASS payments.payment_value_usd negatives/zeros/max 
+PASS late-by-date-not-flagged 4268
+PASS 30d snapshot rows and positives 92880 6668
+PASS report quotes the 30d numbers 
+PASS no zip/city in report samples 
+13/13 passed
+exit=0

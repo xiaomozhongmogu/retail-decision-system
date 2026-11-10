@@ -1,0 +1,85 @@
+{
+  "task_id": "DATA-06",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), pandas for the independent check",
+    "data_mode": "fully_synthetic; full frozen scope, no sampling",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/data/profile.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --contract contracts/data_contract.json --out-json reports/data/profile_before.json --out-md reports/data/profile_before.md; .venv/bin/python evidence/DATA-06/verify_profile.py",
+  "exit_code": 0,
+  "summary": "对冻结研究范围（截止前全部历史，未抽样）做清洗前全量剖析：规模、实体覆盖、缺失、重复与重复候选、时间覆盖与事件先后、取消/零值/负值/极端交易、字段有效性、客户覆盖和正类潜力。主要发现：无负值、无完全重复、无解析失败；缺失全部是事件未发生；按日期晚到但生成器未标记延迟 4,268 单（口径差异）；同单重复商品 779 行，价格各不相同，按独立明细保留；30 天正类潜力 92,880 行样本 6,668 个正例（7.2%）。pandas 独立重算 13/13 一致。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "evidence/DATA-06/verify_profile.py",
+      "sha256": "b72649eab6fc9f909f7c36c1cceff351224bb965275d34779c4bc3f8dd70ea77"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/data/profile.py",
+      "sha256": "c05444c71e68b7afe901825bdad86f8c240c523b800d6fab26ad4b9cbe51f018"
+    },
+    {
+      "path": "reports/data/profile_before.json",
+      "sha256": "015d01d93c42a7afe37f6b34698ded14f2907cc20f1e1d3d06ed1f7908dbbcdb"
+    },
+    {
+      "path": "reports/data/profile_before.md",
+      "sha256": "fd041225314d8dd6b062f93bf8238ef908681ad122bf0ad555046d2bb830b091"
+    },
+    {
+      "path": "evidence/DATA-06/profile_run.log",
+      "sha256": "e578a4e33f7631aa942fad7575ea98143a4c215565a944816136edfde4142027"
+    },
+    {
+      "path": "evidence/DATA-06/verification_run.log",
+      "sha256": "14db6250f7405df4b032e579197c48428f7b80ad7ec260a6cd44ad3fc018ba84"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "profile_before 覆盖 10 张表与 2 个观察视图全部行：行数、客户（3,647 主数据 / 3,356 有订单）、商品（8,000 / 5,418 售出）、卖家、上架；全部列缺失；10 表完全重复行 0、同客户同时刻 0、同客户同日 11、同单重复商品 779、两次支付订单 699；时间范围、35 个月逐月订单、无订单日、事件先后（0 违例）；取消 194 单及其金额、支付与评价；7 个金额字段负值 0、零值 0、分位数与 Q3+3IQR 极端数，最高 5 单。范围写明未抽样，以及以后开发抽样须按客户保留完整历史并标注。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 7 节报告客户覆盖（有购买 3,339，至少两次 2,586）、时间覆盖（2024-01 至 2026-11 共 35 个月，最后一月不完整）与正类潜力：按周 as_of 快照，30 天标签 132 个快照、92,880 行、6,668 个正例（7.2%，单快照 3.0%–11.1%），并列出 60/90 天参考。结论：跨度和正例足以支持时间外评估，不需要回到选型；比例低需用 PR-AUC 和校准。购买口径标为临时（非取消），由 DATA-08 冻结。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "每类问题附样本：同客户同日订单、同单重复商品、按日期晚到未标记的订单（附送达和预计日期）；有效性检查 10 项全部列出（含 0 项）。样本只含合成 ID、日期和金额，不输出邮编和城市，核对脚本检查了这一点。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "数据完全合成；质量问题反映生成器行为，不代表真实业务录入问题。",
+    "正类潜力使用临时购买口径（非取消），DATA-08 冻结后由 ML-01 重算。",
+    "时区为 UTC 工程假设。"
+  ],
+  "steps": [
+    "认领 DATA-06（台账 16b0fd76…）。",
+    "编写 profile.py：全量读取工作层、按契约类型剖析。两次输出到会话临时目录检查：发现按日期晚到与生成器延迟标记不一致 4,268 单，查明是取整口径差异；发现同单重复商品为同一上架、价格不同；修正首购说明（客户建档均不早于数据起点），补列 0 计数检查。",
+    "正式运行写入 reports/data（profile_run.log）。",
+    "用 pandas 写独立核对 verify_profile.py，13/13 通过。"
+  ],
+  "task_spec_sha256": "85fc8e9e9f624bb95f55acd2a2860a207c552c592e9a79d7c3143e7f9546e546",
+  "performed_at": "2026-11-10T14:44:31.970273+08:00"
+}

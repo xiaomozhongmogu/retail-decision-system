@@ -547,10 +547,10 @@
       "category": "DATA",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "C03",
         "C04",
@@ -573,7 +573,9 @@
         "报告实际客户覆盖、时间覆盖与正类潜力；若跨度不足预测，回到选型处理。",
         "字段有效性和质量问题有样本证据，但不泄露不必要的个人信息。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DATA-06/2026-11-10-profile.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
