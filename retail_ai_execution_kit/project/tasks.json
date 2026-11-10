@@ -1492,10 +1492,10 @@
       "category": "ML",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5（自审）",
+      "review_mode": "self_review",
       "requirements": [
         "U03",
         "Q03"
@@ -1518,7 +1518,9 @@
         "标签窗口完整成熟，右截断样本排除；记录母体筛选、快照数和独立客户数。",
         "用边界时间夹具验证刚好落在起止时刻的事件归属。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/ML-02/2026-11-10-samples.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

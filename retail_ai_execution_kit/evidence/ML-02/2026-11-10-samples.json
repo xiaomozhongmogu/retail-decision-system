@@ -1,0 +1,83 @@
+{
+  "task_id": "ML-02",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0, pytest 9.2.0",
+    "data_mode": "fully_synthetic; release wh-db316daf8021; boundary fixtures in pytest tmp_path",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/features/build_samples.py && .venv/bin/python -m pytest tests/model -v -p no:cacheprovider",
+  "exit_code": 0,
+  "summary": "监督样本 target-v1：92,241 行（客户×as_of 唯一）、132 个 as_of、3,312 名客户、6,618 个正例（7.17%），2024-04-01 至 2026-10-05，最晚成熟 2026-11-05；样本文件 data/processed/model/…parquet 与哈希写入 sample_audit.json。边界测试 6/6：下单恰在 as_of 只进标签不进特征；审批恰在 as_of 时不可见、一周后可见；下单恰在 as_of+30 天不在标签窗；审批恰在 as_of+31 天不计入；右截断 as_of 被排除。",
+  "inputs": [
+    {
+      "path": "sql/customer_snapshot.sql",
+      "sha256": "b8708facf3773fec24eee828e8223fdee910943aee344f6200a82621cae86b29"
+    },
+    {
+      "path": "docs/model_target.md",
+      "sha256": "fd9e05db0069e983f53c1c9db8df14a77c3449bec4cfbcc7b531821a3eec1704"
+    },
+    {
+      "path": "reports/warehouse/snapshot_contract.json",
+      "sha256": "451076a9698a59a42e9fd913ba0069e98139f2416e219ce2f1cb61509f1521f9"
+    },
+    {
+      "path": "tests/data/conftest.py",
+      "sha256": "b6d85a704c5c6d392734ff5f6ab0c0159b5add33dee730d015db2817e0702f2f"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/features/build_samples.py",
+      "sha256": "c76ebd32401678c6aab5638c6f0024969ef8f6658b700838325be032eced0fec"
+    },
+    {
+      "path": "reports/model/sample_audit.json",
+      "sha256": "7a3b3bdc77c06845cb74ce954c0b4aad3de1ac3afa1372e8c4409532647b53ab"
+    },
+    {
+      "path": "tests/model/test_samples.py",
+      "sha256": "462ac8b9e6c157d44b27e14d7a97add399551463da5ef628d761198942af0f4d"
+    },
+    {
+      "path": "evidence/ML-02/samples_run.log",
+      "sha256": "04d9cb4715cede794f4d5e0d68a66b4fa48ef17c0ea1ff4ae75c822a8a9b1027"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "sample_audit.json：主键 customer_id+as_of 唯一（key_unique=true）；特征窗 [.., as_of)（下单与审批都早于 as_of，近 90 天窗 [as_of−90d, as_of)），标签窗 [as_of, as_of+30d) 且审批早于 as_of+31d，均为左闭右开。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "只取成熟标签：136 个快照 as_of 中 4 个右截断被排除，样本 132 个 as_of；漏斗记录快照总行 331,649、母体内 94,999、最终样本 92,241；独立客户 3,312，正例 6,618。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "tests/model/test_samples.py 用手工边界订单构建小数仓：恰在 as_of 下单的订单进入标签（y=1）而不计入特征（订单数仍为 1）；恰在 as_of 审批的订单在该 as_of 不可见、下一周可见；恰在 as_of+30 天下单的订单不在窗内（y=0）；恰在 as_of+31 天审批的订单不计入（y=0），而 as_of 02-03 时同一订单计入（y=1）；夹具截止下最晚样本 as_of 为 2025-02-24。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "样本文件被 Git 忽略，按命令重建；快照特征在 ML-03 扩充。",
+    "同一客户多次出现，样本不独立（ML-04/ML-09 处理）。"
+  ],
+  "steps": [
+    "认领 ML-02（台账 8f203273…）。",
+    "编写 build_samples.py 并生成真实样本与审计。",
+    "编写边界测试。第 1 次：夹具日历不够长；第 2 次：成熟边界测试选了不在母体内的客户；第 3 次：我新加的对照断言推理错误（窗口不含该订单）；第 4 次 6/6。"
+  ],
+  "task_spec_sha256": "41034b40e502b47747e93fadfdd4be419998e901a8891d03208832d1546aee60",
+  "performed_at": "2026-11-10T15:33:19.287461+08:00"
+}

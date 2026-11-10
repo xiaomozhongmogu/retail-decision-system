@@ -1,0 +1,53 @@
+$ .venv/bin/python src/retail_bi/features/build_samples.py && .venv/bin/python -m pytest tests/model -v -p no:cacheprovider
+2026-11-10T15:32:26+08:00
+{"rows": 92241, "as_of_points": 132, "customers": 3312, "positives": 6618, "positive_rate": 0.071747, "first_as_of": "2024-04-01 00:00:00+00", "last_as_of": "2026-10-05 00:00:00+00", "max_label_matured_at": "2026-11-05 00:00:00+00"}
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               _duckdb.ConstraintException: Constraint Error: Violates foreign key constraint because key "date_key: 20250226" does not exist in the referenced table
+
+src/retail_bi/warehouse/dwd.py:35: ConstraintException
+=========================== short test summary info ============================
+ERROR tests/model/test_samples.py::test_key_unique - _duckdb.ConstraintExcept...
+ERROR tests/model/test_samples.py::test_purchase_exactly_at_as_of_is_label_not_feature
+ERROR tests/model/test_samples.py::test_approval_exactly_at_as_of_is_not_visible
+ERROR tests/model/test_samples.py::test_purchase_exactly_at_window_end_is_outside
+ERROR tests/model/test_samples.py::test_approval_exactly_at_maturity_is_not_counted
+ERROR tests/model/test_samples.py::test_right_censored_as_of_excluded - _duck...
+============================== 6 errors in 0.46s ===============================
+exit=1
+--- run 2 (run 1: fixture calendar ended 2025-02-10, boundary orders need later date keys; the test now extends its own calendar)
+2026-11-10T15:32:36+08:00
+        r = df[(df.customer_id == cust) & (df.as_of == as_of)]
+>       assert len(r) == 1, f'{cust} at {as_of}: {len(r)} rows'
+E       AssertionError: c2 at 2025-01-27 00:00:00+00: 0 rows
+E       assert 0 == 1
+E        +  where 0 = len(Empty DataFrame\nColumns: [customer_id, as_of, feature_window_start, label_matured_at, y, recency_days, frequency_90d, monetary_90d_usd, orders_all_time, merch_all_time_usd, tenure_days, lifecycle_state]\nIndex: [])
+
+tests/model/test_samples.py:86: AssertionError
+=========================== short test summary info ============================
+FAILED tests/model/test_samples.py::test_approval_exactly_at_maturity_is_not_counted
+========================= 1 failed, 5 passed in 0.56s ==========================
+exit=1
+--- run 3 (run 2: the maturity-edge test used customer c2, who is not in the population at AS_OF; now uses a new in-population customer c5)
+2026-11-10T15:32:50+08:00
+        earlier = row(df, 'c5', '2025-01-20 00:00:00+00')            # for as_of 01-20 the same order is approved well before 01-20 + 31d
+>       assert earlier.y == 1
+E       assert np.int32(0) == 1
+E        +  where np.int32(0) = customer_id                                 c5\nas_of                   2025-01-20 00:00:00+00\nfeature_window_start    2024-10-22 00:00:00+00\nlabel_matured_at        2025-02-20 00:00:00+00\ny                                            0\nrecency_days                             3.625\nfrequency_90d                                1\nmonetary_90d_usd                          10.0\norders_all_time                              1\nmerch_all_time_usd                        10.0\ntenure_days                              3.625\nlifecycle_state                            new\nName: 4, dtype: object.y
+
+tests/model/test_samples.py:123: AssertionError
+=========================== short test summary info ============================
+FAILED tests/model/test_samples.py::test_approval_exactly_at_maturity_is_not_counted
+========================= 1 failed, 5 passed in 0.72s ==========================
+exit=1
+--- run 4 (run 3: my added control assertion was wrong — as_of 01-20's window ends 02-19, before b6; control moved to as_of 02-03)
+2026-11-10T15:33:00+08:00
+
+tests/model/test_samples.py::test_key_unique PASSED                      [ 16%]
+tests/model/test_samples.py::test_purchase_exactly_at_as_of_is_label_not_feature PASSED [ 33%]
+tests/model/test_samples.py::test_approval_exactly_at_as_of_is_not_visible PASSED [ 50%]
+tests/model/test_samples.py::test_purchase_exactly_at_window_end_is_outside PASSED [ 66%]
+tests/model/test_samples.py::test_approval_exactly_at_maturity_is_not_counted PASSED [ 83%]
+tests/model/test_samples.py::test_right_censored_as_of_excluded PASSED   [100%]
+
+============================== 6 passed in 0.58s ===============================
+exit=0

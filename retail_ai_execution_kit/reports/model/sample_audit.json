@@ -1,0 +1,51 @@
+{
+  "task_id": "ML-02",
+  "target": "target-v1",
+  "release": "wh-db316daf8021",
+  "release_sha256": "207ead6b6cbcb9dc6b90243bbd8a35bfe00b4d510601df33f62a259af51be0ec",
+  "sample_file": "data/processed/model/samples-wh-db316daf8021-target-v1.parquet",
+  "sample_sha256": "8a820494fa7427de74b4d944477dcd66b3ac783e175475337fe86c557bc53d34",
+  "key": [
+    "customer_id",
+    "as_of"
+  ],
+  "key_unique": true,
+  "windows": {
+    "features": "[.., as_of)：purchase_ts < as_of 且 approved_ts < as_of；近 90 天特征窗 [as_of-90d, as_of)",
+    "label": "[as_of, as_of+30d)：窗口内下单且 approved_ts < as_of+31d",
+    "as_of_grid": "每周一 00:00 UTC"
+  },
+  "population_filter": "frequency_90d >= 1（过去 90 天有有效购买的已知客户）",
+  "funnel": {
+    "snapshot_rows": 331649,
+    "snapshot_rows_in_population": 94999,
+    "as_of_points_snapshot": 136,
+    "as_of_points_with_mature_labels": 132,
+    "as_of_points_right_censored": 4
+  },
+  "samples": {
+    "rows": 92241,
+    "as_of_points": 132,
+    "customers": 3312,
+    "positives": 6618,
+    "positive_rate": 0.071747,
+    "first_as_of": "2024-04-01 00:00:00+00",
+    "last_as_of": "2026-10-05 00:00:00+00",
+    "max_label_matured_at": "2026-11-05 00:00:00+00"
+  },
+  "right_censoring": "成熟时间晚于截止 2026-11-08 的 as_of 不生成标签，因此不进入样本",
+  "columns": [
+    "customer_id",
+    "as_of",
+    "feature_window_start",
+    "label_matured_at",
+    "y",
+    "recency_days",
+    "frequency_90d",
+    "monetary_90d_usd",
+    "orders_all_time",
+    "merch_all_time_usd",
+    "tenure_days",
+    "lifecycle_state"
+  ]
+}
