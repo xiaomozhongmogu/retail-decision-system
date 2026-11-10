@@ -25,7 +25,7 @@
 | GOV-08 | 建立认领、证据和交接流程 | proposal | done | GOV-01, GOV-02 |
 | DATA-01 | 核验候选数据来源与许可 | proposal | done | GOV-05 |
 | DATA-02 | 实读候选文件并探查字段 | proposal | done | DATA-01, GOV-07 |
-| DATA-03 | 确认唯一主数据路线 | proposal | todo | DATA-02 |
+| DATA-03 | 确认唯一主数据路线 | proposal | done | DATA-02 |
 | DATA-04 | 完成正式数据契约和字典 | proposal | todo | DATA-03 |
 | DATA-05 | 实现完整导入和原始数据登记 | proposal | in_review | DATA-04 |
 | DATA-06 | 全量质量剖析与问题基线 | proposal | todo | DATA-05 |
@@ -266,7 +266,7 @@
 2. 至少核验主候选和备选的可下载性；账号或权限需求明确记录，不绕过访问控制。
 3. UCI/Cosmetics只能在历史数据口径获准后正式采用；T-ECD不得凭2026更新直接认定合规。
 
-证据：evidence/DATA-01/2026-11-10-d012-recheck.json
+证据：evidence/DATA-01/2026-11-10-d013-recheck.json
 
 ### DATA-02 实读候选文件并探查字段
 
@@ -287,7 +287,7 @@
 
 ### DATA-03 确认唯一主数据路线
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C06, C07, U01, Q01。
 - 前置：DATA-02。
 - 允许修改：`reports/data`, `ops`, `contracts`；另可写本任务证据/交接。
@@ -300,7 +300,7 @@
 2. 确认采用交易路线还是行为路线，并列出被删除或调整的指标/模型/页面。
 3. 不得拼接无关来源用户ID；核验至少8个有意义的源业务字段，不以拆日期或模拟补列凑数；D012工作假设允许工程验收，不冒称教师实际确认。
 
-证据：尚无已登记验收证据。
+证据：evidence/DATA-03/2026-11-10-route-selection.json
 
 ### DATA-04 完成正式数据契约和字典
 

@@ -1,0 +1,14 @@
+$ .venv/bin/python evidence/DATA-03/route_facts.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --out reports/data/dataset_selection_facts.json
+2026-11-10T14:27:56+08:00
+(eval):1: no such file or directory: .venv/bin/python evidence/DATA-03/route_facts.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --out reports/data/dataset_selection_facts.json
+exit=127
+--- attempt 2 (attempt 1 failed: zsh did not word-split the command variable, script never ran)
+$ .venv/bin/python evidence/DATA-03/route_facts.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --out reports/data/dataset_selection_facts.json
+2026-11-10T14:28:02+08:00
+{"status": {"delivered": 8655, "processing": 283, "cancelled": 194, "shipped": 179}, "rows": {"orders": 9311, "order_items": 15639, "payments": 10010, "customers": 3647, "products": 8000, "sellers": 800, "shipping": 9311, "reviews": 6190}, "orphans": {"orders.customer_id->customers": 0, "order_items.order_id->orders": 0, "order_items.product_id->products": 0, "order_items.seller_id->sellers": 0, "payments.order_id->orders": 0, "shipping.order_id->orders": 0, "reviews.order_id->orders": 0}, "checked_fields": 17}
+exit=0
+--- attempt 3 (attempt 2 ran, but filtered status 'canceled' while the data uses 'cancelled', so both variants were identical; fixed)
+$ .venv/bin/python evidence/DATA-03/route_facts.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --out reports/data/dataset_selection_facts.json
+2026-11-10T14:28:12+08:00
+{"status": {"delivered": 8655, "processing": 283, "cancelled": 194, "shipped": 179}, "rows": {"orders": 9311, "order_items": 15639, "payments": 10010, "customers": 3647, "products": 8000, "sellers": 800, "shipping": 9311, "reviews": 6190}, "orphans": {"orders.customer_id->customers": 0, "order_items.order_id->orders": 0, "order_items.product_id->products": 0, "order_items.seller_id->sellers": 0, "payments.order_id->orders": 0, "shipping.order_id->orders": 0, "reviews.order_id->orders": 0}, "checked_fields": 17}
+exit=0

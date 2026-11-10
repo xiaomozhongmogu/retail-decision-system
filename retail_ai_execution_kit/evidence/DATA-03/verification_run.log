@@ -1,0 +1,58 @@
+$ .venv/bin/python evidence/DATA-03/verify_selection.py
+2026-11-10T14:30:44+08:00
+PASS layer manifest unchanged since facts run 
+PASS layer built from frozen source ZIP 
+PASS cutoff in report 
+PASS >=8 meaningful source fields, none excluded 17 fields
+PASS field row in report: orders.order_id 
+PASS field row in report: orders.customer_id 
+PASS field row in report: orders.order_status 
+PASS field row in report: orders.order_purchase_timestamp 
+PASS field row in report: orders.order_delivered_customer_date 
+PASS field row in report: order_items.product_id 
+PASS field row in report: order_items.seller_id 
+PASS field row in report: order_items.item_price_usd 
+PASS field row in report: order_items.shipping_cost_usd 
+PASS field row in report: products.product_category 
+PASS field row in report: payments.payment_type 
+PASS field row in report: payments.payment_installments 
+PASS field row in report: payments.payment_value_usd 
+PASS field row in report: customers.customer_state 
+PASS field row in report: customers.customer_region 
+PASS field row in report: shipping.estimated_delivery_days 
+PASS field row in report: reviews.review_score 
+PASS all internal joins have zero orphans 
+PASS join row in report: orders.customer_id->customers 
+PASS join row in report: order_items.order_id->orders 
+PASS join row in report: order_items.product_id->products 
+PASS join row in report: order_items.seller_id->sellers 
+PASS join row in report: payments.order_id->orders 
+PASS join row in report: shipping.order_id->orders 
+PASS join row in report: reviews.order_id->orders 
+PASS row count orders 
+PASS row count order_items 
+PASS row count payments 
+PASS row count customers 
+PASS row count products 
+PASS row count sellers 
+PASS row count shipping 
+PASS row count reviews 
+PASS status counts 
+PASS size rule uses order_items >= 10000 
+PASS month span 
+PASS orders per month range 
+PASS repurchase customers 
+PASS gap quantiles 
+PASS base rate 2025-01-01 
+PASS base rate 2025-04-01 
+PASS base rate 2025-07-01 
+PASS base rate 2025-10-01 
+PASS base rate 2026-01-01 
+PASS base rate 2026-04-01 
+PASS base rate 2026-07-01 
+PASS base rate 2026-09-01 
+PASS authorization wording: D012 user, no teacher reply 
+PASS route decision stated 
+PASS adjusted/deleted items listed 
+54/54 passed
+exit=0

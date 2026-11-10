@@ -1,0 +1,109 @@
+{
+  "task_id": "DATA-03",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; DATA-05 engineering-import-v1 layer (git-ignored, rebuilt from source ZIP d50ee64a…)",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python evidence/DATA-03/route_facts.py --layer data/processed/engineering/d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1 --out reports/data/dataset_selection_facts.json; .venv/bin/python evidence/DATA-03/verify_selection.py",
+  "exit_code": 0,
+  "summary": "按 D012 用户授权冻结工程主数据：合成交易包 baseline_10000_seed42（SHA d50ee64a…），交易路线，截止 2026-11-08T00:00:00Z。实测 17 个源业务字段、7 条内部关联零孤儿、30 天复购基率约 3.3%–8.6%；报告列出被删除和调整的指标、模型、页面。核对脚本 54/54 通过。没有教师答复，报告不称教师已确认。",
+  "inputs": [
+    {
+      "path": "evidence/DATA-03/route_facts.py",
+      "sha256": "deefd15a38e5e2bc2766c1adaeb58ac842644b08834374ff69b3148a7d24255c"
+    },
+    {
+      "path": "evidence/DATA-03/verify_selection.py",
+      "sha256": "365ca665c8e6f3ea7617ad962bcd85695a74dda6dab9bd5d804fc84c76794c40"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "reports/data/candidate_probe.json",
+      "sha256": "c789f146234861e507c1f0d534d0068223b637db1dd5e5b1b0885444e2625459"
+    },
+    {
+      "path": "ops/DECISIONS.md",
+      "sha256": "77eee0e551165dffecce6e83a2823346f4dd8600905ad671a085d0652f942edc"
+    },
+    {
+      "path": "docs/data_candidates.md",
+      "sha256": "9d772e747e79dc5dff5fe12691cd4666331f3a23574ef26231fbd1d42caddc2b"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "5b4c555ff55ae53cc7361f86bbfe3bae9358c78ff936347e328079be8af8431d"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "c9ee3002fd32da554f12d7d448bd9dd8a4e6663be56687fc07d09bc387ae2d16"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "c16ef365aa1a6a7887d8e10c709a0c542e2f1d077c489f5c65b1676ee321f46a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/data/dataset_selection.md",
+      "sha256": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a"
+    },
+    {
+      "path": "reports/data/dataset_selection_facts.json",
+      "sha256": "17b0f7456229fcda164ad418d513f9854bb6a6c208c0d0fd3adb6eabda8daa65"
+    },
+    {
+      "path": "evidence/DATA-03/route_facts_run.log",
+      "sha256": "4091c523ea38c20ea349f79035647b43aaa5ba0fac99521fc7aeb2df9251e4de"
+    },
+    {
+      "path": "evidence/DATA-03/verification_run.log",
+      "sha256": "0305d4b12cc3c0262475a3c28cb7dff69e8da58a2b41eaf6e7a22d588b792008"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "dataset_selection.md 第 1 节冻结主数据（源 ZIP SHA-256、DATA-05 工作层版本、截止、币种、研究范围行数），授权依据写为 D012 用户原话并引用 D010/D011；明确写“没有收到教师对 D001/D006 的实际答复”和“不能写成‘教师已确认’”。D013 登记在 ops/DECISIONS.md。核对脚本检查了这些措辞。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第 2 节选交易路线，逐个说明 UCI、Cosmetics、T-ECD 不采用的理由；第 5 节分指标（positive_sales/net_sales/orders/customers/aov/rfm 调整，销量件数和国家维度删除）、模型（删除退货发票特征，列出禁止入模字段）、页面（不做漏斗/归因，加合成标注，州/大区替代国家）列出删除或调整项。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "只用一个包内部的标识，7 条关联（orders→customers、items→orders/products/sellers、payments/shipping/reviews→orders）孤儿数全为 0。实测 17 个有业务含义的源字段（订单、客户、状态、下单与送达时间、商品、卖家、商品金额、运费、品类、支付方式、分期、支付金额、州、大区、预计送达天数、评分），不含日期拆列、scenario_name 和生成器标签；verify_selection.py 逐字段核对非空数和不同值数与报告一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "数据完全合成；结论只说明工程可行性，不证明真实市场规律或真实模型效果。",
+    "30 天复购基率只是可行性描述，未冻结有效购买和标签（DATA-08、ML-01）。",
+    "工作层目录被 Git 忽略，没有作为证据输入哈希绑定；其他机器需先按 DATA-05 从原 ZIP 重建。证据中绑定的是层清单的哈希（写在 facts JSON 里）和已跟踪的 source_manifest.json。",
+    "contracts/data_contract.json 与 metrics.json 仍是 UCI 草案，由 DATA-04/DATA-08 改写；本任务只登记影响。",
+    "docs/business_scope.md 删去路线 A 的工作不在本任务写入范围，已交给 DATA-04。",
+    "没有教师答复；GOV-04 仍为非阻塞 in_review。"
+  ],
+  "steps": [
+    "刷新台账（fbff0147…）与 Codex 的 DATA-05、D012 交接，确认其已释放协调且无后台作业，Git 工作区干净；登记协调者并认领 DATA-03（台账 a87a19be…）。",
+    "编写 route_facts.py，从 DATA-05 工作层只读计算行数、状态、字段剖析、内部关联、复购结构与 30 天基率。第 1 次运行因 zsh 不拆分命令变量没有执行；第 2 次运行发现脚本把取消状态写成 canceled（数据为 cancelled），两组结果相同；修正后第 3 次运行，三次都保留在 route_facts_run.log。",
+    "撰写 reports/data/dataset_selection.md，数字全部取自 facts JSON；追加 ops/DECISIONS.md D013。",
+    "追加 D013 使 DATA-01 证据失效，审阅影响后出 evidence/DATA-01/2026-11-10-d013-recheck.json（原产物哈希不变）。",
+    "运行 verify_selection.py，54/54 通过；另用改错一个基率数字的副本做反向测试，脚本报 FAIL（53/54），说明核对有效。"
+  ],
+  "task_spec_sha256": "4003fa81de31e327244005ed631a80a675fc1b44247334a864e7670400166b35",
+  "performed_at": "2026-11-10T14:31:21.210670+08:00"
+}
