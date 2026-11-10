@@ -1,0 +1,9 @@
+$ .venv/bin/python evidence/ML-07/verify_boosting.py
+2026-11-10T21:06:35+08:00
+PASS best trial retrained with saved params and iteration gives identical validation metrics 0.534099/0.088212
+PASS trial budget: at most 8 trials, fixed grid 
+PASS test set never loaded or scored 
+PASS run record: seed, features, params, library versions, data identity, timings 
+PASS comparison with logistic regression recorded honestly -0.001497
+5/5 passed
+exit=0

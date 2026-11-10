@@ -1,0 +1,91 @@
+{
+  "task_id": "ML-07",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), lightgbm 4.7.0, scikit-learn 1.9.1",
+    "data_mode": "fully_synthetic; features-v1, split-v1",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/model/boosting.py; .venv/bin/python evidence/ML-07/verify_boosting.py",
+  "exit_code": 0,
+  "summary": "实际训练 LightGBM：固定 8 组参数（num_leaves×min_child_samples×lambda_l2），学习率 0.03、早停 100 轮、种子固定且确定性模式。最佳试验（15 叶、min_child 200、L2=5，5 轮）验证 PR-AUC 0.0882、ROC-AUC 0.534，低于逻辑回归（0.0897 / 0.556），且早停在 2–72 轮、训练验证差 0.10，说明信号弱、树模型很快过拟合。按验收条件允许保留更简单模型并解释（ML-08）。最佳试验以保存参数重训得到完全相同的指标；测试集未加载。核对 5/5。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/model/common.py",
+      "sha256": "7c85e6dfefd016199e16fdf06baff71d1fccaefbb6698a2300ba9f3659a38ca2"
+    },
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/model/feature_build.json",
+      "sha256": "7109464eced64a9cf13a0035407c134061f7a418a338757e02c7b65c9cb04077"
+    },
+    {
+      "path": "reports/model/baselines.json",
+      "sha256": "fb9430a5be7f0390acb5958dfbb448606a6d2842db41e91bbf617ee2ae343eaa"
+    },
+    {
+      "path": "evidence/ML-07/verify_boosting.py",
+      "sha256": "2b4ef96d9a6b584e7c38656fec15de4769acde083a7cfddce77bb640c172a9ec"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/training_runs.json",
+      "sha256": "71656bff1bdabba69dfe36014001e4b8da2fab151eca1bce2c10c462116f06b5"
+    },
+    {
+      "path": "reports/model/boosting_validation.json",
+      "sha256": "d82150f7c9b7155a3da8644bb3770fa6c5417cd9f1b8c0308d4c050b07b2ee00"
+    },
+    {
+      "path": "src/retail_bi/model/boosting.py",
+      "sha256": "29e94de63d4826e0427baeaf2c9acd4166cb7066dd516cedf183d88af8064176"
+    },
+    {
+      "path": "evidence/ML-07/boosting_run.log",
+      "sha256": "aa24c4ecb00fe26e393254598dae87384c3671f12282b72906856371bb8e96b9"
+    },
+    {
+      "path": "evidence/ML-07/verification_run.log",
+      "sha256": "e58129b487002237ee3d11b8035f97e9ba73206cb84facd75a0a9b3759f5b98c"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "实际训练 LightGBM 4.7.0；training_runs.json 保存种子 20261110、30 个特征顺序、每组完整参数、最佳迭代、耗时、Python/LightGBM/sklearn/numpy/pandas 版本、机器架构与数据身份（特征文件哈希、发布版本、切分版本）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "所有试验只在训练集训练、在验证集早停与比较；试验数量预先固定为 8 组（2×2×2 网格），4 线程，每组 0.3–0.9 秒。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "测试集未加载（代码与记录核对）。LightGBM 最佳验证 PR-AUC 比逻辑回归低 0.0015、ROC-AUC 低 0.022；boosting_validation.json 如实记录，并说明验证集兼作早停与选择会偏乐观；最终保留更简单的逻辑回归的决定在 ML-08 记录。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "没有追加试验来改善分数；更强正则或其他特征也许有小幅变化，但会增加对验证集的过拟合风险。",
+    "数据完全合成。"
+  ],
+  "steps": [
+    "重新接手协调（台账 40e26fc7…→7094fea3…），认领 ML-07。",
+    "编写 boosting.py，运行 8 组试验。",
+    "verify_boosting.py 5/5：确定性复现、预算、测试未用、记录完整、比较如实。"
+  ],
+  "task_spec_sha256": "77d9147bbd4dc2943f39d77a6afb3a86c695aec08d0feaa89e49be7fa9294737",
+  "performed_at": "2026-11-10T21:06:55.072329+08:00"
+}

@@ -57,7 +57,7 @@
 | ML-04 | 固定时间切分并审计泄漏 | midterm | done | ML-03 |
 | ML-05 | 完成RFM规则与K-Means分群 | midterm | todo | EDA-05, ML-04 |
 | ML-06 | 训练规则与逻辑回归基线 | midterm | done | ML-04 |
-| ML-07 | 训练并有限调优LightGBM | midterm | todo | ML-06 |
+| ML-07 | 训练并有限调优LightGBM | midterm | done | ML-06 |
 | ML-08 | 冻结模型、校准与阈值 | midterm | todo | ML-07 |
 | ML-09 | 完成最终时间外评估 | midterm | todo | ML-08 |
 | ML-10 | 解释误差与适用限制 | midterm | todo | ML-09, ML-05 |
@@ -840,7 +840,7 @@
 
 ### ML-07 训练并有限调优LightGBM
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C13, U03, Q04。
 - 前置：ML-06。
 - 允许修改：`src/retail_bi/model`, `reports/model`；另可写本任务证据/交接。
@@ -853,7 +853,7 @@
 2. 调参/早停只使用训练验证数据，限制试验数量和资源。
 3. 不以测试集调参；若提升不明显，允许最终保留更简单模型并解释。
 
-证据：尚无已登记验收证据。
+证据：evidence/ML-07/2026-11-10-boosting.json
 
 ### ML-08 冻结模型、校准与阈值
 
