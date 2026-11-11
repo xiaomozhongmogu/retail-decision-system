@@ -1,0 +1,205 @@
+{
+  "release": "wh-d3aaa559048c",
+  "generated_by": "src/retail_bi/ui/issue_samples.py",
+  "columns_excluded": "customer_id 与客户属性（不必要的个人信息）",
+  "issues": {
+    "cancelled_no_approval": {
+      "label": "已取消：没有审批时间，不计入有效购买",
+      "count": 194,
+      "samples": [
+        {
+          "order_id": "order_0004209",
+          "order_status": "cancelled",
+          "purchase_ts": "2024-01-06 13:31:23+00",
+          "approved_ts": null,
+          "delivered_ts": null,
+          "merch_usd": "78.52",
+          "item_lines": 1
+        },
+        {
+          "order_id": "order_0003403",
+          "order_status": "cancelled",
+          "purchase_ts": "2024-01-17 11:52:57+00",
+          "approved_ts": null,
+          "delivered_ts": null,
+          "merch_usd": "76.24",
+          "item_lines": 1
+        },
+        {
+          "order_id": "order_0001353",
+          "order_status": "cancelled",
+          "purchase_ts": "2024-01-19 12:12:53+00",
+          "approved_ts": null,
+          "delivered_ts": null,
+          "merch_usd": "166.63",
+          "item_lines": 5
+        },
+        {
+          "order_id": "order_0005439",
+          "order_status": "cancelled",
+          "purchase_ts": "2024-01-23 16:31:45+00",
+          "approved_ts": null,
+          "delivered_ts": null,
+          "merch_usd": "65.06",
+          "item_lines": 1
+        },
+        {
+          "order_id": "order_0007242",
+          "order_status": "cancelled",
+          "purchase_ts": "2024-01-28 08:39:05+00",
+          "approved_ts": null,
+          "delivered_ts": null,
+          "merch_usd": "532.39",
+          "item_lines": 5
+        }
+      ]
+    },
+    "pending_at_cutoff": {
+      "label": "截止前下单、截止后才审批：截止时不计入有效购买",
+      "count": 4,
+      "samples": [
+        {
+          "order_id": "order_0006750",
+          "order_status": "delivered",
+          "purchase_ts": "2026-11-07 08:23:03+00",
+          "approved_ts": "2026-11-08 04:23:03+00",
+          "delivered_ts": "2026-11-16 19:23:03+00",
+          "merch_usd": "260.77",
+          "item_lines": 4
+        },
+        {
+          "order_id": "order_0008448",
+          "order_status": "delivered",
+          "purchase_ts": "2026-11-07 20:03:52+00",
+          "approved_ts": "2026-11-08 15:03:52+00",
+          "delivered_ts": "2026-11-17 09:03:52+00",
+          "merch_usd": "42.05",
+          "item_lines": 1
+        },
+        {
+          "order_id": "order_0002099",
+          "order_status": "delivered",
+          "purchase_ts": "2026-11-07 21:05:07+00",
+          "approved_ts": "2026-11-08 21:05:07+00",
+          "delivered_ts": "2026-11-21 14:05:07+00",
+          "merch_usd": "200.25",
+          "item_lines": 2
+        },
+        {
+          "order_id": "order_0004579",
+          "order_status": "delivered",
+          "purchase_ts": "2026-11-07 22:15:48+00",
+          "approved_ts": "2026-11-08 11:15:48+00",
+          "delivered_ts": "2026-11-20 07:15:48+00",
+          "merch_usd": "159.17",
+          "item_lines": 2
+        }
+      ]
+    },
+    "not_delivered_yet": {
+      "label": "已审批但截止前未送达：送达时间为空（不插补）",
+      "count": 462,
+      "samples": [
+        {
+          "order_id": "order_0003243",
+          "order_status": "processing",
+          "purchase_ts": "2024-01-01 09:06:48+00",
+          "approved_ts": "2024-01-01 19:06:48+00",
+          "delivered_ts": null,
+          "merch_usd": "42.92",
+          "item_lines": 1
+        },
+        {
+          "order_id": "order_0004229",
+          "order_status": "processing",
+          "purchase_ts": "2024-01-04 14:40:40+00",
+          "approved_ts": "2024-01-05 00:40:40+00",
+          "delivered_ts": null,
+          "merch_usd": "242.70",
+          "item_lines": 3
+        },
+        {
+          "order_id": "order_0006792",
+          "order_status": "processing",
+          "purchase_ts": "2024-01-10 09:36:42+00",
+          "approved_ts": "2024-01-10 17:36:42+00",
+          "delivered_ts": null,
+          "merch_usd": "156.64",
+          "item_lines": 2
+        },
+        {
+          "order_id": "order_0004922",
+          "order_status": "processing",
+          "purchase_ts": "2024-01-11 20:45:10+00",
+          "approved_ts": "2024-01-12 13:45:10+00",
+          "delivered_ts": null,
+          "merch_usd": "29.21",
+          "item_lines": 1
+        },
+        {
+          "order_id": "order_0004484",
+          "order_status": "processing",
+          "purchase_ts": "2024-01-12 16:08:20+00",
+          "approved_ts": "2024-01-12 16:08:20+00",
+          "delivered_ts": null,
+          "merch_usd": "67.49",
+          "item_lines": 1
+        }
+      ]
+    },
+    "repeated_product_lines": {
+      "label": "同一订单重复商品：保留为独立明细（每行价格不同），不合并为数量",
+      "count": 638,
+      "samples": [
+        {
+          "order_id": "order_0009382",
+          "order_status": "delivered",
+          "purchase_ts": "2024-01-03 11:02:48+00",
+          "approved_ts": "2024-01-04 00:02:48+00",
+          "delivered_ts": "2024-01-10 04:02:48+00",
+          "merch_usd": "526.16",
+          "item_lines": 3
+        },
+        {
+          "order_id": "order_0004229",
+          "order_status": "processing",
+          "purchase_ts": "2024-01-04 14:40:40+00",
+          "approved_ts": "2024-01-05 00:40:40+00",
+          "delivered_ts": null,
+          "merch_usd": "242.70",
+          "item_lines": 3
+        },
+        {
+          "order_id": "order_0005037",
+          "order_status": "delivered",
+          "purchase_ts": "2024-01-05 21:25:56+00",
+          "approved_ts": "2024-01-06 08:25:56+00",
+          "delivered_ts": "2024-01-09 11:25:56+00",
+          "merch_usd": "96.68",
+          "item_lines": 2
+        },
+        {
+          "order_id": "order_0005650",
+          "order_status": "delivered",
+          "purchase_ts": "2024-01-06 19:47:21+00",
+          "approved_ts": "2024-01-06 19:47:21+00",
+          "delivered_ts": "2024-01-15 09:47:21+00",
+          "merch_usd": "538.28",
+          "item_lines": 5
+        },
+        {
+          "order_id": "order_0008312",
+          "order_status": "delivered",
+          "purchase_ts": "2024-01-11 13:52:54+00",
+          "approved_ts": "2024-01-11 22:52:54+00",
+          "delivered_ts": "2024-01-21 00:52:54+00",
+          "merch_usd": "310.24",
+          "item_lines": 4
+        }
+      ],
+      "count_unit": "orders",
+      "extra_lines": 779,
+      "groups": 668
+    }
+  }
+}

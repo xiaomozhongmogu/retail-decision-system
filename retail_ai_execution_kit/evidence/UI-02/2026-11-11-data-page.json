@@ -1,0 +1,110 @@
+{
+  "task_id": "UI-02",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "仅本机 localhost:8599；关闭 Streamlit 使用统计"
+  },
+  "command": ".venv/bin/python src/retail_bi/ui/issue_samples.py; .venv/bin/python evidence/UI-02/check.py; streamlit run app.py --server.port 8599 + built-in browser",
+  "exit_code": 0,
+  "summary": "数据口径与质量页面：七个标签页展示来源与版本、规模与覆盖、质量门槛、有效购买对账、缺失与重复、可选择的指标解释和问题样本。数字来自冻结的数据报告并用发布版本 ads.kpi_monthly 核对一致；模型样本（客户×周 92,241 行）单独标明不是原始数据量；问题样本由离线只读脚本抽取，不含客户编号与属性。AppTest 12/12；真实服务在内置浏览器中打开问题样本确认渲染。",
+  "inputs": [
+    {
+      "path": "reports/data/dataset_release.json",
+      "sha256": "95d03f1f0667ed2573f3fc0eb49ab3cbf1295b9b2206d8bb0c2260ba4cabc3da"
+    },
+    {
+      "path": "reports/data/profile_after.json",
+      "sha256": "49137528fbb3e1245cf8391b1a4b058cf2758b17c35f8b602c731fe44a60dcbe"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "5e348ba24dd1b759f31459049d9b410950db6d3e52fdeafb646d5b7c02ef8f65"
+    },
+    {
+      "path": "reports/data/transaction_reconciliation.json",
+      "sha256": "5894bf1bdb01c4163748508a7f2c9f13ad15da7ccf7b2a75ebc8ecfb7fcdff3f"
+    },
+    {
+      "path": "reports/data/cleaning_missing_duplicates.json",
+      "sha256": "cffc581052da5ed6f9ebbf879b09c33204844733e654472363a5d783dd65058a"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "evidence/UI-02/check.py",
+      "sha256": "4eb5510dc890e57ec542b510e18de245212ee4423bb94757483e042b7d78bed4"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ui/pages/data.py",
+      "sha256": "ea959e9f5e611b7119b2228c81fdf8ac5beff11093394f16828c6c6930448450"
+    },
+    {
+      "path": "src/retail_bi/ui/issue_samples.py",
+      "sha256": "fdde3386f5cb2340f7b461dfe81a1add62233288cc2160b2a04792bf44b1d47c"
+    },
+    {
+      "path": "reports/ui/data_issue_samples.json",
+      "sha256": "0db5f9a3d167fabbb71122370e9d47a87f67d782313c14d189f30fc532dcf188"
+    },
+    {
+      "path": "reports/ui/data_page_review.md",
+      "sha256": "028fc1937871005cc5e735d13e2e9686450d83f84b8848d747a1cfd6da268a22"
+    },
+    {
+      "path": "evidence/UI-02/check_run.log",
+      "sha256": "ff958cbe3f7dc499db882123334773294d1c262bdb7b419ef2a536b53d31dee6"
+    },
+    {
+      "path": "evidence/UI-02/check_run_1_failed.log",
+      "sha256": "2bc9a92fdc0ae1f35cc72a049ab89822bb41c6cf45997c37f94a036e91a6be37"
+    },
+    {
+      "path": "evidence/UI-02/data_page_browser.jpg",
+      "sha256": "1ae45b13d5d6357838b3c40d619e65d46d4ed055f6dd74bbb8971f55ec6b5c2a"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "页面展示来源（合成性质、D012 依据、原始包哈希、许可）、质量（10/10 与警告）、覆盖（表行列、时间范围）、单位（USD 商品金额不含运费）与限制（未确定事项）；指标解释可选 13 个指标（AppTest 切换到 aov_usd 显示定义/分子/分母）；问题样本 4 类可展开（浏览器实测）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "有效订单 9,113、商品金额 1,380,161.23 与 profile_after.json 一致，发布版本 ads.kpi_monthly 合计与报告一致；对账 9,311 = 194 + 4 + 9,113；模型样本行数单独列出并注明不是原始数据量。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "不显示密钥或客户属性：问题样本排除 customer_id 与客户属性，页面文字扫描无 customer_ 编号、sk- 密钥、LLM_API_KEY、邮编或城市字段。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次运行 9/12：三项失败都是检查写错（未收集小标题、按“客单价”字样找定义、误以为每类都有 5 条样本而截止后审批只有 4 单），页面无误；修正检查后 12/12，第一次的日志保留为 check_run_1_failed.log。",
+    "窄窗格下页头指标卡会截断（UI-01 组件，未改）。",
+    "/data 路径回到首页（数据页是默认页）。"
+  ],
+  "steps": [
+    "认领 UI-02（台账 bc623419… → 认领）。",
+    "编写 issue_samples.py 离线抽取问题样本，核对同单重复商品 779 行额外明细与清洗报告一致。",
+    "重写 data.py 为七个标签页。",
+    "AppTest 第一次 9/12（检查写错），修正后 12/12。",
+    "通过 .claude/launch.json 启动服务，内置浏览器打开问题样本并截图。"
+  ],
+  "task_spec_sha256": "dfcba1cd192bf78889128346d5d9d168abed3435576fe50de6ab54cd3eec31da",
+  "performed_at": "2026-11-11T14:38:32.682746+08:00"
+}

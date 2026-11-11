@@ -1,0 +1,16 @@
+$ .venv/bin/python evidence/UI-02/check.py
+2026-11-11T14:37:13+08:00
+PASS page renders without exception []
+PASS seven tabs: source, coverage, quality, reconciliation, missing/duplicates, metric explanation, issue samples 
+PASS valid orders and amounts equal profile_after.json {'数据版本': 'wh-d3aaa559048c', '数据时间范围': '2024-01-01 至 2026-11-07', 'as_of（截止，不含）': '2026-11-08', '首笔下单': '2024-01-01', '末笔下单': '2026-11-07', '覆盖月数': '35', '有效订单': '9,113', '商品金额（USD，不含运费）': '1,380,161.23', '运费（USD）': '129,459.18'}
+PASS release cross-check (ads.kpi_monthly) agrees with the report 
+PASS table row counts equal the report 
+PASS quality gate 10/10 and the 2026-Q4 warning shown 
+PASS reconciliation rows: raw 9311 = cancelled 194 + pending 4 + valid 9113 
+PASS model sample rows shown separately and labelled as not raw data 
+PASS metric explanation opens: picking aov_usd shows its definition, numerator and denominator 
+PASS issue samples open: four types with counts and 5 rows each ['已取消：没有审批时间，不计入有效购买 — 194 单', '截止前下单、截止后才审批：截止时不计入有效购买 — 4 单', '已审批但截止前未送达：送达时间为空（不插补） — 462 单', '同一订单重复商品：保留为独立明细（每行价格不同），不合并为数量 — 638 单（779 行额外明细，668 组）']
+PASS no customer ids, keys or personal attributes on the page 
+PASS without a release: banner empty state, report tabs still render, cross-check shows empty state 
+12/12 checks passed
+exit=0

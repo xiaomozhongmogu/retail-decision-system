@@ -2553,7 +2553,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-11-skeleton.json"
+        "evidence/UI-01/2026-11-11-ui02-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2566,10 +2566,10 @@
       "category": "UI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C14",
         "U05",
@@ -2591,7 +2591,9 @@
         "页面统计与质量报告一致，不把模型样本量当原始数据量。",
         "不展示密钥或不必要个人信息。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/UI-02/2026-11-11-data-page.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
