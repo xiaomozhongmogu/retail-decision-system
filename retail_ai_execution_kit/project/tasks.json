@@ -3,9 +3,9 @@
   "project_title": "基于用户全生命周期的电商零售智能决策与AI运营助手系统",
   "baseline_date": "2026-11-05",
   "timezone": "Asia/Shanghai",
-  "project_state": "analysis_model_ui_done_ai_blocked_on_credentials",
+  "project_state": "ai_modules_in_progress",
   "active_dataset": "合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认",
-  "coordinator": "未指定（claude-opus-5-5 于 2026-11-11 释放：剩余可执行任务已全部完成，其余受阻于 LLM 凭据、团队分工表与提交回执）",
+  "coordinator": "claude-opus-5-5（对话“电商项目接力｜说继续即可”）；2026-11-11 15:37 按用户继续（D014）",
   "milestones": {
     "proposal": "2026-11-09",
     "midterm": "2026-11-30",
@@ -128,7 +128,7 @@
         "分配文档章节、演示职责和个人贡献记录方式。"
       ],
       "evidence": [],
-      "blocker": "已从用户提供的选题报告登记 5 名成员姓名、学号与组长（ops/TEAM.md）；仍缺：各模块负责人与复核者、可投入时间、文档章节与演示分工，以及孙卓班级的确认，均需团队提供。恢复条件：用户提供分工表。",
+      "blocker": "技术分工已确定（D014，见 ops/TEAM.md）：全部技术模块负责人为用户本人，AI 助手协助并自审，已记入 ops/TEAM.md。仍缺非技术部分：文档章节、PPT、讲演、答辩、人工审核与行政的组员分配、可投入时间与孙卓班级确认，需团队提供；不阻塞技术开发。",
       "skip_reason": null,
       "execution_required": false
     },
@@ -1936,10 +1936,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "blocked",
+      "status": "done",
       "owner": "claude-opus-5-5",
-      "reviewer": null,
-      "review_mode": null,
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -1963,9 +1963,9 @@
         "完成真实小请求并保留脱敏证据；无密钥时可开发夹具但不得标在线集成完成。"
       ],
       "evidence": [
-        "evidence/AI-01/2026-11-11-client-fixture.json"
+        "evidence/AI-01/2026-11-11-live.json"
       ],
-      "blocker": "缺少 LLM 凭据：适配层与夹具检查已完成（13/13，见 evidence/AI-01/2026-11-11-client-fixture.json），但本机没有 LLM_API_KEY/LLM_BASE_URL/LLM_MODEL，真实小请求无法完成。已尝试：读取环境与 .env，真实调用返回 llm_unavailable。恢复条件：用户自行在执行根目录 .env 填写 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL、LLM_PRICE_IN_PER_1K、LLM_PRICE_OUT_PER_1K，并设 LLM_ALLOW_PAID=1（预算默认 50 次 / 0.5 USD）。下一步：重跑 evidence/AI-01/client_smoke.py，确认真实请求成功后补证据并验收。只阻塞依赖 AI-01 的 AI 任务。",
+      "blocker": null,
       "skip_reason": null,
       "execution_required": true
     },
@@ -2834,7 +2834,7 @@
         "Word/PDF实际打开或渲染核验，提交就绪与已收到分别记录；当期实际提交立即保存回执，不等待REL-07终期汇总。"
       ],
       "evidence": [],
-      "blocker": null,
+      "blocker": "用户 2026-11-11 明确确认选题报告已正式提交（D014，见 ops/TEAM.md）；独立提交回执待补，不编造。",
       "skip_reason": null,
       "execution_required": false
     },

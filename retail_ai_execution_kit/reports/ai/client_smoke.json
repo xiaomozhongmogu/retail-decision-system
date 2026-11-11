@@ -2,28 +2,31 @@
   "task_id": "AI-01",
   "real_call": {
     "config": {
-      "base_url": "",
-      "model": "",
-      "api_key": "missing",
-      "allow_paid": false,
+      "base_url": "https://api.deepseek.com",
+      "model": "deepseek-chat",
+      "api_key": "set, 35 chars",
+      "allow_paid": true,
       "max_calls": 50,
       "max_cost_usd": 0.5,
-      "price_in_per_1k": 0.0,
-      "price_out_per_1k": 0.0,
+      "price_in_per_1k": 0.00014,
+      "price_out_per_1k": 0.00028,
       "timeout_s": 30.0,
       "max_retries": 2
     },
     "result": {
-      "status": "error",
+      "status": "ok",
       "mode": "live",
-      "model": null,
-      "error": {
-        "code": "llm_unavailable",
-        "message": "LLM 未配置（缺 LLM_API_KEY / LLM_BASE_URL / LLM_MODEL）",
-        "retryable": true
-      }
+      "model": "deepseek-flash",
+      "text": "Pong! 🏓\n\nWhat can I help you with today?",
+      "usage": {
+        "prompt_tokens": 5,
+        "completion_tokens": 15,
+        "cost_usd": 5e-06
+      },
+      "attempts": 1,
+      "seconds": 0.598
     },
-    "online_integration_done": false
+    "online_integration_done": true
   },
   "fixture_checks": [
     {
@@ -97,6 +100,6 @@
     }
   ],
   "fixture_checks_passed": true,
-  "online_integration": "not done: no credentials configured (status in_review)",
+  "online_integration": "done",
   "note": "已安装的 openai SDK 在设置了 SOCKS 代理变量时无法创建客户端（缺 socksio），适配层改用标准库 urllib"
 }

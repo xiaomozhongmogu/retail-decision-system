@@ -1,0 +1,18 @@
+$ .venv/bin/python evidence/AI-01/client_smoke.py   (with DeepSeek credentials configured in .env)
+2026-11-11T15:37:42+08:00
+real call: {"status": "ok", "mode": "live", "model": "deepseek-flash", "text": "Pong! 🏓\n\nWhat can I help you with today?", "usage": {"prompt_tokens": 5, "completion_tokens": 15, "cost_usd": 5e-06}, "attempts": 1, "seconds": 0.598}
+PASS fixture success: text, structured JSON, usage and cost recorded {'prompt_tokens': 100, 'completion_tokens': 20, 'cost_usd': 0.00014}
+PASS invalid structured output is rejected 
+PASS retryable error (503) retried once then succeeds 
+PASS non-retryable error (401) fails immediately 
+PASS retries are limited (max_retries=2 -> 3 attempts) and rate limit reported 3
+PASS timeout reported as timeout 
+PASS call budget: third call refused without calling 
+PASS cost budget: expected cost over the limit is refused before calling 
+PASS live mode without paid permission does not call 
+PASS live mode with unknown price does not call 
+PASS no key -> llm_unavailable, no network call 
+PASS call log has model, tokens, cost, timing; never the key or the prompt text 
+PASS config summary redacts the key 
+13/13 fixture checks passed; online integration done: True
+exit=0
