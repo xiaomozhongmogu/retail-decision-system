@@ -1,0 +1,26 @@
+$ .venv/bin/python eval/score_blind_review.py
+2026-11-11T21:52:03+08:00
+{
+ "planted": {
+  "total": 8,
+  "found_by_reviewer": 8,
+  "found_by_our_checker": 6
+ },
+ "clean_reports": {
+  "total": 16,
+  "with_high_severity_findings": 2,
+  "high_severity_real_new_issues": 2,
+  "false_positive_high": 0
+ },
+ "low_severity": {
+  "spec_ambiguity_rounding": 21,
+  "template_wording": 5,
+  "unclassified": 0
+ },
+ "checker_gaps": [
+  "单位被改为“元”未被最终复核发现",
+  "未结束月份与上月全月的直接比较未被发现",
+  "假设中把截止前最后一天算进报告周（R22、R24，真实 LLM 输出）未被发现"
+ ]
+}
+exit=0

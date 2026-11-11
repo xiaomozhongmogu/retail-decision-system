@@ -1,0 +1,540 @@
+{
+ "task_id": "AI-10",
+ "reviewer": "GPT（用户提供的盲测结果，型号未告知）",
+ "review_mode": "independent AI review, blind (answer key withheld)",
+ "reports": 24,
+ "scenarios": [
+  "S01",
+  "S02",
+  "S03",
+  "S04",
+  "S05"
+ ],
+ "planted": {
+  "total": 8,
+  "found_by_reviewer": 8,
+  "found_by_our_checker": 6
+ },
+ "clean_reports": {
+  "total": 16,
+  "with_high_severity_findings": 2,
+  "high_severity_real_new_issues": 2,
+  "false_positive_high": 0
+ },
+ "low_severity": {
+  "spec_ambiguity_rounding": 21,
+  "template_wording": 5,
+  "unclassified": 0
+ },
+ "checker_gaps": [
+  "单位被改为“元”未被最终复核发现",
+  "未结束月份与上月全月的直接比较未被发现",
+  "假设中把截止前最后一天算进报告周（R22、R24，真实 LLM 输出）未被发现"
+ ],
+ "human_spot_check": "未完成：需要真人从 24 份中任选至少 5 份按同样检查项复核",
+ "scope": "结论只针对这 24 份报告，不代表所有输入都不会出错",
+ "rows": [
+  {
+   "report": "R01",
+   "scenario": "S01",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "单位",
+     "reviewer_found": true,
+     "our_checker_found": false
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 +44.2%，订单环比为 +36.5%，客单价环比为 +5.6%；商品金额同比为 -0.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R02",
+   "scenario": "S02",
+   "generation": "template",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比 -17.3%，同比 -42.9%。"
+    },
+    {
+     "type": "不存在字段",
+     "severity": "低",
+     "class": "wording",
+     "note": "template hypothesis says causes need price/promotion/contact records that the data lacks; it is labelled 待验证 and states the fields are missing -> wording to improve, not a false claim",
+     "quote": "待验证：变化的原因需要结合价格、促销与触达记录核实（数据中没有这些字段）"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R03",
+   "scenario": "S02",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "引用",
+     "reviewer_found": true,
+     "our_checker_found": true
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 -17.3%，订单环比为 -22.2%，客单价环比为 +6.3%；商品金额同比（去年同期同星期）为 -42.9%。"
+    }
+   ],
+   "our_checker_flags": [
+    "未知 evidence_id fact:0badc0de"
+   ]
+  },
+  {
+   "report": "R04",
+   "scenario": "S04",
+   "generation": "template",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "不存在字段",
+     "severity": "低",
+     "class": "wording",
+     "note": "template hypothesis says causes need price/promotion/contact records that the data lacks; it is labelled 待验证 and states the fields are missing -> wording to improve, not a false claim",
+     "quote": "待验证：变化的原因需要结合价格、促销与触达记录核实（数据中没有这些字段）"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R05",
+   "scenario": "S02",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "窗口",
+     "reviewer_found": true,
+     "our_checker_found": true
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 -17.3%，订单环比为 -22.2%，客单价环比为 +6.3%；商品金额同比（去年同期同星期）为 -42.9%。"
+    }
+   ],
+   "our_checker_flags": [
+    "最终文本含未知数字 30"
+   ]
+  },
+  {
+   "report": "R06",
+   "scenario": "S03",
+   "generation": "template",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比 —，同比 -0.4%。"
+    },
+    {
+     "type": "不存在字段",
+     "severity": "低",
+     "class": "wording",
+     "note": "template hypothesis says causes need price/promotion/contact records that the data lacks; it is labelled 待验证 and states the fields are missing -> wording to improve, not a false claim",
+     "quote": "待验证：变化的原因需要结合价格、促销与触达记录核实（数据中没有这些字段）"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R07",
+   "scenario": "S05",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "不完整周期",
+     "reviewer_found": true,
+     "our_checker_found": false
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比 +27.9%，订单环比 +24.6%，客单价环比 +2.6%；商品金额同比（去年同期同星期）为 -2.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R08",
+   "scenario": "S01",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额变化 +44.2%，订单数变化 +36.5%，客单价变化 +5.6%；同比去年同期同星期，商品金额变化 -0.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R09",
+   "scenario": "S01",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "数字",
+     "reviewer_found": true,
+     "our_checker_found": true
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 +44.2%，订单环比为 +36.5%，客单价环比为 +5.6%；商品金额同比为 -0.4%。"
+    }
+   ],
+   "our_checker_flags": [
+    "最终文本含未知数字 16,306.01"
+   ]
+  },
+  {
+   "report": "R10",
+   "scenario": "S02",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "不存在字段",
+     "reviewer_found": true,
+     "our_checker_found": true
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 -17.3%，订单环比为 -22.2%，客单价环比为 +6.3%；商品金额同比（去年同期同星期）为 -42.9%。"
+    }
+   ],
+   "our_checker_flags": [
+    "提到数据中没有的字段"
+   ]
+  },
+  {
+   "report": "R11",
+   "scenario": "S05",
+   "generation": "template",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比 +27.9%，同比 -2.4%。"
+    },
+    {
+     "type": "不存在字段",
+     "severity": "低",
+     "class": "wording",
+     "note": "template hypothesis says causes need price/promotion/contact records that the data lacks; it is labelled 待验证 and states the fields are missing -> wording to improve, not a false claim",
+     "quote": "待验证：变化的原因需要结合价格、促销与触达记录核实（数据中没有这些字段）"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R12",
+   "scenario": "S02",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 -17.3%，订单环比为 -22.2%，客单价环比为 +6.3%；商品金额同比（去年同期同星期）为 -42.9%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R13",
+   "scenario": "S05",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比 +27.9%，订单环比 +24.6%，客单价环比 +2.6%；商品金额同比（去年同期同星期）为 -2.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R14",
+   "scenario": "S03",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额同比（去年同期同星期）为 -0.4%"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R15",
+   "scenario": "S01",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 +44.2%，订单环比为 +36.5%，客单价环比为 +5.6%；商品金额同比为 -0.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R16",
+   "scenario": "S01",
+   "generation": "template",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比 +44.2%，同比 -0.4%。"
+    },
+    {
+     "type": "不存在字段",
+     "severity": "低",
+     "class": "wording",
+     "note": "template hypothesis says causes need price/promotion/contact records that the data lacks; it is labelled 待验证 and states the fields are missing -> wording to improve, not a false claim",
+     "quote": "待验证：变化的原因需要结合价格、促销与触达记录核实（数据中没有这些字段）"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R17",
+   "scenario": "S01",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "因果",
+     "reviewer_found": true,
+     "our_checker_found": true
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "不存在字段",
+     "severity": "高",
+     "class": "planted_related",
+     "note": "second finding on the same planted sentence (促销 is not in the data) -> correct",
+     "quote": "本周金额上升是因为促销活动效果显著。"
+    },
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 +44.2%，订单环比为 +36.5%，客单价环比为 +5.6%；商品金额同比为 -0.4%。"
+    }
+   ],
+   "our_checker_flags": [
+    "解释中的原因推测未标待验证：本周金额上升是因为促销活动效果显著"
+   ]
+  },
+  {
+   "report": "R18",
+   "scenario": "S01",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额变化 +44.2%，订单变化 +36.5%，客单价变化 +5.6%；同比去年同期同星期，商品金额变化 -0.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R19",
+   "scenario": "S04",
+   "generation": "live",
+   "reviewer_publishable": true,
+   "planted": [],
+   "other_findings": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R20",
+   "scenario": "S03",
+   "generation": "live+planted",
+   "reviewer_publishable": false,
+   "planted": [
+    {
+     "planted": "特殊情况处理",
+     "reviewer_found": true,
+     "our_checker_found": true
+    }
+   ],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额同比（去年同期同星期）为 -0.4%"
+    }
+   ],
+   "our_checker_flags": [
+    "最终文本含未知数字 0%"
+   ]
+  },
+  {
+   "report": "R21",
+   "scenario": "S02",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额变化 -17.3%，订单数变化 -22.2%，客单价变化 +6.3%；同比去年同期同星期，商品金额变化 -42.9%。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R22",
+   "scenario": "S04",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "窗口",
+     "severity": "高",
+     "class": "real_new_issue",
+     "note": "LLM hypothesis says the excluded last day will raise the report-week amount; that day is outside the report week -> real semantic error missed by our checker",
+     "quote": "待验证：截止前最后一天审批落定后，该日订单会使本周有效订单口径的金额进一步上升。"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R23",
+   "scenario": "S03",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "本周商品金额同比为 -0.4%"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R24",
+   "scenario": "S05",
+   "generation": "live",
+   "reviewer_publishable": false,
+   "planted": [],
+   "other_findings": [
+    {
+     "type": "窗口",
+     "severity": "高",
+     "class": "real_new_issue",
+     "note": "LLM hypothesis says the excluded last day can change the report-week result; same error -> real, missed by our checker",
+     "quote": "待验证：截止前最后一天审批未落定的订单在审批落定后，会改变该日与本周的订单口径结果。"
+    },
+    {
+     "type": "数字",
+     "severity": "低",
+     "class": "spec_ambiguity",
+     "note": "ratio shown with one decimal (e.g. 0.4416 -> +44.2%): packet knowledge.md did not say whether one-decimal percentages are allowed; values are correct when rounded -> spec ambiguity, not a report error",
+     "quote": "商品金额环比为 +27.9%，订单环比为 +24.6%，客单价环比为 +2.6%；商品金额同比（去年同期同星期）为 -2.4%。"
+    }
+   ],
+   "our_checker_flags": []
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "AI-10",
+  "verification_status": "partial",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "GPT（独立 AI 盲测，型号未告知）+ claude-opus-5-5 评分",
+  "review_mode": "independent",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic；5 个场景（真实发布 + 4 个由真实日数据改造的场景）；真实 LLM（DeepSeek）与模板周报",
+    "network": "生成周报时联网 api.deepseek.com；盲测由用户在 GPT 中完成"
+  },
+  "command": ".venv/bin/python eval/make_blind_packet.py; （用户在 GPT 中审查 eval/blind_packet/ALL_IN_ONE.md）; .venv/bin/python eval/score_blind_review.py",
+  "exit_code": 0,
+  "summary": "周报场景验收（确定性与独立 AI 部分）：24 份周报覆盖正常周、环比下降（负净额）、分母为 0、小样本、不完整周期，其中 8 份植入错误（数字、单位、窗口、引用、因果、不存在字段、不完整周期比较、分母为 0）。GPT 在不知道答案的情况下 8/8 全部发现；我方确定性校验发现 6/8（漏掉单位改为“元”和不完整月比较）。16 份合格报告中没有高严重度误报，GPT 另外发现 2 处真实问题（R22、R24：真实 LLM 写的假设把截止前最后一天算进报告周），我方校验器未发现。低严重度：21 处一位小数百分比的格式疑问（材料包口径说明未写清，非数值错误），5 处模板假设措辞。人工抽查尚未完成。",
+  "inputs": [
+    {
+      "path": "eval/blind_test_plan.md",
+      "sha256": "351fd40d8e9ab6eba6f80986592f4e90521cc9ebcf3766f702dc89306c1d67fb"
+    },
+    {
+      "path": "eval/blind_key/answer_key.json",
+      "sha256": "25c77da76f1343b0bf9aa08c96e4e212d1378316974ba36af5b70a43480b2f77"
+    },
+    {
+      "path": "src/retail_bi/ai/report_generator.py",
+      "sha256": "974d13cae073fb7fe05ec1a9ac2055929d1c2ec26f88c852540e88798d1057cb"
+    },
+    {
+      "path": "src/retail_bi/ai/report_facts.py",
+      "sha256": "7e4365a2e01be6da739d95cccf7dbf6ff619a6d5d1ebfdd9fbe5f728fa06a867"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "eval/report_cases.jsonl",
+      "sha256": "dc1d59764d476bf57b05e1bc5f1b908f1c96f9df4c6b4927ae0eb767c73e9ed4"
+    },
+    {
+      "path": "eval/make_blind_packet.py",
+      "sha256": "84ab0d9942e66cd1020982c53c630822a2de858813e77ece03e054e4e8364c12"
+    },
+    {
+      "path": "eval/score_blind_review.py",
+      "sha256": "d8381edffdee67bd5bf042bb9fabd6894a64c13066e628854334d678c9cb4510"
+    },
+    {
+      "path": "eval/blind_packet/ALL_IN_ONE.md",
+      "sha256": "b12f8b1ddcde66b32cc9d8b688d79da9b530d0abba18c381ffe647aa70dbdab8"
+    },
+    {
+      "path": "eval/blind_packet/gpt_review.jsonl",
+      "sha256": "a48473974449840c8d33caaef0a33dda96045f5dd5a352492d7931f6e2d0c841"
+    },
+    {
+      "path": "reports/ai/report_evaluation.json",
+      "sha256": "97857f6754d820b9cc475000cfeedbd1929840098e24c8fc0650700db57d9f05"
+    },
+    {
+      "path": "evidence/AI-10/score_run.log",
+      "sha256": "998c36424fce3213f19bcfb3aaacc990faf7216df6c5b93a0e3e64e740030812"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "24 个正常/异常场景报告，覆盖 0 分母（S03）、负净额（S02 环比下降）、小样本（S04，基期少于 30 单不给增长率）与不完整周期（S05 as_of 2026-10-15；各场景的截止前最后一天）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "测例中的数字、单位、窗口与引用可对照事实表核对；8 处植入违规全部被盲测发现，我方确定性校验发现 6 处；违规数字（R09）与无依据因果（R17）均被检测。同时记录了我方校验器的 3 类漏洞。"
+    },
+    {
+      "criterion": 3,
+      "status": "not_done",
+      "finding": "确定性校验（answer_key 中的 our_checker_flags）与独立 AI 盲测（gpt_review.jsonl）分别保存；人工抽查尚未完成（需要真人任选至少 5 份复核）。结论只针对这 24 份报告。"
+    }
+  ],
+  "limitations": [
+    "GPT 型号用户未告知；GPT 盲测是独立 AI 复核，不是人工抽查。",
+    "对 GPT 发现的分类（格式歧义、措辞、真实新问题）由 claude-opus-5-5 对照报告原文判断，规则写在 score_blind_review.py。",
+    "材料包的口径说明没有写明比例可保留一位小数，导致 21 处低严重度疑问；下一版材料包需补充。",
+    "发现的校验器漏洞尚未修复（属于 AI-09 的改进）。"
+  ],
+  "steps": [
+    "编写盲测方案；第一次交给 GPT 时只有方案、没有材料，GPT 正确地拒绝审查。",
+    "生成材料包（24 份周报、5 个场景事实表、口径摘录、答案清单另存）；生成时记录我方校验器结果。",
+    "用户在 GPT 中完成盲测并回传 24 行结果；原样保存为 gpt_review.jsonl。",
+    "对照答案清单评分，并核对 R22、R24 的新发现属实。"
+  ],
+  "task_spec_sha256": "f7e4d250a2ac15a7c197ebcde931f22dd7ad88cdda43bd0c6feb8f013284bf8a",
+  "performed_at": "2026-11-11T21:52:04.196704+08:00"
+}

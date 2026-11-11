@@ -2292,8 +2292,8 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
+      "status": "in_review",
+      "owner": "claude-opus-5-5",
       "reviewer": null,
       "review_mode": null,
       "requirements": [
@@ -2318,8 +2318,10 @@
         "声明测例中可核对数字、单位和引用一致，违规数字或无依据因果结论被检测。",
         "分别保存确定性校验和人工抽查，不把有限测试写成所有输入永不出错。"
       ],
-      "evidence": [],
-      "blocker": null,
+      "evidence": [
+        "evidence/AI-10/2026-11-11-blind-review.json"
+      ],
+      "blocker": "剩余：人工抽查（真人从 eval/blind_packet/reports 的 24 份中任选至少 5 份，按 eval/blind_test_plan.md 第 3 节检查项复核并记录）；另有 3 类校验器漏洞待在 AI-09 中修复。",
       "skip_reason": null,
       "execution_required": true
     },
