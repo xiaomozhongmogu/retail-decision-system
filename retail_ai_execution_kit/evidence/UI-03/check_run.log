@@ -1,0 +1,24 @@
+$ .venv/bin/python evidence/UI-03/check.py   (after the shared banner became one text line)
+2026-11-11T14:43:34+08:00
+PASS page renders without exception 
+PASS full-range KPIs equal DWD: orders, merchandise, AOV recomputed from sums 
+PASS incomplete month flagged (2026-11) 
+PASS cube over everything sums to the same merchandise total (no join amplification) 
+PASS year roll-up: 2025 equals DWD and is complete; 2026 is flagged incomplete 
+PASS drill year > quarter > month > day matches DW-08 q4a (2025-11 by day) 
+PASS drill quarter table has the three months of 2025-Q4 
+PASS quarter rows of 2025 add up to the year 
+PASS slice year=2025 by region matches DW-08 q1 
+PASS operation label shows 切片 
+PASS dice (year x region x category) lines equal DWD 
+PASS operation label shows 切块 
+PASS pivot month x region (2026) matches DW-08 q5 for Jan-Mar 
+PASS 2026-11 in a month view is flagged incomplete 
+PASS rotate (swap rows/columns) gives the transposed table 
+PASS unknown/unsupported dimension shows an explicit message 
+PASS orders_containing refused when categories would be added up 
+PASS empty period (start after end) shows an empty-state message 
+PASS day grain flags 2026-11-07 (approval still pending) as incomplete 
+PASS month grain shows monthly distinct buyers equal to ads.kpi_monthly 
+20/20 checks passed
+exit=0

@@ -2553,7 +2553,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-11-ui02-recheck.json"
+        "evidence/UI-01/2026-11-11-ui03-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2605,10 +2605,10 @@
       "category": "UI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C10",
         "C14",
@@ -2631,7 +2631,9 @@
         "图表数字与ADS一致，筛选后的分母和单位正确，不连接放大或重复累计。",
         "空结果、未知维度、不完整周期有明确提示。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/UI-03/2026-11-11-business-page.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

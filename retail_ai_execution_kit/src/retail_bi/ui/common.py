@@ -37,10 +37,8 @@ def banner():
     if info is None:
         st.warning('尚无已发布的数据版本。请先运行 `pipeline.py build` 与 `release.py publish`（见 docs/COMMANDS.md），页面将显示空状态。')
         return None
-    c1, c2, c3 = st.columns(3)
-    c1.metric('数据版本', info['version'])
-    c2.metric('数据时间范围', '2024-01-01 至 2026-11-07')
-    c3.metric('as_of（截止，不含）', AS_OF[:10])
+    # one text line instead of metric cards: cards truncate long values in narrow windows
+    st.markdown(f"**数据版本** `{info['version']}` · **数据时间范围** 2024-01-01 至 2026-11-07 · **as_of（截止，不含）** {AS_OF[:10]}")
     st.caption('完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。')
     return info
 

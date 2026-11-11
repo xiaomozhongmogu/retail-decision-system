@@ -80,7 +80,7 @@
 | AI-15 | 完成三模块联调与可观测性 | final | todo | AI-03, AI-07, AI-10, AI-14 |
 | UI-01 | 建立Streamlit多页骨架 | midterm | done | GOV-07, GOV-06 |
 | UI-02 | 接入数据质量与口径页面 | midterm | done | UI-01, DATA-12 |
-| UI-03 | 接入经营指标与OLAP交互 | midterm | todo | UI-01, DW-10, EDA-02 |
+| UI-03 | 接入经营指标与OLAP交互 | midterm | done | UI-01, DW-10, EDA-02 |
 | UI-04 | 接入客户生命周期与分群 | midterm | todo | UI-01, EDA-03, EDA-05, ML-05 |
 | UI-05 | 接入预测评估与名单试算 | midterm | todo | UI-01, ML-12 |
 | UI-06 | 接入AI工作台 | final | todo | UI-01, AI-15 |
@@ -1218,7 +1218,7 @@
 2. 全局显示数据版本、数据时间和as_of，历史数据不标实时2026。
 3. 应用实际启动，空数据状态可理解，不能只交静态截图。
 
-证据：evidence/UI-01/2026-11-11-ui02-recheck.json
+证据：evidence/UI-01/2026-11-11-ui03-recheck.json
 
 ### UI-02 接入数据质量与口径页面
 
@@ -1239,7 +1239,7 @@
 
 ### UI-03 接入经营指标与OLAP交互
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C10, C14, U05。
 - 前置：UI-01, DW-10, EDA-02。
 - 允许修改：`src/retail_bi/ui`, `reports/ui`；另可写本任务证据/交接。
@@ -1252,7 +1252,7 @@
 2. 图表数字与ADS一致，筛选后的分母和单位正确，不连接放大或重复累计。
 3. 空结果、未知维度、不完整周期有明确提示。
 
-证据：尚无已登记验收证据。
+证据：evidence/UI-03/2026-11-11-business-page.json
 
 ### UI-04 接入客户生命周期与分群
 
