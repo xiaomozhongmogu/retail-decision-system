@@ -1,0 +1,48 @@
+$ .venv/bin/python evidence/AI-04/check_intent.py
+2026-11-11T21:20:17+08:00
+PASS parse: 2026年10月的商品金额是多少？ -> ok 
+PASS parse: 上个月有多少单？ -> ok 
+PASS parse: 2025年的客单价是多少 -> ok 
+PASS parse: 2026年10月购买客户有多少？ -> ok 
+PASS parse: 2025年第四季度的运费一共多少 -> ok 
+PASS parse: 2025年取消了多少订单 -> ok 
+PASS parse: 最近6个月商品金额的趋势 -> ok 
+PASS parse: 2025年每月订单数走势 -> ok 
+PASS parse: 最近一周每天的销售额 -> ok 
+PASS parse: 2025年哪个品类的商品金额最高？ -> ok 
+PASS parse: 2026年10月商品金额前3的品类 -> ok 
+PASS parse: 2025年各大区商品金额占比 -> ok 
+PASS parse: 2026年10月商品金额同比变化 -> ok 
+PASS parse: 上个月订单数环比 -> ok 
+PASS parse: 2025年西部地区电子品类的商品金额 -> ok 
+PASS parse: 2025年中西部的商品金额是多少 -> ok 
+PASS parse: 最新的30天复购率是多少 -> ok 
+PASS parse: 首单后第一个月的留存率 -> ok 
+PASS parse: 现在沉睡客户有多少 -> ok 
+PASS parse: 商品金额是多少 -> clarify 
+PASS parse: 2025年的收入是多少 -> clarify 
+PASS parse: 哪个品类卖得最好 -> clarify 
+PASS parse: 2025年商品金额排名 -> clarify 
+PASS parse: 2026年10月商品金额对比 -> clarify 
+PASS parse: 今天天气怎么样 -> clarify 
+PASS parse: 2025年各品类的毛利是多少 -> unsupported 
+PASS parse: 各渠道的ROI -> unsupported 
+PASS parse: 2025年加州的订单数 -> unsupported 
+PASS parse: 2025年各品类的购买客户数 -> unsupported 
+PASS parse: 2025年全年去重购买客户数 -> unsupported 
+PASS parse: 2023年的商品金额 -> empty 
+PASS parse: 2026年12月的订单数 -> empty 
+PASS at least 10 supported question classes (distinct metric x kind) 
+PASS category and region enums equal the release values 
+PASS every planned view is in the release allow-list 
+PASS comparison plan: same months one year earlier as base 
+PASS AOV plan recomputes from sums, from kpi_monthly 
+PASS plans contain no SQL text 
+PASS incomplete period flagged (本月) 
+PASS validator rejects an unknown dimension (LLM path safety) 
+PASS validator rejects a category value outside the enum 
+PASS LLM path used only after rules fail, and its intent passes the catalog or is turned into a clarification: 二〇二五年十月份大概成交了多少美元的货？ 
+PASS LLM path used only after rules fail, and its intent passes the catalog or is turned into a clarification: 去年十月份一共来了几张单子 
+[{"question": "二〇二五年十月份大概成交了多少美元的货？", "rules": "clarify", "final": {"parser": "llm", "status": "ok", "metric": "merchandise_sales_usd", "kind": "value", "time": {"start": "2025-10", "end": "2025-10", "grain": "month", "label": "2025年10月"}, "clarification": null, "error": null}}, {"question": "去年十月份一共来了几张单子", "rules": "clarify", "final": {"parser": "llm", "status": "ok", "metric": "valid_orders", "kind": "value", "time": {"start": "2025-10", "end": "2025-10", "grain": "month", "label": "去年十月份"}, "clarification": null, "error": null}}]
+43/43 checks passed
+exit=0

@@ -1,0 +1,719 @@
+{
+ "task_id": "AI-04",
+ "rows": [
+  {
+   "question": "2026年10月的商品金额是多少？",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "上个月有多少单？",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "valid_orders",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "上个月"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年的客单价是多少",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "aov_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2026年10月购买客户有多少？",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "buyers",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年第四季度的运费一共多少",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "shipping_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2025-10",
+     "end": "2025-12",
+     "grain": "quarter",
+     "label": "2025-Q4"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年取消了多少订单",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "cancelled_orders",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "最近6个月商品金额的趋势",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "trend",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-05",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "最近 6 个完整月"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年每月订单数走势",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "valid_orders",
+    "kind": "trend",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "最近一周每天的销售额",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "trend",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10-31",
+     "end": "2026-11-07",
+     "grain": "day",
+     "label": "最近一个审批落定的完整周",
+     "closed": "left"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年哪个品类的商品金额最高？",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "ranking",
+    "dims": [
+     "product_category"
+    ],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2026年10月商品金额前3的品类",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "ranking",
+    "dims": [
+     "product_category"
+    ],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年各大区商品金额占比",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "share",
+    "dims": [
+     "customer_region"
+    ],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2026年10月商品金额同比变化",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "comparison",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": "yoy",
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "上个月订单数环比",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "valid_orders",
+    "kind": "comparison",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "上个月"
+    },
+    "compare": "mom",
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年西部地区电子品类的商品金额",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {
+     "product_category": [
+      "Electronics & Accessories"
+     ],
+     "customer_region": [
+      "West"
+     ]
+    },
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年中西部的商品金额是多少",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {
+     "customer_region": [
+      "Midwest"
+     ]
+    },
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "最新的30天复购率是多少",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "repurchase_rate_30d",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "首单后第一个月的留存率",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "cohort_retention_rate",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "现在沉睡客户有多少",
+   "expected_status": "ok",
+   "got": {
+    "status": "ok",
+    "metric": "lifecycle_customers",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": null,
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "商品金额是多少",
+   "expected_status": "clarify",
+   "got": {
+    "status": "clarify",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": "请指定时间范围，例如“2026年10月”“2025年”“最近3个月”或“上周”。",
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年的收入是多少",
+   "expected_status": "clarify",
+   "got": {
+    "status": "clarify",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": "“收入/业绩”可以指商品金额（不含运费）或订单金额（含运费），本系统默认口径是商品金额。请确认要看哪一个。",
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "哪个品类卖得最好",
+   "expected_status": "clarify",
+   "got": {
+    "status": "clarify",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": "“卖得最好”可以按商品金额或按明细件数排名，请确认用哪个指标。",
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年商品金额排名",
+   "expected_status": "clarify",
+   "got": {
+    "status": "clarify",
+    "metric": "merchandise_sales_usd",
+    "kind": "ranking",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": "排名或占比需要一个维度：按品类还是按客户大区？",
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2026年10月商品金额对比",
+   "expected_status": "clarify",
+   "got": {
+    "status": "clarify",
+    "metric": "merchandise_sales_usd",
+    "kind": "comparison",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "clarification": "请说明对比对象：同比（去年同期）还是环比（上一期）。",
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "今天天气怎么样",
+   "expected_status": "clarify",
+   "got": {
+    "status": "clarify",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": "没有识别出指标。可以问商品金额、订单数、客单价、购买客户数、运费、取消订单、复购率、留存率或生命周期人数。",
+    "error": null
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年各品类的毛利是多少",
+   "expected_status": "unsupported",
+   "got": {
+    "status": "unsupported",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "capability_not_supported",
+     "message": "不支持：毛利与利润（数据中没有成本）"
+    }
+   },
+   "pass": true
+  },
+  {
+   "question": "各渠道的ROI",
+   "expected_status": "unsupported",
+   "got": {
+    "status": "unsupported",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "capability_not_supported",
+     "message": "不支持：渠道与营销投放（数据中没有）"
+    }
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年加州的订单数",
+   "expected_status": "unsupported",
+   "got": {
+    "status": "unsupported",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "capability_not_supported",
+     "message": "不支持：州、城市与邮编（不在允许视图中）"
+    }
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年各品类的购买客户数",
+   "expected_status": "unsupported",
+   "got": {
+    "status": "unsupported",
+    "metric": "buyers",
+    "kind": "value",
+    "dims": [
+     "product_category"
+    ],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "unknown_field",
+     "message": "购买客户数（月内去重）没有按品类或地区的允许视图（品类×地区视图只有商品金额、明细行和含该品类订单数）"
+    }
+   },
+   "pass": true
+  },
+  {
+   "question": "2025年全年去重购买客户数",
+   "expected_status": "unsupported",
+   "got": {
+    "status": "unsupported",
+    "metric": "buyers",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "unknown_field",
+     "message": "购买客户按月去重，跨月不能相加：请问单个月份，或用“每月购买客户趋势”"
+    }
+   },
+   "pass": true
+  },
+  {
+   "question": "2023年的商品金额",
+   "expected_status": "empty",
+   "got": {
+    "status": "empty",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2023-01",
+     "end": "2023-12",
+     "grain": "year",
+     "label": "2023",
+     "incomplete": false
+    },
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "out_of_range",
+     "message": "数据从 2024-01 开始，所问时间 2023 没有数据"
+    }
+   },
+   "pass": true
+  },
+  {
+   "question": "2026年12月的订单数",
+   "expected_status": "empty",
+   "got": {
+    "status": "empty",
+    "metric": "valid_orders",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-12",
+     "end": "2026-12",
+     "grain": "month",
+     "label": "2026-12"
+    },
+    "compare": null,
+    "clarification": null,
+    "error": {
+     "code": "out_of_range",
+     "message": "数据截止 2026-11-08（不含），所问时间 2026-12 没有数据"
+    }
+   },
+   "pass": true
+  }
+ ],
+ "llm_path": [
+  {
+   "question": "二〇二五年十月份大概成交了多少美元的货？",
+   "rules": "clarify",
+   "final": {
+    "parser": "llm",
+    "status": "ok",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "time": {
+     "start": "2025-10",
+     "end": "2025-10",
+     "grain": "month",
+     "label": "2025年10月"
+    },
+    "clarification": null,
+    "error": null
+   }
+  },
+  {
+   "question": "去年十月份一共来了几张单子",
+   "rules": "clarify",
+   "final": {
+    "parser": "llm",
+    "status": "ok",
+    "metric": "valid_orders",
+    "kind": "value",
+    "time": {
+     "start": "2025-10",
+     "end": "2025-10",
+     "grain": "month",
+     "label": "去年十月份"
+    },
+    "clarification": null,
+    "error": null
+   }
+  }
+ ],
+ "passed": 43,
+ "total": 43
+}

@@ -2056,10 +2056,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2082,7 +2082,9 @@
         "输出结构化意图，歧义问题澄清；不支持字段/时间明确说明。",
         "默认可信SQL构造器；若开启模型生成SQL，明确额外校验路径。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-04/2026-11-11-intent.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

@@ -66,7 +66,7 @@
 | AI-01 | 实现LLM适配与配置边界 | final | done | GOV-07, GOV-06 |
 | AI-02 | 建立业务知识库与检索 | final | done | DW-06, ML-12 |
 | AI-03 | 评测知识检索和依据引用 | final | done | AI-02, AI-01 |
-| AI-04 | 实现查询意图与Schema约束 | final | todo | AI-01, DW-06 |
+| AI-04 | 实现查询意图与Schema约束 | final | done | AI-01, DW-06 |
 | AI-05 | 实现受限SQL执行器 | final | todo | AI-04, DW-10 |
 | AI-06 | 实现查询回答与结果证据 | final | todo | AI-05 |
 | AI-07 | 完成NL2SQL标准集验收 | final | todo | AI-06 |
@@ -996,7 +996,7 @@
 
 ### AI-04 实现查询意图与Schema约束
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q01。
 - 前置：AI-01, DW-06。
 - 允许修改：`src/retail_bi/ai`, `docs`；另可写本任务证据/交接。
@@ -1009,7 +1009,7 @@
 2. 输出结构化意图，歧义问题澄清；不支持字段/时间明确说明。
 3. 默认可信SQL构造器；若开启模型生成SQL，明确额外校验路径。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-04/2026-11-11-intent.json
 
 ### AI-05 实现受限SQL执行器
 

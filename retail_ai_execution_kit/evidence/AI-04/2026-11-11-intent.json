@@ -1,0 +1,92 @@
+{
+  "task_id": "AI-04",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；规则解析 + 可选真实 LLM（DeepSeek）",
+    "network": "联网：api.deepseek.com（仅 LLM 路径 2 次调用）"
+  },
+  "command": ".venv/bin/python evidence/AI-04/check_intent.py",
+  "exit_code": 0,
+  "summary": "查询意图层：规则解析器把经营问题转成结构化意图（指标、维度、筛选、时间、问题类型、对比），经目录校验（指标、维度、枚举与发布一致、时间范围、可加性）后由可信构造器生成 query_view 调用计划，不产生 SQL 文本。支持 15 类问题；歧义（收入口径、卖得最好、缺时间、缺维度、缺对比对象）返回澄清；不支持字段与不可加指标明确说明；规则识别不出时才走 LLM 路径，其结果同样必须通过目录校验。43/43 检查通过。",
+  "inputs": [
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "src/retail_bi/ai/report_facts.py",
+      "sha256": "7e4365a2e01be6da739d95cccf7dbf6ff619a6d5d1ebfdd9fbe5f728fa06a867"
+    },
+    {
+      "path": "evidence/AI-04/check_intent.py",
+      "sha256": "1be876f50dc93c4d4bf90786d180ee28cad877a9699bba51f332f139d0ef541c"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/query_intent.py",
+      "sha256": "7384f17bb4738693af886985d45c86efeddd226df351ed54a98d6de248db8a37"
+    },
+    {
+      "path": "docs/nl2sql_supported_queries.md",
+      "sha256": "35d39bdb2ee545b59487728f8257f76ea9cf001f49e1afff1b612f9a5fd4876f"
+    },
+    {
+      "path": "reports/ai/query_intent_checks.json",
+      "sha256": "24e43d42bddbc593adf622702a20b10e53a9851540f75796d92265fc2141db52"
+    },
+    {
+      "path": "evidence/AI-04/check_run.log",
+      "sha256": "e5f05a8000592447597f36e384d2675c6570ce71b10b70cb5c47d48fa27d2908"
+    },
+    {
+      "path": "evidence/AI-04/check_run_1_failed.log",
+      "sha256": "ed3ab3ef842b971e73ac13a81c26a9d21a91baec43902eb5805f5b16b4fdd5b6"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "15 类问题（金额、订单、客单价、单月客户、运费、取消、月度/按天趋势、排名与前 N、占比、同比/环比、品类×大区筛选、复购率、留存率、生命周期人数）；目录包含允许视图、字段、指标口径、16 个品类与 4 个大区枚举（与发布核对一致）、时间语义和文档中的已验示例。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "输出结构化意图；6 种歧义返回澄清；毛利、渠道、州、按品类客户数、跨月去重客户等返回不支持并说明原因；数据范围外的时间返回 empty；本月等不完整期间附提示。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "默认可信构造器只产生 query_view 调用（检查确认计划中没有 SQL 文本、视图都在允许清单内）；LLM 只在规则识别不出指标时填写意图 JSON，必须通过同一目录校验，否则转为澄清；模型生成 SQL 未开启，额外校验路径写在 docs/nl2sql_supported_queries.md §5。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次运行 41/43：取消订单被识别成有效订单、筛选中的“地区/品类”被当成分组维度，属于解析器错误，已修正（check_run_1_failed.log）。",
+    "规则解析只覆盖文档列出的表达方式；口语化或少见说法依赖 LLM 路径，LLM 路径只测了 2 句。",
+    "执行与回答属于 AI-05、AI-06，本任务不执行查询。"
+  ],
+  "steps": [
+    "认领 AI-04。",
+    "编写 query_intent.py（规则解析、目录校验、可信计划、可选 LLM 路径）与支持问题文档。",
+    "第一次检查 41/43，修正指标优先级与分组维度识别；第二次 43/43（含 2 次真实 LLM 解析）。"
+  ],
+  "task_spec_sha256": "ab7c0196e4aa6ecb8d0f05a9bb3a931f7edfc9ce16c0f9ce10f4406b3541ea24",
+  "performed_at": "2026-11-11T21:20:39.215814+08:00"
+}
