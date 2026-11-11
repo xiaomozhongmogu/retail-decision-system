@@ -1,0 +1,230 @@
+{
+  "task_id": "AI-11",
+  "policy_version": "retention-policy-v1",
+  "policy_source": "knowledge/retention_policy.md",
+  "checks": [
+    {
+      "check": "config parsed from knowledge/retention_policy.md",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "tier boundary: 2 orders in 90d -> high; 1 order and 203.18 USD -> normal; 203.19 USD -> high",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "lapsed tiers: no purchase in 90d split by history",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "discount exactly at the high-value cap (10%) is allowed unchanged",
+      "status": "passed",
+      "detail": "[]"
+    },
+    {
+      "check": "discount above the cap is lowered to the cap (modify)",
+      "status": "passed",
+      "detail": "['折扣由 0.11 下调到上限 0.1']"
+    },
+    {
+      "check": "normal tier cap is 5%",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "margin cap binds below tier cap (lapsed_high 15% vs margin 20% x 0.5 = 10%)",
+      "status": "passed",
+      "detail": "['折扣由 0.2 下调到上限 0.1000']"
+    },
+    {
+      "check": "risk does not raise the discount: p=0.05 and p=0.95 get the same action and cost",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "out-of-population customer is decided by rules without a model probability",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "consent unknown (default) -> deny not_eligible",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "consent false -> deny",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "open complaint -> deny",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "frequency: 1 contact in 30 days allowed, 2 (= cap) denied",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "gap: 7 days allowed, 6 days denied",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "new customer (tenure 29 < 30 days) gets a reminder instead of a coupon",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "active recent buyer gets a reminder instead of a coupon",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "out of stock (demo) -> reminder",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "return rate 0.31 > 0.30 -> reminder; None (no returns in data) noted, not triggered",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "deterministic cost = discount x 90-day avg order + reminder",
+      "status": "passed",
+      "detail": "15.05"
+    },
+    {
+      "check": "per-customer cap: cost 20.00 allowed, 20.01 denied (budget_denied)",
+      "status": "passed",
+      "detail": "(20.0, 20.01)"
+    },
+    {
+      "check": "weekly budget: spent so that total equals 200 allowed; one cent more denied",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "invalid action rejected",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "demo settings reported separately from facts",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "policy engine does not import the LLM client",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "real batch: weekly budget never exceeded",
+      "status": "passed",
+      "detail": "199.98"
+    },
+    {
+      "check": "real batch: weekly budget runs out partway down the ranked list; afterwards only actions that still fit are allowed",
+      "status": "passed",
+      "detail": "(65, {'单客成本上限': 5, '每周预算': 637})"
+    },
+    {
+      "check": "real batch: every decision has a reason or passes all checks",
+      "status": "passed",
+      "detail": ""
+    }
+  ],
+  "passed": 27,
+  "total": 27,
+  "real_batch": {
+    "release": "wh-d3aaa559048c",
+    "population_ranked": 704,
+    "decisions": {
+      "modify": 48,
+      "allow": 14,
+      "deny": 642
+    },
+    "deny_codes": {
+      "budget_denied": 642
+    },
+    "deny_by_rule": {
+      "单客成本上限": 5,
+      "每周预算": 637
+    },
+    "actions": {
+      "reminder": 48,
+      "coupon": 14
+    },
+    "tiers": {
+      "high": 249,
+      "normal": 455
+    },
+    "spent_usd": 199.98,
+    "weekly_budget_usd": 200.0,
+    "first_weekly_budget_denied_rank": 65,
+    "assumptions": "演示：所有客户假设已同意营销、无投诉、无近期触达、毛利 30%、有货；请求 10% 优惠；名单按冻结规则排序",
+    "examples": [
+      {
+        "decision": "modify",
+        "action": {
+          "type": "reminder",
+          "discount": 0.0,
+          "draft_only": true
+        },
+        "cost_usd": 0.05,
+        "tier": "high",
+        "reasons": [
+          "近期购买者不发优惠：活跃且 15.3 天前刚买过"
+        ]
+      },
+      {
+        "decision": "modify",
+        "action": {
+          "type": "reminder",
+          "discount": 0.0,
+          "draft_only": true
+        },
+        "cost_usd": 0.05,
+        "tier": "high",
+        "reasons": [
+          "近期购买者不发优惠：活跃且 1.2 天前刚买过"
+        ]
+      },
+      {
+        "decision": "modify",
+        "action": {
+          "type": "reminder",
+          "discount": 0.0,
+          "draft_only": true
+        },
+        "cost_usd": 0.05,
+        "tier": "high",
+        "reasons": [
+          "近期购买者不发优惠：活跃且 9.2 天前刚买过"
+        ]
+      },
+      {
+        "decision": "deny",
+        "code": "budget_denied",
+        "cost_usd": 0.0,
+        "tier": "high",
+        "reasons": [
+          "单客成本上限：成本 34.65 USD，上限 20.0"
+        ]
+      },
+      {
+        "decision": "deny",
+        "code": "budget_denied",
+        "tier": "high",
+        "reasons": [
+          "每周预算：已用 199.88 + 本次 6.77 USD，周预算 200.0"
+        ]
+      }
+    ]
+  }
+}

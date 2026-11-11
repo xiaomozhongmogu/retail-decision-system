@@ -2322,10 +2322,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C12",
         "U04",
@@ -2351,7 +2351,9 @@
         "公开数据缺触达/投诉/同意/库存/毛利/优惠时明确演示配置，与事实字段分开。",
         "资格、折扣上限、频率和预算用确定性代码检查，有边界夹具。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-11/2026-11-11-policy.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

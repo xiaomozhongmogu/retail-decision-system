@@ -73,7 +73,7 @@
 | AI-08 | 实现周报事实计算 | final | done | EDA-04, DW-06 |
 | AI-09 | 实现周报生成与数值校验 | final | todo | AI-08, AI-01, AI-02 |
 | AI-10 | 完成周报场景验收 | final | todo | AI-09 |
-| AI-11 | 建立运营政策与预算规则 | final | todo | ML-11, GOV-05 |
+| AI-11 | 建立运营政策与预算规则 | final | done | ML-11, GOV-05 |
 | AI-12 | 实现有限步骤运营Agent | final | todo | AI-11, AI-01, AI-02 |
 | AI-13 | 实现草稿存储和审阅状态 | final | todo | AI-12 |
 | AI-14 | 完成Agent边界场景验收 | final | todo | AI-13 |
@@ -1117,7 +1117,7 @@
 
 ### AI-11 建立运营政策与预算规则
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C12, U04, Q01, Q06。
 - 前置：ML-11, GOV-05。
 - 允许修改：`knowledge`, `src/retail_bi/ai`, `reports/ai`；另可写本任务证据/交接。
@@ -1130,7 +1130,7 @@
 2. 公开数据缺触达/投诉/同意/库存/毛利/优惠时明确演示配置，与事实字段分开。
 3. 资格、折扣上限、频率和预算用确定性代码检查，有边界夹具。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-11/2026-11-11-policy.json
 
 ### AI-12 实现有限步骤运营Agent
 
