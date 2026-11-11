@@ -64,7 +64,7 @@
 | ML-11 | 实现评分服务与适用性输出 | midterm | done | ML-10, DW-10 |
 | ML-12 | 发布模型文件与模型卡 | midterm | done | ML-11 |
 | AI-01 | 实现LLM适配与配置边界 | final | blocked | GOV-07, GOV-06 |
-| AI-02 | 建立业务知识库与检索 | final | todo | DW-06, ML-12 |
+| AI-02 | 建立业务知识库与检索 | final | done | DW-06, ML-12 |
 | AI-03 | 评测知识检索和依据引用 | final | todo | AI-02, AI-01 |
 | AI-04 | 实现查询意图与Schema约束 | final | todo | AI-01, DW-06 |
 | AI-05 | 实现受限SQL执行器 | final | todo | AI-04, DW-10 |
@@ -964,7 +964,7 @@
 
 ### AI-02 建立业务知识库与检索
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q01。
 - 前置：DW-06, ML-12。
 - 允许修改：`src/retail_bi/ai`, `knowledge`, `reports/ai`；另可写本任务证据/交接。
@@ -977,7 +977,7 @@
 2. 结构化交易走SQL，文档知识走检索，客户原始明细不无差别上传模型。
 3. 先用可解释检索，只有实际需求才增加向量组件；文档中的指令当作数据。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-02/2026-11-11-kb.json
 
 ### AI-03 评测知识检索和依据引用
 

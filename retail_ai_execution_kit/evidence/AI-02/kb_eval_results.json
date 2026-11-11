@@ -1,0 +1,439 @@
+{
+  "task_id": "AI-02",
+  "kb_version": "kb-v1",
+  "passages": 44,
+  "routing": [
+    {
+      "question": "2026年10月商品金额是多少",
+      "route": "structured_query",
+      "expected": "structured_query"
+    },
+    {
+      "question": "哪个品类销售额最高",
+      "route": "structured_query",
+      "expected": "structured_query"
+    },
+    {
+      "question": "每月订单数趋势",
+      "route": "structured_query",
+      "expected": "structured_query"
+    },
+    {
+      "question": "客单价怎么算",
+      "route": "knowledge",
+      "expected": "knowledge"
+    },
+    {
+      "question": "沉睡客户是什么意思",
+      "route": "knowledge",
+      "expected": "knowledge"
+    },
+    {
+      "question": "高价值客户的折扣上限是多少",
+      "route": "knowledge",
+      "expected": "knowledge"
+    },
+    {
+      "question": "有没有渠道数据",
+      "route": "knowledge",
+      "expected": "knowledge"
+    },
+    {
+      "question": "有效订单的口径是什么，10月有多少",
+      "route": "both",
+      "expected": "both"
+    }
+  ],
+  "retrieval_eval": {
+    "questions": 20,
+    "hit_at_1": 12,
+    "hit_at_3": 17,
+    "rows": [
+      {
+        "question": "客单价怎么算",
+        "expected_prefixes": [
+          "metric:aov_usd"
+        ],
+        "top3": [
+          "metric:aov_usd@transaction-rules-v1",
+          "doc:transaction_rules#5-金额@transaction-rules-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "客单",
+          "单价"
+        ]
+      },
+      {
+        "question": "取消的订单算不算有效购买",
+        "expected_prefixes": [
+          "doc:transaction_rules#1",
+          "doc:transaction_rules#3",
+          "metric:valid_orders"
+        ],
+        "top3": [
+          "doc:transaction_rules#1-有效购买@transaction-rules-v1",
+          "doc:model_card#2-数据与特征@repurchase-logreg-v1",
+          "doc:transaction_rules#3-取消@transaction-rules-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "效购",
+          "的订",
+          "有效",
+          "取消",
+          "购买",
+          "订单"
+        ]
+      },
+      {
+        "question": "商品金额包不包括运费",
+        "expected_prefixes": [
+          "metric:merchandise_sales_usd",
+          "doc:transaction_rules#5"
+        ],
+        "top3": [
+          "doc:transaction_rules#5-金额@transaction-rules-v1",
+          "doc:data_dictionary#order-items@synthetic-transaction-v1",
+          "metric:merchandise_sales_usd@transaction-rules-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "运费",
+          "品金",
+          "商品",
+          "金额"
+        ]
+      },
+      {
+        "question": "购买客户数怎么去重",
+        "expected_prefixes": [
+          "metric:buyers"
+        ],
+        "top3": [
+          "metric:buyers@transaction-rules-v1",
+          "doc:transaction_rules#6-客户身份@transaction-rules-v1",
+          "metric:cohort_retention_rate@transaction-rules-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "买客",
+          "户数",
+          "去重",
+          "客户",
+          "购买"
+        ]
+      },
+      {
+        "question": "退款和退货怎么处理",
+        "expected_prefixes": [
+          "doc:transaction_rules#4"
+        ],
+        "top3": [
+          "doc:retention_policy#1-事实字段与演示配置的区别@retention-policy-v1",
+          "doc:transaction_rules#4-退款-退货-冲销@transaction-rules-v1",
+          "doc:business_scope#0-主数据能支持什么-2026-11-10-实测@v2"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "退货",
+          "和退",
+          "退款"
+        ]
+      },
+      {
+        "question": "截止时还没审批的订单算吗",
+        "expected_prefixes": [
+          "doc:transaction_rules#2",
+          "doc:transaction_rules#1",
+          "doc:transaction_rules#8"
+        ],
+        "top3": [
+          "metric:cancelled_orders@transaction-rules-v1",
+          "doc:transaction_rules#3-取消@transaction-rules-v1",
+          "doc:transaction_rules#2-时间归属与可观察性@transaction-rules-v1"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "批的",
+          "的订",
+          "止时",
+          "截止",
+          "审批",
+          "订单"
+        ]
+      },
+      {
+        "question": "沉睡客户是什么意思",
+        "expected_prefixes": [
+          "doc:lifecycle_rules#1",
+          "doc:business_scope#2"
+        ],
+        "top3": [
+          "doc:business_scope#2-四个生命周期阶段@v2",
+          "doc:business_scope#1-使用者与决策动作@v2",
+          "doc:business_scope#0-主数据能支持什么-2026-11-10-实测@v2"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "沉睡",
+          "户是",
+          "什么",
+          "客户"
+        ]
+      },
+      {
+        "question": "生命周期阈值为什么是30、90、180天",
+        "expected_prefixes": [
+          "doc:lifecycle_rules#2"
+        ],
+        "top3": [
+          "doc:lifecycle_rules#2-阈值的依据@lifecycle-v1",
+          "doc:business_scope#3-四个概念分开定义-验收条件-3@v2",
+          "doc:lifecycle_rules#1-规则-按优先级-先满足者生效@lifecycle-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "阈值",
+          "180",
+          "天",
+          "90",
+          "30"
+        ]
+      },
+      {
+        "question": "复购模型的效果怎么样",
+        "expected_prefixes": [
+          "doc:model_card#4"
+        ],
+        "top3": [
+          "doc:retention_policy#5-模型的使用@retention-policy-v1",
+          "doc:retention_policy#7-评价方式@retention-policy-v1",
+          "doc:model_card#5-限制@repurchase-logreg-v1"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "matched_terms_top1": [
+          "型的",
+          "购模",
+          "模型",
+          "复购"
+        ]
+      },
+      {
+        "question": "复购模型有哪些限制",
+        "expected_prefixes": [
+          "doc:model_card#5"
+        ],
+        "top3": [
+          "doc:model_card#5-限制@repurchase-logreg-v1",
+          "doc:retention_policy#5-模型的使用@retention-policy-v1",
+          "doc:business_scope#1-使用者与决策动作@v2"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "限制",
+          "复购",
+          "模型"
+        ]
+      },
+      {
+        "question": "模型用了哪些特征",
+        "expected_prefixes": [
+          "doc:model_card#2"
+        ],
+        "top3": [
+          "doc:business_scope#1-使用者与决策动作@v2",
+          "doc:model_card#5-限制@repurchase-logreg-v1",
+          "metric:repurchase_30d@transaction-rules-v1"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "matched_terms_top1": [
+          "哪些",
+          "模型"
+        ]
+      },
+      {
+        "question": "cohort 留存率的定义",
+        "expected_prefixes": [
+          "metric:cohort_retention_rate"
+        ],
+        "top3": [
+          "metric:cohort_retention_rate@transaction-rules-v1",
+          "doc:business_scope#2-四个生命周期阶段@v2",
+          "doc:business_scope#1-使用者与决策动作@v2"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "存率",
+          "cohort",
+          "留存"
+        ]
+      },
+      {
+        "question": "30天复购的标签怎么定义",
+        "expected_prefixes": [
+          "metric:repurchase_30d",
+          "metric:repurchase_rate_30d_observed"
+        ],
+        "top3": [
+          "metric:repurchase_30d@transaction-rules-v1",
+          "doc:retention_policy#7-评价方式@retention-policy-v1",
+          "metric:repurchase_rate_30d_observed@transaction-rules-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "天复",
+          "标签",
+          "复购",
+          "定义",
+          "30"
+        ]
+      },
+      {
+        "question": "高价值客户的折扣上限",
+        "expected_prefixes": [
+          "doc:retention_policy#4"
+        ],
+        "top3": [
+          "doc:retention_policy#4-折扣上限@retention-policy-v1",
+          "doc:business_scope#2-四个生命周期阶段@v2",
+          "doc:retention_policy#2-价值层级-事实@retention-policy-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "扣上",
+          "折扣",
+          "上限",
+          "高价",
+          "的折",
+          "价值"
+        ]
+      },
+      {
+        "question": "同一个客户多久能联系一次",
+        "expected_prefixes": [
+          "doc:retention_policy#6"
+        ],
+        "top3": [
+          "doc:model_card#1-用途@repurchase-logreg-v1",
+          "doc:data_dictionary#1-表与粒度@synthetic-transaction-v1",
+          "doc:lifecycle_rules#1-规则-按优先级-先满足者生效@lifecycle-v1"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "matched_terms_top1": [
+          "联系",
+          "一次",
+          "客户"
+        ]
+      },
+      {
+        "question": "每周预算是多少",
+        "expected_prefixes": [
+          "doc:retention_policy#6"
+        ],
+        "top3": [
+          "doc:retention_policy#1-事实字段与演示配置的区别@retention-policy-v1",
+          "doc:retention_policy#6-频率与预算@retention-policy-v1",
+          "doc:business_scope#2-四个生命周期阶段@v2"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "周预",
+          "每周",
+          "预算"
+        ]
+      },
+      {
+        "question": "哪些客户不能发优惠",
+        "expected_prefixes": [
+          "doc:retention_policy#3"
+        ],
+        "top3": [
+          "doc:retention_policy#3-资格规则@retention-policy-v1",
+          "doc:business_scope#1-使用者与决策动作@v2",
+          "doc:business_scope#3-四个概念分开定义-验收条件-3@v2"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "发优",
+          "户不",
+          "优惠",
+          "客户"
+        ]
+      },
+      {
+        "question": "数据里有没有渠道和毛利",
+        "expected_prefixes": [
+          "doc:data_dictionary#4",
+          "doc:business_scope#0",
+          "doc:business_scope#4"
+        ],
+        "top3": [
+          "doc:retention_policy#4-折扣上限@retention-policy-v1",
+          "doc:data_dictionary#4-数据中没有的内容@synthetic-transaction-v1",
+          "doc:business_scope#2-四个生命周期阶段@v2"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "和毛",
+          "毛利"
+        ]
+      },
+      {
+        "question": "订单表有哪些字段",
+        "expected_prefixes": [
+          "doc:data_dictionary#orders"
+        ],
+        "top3": [
+          "doc:retention_policy#1-事实字段与演示配置的区别@retention-policy-v1",
+          "doc:data_dictionary#orders@synthetic-transaction-v1",
+          "doc:business_scope#1-使用者与决策动作@v2"
+        ],
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "字段",
+          "些字",
+          "订单"
+        ]
+      },
+      {
+        "question": "RFM 是怎么计算的",
+        "expected_prefixes": [
+          "metric:rfm",
+          "doc:retention_policy#2"
+        ],
+        "top3": [
+          "metric:rfm@transaction-rules-v1",
+          "doc:business_scope#3-四个概念分开定义-验收条件-3@v2",
+          "doc:transaction_rules#6-客户身份@transaction-rules-v1"
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "matched_terms_top1": [
+          "rfm"
+        ]
+      }
+    ]
+  },
+  "checks_passed": 15,
+  "checks_total": 15
+}

@@ -1976,10 +1976,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2003,7 +2003,9 @@
         "结构化交易走SQL，文档知识走检索，客户原始明细不无差别上传模型。",
         "先用可解释检索，只有实际需求才增加向量组件；文档中的指令当作数据。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-02/2026-11-11-kb.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

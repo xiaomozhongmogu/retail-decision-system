@@ -1,0 +1,23 @@
+$ .venv/bin/python evidence/AI-02/kb_eval.py
+2026-11-11T14:34:28+08:00
+PASS 20-50 passages 44
+PASS covers metrics, data dictionary, model card and demo policy {'contracts/metrics.json': 13, 'docs/data_dictionary.md': 5, 'docs/transaction_rules.md': 7, 'docs/model_card.md': 5, 'docs/lifecycle_rules.md': 2, 'docs/business_scope.md': 5, 'knowledge/retention_policy.md': 7}
+PASS every passage has source, version, effective date, kind, content hash 
+PASS ids unique 
+PASS demo policy passages are labelled demo_policy 
+PASS no customer or order ids in the knowledge base 
+PASS knowledge base does not read the warehouse 
+PASS routing on 8 fixed questions []
+  miss: 复购模型的效果怎么样 ['doc:retention_policy#5-模型的使用@retention-policy-v1', 'doc:retention_policy#7-评价方式@retention-policy-v1', 'doc:model_card#5-限制@repurchase-logreg-v1']
+  miss: 模型用了哪些特征 ['doc:business_scope#1-使用者与决策动作@v2', 'doc:model_card#5-限制@repurchase-logreg-v1', 'metric:repurchase_30d@transaction-rules-v1']
+  miss: 同一个客户多久能联系一次 ['doc:model_card#1-用途@repurchase-logreg-v1', 'doc:data_dictionary#1-表与粒度@synthetic-transaction-v1', 'doc:lifecycle_rules#1-规则-按优先级-先满足者生效@lifecycle-v1']
+hit@1 12/20, hit@3 17/20
+PASS retrieval hit@3 >= 80% on the fixed question set 17/20
+PASS every hit explains itself (matched terms, score) 
+PASS unrelated question returns empty, not a forced answer 
+PASS demo policy hits carry a demo_config warning 
+PASS injected passage is flagged instruction_like with a warning 
+PASS context block labels passages as data and escapes delimiter spoofing 
+PASS retrieved text cannot change the enforced policy (engine reads only the config block) 
+15/15 checks passed
+exit=0
