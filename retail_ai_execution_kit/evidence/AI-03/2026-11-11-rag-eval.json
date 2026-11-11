@@ -1,0 +1,94 @@
+{
+  "task_id": "AI-03",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "知识库 kb-v1（44 段）；真实 LLM（DeepSeek）",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python eval/rag_eval.py",
+  "exit_code": 0,
+  "summary": "固定评测集 25 题（可回答 15、规则版本冲突 5、无依据 5），期望证据对照原文标注。评测流程：检索前 3 段 → 真实 LLM 按资料回答并给出引用 → 代码打分（检索命中、引用 id 有效且对应期望证据、答案数字出现在引用原文、关键事实、无依据拒答），不用 LLM 打分。结果 24/25：可回答 15/15、冲突 4/5、无依据拒答 5/5；检索命中 20/20，引用有效与对应 20/20，答案数字全部可在引用原文中找到。25 次调用约 0.0043 USD。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/retrieval.py",
+      "sha256": "cc9d2b87c37e4c91df4090e51208d3d1659a84c77640d3bab2a482b29d0e3db8"
+    },
+    {
+      "path": "src/retail_bi/ai/client.py",
+      "sha256": "0b47028bc9e4847ece30f0a9171a82d1e19bcef377ef7e8532c808dac46bde35"
+    },
+    {
+      "path": "docs/business_scope.md",
+      "sha256": "4836757f0cc70949c09f6da794e46a11dca598fabe8973646f705724628b4461"
+    },
+    {
+      "path": "docs/model_card.md",
+      "sha256": "74bf33f4430c64dd1349f2d3cbdfb13ef205fa684df2387e783fe8292dc491e5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "eval/rag_cases.jsonl",
+      "sha256": "d7f0dea2e112bcd01746497d4a2e8f75db6730ff3ae196420520f9c464efa872"
+    },
+    {
+      "path": "eval/rag_eval.py",
+      "sha256": "a98905113744e527aef00ec60f695d472d05b4d898fababfbd12243eb21dad80"
+    },
+    {
+      "path": "reports/ai/rag_evaluation.json",
+      "sha256": "46d134c265524e7ae7550a576abee0075c5f2095fb8d188b5bd0b6a912bcab44"
+    },
+    {
+      "path": "evidence/AI-03/eval_run.log",
+      "sha256": "400b1603cfe282c8cc047c28f05c07fc7012d6435cbb5fd9dc9a8ff4de4d7a36"
+    },
+    {
+      "path": "evidence/AI-03/eval_run_1.log",
+      "sha256": "f9b5bd422794cf953b21aa4f5e787c215bdb852b02f6253d884da5a69ae11502"
+    },
+    {
+      "path": "evidence/AI-03/eval_run_1_results.json",
+      "sha256": "9bf61f34bce4025186476e0bc7db280edd05cc3975f83550ca4ef333b18736d1"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "25 题覆盖可回答、规则版本冲突（只算已送达、生成器阶段字段、LightGBM、沉睡即流失、按风险加折扣）与无依据（渠道 ROI、竞品价格、毛利、年龄、销售目标）；期望证据按 docs/、contracts/metrics.json、knowledge/ 原文标注，标注者为 claude-opus-5-5，不是独立人工（如实写在用例中）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "报告检索命中（20/20）、引用有效（20/20）、引用对应期望证据（20/20）、数字有据（20/20）、关键事实（19/20）与无依据拒答（5/5），全部由确定性规则计算，未使用 LLM 打分。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "提示中的两个示例与评测题不重合（脚本断言）；评测集固定在 eval/rag_cases.jsonl；第一次运行（23/25）与最终运行（24/25）的输出及失败案例都保留：最终仍失败的 V02 回答内容正确但缺少标注的关键词“规则”，按严格规则记为失败。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次运行后修正了两条标注（V02 漏标 business_scope §4；A09 的关键词不在期望段落原文中），修正依据写在用例 label_note 中；这属于看到结果后的修改，第一次结果另存为 eval_run_1_results.json。",
+    "关键事实只用子串匹配，正确但换了说法的回答会被判失败（V02）。",
+    "LLM 输出不完全确定，重跑结果可能略有不同。",
+    "标注不是独立人工，题目由实现者编写。"
+  ],
+  "steps": [
+    "认领 AI-03。",
+    "编写 25 题评测集与评测脚本（检索 + 真实 LLM 回答 + 确定性打分）。",
+    "第一次运行 23/25；对照原文确认 A09、V02 的失败来自标注错误，修正标注并保留第一次结果。",
+    "重跑 24/25，V02 作为失败案例保留；先读输出再写本记录。"
+  ],
+  "task_spec_sha256": "6e79c378ee51e8a356374dc58ae4d69a1d3a992c5f52668174d9767583d5d731",
+  "performed_at": "2026-11-11T19:20:03.728726+08:00"
+}

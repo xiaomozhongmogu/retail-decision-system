@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "2026-11-11 claude-opus-5-5：已验收 57 项。AI-01 真实 DeepSeek 调用已验收；AI-09 周报生成（数字由代码填入、校验与模板回退）已完成。D014：技术模块由用户本人负责，非技术工作待分配，选题报告用户确认已提交、回执待补（ops/TEAM.md）。可直接开始：AI-03、AI-04、AI-12、AI-10。",
+  "state_note": "2026-11-11 claude-opus-5-5：已验收 58 项。AI-01 真实 DeepSeek 调用、AI-09 周报生成、AI-03 知识检索评测（24/25）已完成。D014：技术模块由用户本人负责，非技术工作待分配，选题报告用户确认已提交、回执待补（ops/TEAM.md）。可直接开始：AI-04、AI-10、AI-12。",
   "tasks": [
     {
       "id": "GOV-01",
@@ -2017,10 +2017,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "Q05",
         "U04"
@@ -2042,7 +2042,9 @@
         "报告检索命中、引用对应和无依据拒答，不只用另一个LLM主观打分。",
         "固定评测集与提示示例分离，保留实际测试和失败案例。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-03/2026-11-11-rag-eval.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

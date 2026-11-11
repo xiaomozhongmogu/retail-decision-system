@@ -65,7 +65,7 @@
 | ML-12 | 发布模型文件与模型卡 | midterm | done | ML-11 |
 | AI-01 | 实现LLM适配与配置边界 | final | done | GOV-07, GOV-06 |
 | AI-02 | 建立业务知识库与检索 | final | done | DW-06, ML-12 |
-| AI-03 | 评测知识检索和依据引用 | final | todo | AI-02, AI-01 |
+| AI-03 | 评测知识检索和依据引用 | final | done | AI-02, AI-01 |
 | AI-04 | 实现查询意图与Schema约束 | final | todo | AI-01, DW-06 |
 | AI-05 | 实现受限SQL执行器 | final | todo | AI-04, DW-10 |
 | AI-06 | 实现查询回答与结果证据 | final | todo | AI-05 |
@@ -979,7 +979,7 @@
 
 ### AI-03 评测知识检索和依据引用
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：Q05, U04。
 - 前置：AI-02, AI-01。
 - 允许修改：`eval`, `reports/ai`；另可写本任务证据/交接。
@@ -992,7 +992,7 @@
 2. 报告检索命中、引用对应和无依据拒答，不只用另一个LLM主观打分。
 3. 固定评测集与提示示例分离，保留实际测试和失败案例。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-03/2026-11-11-rag-eval.json
 
 ### AI-04 实现查询意图与Schema约束
 

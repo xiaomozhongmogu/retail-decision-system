@@ -1,0 +1,5 @@
+$ .venv/bin/python eval/rag_eval.py   (after correcting the A09 and V02 labels against the source text)
+2026-11-11T19:19:00+08:00
+{"by_type": {"answerable": {"cases": 15, "passed": 15, "retrieval_hit": 15, "citations_valid": 15, "citation_corresponds": 15, "numbers_grounded": 15, "key_facts": 15}, "conflict": {"cases": 5, "passed": 4, "retrieval_hit": 5, "citations_valid": 5, "citation_corresponds": 5, "numbers_grounded": 5, "key_facts": 4}, "no_evidence": {"cases": 5, "passed": 5, "refused": 5}}, "passed": 24, "cases": 25, "budget": {"calls": 25, "max_calls": 60, "cost_usd": 0.004264, "max_cost_usd": 0.05, "tokens_in": 27181, "tokens_out": 1639}}
+FAIL V02 客户生命周期是不是直接用数据里生成器自带的阶段字段？ | retrieved ['doc:business_scope#4-明确不做-不宣称@v2', 'doc:business_scope#2-四个生命周期阶段@v2', 'doc:model_card#5-限制@repurchase-logreg-v1'] | cited ['doc:business_scope#4-明确不做-不宣称@v2', 'doc:business_scope#2-四个生命周期阶段@v2'] | 不是。生命周期从首次可观测购买开始定义；生成器自带的阶段标签不能当真值或模型特征。
+exit=0
