@@ -2204,10 +2204,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C12",
         "C16",
@@ -2231,7 +2231,9 @@
         "每项事实有evidence_id、单位、时间窗口、查询版本，分母为0或周期不全给状态。",
         "LLM不承担金额求和或比例计算；与经营页面同一指标口径。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-08/2026-11-11-weekly-facts.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

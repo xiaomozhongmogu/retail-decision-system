@@ -70,7 +70,7 @@
 | AI-05 | 实现受限SQL执行器 | final | todo | AI-04, DW-10 |
 | AI-06 | 实现查询回答与结果证据 | final | todo | AI-05 |
 | AI-07 | 完成NL2SQL标准集验收 | final | todo | AI-06 |
-| AI-08 | 实现周报事实计算 | final | todo | EDA-04, DW-06 |
+| AI-08 | 实现周报事实计算 | final | done | EDA-04, DW-06 |
 | AI-09 | 实现周报生成与数值校验 | final | todo | AI-08, AI-01, AI-02 |
 | AI-10 | 完成周报场景验收 | final | todo | AI-09 |
 | AI-11 | 建立运营政策与预算规则 | final | todo | ML-11, GOV-05 |
@@ -1066,7 +1066,7 @@
 
 ### AI-08 实现周报事实计算
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C12, C16, U04, Q01。
 - 前置：EDA-04, DW-06。
 - 允许修改：`src/retail_bi/ai`, `reports/ai`；另可写本任务证据/交接。
@@ -1079,7 +1079,7 @@
 2. 每项事实有evidence_id、单位、时间窗口、查询版本，分母为0或周期不全给状态。
 3. LLM不承担金额求和或比例计算；与经营页面同一指标口径。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-08/2026-11-11-weekly-facts.json
 
 ### AI-09 实现周报生成与数值校验
 

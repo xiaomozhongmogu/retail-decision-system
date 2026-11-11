@@ -1,0 +1,89 @@
+{
+  "task_id": "AI-08",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "无；不调用 LLM"
+  },
+  "command": ".venv/bin/python src/retail_bi/ai/report_facts.py; .venv/bin/python evidence/AI-08/verify_facts.py",
+  "exit_code": 0,
+  "summary": "周报事实由确定性代码从只读发布的允许视图（与经营页面相同的 ads.kpi_daily / kpi_monthly / sales_month_category_region 等）计算：报告周为审批已落定的最近 7 天 [2026-10-31, 2026-11-07)，对比上周、52 周前同星期、前 8 周均值；最近完整月 2026-10 对比上月与去年同月；金额变化按订单×客单价、客户数×人均订单×客单价分解（各部分精确相加），并按品类、大区给出贡献；异常候选用稳健 z 与 8 周基线。每项事实带 evidence_id、单位、左闭右开窗口、查询视图与 SQL 哈希、数据与指标版本、状态和样本数。27/27 检查通过，含独立 DWD 重算和边界夹具。",
+  "inputs": [
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "docs/transaction_rules.md",
+      "sha256": "1a14f715b6990bef37e68ba2d707e9119f75ec38fd9631a5f0c67f33f67b80fb"
+    },
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "evidence/AI-08/verify_facts.py",
+      "sha256": "1a940df531a8ce39dc5fd1af185a53f4a082d9128d10257dba7af37fd58b362d"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/report_facts.py",
+      "sha256": "7e4365a2e01be6da739d95cccf7dbf6ff619a6d5d1ebfdd9fbe5f728fa06a867"
+    },
+    {
+      "path": "reports/ai/report_facts_example.json",
+      "sha256": "3ab9c911d784f15e48b5c80eade271b6448639c66178cc4c4fffc6fbd3364f7c"
+    },
+    {
+      "path": "evidence/AI-08/verify_run.log",
+      "sha256": "0d9189637915700a662fe61f5bbf325b64f88fe8cb90203dff53a60f36f1eebf"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "程序生成完整可比周期（审批落定的 7 天、上周、52 周前同星期、最近完整月及其上月和去年同月）、环比/同比、两种金额分解与品类/大区贡献、异常候选（本周商品金额 z=2.07 超过 2.0 阈值）和每项样本数；报告周、上周、月度订单/去重客户/金额与品类贡献均与直接查询 DWD 的独立重算一致。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "48 项事实全部带 evidence_id（唯一）、单位、窗口、查询（视图、列、SQL 哈希）、数据版本与 metrics@ 版本；夹具验证分母为 0 → zero_denominator 且值为 null，历史不足 → incomplete_period，基期少于 30 单 → small_sample；截止前最后一天（4 单截止后才审批）单独标 partial_period 不参与比较；2026-11 不完整月不用于月度比较。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "事实模块不导入 LLM 客户端，所有求和、比例和分解由代码完成；经营页面显示的 ads.kpi_monthly 2026-10 与 ads.kpi_daily 按日加总、与事实值完全一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "ADS 只有按日去重客户和月粒度品类视图：周报不报告周去重客户，品类/大区贡献在最近完整月上计算（已写入 not_available）。",
+    "品类月度明细多数少于 30 行，增长率按 small_sample 不报告；异常候选仅供人工核实，不是结论。",
+    "生成文字的数值校验属于 AI-09。"
+  ],
+  "steps": [
+    "认领 AI-08（台账 6f1fa9c2… → 认领）。",
+    "核查数据：2026-11-07 只有 2 单有效、4 单截止后审批；按“下单到审批最长 24 小时”把最后一天移出比较周期。",
+    "编写 report_facts.py 并生成示例；把候选说明中的英文指标名改为中文后重新生成。",
+    "编写并运行 verify_facts.py：27/27 通过，先读输出再写本记录。"
+  ],
+  "task_spec_sha256": "c6976b3242a16de1883110ee29c03072f05fb5d461c43f9c1c81eac66c49485f",
+  "performed_at": "2026-11-11T14:29:04.202985+08:00"
+}
