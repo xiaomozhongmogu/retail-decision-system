@@ -1,0 +1,297 @@
+{
+ "note": "不要交给审查者",
+ "reports": [
+  {
+   "report": "R01",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "单位",
+     "description": "第一个 USD 改为“元”"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R02",
+   "scenario": "S02",
+   "scenario_label": "环比下降（报告周订单按 0.55 倍缩小）",
+   "generation": "template",
+   "generator_status": "ok",
+   "llm_attempts": 0,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R03",
+   "scenario": "S02",
+   "scenario_label": "环比下降（报告周订单按 0.55 倍缩小）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "引用",
+     "description": "关键数字表中一个 evidence_id 换成不存在的编号"
+    }
+   ],
+   "our_checker_flags": [
+    "未知 evidence_id fact:0badc0de"
+   ]
+  },
+  {
+   "report": "R04",
+   "scenario": "S04",
+   "scenario_label": "小样本（每天只有 1–2 单）",
+   "generation": "template",
+   "generator_status": "ok",
+   "llm_attempts": 0,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R05",
+   "scenario": "S02",
+   "scenario_label": "环比下降（报告周订单按 0.55 倍缩小）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "窗口",
+     "description": "标题中报告周起始日改早一天"
+    }
+   ],
+   "our_checker_flags": [
+    "最终文本含未知数字 30"
+   ]
+  },
+  {
+   "report": "R06",
+   "scenario": "S03",
+   "scenario_label": "分母为 0（上一周没有有效订单）",
+   "generation": "template",
+   "generator_status": "ok",
+   "llm_attempts": 0,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R07",
+   "scenario": "S05",
+   "scenario_label": "不完整周期（as_of = 2026-10-15，10 月未结束）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "不完整周期",
+     "description": "把未结束的 10 月与 9 月全月直接比较"
+    }
+   ],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R08",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R09",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "数字",
+     "description": "本周商品金额的一个数字被改动"
+    }
+   ],
+   "our_checker_flags": [
+    "最终文本含未知数字 16,306.01"
+   ]
+  },
+  {
+   "report": "R10",
+   "scenario": "S02",
+   "scenario_label": "环比下降（报告周订单按 0.55 倍缩小）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "不存在字段",
+     "description": "行动建议中加入按渠道拆分"
+    }
+   ],
+   "our_checker_flags": [
+    "提到数据中没有的字段"
+   ]
+  },
+  {
+   "report": "R11",
+   "scenario": "S05",
+   "scenario_label": "不完整周期（as_of = 2026-10-15，10 月未结束）",
+   "generation": "template",
+   "generator_status": "ok",
+   "llm_attempts": 0,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R12",
+   "scenario": "S02",
+   "scenario_label": "环比下降（报告周订单按 0.55 倍缩小）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R13",
+   "scenario": "S05",
+   "scenario_label": "不完整周期（as_of = 2026-10-15，10 月未结束）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R14",
+   "scenario": "S03",
+   "scenario_label": "分母为 0（上一周没有有效订单）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R15",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R16",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "template",
+   "generator_status": "ok",
+   "llm_attempts": 0,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R17",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "因果",
+     "description": "解释末尾加入未标待验证的因果结论"
+    }
+   ],
+   "our_checker_flags": [
+    "解释中的原因推测未标待验证：本周金额上升是因为促销活动效果显著"
+   ]
+  },
+  {
+   "report": "R18",
+   "scenario": "S01",
+   "scenario_label": "正常周（真实发布数据）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R19",
+   "scenario": "S04",
+   "scenario_label": "小样本（每天只有 1–2 单）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R20",
+   "scenario": "S03",
+   "scenario_label": "分母为 0（上一周没有有效订单）",
+   "generation": "live+planted",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [
+    {
+     "type": "特殊情况处理",
+     "description": "分母为 0 时写成“环比增长 0%，与上周持平”"
+    }
+   ],
+   "our_checker_flags": [
+    "最终文本含未知数字 0%"
+   ]
+  },
+  {
+   "report": "R21",
+   "scenario": "S02",
+   "scenario_label": "环比下降（报告周订单按 0.55 倍缩小）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R22",
+   "scenario": "S04",
+   "scenario_label": "小样本（每天只有 1–2 单）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R23",
+   "scenario": "S03",
+   "scenario_label": "分母为 0（上一周没有有效订单）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  },
+  {
+   "report": "R24",
+   "scenario": "S05",
+   "scenario_label": "不完整周期（as_of = 2026-10-15，10 月未结束）",
+   "generation": "live",
+   "generator_status": "ok",
+   "llm_attempts": 1,
+   "planted_errors": [],
+   "our_checker_flags": []
+  }
+ ]
+}

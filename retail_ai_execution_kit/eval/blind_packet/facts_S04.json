@@ -1,0 +1,722 @@
+{
+ "scenario_note": "完全合成的模拟数据；本文件是该场景周报唯一的数字依据",
+ "periods": {
+  "report_week": {
+   "start": "2026-10-31",
+   "end": "2026-11-07",
+   "closed": "left"
+  },
+  "previous_week": {
+   "start": "2026-10-24",
+   "end": "2026-10-31",
+   "closed": "left"
+  },
+  "same_week_last_year": {
+   "start": "2025-11-01",
+   "end": "2025-11-08",
+   "closed": "left"
+  },
+  "open_tail": {
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "closed": "left"
+  },
+  "report_month": {
+   "start": "2026-10-01",
+   "end": "2026-11-01",
+   "closed": "left"
+  },
+  "previous_month": {
+   "start": "2026-09-01",
+   "end": "2026-10-01",
+   "closed": "left"
+  },
+  "same_month_last_year": {
+   "start": "2025-10-01",
+   "end": "2025-11-01",
+   "closed": "left"
+  }
+ },
+ "warnings": [
+  {
+   "code": "partial_period",
+   "message": "2026-11-07 当天的订单可能尚未审批，只单独列出，不参与环比/同比"
+  },
+  {
+   "code": "partial_period",
+   "message": "2026-11 为不完整月，月度比较使用 2026-10"
+  }
+ ],
+ "facts": [
+  {
+   "evidence_id": "fact:ab7e9a82",
+   "metric": "report_week.orders",
+   "label": "有效订单",
+   "value": 14,
+   "unit": "count",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:a31927a7",
+   "metric": "report_week.sales",
+   "label": "商品金额",
+   "value": 2212.36,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:5145708c",
+   "metric": "report_week.shipping",
+   "label": "运费",
+   "value": 185.36,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:afdd8b01",
+   "metric": "report_week.aov",
+   "label": "客单价",
+   "value": 158.03,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:5cc00ca8",
+   "metric": "previous_week.orders",
+   "label": "有效订单",
+   "value": 9,
+   "unit": "count",
+   "window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:cb0d536f",
+   "metric": "previous_week.sales",
+   "label": "商品金额",
+   "value": 1280.19,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:5654d982",
+   "metric": "previous_week.shipping",
+   "label": "运费",
+   "value": 115.55,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:d0bd98df",
+   "metric": "previous_week.aov",
+   "label": "客单价",
+   "value": 142.24,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:0d0e3430",
+   "metric": "same_week_last_year.orders",
+   "label": "有效订单",
+   "value": 14,
+   "unit": "count",
+   "window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:26704d20",
+   "metric": "same_week_last_year.sales",
+   "label": "商品金额",
+   "value": 2014.86,
+   "unit": "USD",
+   "window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:92c54205",
+   "metric": "same_week_last_year.shipping",
+   "label": "运费",
+   "value": 223.76,
+   "unit": "USD",
+   "window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:90e89ab1",
+   "metric": "same_week_last_year.aov",
+   "label": "客单价",
+   "value": 143.92,
+   "unit": "USD",
+   "window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:0e8603be",
+   "metric": "change_vs_previous_week.orders",
+   "label": "有效订单环比变化率",
+   "value": null,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "small_sample",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:31cf2f70",
+   "metric": "change_vs_previous_week.sales",
+   "label": "商品金额环比变化率",
+   "value": null,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "small_sample",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:efdd31dc",
+   "metric": "change_vs_previous_week.aov",
+   "label": "客单价环比变化率",
+   "value": null,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "small_sample",
+   "sample_size": 9
+  },
+  {
+   "evidence_id": "fact:b99bf8fb",
+   "metric": "split_vs_previous_week",
+   "label": "商品金额环比变化 = 订单数影响 + 客单价影响",
+   "value": {
+    "orders": 752.88,
+    "aov": 179.29
+   },
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-10-24",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 9,
+   "total_change": 932.17
+  },
+  {
+   "evidence_id": "fact:b6fbc9c2",
+   "metric": "change_vs_same_week_last_year.orders",
+   "label": "有效订单同比（52 周前同星期）变化率",
+   "value": null,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "small_sample",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:56489918",
+   "metric": "change_vs_same_week_last_year.sales",
+   "label": "商品金额同比（52 周前同星期）变化率",
+   "value": null,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "small_sample",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:7662b477",
+   "metric": "change_vs_same_week_last_year.aov",
+   "label": "客单价同比（52 周前同星期）变化率",
+   "value": null,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "small_sample",
+   "sample_size": 14
+  },
+  {
+   "evidence_id": "fact:ff4f4365",
+   "metric": "split_vs_same_week_last_year",
+   "label": "商品金额同比（52 周前同星期）变化 = 订单数影响 + 客单价影响",
+   "value": {
+    "orders": 0.0,
+    "aov": 197.5
+   },
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2025-11-01",
+    "end": "2025-11-08",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 14,
+   "total_change": 197.5
+  },
+  {
+   "evidence_id": "fact:a4d93360",
+   "metric": "trailing_8w_mean.orders",
+   "label": "前 8 周周均有效订单",
+   "value": 9.75,
+   "unit": "count",
+   "window": {
+    "start": "2026-09-05",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 78
+  },
+  {
+   "evidence_id": "fact:083e6330",
+   "metric": "report_week_z.orders",
+   "label": "本周有效订单相对前 8 周的 z 值",
+   "value": 1.63,
+   "unit": "z-score",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-09-05",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 8
+  },
+  {
+   "evidence_id": "fact:b9ed6ccc",
+   "metric": "trailing_8w_mean.sales",
+   "label": "前 8 周周均商品金额",
+   "value": 1440.64,
+   "unit": "USD",
+   "window": {
+    "start": "2026-09-05",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 78
+  },
+  {
+   "evidence_id": "fact:f42e59c4",
+   "metric": "report_week_z.sales",
+   "label": "本周商品金额相对前 8 周的 z 值",
+   "value": 2.32,
+   "unit": "z-score",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-07",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-09-05",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 8
+  },
+  {
+   "evidence_id": "fact:6a5ddee7",
+   "metric": "daily_z.sales.2026-10-31",
+   "label": "2026-10-31 日商品金额的稳健 z 值",
+   "value": 3.07,
+   "unit": "z-score",
+   "window": {
+    "start": "2026-10-31",
+    "end": "2026-11-01",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-09-05",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 56
+  },
+  {
+   "evidence_id": "fact:f9ea56c1",
+   "metric": "daily_z.sales.2026-11-03",
+   "label": "2026-11-03 日商品金额的稳健 z 值",
+   "value": 3.7,
+   "unit": "z-score",
+   "window": {
+    "start": "2026-11-03",
+    "end": "2026-11-04",
+    "closed": "left"
+   },
+   "compare_window": {
+    "start": "2026-09-05",
+    "end": "2026-10-31",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 56
+  },
+  {
+   "evidence_id": "fact:81a0bd95",
+   "metric": "open_tail.orders",
+   "label": "截止前最后一天的有效订单（审批未落定，不参与比较）",
+   "value": 0,
+   "unit": "count",
+   "window": {
+    "start": "2026-11-07",
+    "end": "2026-11-08",
+    "closed": "left"
+   },
+   "status": "partial_period",
+   "sample_size": 0
+  },
+  {
+   "evidence_id": "fact:609c663a",
+   "metric": "report_month.orders",
+   "label": "2026-10 有效订单",
+   "value": 336,
+   "unit": "count",
+   "window": {
+    "start": "2026-10-01",
+    "end": "2026-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 336
+  },
+  {
+   "evidence_id": "fact:e09fbf31",
+   "metric": "report_month.buyers",
+   "label": "2026-10 购买客户（月内去重）",
+   "value": 326,
+   "unit": "customers",
+   "window": {
+    "start": "2026-10-01",
+    "end": "2026-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 326
+  },
+  {
+   "evidence_id": "fact:fa543b7c",
+   "metric": "report_month.sales",
+   "label": "2026-10 商品金额",
+   "value": 47590.59,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-01",
+    "end": "2026-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 336
+  },
+  {
+   "evidence_id": "fact:edd7f2ca",
+   "metric": "report_month.aov",
+   "label": "2026-10 客单价",
+   "value": 141.64,
+   "unit": "USD",
+   "window": {
+    "start": "2026-10-01",
+    "end": "2026-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 336
+  },
+  {
+   "evidence_id": "fact:f9570b98",
+   "metric": "report_month.orders_per_buyer",
+   "label": "2026-10 人均订单",
+   "value": 1.0307,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-01",
+    "end": "2026-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 326
+  },
+  {
+   "evidence_id": "fact:2204cf19",
+   "metric": "previous_month.orders",
+   "label": "2026-09 有效订单",
+   "value": 240,
+   "unit": "count",
+   "window": {
+    "start": "2026-09-01",
+    "end": "2026-10-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 240
+  },
+  {
+   "evidence_id": "fact:ce162a3d",
+   "metric": "previous_month.buyers",
+   "label": "2026-09 购买客户（月内去重）",
+   "value": 232,
+   "unit": "customers",
+   "window": {
+    "start": "2026-09-01",
+    "end": "2026-10-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 232
+  },
+  {
+   "evidence_id": "fact:972e8b52",
+   "metric": "previous_month.sales",
+   "label": "2026-09 商品金额",
+   "value": 39190.7,
+   "unit": "USD",
+   "window": {
+    "start": "2026-09-01",
+    "end": "2026-10-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 240
+  },
+  {
+   "evidence_id": "fact:8e0bbd3e",
+   "metric": "previous_month.aov",
+   "label": "2026-09 客单价",
+   "value": 163.29,
+   "unit": "USD",
+   "window": {
+    "start": "2026-09-01",
+    "end": "2026-10-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 240
+  },
+  {
+   "evidence_id": "fact:6d2bd630",
+   "metric": "previous_month.orders_per_buyer",
+   "label": "2026-09 人均订单",
+   "value": 1.0345,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-09-01",
+    "end": "2026-10-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 232
+  },
+  {
+   "evidence_id": "fact:cb8678bd",
+   "metric": "same_month_last_year.orders",
+   "label": "2025-10 有效订单",
+   "value": 329,
+   "unit": "count",
+   "window": {
+    "start": "2025-10-01",
+    "end": "2025-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 329
+  },
+  {
+   "evidence_id": "fact:0109cf07",
+   "metric": "same_month_last_year.buyers",
+   "label": "2025-10 购买客户（月内去重）",
+   "value": 321,
+   "unit": "customers",
+   "window": {
+    "start": "2025-10-01",
+    "end": "2025-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 321
+  },
+  {
+   "evidence_id": "fact:997d5d67",
+   "metric": "same_month_last_year.sales",
+   "label": "2025-10 商品金额",
+   "value": 49547.36,
+   "unit": "USD",
+   "window": {
+    "start": "2025-10-01",
+    "end": "2025-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 329
+  },
+  {
+   "evidence_id": "fact:05a53592",
+   "metric": "same_month_last_year.aov",
+   "label": "2025-10 客单价",
+   "value": 150.6,
+   "unit": "USD",
+   "window": {
+    "start": "2025-10-01",
+    "end": "2025-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 329
+  },
+  {
+   "evidence_id": "fact:5e5c7010",
+   "metric": "same_month_last_year.orders_per_buyer",
+   "label": "2025-10 人均订单",
+   "value": 1.0249,
+   "unit": "ratio",
+   "window": {
+    "start": "2025-10-01",
+    "end": "2025-11-01",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 321
+  },
+  {
+   "evidence_id": "fact:6aaec672",
+   "metric": "repurchase_rate_30d.latest_matured",
+   "label": "最近已成熟的 30 天复购率（as_of 2026-10-05，标签窗到 2026-11-04）",
+   "value": 0.112,
+   "unit": "ratio",
+   "window": {
+    "start": "2026-10-05",
+    "end": "2026-11-04",
+    "closed": "left"
+   },
+   "status": "ok",
+   "sample_size": 643
+  }
+ ]
+}
