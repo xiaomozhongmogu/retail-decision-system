@@ -1,0 +1,30 @@
+$ .venv/bin/streamlit run app.py --server.headless true --server.port 8765 (background) ; curl health and pages
+2026-11-11T14:19:36+08:00
+health: 
+GET / -> 200
+GET /business -> 404
+GET /customers -> 404
+GET /prediction -> 404
+GET /ai -> 404
+server stopped
+--- attempt 2 (attempt 1 queried before the server was fully up: empty health, 404 on sub-paths); wait for health == ok
+2026-11-11T14:19:46+08:00
+health after 40s: 
+GET / -> 200
+GET /data -> 404
+GET /business -> 404
+GET /customers -> 404
+GET /prediction -> 404
+GET /ai -> 404
+server pid 13438 left running for the browser check
+--- attempt 3 (attempts 1-2 hit Anki, which already listens on localhost:8765; moved to port 8599, usage stats disabled)
+2026-11-11T14:20:48+08:00
+health after 2s: ok
+GET / -> 200
+GET /data -> 200
+GET /business -> 200
+GET /customers -> 200
+GET /prediction -> 200
+GET /ai -> 200
+server pid 13594 running for browser check
+server stopped 2026-11-11T14:21:30+08:00

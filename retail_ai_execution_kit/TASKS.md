@@ -78,7 +78,7 @@
 | AI-13 | 实现草稿存储和审阅状态 | final | todo | AI-12 |
 | AI-14 | 完成Agent边界场景验收 | final | todo | AI-13 |
 | AI-15 | 完成三模块联调与可观测性 | final | todo | AI-03, AI-07, AI-10, AI-14 |
-| UI-01 | 建立Streamlit多页骨架 | midterm | todo | GOV-07, GOV-06 |
+| UI-01 | 建立Streamlit多页骨架 | midterm | done | GOV-07, GOV-06 |
 | UI-02 | 接入数据质量与口径页面 | midterm | todo | UI-01, DATA-12 |
 | UI-03 | 接入经营指标与OLAP交互 | midterm | todo | UI-01, DW-10, EDA-02 |
 | UI-04 | 接入客户生命周期与分群 | midterm | todo | UI-01, EDA-03, EDA-05, ML-05 |
@@ -1203,7 +1203,7 @@
 
 ### UI-01 建立Streamlit多页骨架
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C15, U05。
 - 前置：GOV-07, GOV-06。
 - 允许修改：`app.py`, `src/retail_bi/ui`, `reports/ui`；另可写本任务证据/交接。
@@ -1216,7 +1216,7 @@
 2. 全局显示数据版本、数据时间和as_of，历史数据不标实时2026。
 3. 应用实际启动，空数据状态可理解，不能只交静态截图。
 
-证据：尚无已登记验收证据。
+证据：evidence/UI-01/2026-11-11-skeleton.json
 
 ### UI-02 接入数据质量与口径页面
 

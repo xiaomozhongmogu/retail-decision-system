@@ -1,0 +1,10 @@
+$ .venv/bin/python evidence/UI-01/smoke.py
+2026-11-11T14:19:18+08:00
+[{"page": "data", "title_found": true, "banner": true, "exception": [], "dataframes": 0}, {"page": "business", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "customers", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "prediction", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "ai", "title_found": true, "banner": true, "exception": [], "dataframes": 0}, {"page": "data", "no_release": true, "empty_state_shown": false, "exception": []}, {"page": "business", "no_release": true, "empty_state_shown": false, "exception": []}, {"page": "customers", "no_release": true, "empty_state_shown": false, "exception": []}, {"page": "prediction", "no_release": true, "empty_state_shown": false, "exception": []}, {"page": "ai", "no_release": true, "empty_state_shown": false, "exception": []}]
+5/10 pages ok
+exit=1
+--- run 2 (run 1: empty-state pages 0/5 because the release directory was read once at import; now read per call)
+2026-11-11T14:19:28+08:00
+[{"page": "data", "title_found": true, "banner": true, "exception": [], "dataframes": 0}, {"page": "business", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "customers", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "prediction", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "ai", "title_found": true, "banner": true, "exception": [], "dataframes": 0}, {"page": "data", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "business", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "customers", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "prediction", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "ai", "no_release": true, "empty_state_shown": true, "exception": []}]
+10/10 pages ok
+exit=0
