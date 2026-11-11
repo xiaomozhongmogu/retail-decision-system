@@ -2,9 +2,9 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：Done through ML-06 (2026-11-10, claude-opus-5-5): data, warehouse release wh-db316daf8021, EDA-01, ML-01..04, ML-06 baselines (weak signal: logreg val ROC-AUC 0.556). Next: ML-07 LightGBM, ML-08, ML-09; EDA-05 then ML-05; UI-01; AI-01; DOC-04. Coordinator released at usage limit.
+- 项目状态说明：2026-11-11 claude-opus-5-5：已验收 55 项。数据、数仓发布 wh-d3aaa559048c、EDA-01..06、ML-01..12（测试 ROC-AUC 0.515，信号弱，如实记录）、UI-01..05、AI-02 知识库、AI-08 周报事实、AI-11 挽回政策、DOC-04 文献核验已完成。AI-01 适配层已实现但缺 LLM 凭据（blocked），其后 18 项 AI/UI/DOC/REL 任务依赖它；GOV-03 缺团队分工表；DOC-01 等待提交回执与 GOV-03；GOV-04 等待教师答复（非阻塞）。交接见 worklogs/DOC-04-claude-opus-5-5-2026-11-11.md。
 - 正式主数据：合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认。
-- 协调者：claude-opus-5-5（对话“电商项目接力｜说继续即可”）；2026-11-11 14:18 按用户再次继续，台账 4420cb35…。
+- 协调者：未指定（claude-opus-5-5 于 2026-11-11 释放：剩余可执行任务已全部完成，其余受阻于 LLM 凭据、团队分工表与提交回执）。
 - 已选 85 项；done 55 项；blocked 2 项；其他未验收 28 项。
 
 ## 可认领的下一步
