@@ -71,7 +71,7 @@
 | AI-06 | 实现查询回答与结果证据 | final | todo | AI-05 |
 | AI-07 | 完成NL2SQL标准集验收 | final | todo | AI-06 |
 | AI-08 | 实现周报事实计算 | final | done | EDA-04, DW-06 |
-| AI-09 | 实现周报生成与数值校验 | final | todo | AI-08, AI-01, AI-02 |
+| AI-09 | 实现周报生成与数值校验 | final | done | AI-08, AI-01, AI-02 |
 | AI-10 | 完成周报场景验收 | final | todo | AI-09 |
 | AI-11 | 建立运营政策与预算规则 | final | done | ML-11, GOV-05 |
 | AI-12 | 实现有限步骤运营Agent | final | todo | AI-11, AI-01, AI-02 |
@@ -1081,7 +1081,7 @@
 
 ### AI-09 实现周报生成与数值校验
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q05。
 - 前置：AI-08, AI-01, AI-02。
 - 允许修改：`src/retail_bi/ai`, `reports/ai`；另可写本任务证据/交接。
@@ -1094,7 +1094,7 @@
 2. 可能原因标为待验证假设；最终文本的数字、单位、窗口、引用再次检查。
 3. 修复次数有上限，仍失败回退可信模板；输出标真实LLM或回放模式。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-09/2026-11-11-weekly-report.json
 
 ### AI-10 完成周报场景验收
 

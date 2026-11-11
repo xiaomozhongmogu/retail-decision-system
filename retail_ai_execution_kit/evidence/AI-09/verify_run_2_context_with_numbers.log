@@ -1,0 +1,21 @@
+$ .venv/bin/python evidence/AI-09/verify_report.py   (after adding the period context to the prompt)
+2026-11-11T15:42:16+08:00
+PASS valid LLM text accepted; numbers substituted from facts; mode live 
+PASS digits outside placeholders rejected 
+PASS Chinese numerals with a unit rejected 
+PASS unknown placeholder rejected 
+PASS unmarked cause in explanation and hypothesis without 待验证 rejected 
+PASS placeholder misused as another quantity (unit after it, repeated) rejected — seen in live run 2 
+PASS one repair then accepted 
+PASS repairs capped at 2: 3 calls, then trusted template 
+PASS non-JSON output falls back after the cap 
+PASS replay mode labelled as replay 
+PASS template mode passes the final number check 
+PASS final check catches a number not in the facts 
+PASS every key number cites its evidence id 
+PASS LLM unavailable -> template with note, not an error 
+live attempts: [{"attempt": 1, "result": "validation_failed", "errors": ["用中文数字写了数量：七天", "用中文数字写了数量：一天", "用中文数字写了数量：八周"], "usage": {"prompt_tokens": 1036, "completion_tokens": 410, "cost_usd": 0.00026}}, {"attempt": 2, "result": "validation_failed", "errors": ["用中文数字写了数量：一日", "用中文数字写了数量：一周", "用中文数字写了数量：一日"], "usage": {"prompt_tokens": 1487, "completion_tokens": 403, "cost_usd": 0.000321}}, {"attempt": 3, "result": "validation_failed", "errors": ["用中文数字写了数量：一周"], "usage": {"prompt_tokens": 1930, "completion_tokens": 406, "cost_usd": 0.000384}}]
+FAIL live run: real LLM text accepted within the repair cap, final check clean [{'attempt': 1, 'result': 'validation_failed', 'errors': ['用中文数字写了数量：七天', '用中文数字写了数量：一天', '用中文数字写了数量：八周'], 'usage': {'prompt_tokens': 1036, 'completion_tokens': 410, 'cost_usd': 0.00026}}, {'attempt': 2, 'result': 'validation_failed', 'errors': ['用中文数字写了数量：一日', '用中文数字写了数量：一周', '用中文数字写了数量：一日'], 'usag
+FAIL the recorded live text replays identically (offline demo) 
+14/16 checks passed
+exit=1

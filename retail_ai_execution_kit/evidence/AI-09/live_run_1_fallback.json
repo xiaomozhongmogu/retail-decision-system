@@ -1,0 +1,60 @@
+{
+  "status": "ok",
+  "mode": "template",
+  "requested_mode": "live",
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "validation_failed",
+      "errors": [
+        "占位符之外出现数字：本周商品金额为 ，有效订单为 ，客单价为 。环比看，商品金额变化 ，订单数变化 ",
+        "解释中的原因推测未标“待验证”：需注意本周口径为部分周期：截止前最后一天的有效订单 {{F0"
+      ],
+      "usage": {
+        "prompt_tokens": 900,
+        "completion_tokens": 372,
+        "cost_usd": 0.00023
+      }
+    },
+    {
+      "attempt": 2,
+      "result": "validation_failed",
+      "errors": [
+        "解释中的原因推测未标“待验证”：本周口径为部分周期，截止前最后一天的有效订单 {{F09}}"
+      ],
+      "usage": {
+        "prompt_tokens": 1347,
+        "completion_tokens": 365,
+        "cost_usd": 0.000291
+      }
+    },
+    {
+      "attempt": 3,
+      "result": "validation_failed",
+      "errors": [
+        "解释中的原因推测未标“待验证”：本周口径为部分周期，截止前最后一天的有效订单 {{F09}}"
+      ],
+      "usage": {
+        "prompt_tokens": 1755,
+        "completion_tokens": 368,
+        "cost_usd": 0.000349
+      }
+    }
+  ],
+  "final_check_errors": [],
+  "evidence_ids": [
+    "doc:transaction_rules#1-有效购买@transaction-rules-v1",
+    "doc:transaction_rules#2-时间归属与可观察性@transaction-rules-v1",
+    "fact:0e8603be",
+    "fact:31cf2f70",
+    "fact:56489918",
+    "fact:81a0bd95",
+    "fact:a31927a7",
+    "fact:ab7e9a82",
+    "fact:afdd8b01",
+    "fact:b99bf8fb",
+    "fact:efdd31dc",
+    "fact:f42e59c4"
+  ],
+  "llm_body": null
+}
