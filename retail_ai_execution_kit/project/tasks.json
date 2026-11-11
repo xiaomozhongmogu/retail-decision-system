@@ -2928,10 +2928,10 @@
       "category": "DOC",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C17"
       ],
@@ -2951,7 +2951,9 @@
         "按RFM/价值、复购/流失、NL2SQL、RAG/Agent组织综述，写采用方法与限制。",
         "区分已核元数据/已读摘要/已读全文；官方技术资料和数据卡另列，不编造DOI或贡献。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/DOC-04/2026-11-11-references.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": false

@@ -1,0 +1,31 @@
+$ python3 evidence/DOC-04/check_refs.py
+2026-11-11T14:57:48+08:00
+PASS 14 academic entries in the registry table 
+PASS at least 11 entries (course rule 10+, project 11+) 
+PASS every entry has a reading level; none claims full text 
+PASS DOIs only where a source record exists: [1]-[6], [10], [12], [14] 
+PASS [1] DOI 10.1057/dbm.2012.17: Crossref record exists, title and year match 
+PASS [2] DOI 10.1509/jmkr.2005.42.4.415: Crossref record exists, title and year match 
+PASS [3] DOI 10.1287/mksc.1040.0098: Crossref record exists, title and year match 
+PASS [4] DOI 10.1016/j.eswa.2008.05.027: Crossref record exists, title and year match 
+PASS [5] DOI 10.1509/jmr.16.0163: Crossref record exists, title and year match 
+PASS [6] DOI 10.1145/2939672.2939785: Crossref record exists, title and year match 
+PASS [10] DOI 10.52202/075280-1835: Crossref record exists, title and year match 
+PASS [12] DOI 10.1360/SSI-2021-0316: Crossref record exists, title and year match 
+PASS [14] DOI 10.1145/3770855.3817588: Crossref record exists, title and year match 
+PASS [7] proceedings page: title matches; pages as recorded 
+PASS [8] proceedings page: title matches; pages as recorded 
+PASS [10] proceedings page: title matches; pages as recorded 
+PASS [11] proceedings page: title matches; pages as recorded 
+PASS [9] ReAct: ICLR 2023 from OpenReview 
+PASS [13] 郭先会 2024 57(9): 873-879 from the journal site 
+PASS [12] no unverified end page 
+PASS every entry is cited in the review text 
+PASS theme section present: RFM 与客户价值 
+PASS theme section present: 复购预测、类别不平衡与挽回 
+PASS theme section present: 自然语言查询数据库（NL2SQL） 
+PASS theme section present: 检索增强与工具代理 
+PASS each theme states what the project adopted and its limits 
+PASS official docs and data cards listed separately, not counted 
+27/27 checks passed
+exit=0

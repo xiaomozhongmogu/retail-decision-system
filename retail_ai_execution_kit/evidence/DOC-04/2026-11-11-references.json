@@ -1,0 +1,111 @@
+{
+  "task_id": "DOC-04",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "system python3 (标准库)",
+    "data_mode": "公开文献元数据",
+    "network": "联网：Crossref API、NeurIPS/ICLR 论文集、OpenReview、Springer、ACM、Ghent 大学文献库、SciEngine、《通信技术》官网（未发送个人信息）"
+  },
+  "command": "python3 evidence/DOC-04/check_refs.py",
+  "exit_code": 0,
+  "summary": "核验 14 篇学术文献：有 DOI 的 9 篇对照 Crossref 记录，其余 5 篇对照会议论文集、OpenReview 或期刊官网的引文元数据；作者、年份、题目、出处全部一致，更正 5 处页码或卷期（Burez 卷期、LightGBM 去掉页码、BIRD 与 Spider 2.0 补页码、梁清源去掉无依据的结束页），没有编造 DOI。12 篇已读摘要、2 篇只核元数据、0 篇读全文。综述按 RFM 与价值、复购/流失与挽回、梯度提升树、NL2SQL、RAG 与 Agent 组织，每个主题写明本项目采用的方法与限制；官方技术资料和数据卡另列。机械检查 27/27。",
+  "inputs": [
+    {
+      "path": "evidence/DOC-04/check_refs.py",
+      "sha256": "19a9f1998e24bf18c15cb54ac8a00592a3d3b124055de00a84f00bc94ceb8725"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1016_j.eswa.2008.05.027.json",
+      "sha256": "474622887890e9554b03be27d427b0131786dc67849501297a3cf39e0678681e"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1057_dbm.2012.17.json",
+      "sha256": "95a2303792d98b60c1931f054206d3902ff5db43725b617304eb6efd50059e8e"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1145_2939672.2939785.json",
+      "sha256": "e3cc90cbfaf08d8cba2e5ac76ef785b44435115410a699443d3ac7c87c039c94"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1145_3770855.3817588.json",
+      "sha256": "baa9b404a6e43014e1d8a68123651376f0e96a1b2a11173f1d4d41ac188d192d"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1287_mksc.1040.0098.json",
+      "sha256": "fd7e978405709830b6e43ffe848929514ceea3696653308f8f94616204b4b8a3"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1360_SSI-2021-0316.json",
+      "sha256": "40f5f56b757448e26a892217b0021605c9e40cc475be04fbe7381b181d3d0975"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1509_jmkr.2005.42.4.415.json",
+      "sha256": "8c5f1f44edd677ff02e8de0138469a2d803840480884ff2d8eca47f65ca97455"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.1509_jmr.16.0163.json",
+      "sha256": "2d0bea9e13de5ed10e193992c9a1d4ff1c2fa9c161956c3223158e5be6f166cf"
+    },
+    {
+      "path": "evidence/DOC-04/sources/10.52202_075280-1835.json",
+      "sha256": "7042ab250364ada15f6025504933ad44edcf651f391a97a5a1e6e6cb677936f9"
+    },
+    {
+      "path": "evidence/DOC-04/sources/page_metadata.json",
+      "sha256": "a38d65d731bad8656a4d7adddeeae984b503888609f44beacff5e49ca66a3d72"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/reference_registry.md",
+      "sha256": "58ec527af80b2504298a376cc2096efa4e03b32b1059b7ecff7d05f760554a58"
+    },
+    {
+      "path": "reports/references/reference_audit.md",
+      "sha256": "fe55a2197158ae6c951df726a029e41aa665ed3dbaa74a3f01340187dd43d2a8"
+    },
+    {
+      "path": "evidence/DOC-04/check_run.log",
+      "sha256": "405f43abbaa9e7b981775acb48fbe5a80a3dcccc16578d838f6adcad9f800e6a"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "14 篇（期刊 7、会议 7），超过至少 11 篇的项目要求、在建议的 12 至 14 篇内；每篇的作者、年份、题目、刊会与原始来源逐条记录在 reference_audit.md，原始记录保存在 evidence/DOC-04/sources/。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "综述分 RFM 与客户价值、复购预测/类别不平衡与挽回、梯度提升树、NL2SQL、检索增强与工具代理五节，正文引用 [1]–[14] 全部出现，每节有“本项目采用”和“限制”。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "每篇标阅读层次（已读摘要 12、已核元数据 2、已读全文 0）；官方技术资料与数据卡单列不计数；只写来源记录中存在的 DOI（9 个，均与 Crossref 一致），郭先会 2024 期刊页 DOI 为空则不写；引用只写摘要能支持的内容，并把 RAG、Burez、Spider 2.0 三处措辞改为与摘要一致。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "没有通读任何一篇全文；最终报告若引用方法细节需先读全文并更新阅读层次。",
+    "Burez 2009 与梁清源 2022 只核到元数据（关键词、目录），综述中注明依据范围。",
+    "OpenReview 与 DBLP 直接请求被机器人校验拦截，ReAct 通过 firecrawl 读取 OpenReview 页面。",
+    "文献清单沿用前期调研的 14 条，没有新增检索；覆盖面以课程所需主题为限。"
+  ],
+  "steps": [
+    "认领 DOC-04。",
+    "用 Crossref API 取 9 个 DOI 的记录，逐项对照登记；用论文集页面的 citation_* 元数据核对 LightGBM、RAG、BIRD、Spider 2.0；OpenReview 核对 ReAct；期刊官网核对郭先会 2024；SciEngine 核对梁清源 2022 的页码。",
+    "读取出版方页面上的摘要（12 篇），Burez 2009 页面只有关键词。",
+    "重写 docs/reference_registry.md（v2：清单、更正、按主题综述、官方资料另列），核对综述措辞与摘要一致并修改 3 处。",
+    "编写核验记录与机械检查脚本，27/27 通过。"
+  ],
+  "task_spec_sha256": "123004ba78cbd86344efbca1c1591293b2f3b4daf372578858486a199d881af2",
+  "performed_at": "2026-11-11T14:58:08.954937+08:00"
+}

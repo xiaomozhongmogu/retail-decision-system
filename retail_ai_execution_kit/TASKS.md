@@ -88,7 +88,7 @@
 | DOC-01 | 完成选题报告并形成阶段一材料 | proposal | in_review | GOV-03, GOV-06, DATA-12, EDA-01, DOC-04 |
 | DOC-02 | 完成中期检查报告与答辩材料 | midterm | todo | DOC-01, DW-10, EDA-06, ML-12, UI-05 |
 | DOC-03 | 完成正式报告六章及设计方案覆盖 | final | todo | DOC-02, AI-15, UI-07, DOC-05, DOC-08 |
-| DOC-04 | 核验学术文献与综述引用 | proposal | todo | GOV-05 |
+| DOC-04 | 核验学术文献与综述引用 | proposal | done | GOV-05 |
 | DOC-05 | 整理实现证据、图表和复现说明 | final | todo | DW-10, ML-12, AI-15, UI-07 |
 | DOC-06 | 整理个人贡献与答辩知识清单 | final | todo | GOV-03, DOC-05 |
 | DOC-07 | 完成终期PPT与10分钟脚本 | final | todo | DOC-03, DOC-06 |
@@ -1378,7 +1378,7 @@
 
 ### DOC-04 核验学术文献与综述引用
 
-- [ ] 状态：`todo`；阶段：`proposal`；范围：已选核心。
+- [x] 状态：`done`；阶段：`proposal`；范围：已选核心。
 - 依据：C17。
 - 前置：GOV-05。
 - 允许修改：`docs`, `reports/references`；另可写本任务证据/交接。
@@ -1391,7 +1391,7 @@
 2. 按RFM/价值、复购/流失、NL2SQL、RAG/Agent组织综述，写采用方法与限制。
 3. 区分已核元数据/已读摘要/已读全文；官方技术资料和数据卡另列，不编造DOI或贡献。
 
-证据：尚无已登记验收证据。
+证据：evidence/DOC-04/2026-11-11-references.json
 
 ### DOC-05 整理实现证据、图表和复现说明
 

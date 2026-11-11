@@ -1,0 +1,190 @@
+{
+ "lightgbm": {
+  "url": "https://proceedings.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html",
+  "retrieved": "2026-11-11",
+  "citation_title": [
+   "LightGBM: A Highly Efficient Gradient Boosting Decision Tree"
+  ],
+  "citation_author": [
+   "Ke, Guolin",
+   "Meng, Qi",
+   "Finley, Thomas",
+   "Wang, Taifeng",
+   "Chen, Wei",
+   "Ma, Weidong",
+   "Ye, Qiwei",
+   "Liu, Tie-Yan"
+  ],
+  "date": [
+   "2017"
+  ],
+  "conference": [
+   "Advances in Neural Information Processing Systems"
+  ],
+  "firstpage": [],
+  "lastpage": []
+ },
+ "rag": {
+  "url": "https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html",
+  "retrieved": "2026-11-11",
+  "citation_title": [
+   "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  ],
+  "citation_author": [
+   "Lewis, Patrick",
+   "Perez, Ethan",
+   "Piktus, Aleksandra",
+   "Petroni, Fabio",
+   "Karpukhin, Vladimir",
+   "Goyal, Naman",
+   "Küttler, Heinrich",
+   "Lewis, Mike",
+   "Yih, Wen-tau",
+   "Rocktäschel, Tim",
+   "Riedel, Sebastian",
+   "Kiela, Douwe"
+  ],
+  "date": [
+   "2020"
+  ],
+  "conference": [
+   "Advances in Neural Information Processing Systems"
+  ],
+  "firstpage": [
+   "9459"
+  ],
+  "lastpage": [
+   "9474"
+  ]
+ },
+ "spider2": {
+  "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/46c10f6c8ea5aa6f267bcdabcb123f97-Abstract-Conference.html",
+  "retrieved": "2026-11-11",
+  "citation_title": [
+   "Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows"
+  ],
+  "citation_author": [
+   "Lei, Fangyu",
+   "Chen, Jixuan",
+   "Ye, Yuxiao",
+   "Cao, Ruisheng",
+   "Shin, Dongchan",
+   "SU, Hongjin",
+   "Suo, Zhaoqing",
+   "Gao, Hongcheng",
+   "Hu, Wenjing",
+   "Yin, Pengcheng",
+   "Zhong, Victor",
+   "Xiong, Caiming",
+   "Sun, Ruoxi",
+   "Liu, Qian",
+   "Wang, Sida",
+   "Yu, Tao"
+  ],
+  "date": [
+   "2025-05-01"
+  ],
+  "conference": [
+   "International Conference on Learning Representations"
+  ],
+  "firstpage": [
+   "28691"
+  ],
+  "lastpage": [
+   "28735"
+  ]
+ },
+ "bird": {
+  "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/83fc8fab1710363050bbd1d4b8cc0021-Abstract-Datasets_and_Benchmarks.html",
+  "retrieved": "2026-11-11",
+  "citation_title": [
+   "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+  ],
+  "citation_author": [
+   "Li, Jinyang",
+   "Hui, Binyuan",
+   "Qu, Ge",
+   "Yang, Jiaxi",
+   "Li, Binhua",
+   "Li, Bowen",
+   "Wang, Bailin",
+   "Qin, Bowen",
+   "Geng, Ruiying",
+   "Huo, Nan",
+   "Zhou, Xuanhe",
+   "Ma, Chenhao",
+   "Li, Guoliang",
+   "Chang, Kevin",
+   "Huang, Fei",
+   "Cheng, Reynold",
+   "Li, Yongbin"
+  ],
+  "date": [
+   "2023-12-15"
+  ],
+  "conference": [
+   "Advances in Neural Information Processing Systems"
+  ],
+  "firstpage": [
+   "42330"
+  ],
+  "lastpage": [
+   "42357"
+  ]
+ },
+ "react": {
+  "url": "https://openreview.net/forum?id=WE_vluYUL-X",
+  "retrieved": "2026-11-11",
+  "via": "firecrawl (direct fetch returned a bot check)",
+  "citation_title": [
+   "ReAct: Synergizing Reasoning and Acting in Language Models"
+  ],
+  "citation_author": [
+   "Shunyu Yao",
+   "Jeffrey Zhao",
+   "Dian Yu",
+   "Nan Du",
+   "Izhak Shafran",
+   "Karthik R Narasimhan",
+   "Yuan Cao"
+  ],
+  "conference": [
+   "The Eleventh International Conference on Learning Representations"
+  ],
+  "decision": "ICLR 2023 Conference, Accept: notable-top-5%"
+ },
+ "guo2024": {
+  "url": "https://txjs.cbpt.cnki.net/portal/journal/portal/client/paper/06992c3314e139bb3ea7b428c1f32688",
+  "retrieved": "2026-11-11",
+  "via": "firecrawl",
+  "shown": "2024 09 v.57 873-879；基于大语言模型的智能体构建综述；郭先会、张梦姣、马军；出版时间 2024-09-20；引用信息 通信技术,2024,57(09):873-879；DOI 栏为空"
+ },
+ "liang2022_pages": {
+  "url": "https://www.sciengine.com/SSI/doi/10.1360/SSI-2021-0316",
+  "retrieved": "2026-11-11",
+  "via": "firecrawl",
+  "shown": "Volume 52, Issue 8: 1363(2022)；citation_firstpage 1363；prism.endingPage 为空"
+ },
+ "chen2012_abstract": {
+  "url": "https://link.springer.com/article/10.1057/dbm.2012.17",
+  "via": "firecrawl",
+  "pages": "197-208",
+  "abstract_read": true
+ },
+ "burez2009": {
+  "url": "https://biblio.ugent.be/publication/677499",
+  "via": "firecrawl",
+  "shown": "vol 36 no 3 pp 4626-4636; keywords Classifier, Customer churn, Boosting, CUBE, Under-sampling, Rare events, Random forests, Class imbalance, Oversampling",
+  "abstract_read": false
+ },
+ "tecd2026": {
+  "url": "https://dl.acm.org/doi/10.1145/3770855.3817588",
+  "via": "firecrawl",
+  "shown": "KDD 26 Proceedings V.2, published 08 August 2026; abstract: banking ecosystem, five e-commerce domains",
+  "abstract_read": true
+ },
+ "xgboost_arxiv": {
+  "url": "https://export.arxiv.org/api/query?id_list=1603.02754",
+  "abstract_read": true
+ }
+}
