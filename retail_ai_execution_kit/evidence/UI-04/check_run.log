@@ -1,5 +1,5 @@
-$ .venv/bin/python evidence/UI-04/check.py
-2026-11-11T14:46:28+08:00
+$ .venv/bin/python evidence/UI-04/check.py   (after the segment tab shows an empty state without a release)
+2026-11-11T14:48:12+08:00
 PASS page renders without exception; five tabs 
 PASS stage counts equal the latest snapshot 
 PASS no-visible-purchase customers = all customers - snapshot customers; anonymous = 0 

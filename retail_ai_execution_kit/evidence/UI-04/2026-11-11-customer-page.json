@@ -48,7 +48,7 @@
   "artifacts": [
     {
       "path": "src/retail_bi/ui/pages/customers.py",
-      "sha256": "1d9a29c6aa54e941bd22231537e3978e9f452e5298b5c1cabf96bf58fda55c6c"
+      "sha256": "646bb3e6295f57046b0351a595ebc28683c4230b079592601e24524cbdaa5e06"
     },
     {
       "path": "src/retail_bi/ui/customer_data.py",
@@ -60,7 +60,7 @@
     },
     {
       "path": "evidence/UI-04/check_run.log",
-      "sha256": "d87805c40f05fbc652c31cc88a83f851c9d1a7f1ba488b274c2e89b045013ff2"
+      "sha256": "448fa557951117589707220b266a046b1a2ddbda50db412a025f270da317164f"
     },
     {
       "path": "evidence/UI-04/lifecycle_browser.jpg",
@@ -91,15 +91,17 @@
   "limitations": [
     "自审。",
     "单客户查询通过 runtime.open_current() 只读执行固定 SQL，不经允许视图清单；只供页面使用，不开放给 AI 查询层。",
-    "价值群表来自 ML-05 报告（旧发布上生成，交易数据相同）。"
+    "价值群表来自 ML-05 报告（旧发布上生成，交易数据相同）。",
+    "更正：第一次提交（c0d559c）时 UI-01 复核冒烟实际为 9/10（无发布时客户页仍显示来自报告文件的分群表），但命令串联后仍写入了通过记录。已改为无发布时价值群标签页显示空状态，UI-04 检查重跑 15/15、UI-01 冒烟重跑 10/10，本记录和 UI-01 复核记录据此重新生成；失败的日志保留为 evidence/UI-01/smoke_run_ui04_recheck_1_failed.log。"
   ],
   "steps": [
     "认领 UI-04。",
     "编写 customer_data.py（聚合与单客户查询）和客户页面五个标签页。",
     "AppTest 15/15（一次通过）。",
     "重启服务，内置浏览器查看生命周期页与 cohort 热力图并截图。",
-    "复跑 UI-01 冒烟 10/10 与服务检查。"
+    "复跑 UI-01 冒烟 10/10 与服务检查。",
+    "提交后发现 UI-01 冒烟实为 9/10：修改价值群标签页的无发布状态，重跑 UI-04 15/15 与 UI-01 10/10，重新生成证据。"
   ],
   "task_spec_sha256": "8bc421bc9904706ab16139355a3be27040df6f0bc5a121a3b526595dc346b3e0",
-  "performed_at": "2026-11-11T14:47:43.440769+08:00"
+  "performed_at": "2026-11-11T14:48:29.657815+08:00"
 }

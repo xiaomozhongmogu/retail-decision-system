@@ -45,16 +45,19 @@ with t1:
         st.altair_chart(trend, width='stretch')
 
 with t2:
-    seg = json.loads((ROOT / 'reports/model/cluster_metrics.json').read_text(encoding='utf-8'))
-    d = seg['definition']
-    st.markdown(f"母体：{d['population']}；R：{d['R']}；F：{d['F']}；M：{d['M']}。")
-    st.markdown('**规则分群**（切分点：最近购买 < 30 天为近期；近 90 天 ≥ 2 单或金额 ≥ 203.19 USD 为高价值；切分点在 2025-08-25 拟合）')
-    rs = pd.DataFrame(seg['rule_segments']['apply_as_of_profile'])
-    st.dataframe(rs.rename(columns={'segment': '规则分群', 'customers': '客户', 'share': '占比', 'r_median_days': 'R 中位数（天）', 'f_mean': '平均 F（单）',
-                                    'm_median_usd': 'M 中位数（USD）', 'm_total_share': '占 M 总额'}), hide_index=True,
-                 column_config={'占比': st.column_config.NumberColumn(format='percent'), '占 M 总额': st.column_config.NumberColumn(format='percent')})
-    st.caption(f"应用时点 {d['as_of_apply'][:10]}，共 {int(rs.customers.sum())} 人（近 90 天有购买）。来源 reports/model/rfm_segments.md（发布 {seg['release']}，交易数据与当前发布相同）。"
-               '近 90 天无购买的客户不在分群母体内，由生命周期规则管理。K-Means 聚类只作探索对照，见 ML-05 报告。')
+    if info is None:
+        st.info('暂无价值群：没有已发布的数据版本（分群对应发布数据的近 90 天母体）')
+    else:
+        seg = json.loads((ROOT / 'reports/model/cluster_metrics.json').read_text(encoding='utf-8'))
+        d = seg['definition']
+        st.markdown(f"母体：{d['population']}；R：{d['R']}；F：{d['F']}；M：{d['M']}。")
+        st.markdown('**规则分群**（切分点：最近购买 < 30 天为近期；近 90 天 ≥ 2 单或金额 ≥ 203.19 USD 为高价值；切分点在 2025-08-25 拟合）')
+        rs = pd.DataFrame(seg['rule_segments']['apply_as_of_profile'])
+        st.dataframe(rs.rename(columns={'segment': '规则分群', 'customers': '客户', 'share': '占比', 'r_median_days': 'R 中位数（天）', 'f_mean': '平均 F（单）',
+                                        'm_median_usd': 'M 中位数（USD）', 'm_total_share': '占 M 总额'}), hide_index=True,
+                     column_config={'占比': st.column_config.NumberColumn(format='percent'), '占 M 总额': st.column_config.NumberColumn(format='percent')})
+        st.caption(f"应用时点 {d['as_of_apply'][:10]}，共 {int(rs.customers.sum())} 人（近 90 天有购买）。来源 reports/model/rfm_segments.md（发布 {seg['release']}，交易数据与当前发布相同）。"
+                   '近 90 天无购买的客户不在分群母体内，由生命周期规则管理。K-Means 聚类只作探索对照，见 ML-05 报告。')
 
 with t3:
     status, rk, msg = view('ads.risk_summary_latest')
