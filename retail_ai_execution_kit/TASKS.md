@@ -63,7 +63,7 @@
 | ML-10 | 解释误差与适用限制 | midterm | done | ML-09, ML-05 |
 | ML-11 | 实现评分服务与适用性输出 | midterm | done | ML-10, DW-10 |
 | ML-12 | 发布模型文件与模型卡 | midterm | done | ML-11 |
-| AI-01 | 实现LLM适配与配置边界 | final | todo | GOV-07, GOV-06 |
+| AI-01 | 实现LLM适配与配置边界 | final | blocked | GOV-07, GOV-06 |
 | AI-02 | 建立业务知识库与检索 | final | todo | DW-06, ML-12 |
 | AI-03 | 评测知识检索和依据引用 | final | todo | AI-02, AI-01 |
 | AI-04 | 实现查询意图与Schema约束 | final | todo | AI-01, DW-06 |
@@ -945,7 +945,7 @@
 
 ### AI-01 实现LLM适配与配置边界
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [ ] 状态：`blocked`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q06。
 - 前置：GOV-07, GOV-06。
 - 允许修改：`src/retail_bi/ai`, `reports/ai`；另可写本任务证据/交接。
@@ -958,7 +958,9 @@
 2. 统一超时、有限重试、结构化输出、调用次数和费用预算；未授权付费或超预算不调用。
 3. 完成真实小请求并保留脱敏证据；无密钥时可开发夹具但不得标在线集成完成。
 
-证据：尚无已登记验收证据。
+**当前阻塞：** 缺少 LLM 凭据：适配层与夹具检查已完成（13/13，见 evidence/AI-01/2026-11-11-client-fixture.json），但本机没有 LLM_API_KEY/LLM_BASE_URL/LLM_MODEL，真实小请求无法完成。已尝试：读取环境与 .env，真实调用返回 llm_unavailable。恢复条件：用户自行在执行根目录 .env 填写 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL、LLM_PRICE_IN_PER_1K、LLM_PRICE_OUT_PER_1K，并设 LLM_ALLOW_PAID=1（预算默认 50 次 / 0.5 USD）。下一步：重跑 evidence/AI-01/client_smoke.py，确认真实请求成功后补证据并验收。只阻塞依赖 AI-01 的 AI 任务。
+
+证据：evidence/AI-01/2026-11-11-client-fixture.json
 
 ### AI-02 建立业务知识库与检索
 

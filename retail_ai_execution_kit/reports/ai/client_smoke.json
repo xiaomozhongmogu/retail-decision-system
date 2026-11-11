@@ -1,0 +1,102 @@
+{
+  "task_id": "AI-01",
+  "real_call": {
+    "config": {
+      "base_url": "",
+      "model": "",
+      "api_key": "missing",
+      "allow_paid": false,
+      "max_calls": 50,
+      "max_cost_usd": 0.5,
+      "price_in_per_1k": 0.0,
+      "price_out_per_1k": 0.0,
+      "timeout_s": 30.0,
+      "max_retries": 2
+    },
+    "result": {
+      "status": "error",
+      "mode": "live",
+      "model": null,
+      "error": {
+        "code": "llm_unavailable",
+        "message": "LLM 未配置（缺 LLM_API_KEY / LLM_BASE_URL / LLM_MODEL）",
+        "retryable": true
+      }
+    },
+    "online_integration_done": false
+  },
+  "fixture_checks": [
+    {
+      "check": "fixture success: text, structured JSON, usage and cost recorded",
+      "status": "passed",
+      "detail": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "cost_usd": 0.00014
+      }
+    },
+    {
+      "check": "invalid structured output is rejected",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "retryable error (503) retried once then succeeds",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "non-retryable error (401) fails immediately",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "retries are limited (max_retries=2 -> 3 attempts) and rate limit reported",
+      "status": "passed",
+      "detail": 3
+    },
+    {
+      "check": "timeout reported as timeout",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "call budget: third call refused without calling",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "cost budget: expected cost over the limit is refused before calling",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "live mode without paid permission does not call",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "live mode with unknown price does not call",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "no key -> llm_unavailable, no network call",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "call log has model, tokens, cost, timing; never the key or the prompt text",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "config summary redacts the key",
+      "status": "passed",
+      "detail": ""
+    }
+  ],
+  "fixture_checks_passed": true,
+  "online_integration": "not done: no credentials configured (status in_review)",
+  "note": "已安装的 openai SDK 在设置了 SOCKS 代理变量时无法创建客户端（缺 socksio），适配层改用标准库 urllib"
+}

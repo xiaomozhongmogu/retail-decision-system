@@ -1,0 +1,68 @@
+{
+  "task_id": "AI-01",
+  "verification_status": "partial",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)，标准库 urllib",
+    "data_mode": "夹具（fixture），无真实 LLM 调用",
+    "network": "未联网：本机无 LLM_API_KEY/LLM_BASE_URL/LLM_MODEL"
+  },
+  "command": ".venv/bin/python evidence/AI-01/client_smoke.py",
+  "exit_code": 0,
+  "summary": "实现统一 LLM 适配层（OpenAI 兼容 chat/completions，标准库 HTTP）：密钥只从环境或被 git 忽略的 .env 读取；统一超时、有限重试（可重试错误退避）、结构化 JSON 输出校验、调用次数与费用预算；未授权付费、价格未知或超预算时不发请求。夹具检查 13/13 通过。真实小请求未完成：本机没有凭据，真实调用返回 llm_unavailable，因此在线集成未完成，任务不标 done。",
+  "inputs": [
+    {
+      "path": "evidence/AI-01/client_smoke.py",
+      "sha256": "f1a11f9f4129c36922a24b24f036febe5db6e39bbba60b85fedc2210182cde2c"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/client.py",
+      "sha256": "0b47028bc9e4847ece30f0a9171a82d1e19bcef377ef7e8532c808dac46bde35"
+    },
+    {
+      "path": "reports/ai/client_smoke.json",
+      "sha256": "39967bdf04371cd9e803fd7bece46f3f43a63146a9dc0152eb114e11f3c6509b"
+    },
+    {
+      "path": "evidence/AI-01/smoke_run.log",
+      "sha256": "99e6e105655cfd2411b6a70ced236c88e55ef20ff9fea315cc0d6034b5c2d93b"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "not_done",
+      "finding": "适配层已实现、密钥从环境读取；但没有可用凭据，模型名和接口能力未实测。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "夹具证明：超时与 429 分别报 timeout/rate_limited；503 重试后成功；401 不重试；重试次数上限 max_retries=2（共 3 次）；结构化输出缺键或非 JSON 被拒；调用次数上限与预计费用上限在发请求前拒绝；未设置 LLM_ALLOW_PAID=1 或价格未知时不调用。"
+    },
+    {
+      "criterion": 3,
+      "status": "not_done",
+      "finding": "无密钥：真实请求返回 llm_unavailable，夹具结果在 client_smoke.json 中标为 fixture，online_integration=not done。日志不含密钥和提示原文（夹具断言）。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "在线集成未完成，需要用户在 .env 中自行填写凭据与价格后重跑同一命令。",
+    "已安装的 openai SDK 在设置 SOCKS 代理变量时无法创建客户端（缺 socksio），因此适配层不用 SDK。",
+    "费用为按配置单价的估算，不是供应商账单。"
+  ],
+  "steps": [
+    "认领 AI-01（台账 → f2fc0960…）。",
+    "编写 client.py；openai SDK 因代理变量失败，改用 urllib。",
+    "运行 client_smoke.py：真实调用 llm_unavailable；夹具 13/13 通过；先读输出再写本记录。"
+  ],
+  "task_spec_sha256": "436cb133b9f11d821002a19ce67e6fa8c92353b3e91d921b966c72589b986343",
+  "performed_at": "2026-11-11T14:24:42.437131+08:00"
+}

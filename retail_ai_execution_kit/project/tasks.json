@@ -1936,8 +1936,8 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
+      "status": "blocked",
+      "owner": "claude-opus-5-5",
       "reviewer": null,
       "review_mode": null,
       "requirements": [
@@ -1962,8 +1962,10 @@
         "统一超时、有限重试、结构化输出、调用次数和费用预算；未授权付费或超预算不调用。",
         "完成真实小请求并保留脱敏证据；无密钥时可开发夹具但不得标在线集成完成。"
       ],
-      "evidence": [],
-      "blocker": null,
+      "evidence": [
+        "evidence/AI-01/2026-11-11-client-fixture.json"
+      ],
+      "blocker": "缺少 LLM 凭据：适配层与夹具检查已完成（13/13，见 evidence/AI-01/2026-11-11-client-fixture.json），但本机没有 LLM_API_KEY/LLM_BASE_URL/LLM_MODEL，真实小请求无法完成。已尝试：读取环境与 .env，真实调用返回 llm_unavailable。恢复条件：用户自行在执行根目录 .env 填写 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL、LLM_PRICE_IN_PER_1K、LLM_PRICE_OUT_PER_1K，并设 LLM_ALLOW_PAID=1（预算默认 50 次 / 0.5 USD）。下一步：重跑 evidence/AI-01/client_smoke.py，确认真实请求成功后补证据并验收。只阻塞依赖 AI-01 的 AI 任务。",
       "skip_reason": null,
       "execution_required": true
     },
