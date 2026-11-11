@@ -1,0 +1,125 @@
+{
+  "task_id": "UI-01",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "仅本机 localhost；关闭 Streamlit 使用统计"
+  },
+  "command": ".venv/bin/python evidence/UI-01/smoke.py; curl localhost:8599 health and page paths (server started via .claude/launch.json)",
+  "exit_code": 0,
+  "summary": "复核（UI-04 修改 pages/customers.py 后）：Streamlit 多页骨架：数据口径、经营、客户、预测、AI 工作台五组入口，全部只经只读运行时读取允许视图；每页显示数据版本、数据时间范围与 as_of，并标注合成历史数据、非 2026 实时经营。AppTest 有发布 5/5、无发布空状态 5/5；真实服务健康 ok、六个路径 200；内置浏览器打开经营页确认渲染。 复核：AppTest 有发布 5/5、无发布 5/5；服务健康 200、五个页面路径 200。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "src/retail_bi/warehouse/release.py",
+      "sha256": "078b6fb34921edc79e197f53b3bb90bc30e1aa2bb51b5cc4c6b3504f77bfae7d"
+    },
+    {
+      "path": "docs/query_runtime.md",
+      "sha256": "9df883c2ba71b6170a5fcfa2aa283d3586f39bd18123da8871260b0a6454cfd9"
+    },
+    {
+      "path": "evidence/UI-01/smoke.py",
+      "sha256": "bfe0e911e096ceae622e1ba00b2d6be9fe18ab0c0890f137f5ed064909876277"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "app.py",
+      "sha256": "2a7b194a5cfeee4fa289e4183c8cc675352d4be3649db43d6f9f60054705c225"
+    },
+    {
+      "path": "reports/ui/navigation_smoke.md",
+      "sha256": "386226ab46b15085b4fe399a447cf17e1aab8ca9272ff8c943cc0941791ba083"
+    },
+    {
+      "path": "src/retail_bi/ui/common.py",
+      "sha256": "87f2acccac29ac62a82f48037724bb492a8cbcbf2bc981846ff63ec5ccb7f770"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/data.py",
+      "sha256": "ea959e9f5e611b7119b2228c81fdf8ac5beff11093394f16828c6c6930448450"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/business.py",
+      "sha256": "1cf9ab812f6497d1612cca43c068917c45f67b019b6f6258de4b2cbd262f4fa0"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/customers.py",
+      "sha256": "1d9a29c6aa54e941bd22231537e3978e9f452e5298b5c1cabf96bf58fda55c6c"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/prediction.py",
+      "sha256": "7deb9f3c0f22eb314257cf4bbca80174ed94f6a036c7540b84ad69c06c654583"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/ai.py",
+      "sha256": "c6af81d02ca7a2daee65653a1873edd6fa770b6e6c325e4d0ceecd3e48662699"
+    },
+    {
+      "path": "evidence/UI-01/smoke_run.log",
+      "sha256": "95874c95b23f73730462e47e2c235b2634f846862bd04fc280f00d31ba4c6490"
+    },
+    {
+      "path": "evidence/UI-01/server_check.log",
+      "sha256": "3dcdafb921de46ab169175255169e7d406c97e2afe9f68e7c5f215b057b61588"
+    },
+    {
+      "path": "evidence/UI-01/business_page_browser.jpg",
+      "sha256": "c275822671134b19417efaf66add9b9c23d2a90b77d315bea85f1dae84961b84"
+    },
+    {
+      "path": "evidence/UI-01/smoke_run_ui04_recheck.log",
+      "sha256": "cf0b4d72df094d1a728b2c7e50fb1af366cc06e98d8e700e04b7cf6ad333d115"
+    },
+    {
+      "path": "evidence/UI-01/server_check_ui04_recheck.log",
+      "sha256": "9c631624f6d5462846c2b6fbac16fc4cd5821aa3b39f52734c53d9d09f02dc13"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "st.navigation 提供数据口径、经营、客户、预测、AI 工作台五组页面入口（各一页，路径 /data、/business、/customers、/prediction、/ai），浏览器截图显示侧栏五组。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "共用 banner() 在每页显示数据版本（发布 wh-d3aaa559048c）、数据时间范围 2024-01-01 至 2026-11-07、as_of 2026-11-08，并写明完全合成、模拟历史区间、不是 2026 年实时经营；AppTest 断言五页均包含这些文字。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "应用实际启动（健康检查 ok，六个路径 200，内置浏览器渲染经营页并截图）；发布目录为空时五页都显示“尚无已发布的数据版本”与操作提示且无异常，不是只交静态截图。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "骨架阶段：详细页面由 UI-02 至 UI-06 接入。",
+    "本机 8765 端口被 Anki 占用，前两次服务检查无效，已保留记录。",
+    "复核时把无发布空状态的判定从“页面没有任何表格”细化为“不显示发布数据”：数据页（UI-02）在没有发布时仍显示来自报告文件的表格，其发布核对处显示空状态；其他页面仍要求没有表格。第一次复核按旧判定为 9/10（只有数据页不符），修改判定后 10/10。",
+    "UI-03 把共用页头由三张指标卡改为一行文字（窄窗口下指标卡会截断）；冒烟检查读取页面文字，仍检查数据版本、时间范围、as_of 与合成声明。"
+  ],
+  "steps": [
+    "认领 UI-01（台账 4420cb35…→04cfe4cb…）。",
+    "编写 app.py 与 common.py；AppTest 只能按文件切换页面，改为每页一个文件。",
+    "增加发布目录配置以测试空状态；第一次空状态 0/5（导入时固定目录），改为按调用读取后 10/10。",
+    "真实启动：前两次命中 Anki 的 8765 端口，换 8599 后健康 ok；内置浏览器确认渲染并保存截图，停止服务。",
+    "UI-02 修改 data.py 后台账校验提示 UI-01 证据失效；重跑 smoke 9/10（数据页无发布时显示报告表格），细化空状态判定后 10/10；对运行中的服务检查健康和页面路径。",
+    "UI-03 修改经营页与页头后再次复核：冒烟 10/10，服务健康与五个页面路径 200。",
+    "UI-04 修改客户页后再次复核：冒烟 10/10，服务健康与五个页面路径 200。"
+  ],
+  "task_spec_sha256": "06ea732a6f804d164144fc69f6be1c770f5278e2efdc9273506fb24d5287a29b",
+  "performed_at": "2026-11-11T14:47:43.472845+08:00"
+}

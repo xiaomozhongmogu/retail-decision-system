@@ -1,0 +1,19 @@
+$ .venv/bin/python evidence/UI-04/check.py
+2026-11-11T14:46:28+08:00
+PASS page renders without exception; five tabs 
+PASS stage counts equal the latest snapshot 
+PASS no-visible-purchase customers = all customers - snapshot customers; anonymous = 0 
+PASS long-dormant customers (>= 730 days) shown as dormant with correct count 
+PASS value segments equal the ML-05 report (4 groups, 704 customers) 
+PASS segment population equals in-population customers of the current release 
+PASS risk shown as average only, with weak-model warning, from risk_summary_latest 
+PASS cohort immature cells counted and labelled 未成熟 (not 0%) 
+PASS no age, channel, city, zip or generator labels on the page 
+PASS lookup in-population customer: stage with rule basis, value segment, model reference, observable fields 
+PASS lookup longest-dormant customer: dormant, not lost; out of model population 
+PASS lookup customer with no visible purchase: unknown_no_purchase 
+PASS unknown id: empty state 
+PASS malformed id rejected before querying 
+PASS all real customer ids match the accepted format 
+15/15 checks passed
+exit=0

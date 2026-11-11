@@ -2553,7 +2553,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-11-ui03-recheck.json"
+        "evidence/UI-01/2026-11-11-ui04-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2645,10 +2645,10 @@
       "category": "UI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C14",
         "U01",
@@ -2672,7 +2672,9 @@
         "cohort未成熟格子、匿名客户与长期沉睡客户显示正确状态。",
         "展示的是可观测历史，不编造年龄、渠道或真实身份。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/UI-04/2026-11-11-customer-page.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

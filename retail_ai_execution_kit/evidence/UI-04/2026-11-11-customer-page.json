@@ -1,0 +1,105 @@
+{
+  "task_id": "UI-04",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, altair",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "仅本机 localhost:8599；关闭 Streamlit 使用统计"
+  },
+  "command": ".venv/bin/python evidence/UI-04/check.py; streamlit run app.py --server.port 8599 + built-in browser at 1400px",
+  "exit_code": 0,
+  "summary": "客户页面把生命周期阶段、价值群、复购风险分开展示，并有 cohort 留存热力图和单客户查询（只读固定 SQL，返回可观测字段、命中的生命周期规则、价值群切分依据和模型适用性）。尚无购买 315 人、匿名 0、长期沉睡按天数分组且不称流失、cohort 未成熟格子显示“未成熟”。不显示年龄、渠道、城市、邮编或身份。AppTest 15/15，浏览器检查通过。",
+  "inputs": [
+    {
+      "path": "docs/lifecycle_rules.md",
+      "sha256": "b3b50509e1f88f9a28dbcb4c01ade3e6fd23cf260fe7f044538967e3b4f0eff3"
+    },
+    {
+      "path": "reports/analysis/lifecycle_checks.json",
+      "sha256": "8d3af8bc480ef13b14481048b00f319871ea631fcdfe1d7e22e603dbbcbabe68"
+    },
+    {
+      "path": "reports/model/cluster_metrics.json",
+      "sha256": "8d577f1a1e955f5e72283cc1edd5ec5e3e0c6a85c4346714eef3ee219d38cb40"
+    },
+    {
+      "path": "reports/model/rfm_segments.md",
+      "sha256": "b2ab4811bda1d9013f6d6aab8bd2b4d12f0b11b42e340d7ecc8aa19624faa33c"
+    },
+    {
+      "path": "docs/model_card.md",
+      "sha256": "74bf33f4430c64dd1349f2d3cbdfb13ef205fa684df2387e783fe8292dc491e5"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "evidence/UI-04/check.py",
+      "sha256": "a5e5a045070cb2328380ceb414970210e2783b2d0dcc6faa37d5378e27ceda5f"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ui/pages/customers.py",
+      "sha256": "1d9a29c6aa54e941bd22231537e3978e9f452e5298b5c1cabf96bf58fda55c6c"
+    },
+    {
+      "path": "src/retail_bi/ui/customer_data.py",
+      "sha256": "c7a05f25b24fb3ce7661b69318bf7b4eed5f1d4784412684f758523ae26028a4"
+    },
+    {
+      "path": "reports/ui/customer_page_review.md",
+      "sha256": "0e4fc77282721c833ccb07f734c97b78ed288211ad4b5c1c53b9b75eb29c3f9a"
+    },
+    {
+      "path": "evidence/UI-04/check_run.log",
+      "sha256": "d87805c40f05fbc652c31cc88a83f851c9d1a7f1ba488b274c2e89b045013ff2"
+    },
+    {
+      "path": "evidence/UI-04/lifecycle_browser.jpg",
+      "sha256": "5f3b4a55838d81bd368a4d8fa07f4fa4cfb7c17a056ace40db90c525db70b836"
+    },
+    {
+      "path": "evidence/UI-04/cohort_browser.jpg",
+      "sha256": "ba037f70e8606ce0ad56e82e08bce4eb893ff1956eeaca85ba05a2de721cff55"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "五个标签页分别展示阶段（规则 lifecycle-v1）、价值群（segments-v1 规则分群 4 组 704 人）、复购风险（只有平均水平与弱模型警告）、cohort 与单客户查询；查询显示客户可观测特征、命中的阶段规则（含天数）和价值群切分依据。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "cohort 未成熟格子显示“未成熟”（前 12 个月 12 格）；匿名客户为 0 并明确显示；尚无购买 315 人单独显示；最久沉睡客户（1,035.6 天）查询结果为沉睡且写明不表示已流失，730 天以上 312 人仍属沉睡。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "只显示交易历史和客户大区；页面与查询扫描无年龄、渠道、城市、邮编或生成器标签；编号先按 customer_+6 位数字校验，注入式输入被拒绝。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "单客户查询通过 runtime.open_current() 只读执行固定 SQL，不经允许视图清单；只供页面使用，不开放给 AI 查询层。",
+    "价值群表来自 ML-05 报告（旧发布上生成，交易数据相同）。"
+  ],
+  "steps": [
+    "认领 UI-04。",
+    "编写 customer_data.py（聚合与单客户查询）和客户页面五个标签页。",
+    "AppTest 15/15（一次通过）。",
+    "重启服务，内置浏览器查看生命周期页与 cohort 热力图并截图。",
+    "复跑 UI-01 冒烟 10/10 与服务检查。"
+  ],
+  "task_spec_sha256": "8bc421bc9904706ab16139355a3be27040df6f0bc5a121a3b526595dc346b3e0",
+  "performed_at": "2026-11-11T14:47:43.440769+08:00"
+}
