@@ -82,7 +82,7 @@
 | UI-02 | 接入数据质量与口径页面 | midterm | done | UI-01, DATA-12 |
 | UI-03 | 接入经营指标与OLAP交互 | midterm | done | UI-01, DW-10, EDA-02 |
 | UI-04 | 接入客户生命周期与分群 | midterm | done | UI-01, EDA-03, EDA-05, ML-05 |
-| UI-05 | 接入预测评估与名单试算 | midterm | todo | UI-01, ML-12 |
+| UI-05 | 接入预测评估与名单试算 | midterm | done | UI-01, ML-12 |
 | UI-06 | 接入AI工作台 | final | todo | UI-01, AI-15 |
 | UI-07 | 完成可读性、缓存与异常交互验收 | final | todo | UI-02, UI-03, UI-04, UI-05, UI-06 |
 | DOC-01 | 完成选题报告并形成阶段一材料 | proposal | in_review | GOV-03, GOV-06, DATA-12, EDA-01, DOC-04 |
@@ -1218,7 +1218,7 @@
 2. 全局显示数据版本、数据时间和as_of，历史数据不标实时2026。
 3. 应用实际启动，空数据状态可理解，不能只交静态截图。
 
-证据：evidence/UI-01/2026-11-11-ui04-recheck.json
+证据：evidence/UI-01/2026-11-11-ui05-recheck.json
 
 ### UI-02 接入数据质量与口径页面
 
@@ -1273,7 +1273,7 @@
 
 ### UI-05 接入预测评估与名单试算
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [x] 状态：`done`；阶段：`midterm`；范围：已选核心。
 - 依据：C14, U03, U05。
 - 前置：UI-01, ML-12。
 - 允许修改：`src/retail_bi/ui`, `reports/ui`；另可写本任务证据/交接。
@@ -1286,7 +1286,7 @@
 2. K或阈值交互作为试算，不覆盖冻结的最终测试结果或选模记录。
 3. 超出模型母体明确不适用；特征变化不表述为因果效果。
 
-证据：尚无已登记验收证据。
+证据：evidence/UI-05/2026-11-11-model-page.json
 
 ### UI-06 接入AI工作台
 

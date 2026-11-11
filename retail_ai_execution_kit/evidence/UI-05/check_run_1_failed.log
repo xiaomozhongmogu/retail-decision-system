@@ -1,0 +1,15 @@
+PASS page renders without exception; five tabs 
+PASS sample ranges equal split_manifest (train/validation/test rows and positives) 
+PASS sample rows labelled customer x week, not raw orders 
+PASS frozen test metrics with CI, rule baselines and base rate shown 
+FAIL calibration (reliability) chart and ECE shown 
+PASS error analysis: weekly top-10% confusion matrix shown 
+PASS feature effects stated as non-causal 
+PASS default what-if = frozen K 10%: 70 of 704, ordered by 90-day orders then amount (independent SQL) 
+PASS out-of-population customers counted as not applicable and absent from the list 
+PASS K = 20% gives the top 141 of the same ranking 
+PASS probability floor 0.08 keeps exactly those top-K customers with p >= 0.08 
+PASS what-if labelled as trial, frozen rule restated 
+PASS no city, zip or personal attributes in the list 
+PASS frozen reports, model file and release pointer unchanged after the what-if 
+13/14 checks passed

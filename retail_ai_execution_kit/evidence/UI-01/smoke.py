@@ -40,9 +40,10 @@ with tempfile.TemporaryDirectory() as empty:
             at.switch_page(f'src/retail_bi/ui/pages/{page}.py')
             at.run()
         t = text(at)
-        # no release data may appear; the data page (UI-02) still shows file-based data reports, and its release
-        # cross-check must show the empty state instead
-        no_release_data = len(at.dataframe) == 0 if page != 'data' else any('发布版本中没有月度指标' in i.value for i in at.info)
+        # no release data may appear. The data page (UI-02) and the prediction page (UI-05) still show frozen,
+        # file-based reports (data quality; model evaluation), so their release-based parts must show the empty state
+        release_empty = {'data': '发布版本中没有月度指标', 'prediction': '暂无评分名单：没有已发布的数据版本'}
+        no_release_data = len(at.dataframe) == 0 if page not in release_empty else any(release_empty[page] in i.value for i in at.info)
         good = not at.exception and '尚无已发布的数据版本' in t and no_release_data
         ok.append(good)
         res.append({'page': page, 'no_release': True, 'empty_state_shown': '尚无已发布的数据版本' in t, 'exception': [str(e.value) for e in at.exception]})

@@ -1,0 +1,5 @@
+$ .venv/bin/python evidence/UI-01/smoke.py   (recheck after UI-05; empty-state rule extended to the prediction page's frozen reports)
+2026-11-11T14:50:51+08:00
+[{"page": "data", "title_found": true, "banner": true, "exception": [], "dataframes": 9}, {"page": "business", "title_found": true, "banner": true, "exception": [], "dataframes": 5}, {"page": "customers", "title_found": true, "banner": true, "exception": [], "dataframes": 2}, {"page": "prediction", "title_found": true, "banner": true, "exception": [], "dataframes": 8}, {"page": "ai", "title_found": true, "banner": true, "exception": [], "dataframes": 0}, {"page": "data", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "business", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "customers", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "prediction", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "ai", "no_release": true, "empty_state_shown": true, "exception": []}]
+10/10 pages ok
+exit=0
