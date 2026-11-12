@@ -2422,10 +2422,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "U04",
         "Q01",
@@ -2448,7 +2448,9 @@
         "同一请求可追踪不重复创建不可控副作用，修改/撤回草稿行为明确。",
         "保存草稿不等于消息已发送，UI和日志不得混淆。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-13/2026-11-12-drafts.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

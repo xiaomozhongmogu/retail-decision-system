@@ -75,7 +75,7 @@
 | AI-10 | 完成周报场景验收 | final | in_review | AI-09 |
 | AI-11 | 建立运营政策与预算规则 | final | done | ML-11, GOV-05 |
 | AI-12 | 实现有限步骤运营Agent | final | done | AI-11, AI-01, AI-02 |
-| AI-13 | 实现草稿存储和审阅状态 | final | todo | AI-12 |
+| AI-13 | 实现草稿存储和审阅状态 | final | done | AI-12 |
 | AI-14 | 完成Agent边界场景验收 | final | todo | AI-13 |
 | AI-15 | 完成三模块联调与可观测性 | final | todo | AI-03, AI-07, AI-10, AI-14 |
 | UI-01 | 建立Streamlit多页骨架 | midterm | done | GOV-07, GOV-06 |
@@ -1151,7 +1151,7 @@
 
 ### AI-13 实现草稿存储和审阅状态
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：U04, Q01, Q06。
 - 前置：AI-12。
 - 允许修改：`src/retail_bi/ai`, `sql`, `reports/ai`；另可写本任务证据/交接。
@@ -1164,7 +1164,7 @@
 2. 同一请求可追踪不重复创建不可控副作用，修改/撤回草稿行为明确。
 3. 保存草稿不等于消息已发送，UI和日志不得混淆。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-13/2026-11-12-drafts.json
 
 ### AI-14 完成Agent边界场景验收
 

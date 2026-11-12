@@ -1,0 +1,74 @@
+{
+  "task_id": "AI-13",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), sqlite3",
+    "data_mode": "草稿库在临时目录（测试）与 warehouse/drafts/（运行，Git 忽略）",
+    "network": "无"
+  },
+  "command": ".venv/bin/python evidence/AI-13/check_drafts.py",
+  "exit_code": 0,
+  "summary": "草稿存储：保存建议、理由、证据、规则版本、预算结果、文案、生成模式与待审状态；草稿编号由请求编号推导，同一请求重复保存返回原草稿，内容不同则拒绝（idempotency_conflict）不覆盖；只能在待审时修改（保留旧文案）或撤回（记录保留）；审核只有通过/驳回，通过后 sent 仍为 false、delivery 为 not_sent；没有“已发送”状态或发送相关字段。Agent 对同一请求重跑不产生第二份草稿。15/15 检查通过。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/retention_agent.py",
+      "sha256": "f253379472d34c34924816de442b5ded66d25b7058e2afab573c5fbce36ba9a7"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "evidence/AI-13/check_drafts.py",
+      "sha256": "5f9862817087d244c6bb7aca3e8ed9942ee65a13220a419ea8bd262ddb8452ae"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/drafts.py",
+      "sha256": "56a1778197501dd52ed3e38fd69179db5431e948debc3e3dc1a8799950206adc"
+    },
+    {
+      "path": "reports/ai/draft_examples.json",
+      "sha256": "7aadf7f69386bc8371289a91414987cb82d41cdfd2183e722f8820dd56497723"
+    },
+    {
+      "path": "evidence/AI-13/check_run.log",
+      "sha256": "bb5aab8281cc1b934d8cd2eddc321424220aa2a717119a125d59d5070b503285"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "每条草稿保存 action/discount（建议）、reasons、evidence、policy_version、budget、copy、mode、status=pending_review 与完整历史。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "同一 request_id 第二次保存返回同一 draft_id、不新增行；不同内容同编号被拒绝且原草稿不变；Agent 重跑同一请求 draft_created=false；修改只在待审时允许并保留旧文案，撤回后记录保留，已通过或已撤回的草稿不能再修改、撤回或审核。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "保存与审核通过都不改变 sent=false、delivery=not_sent；审核没有 sent 选项；表结构没有发送时间、渠道、手机号、邮箱字段；状态词只有 pending_review/approved/rejected/withdrawn，Agent 轨迹与报告示例都显示未发送。页面展示由 UI-06 接入。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "SQLite 单文件存储，适合单机演示；多人同时审核时依赖 SQLite 的写锁。",
+    "审核人是自由文本，没有账号体系。"
+  ],
+  "steps": [
+    "认领 AI-13（drafts.py 在 AI-12 中一并编写）。",
+    "编写检查脚本，15/15 一次通过，并保存草稿示例。"
+  ],
+  "task_spec_sha256": "1faa934b73cc68e1ea071537fe2664580253a67a6249fd037a186edf1f24ca5f",
+  "performed_at": "2026-11-12T22:05:09.804511+08:00"
+}
