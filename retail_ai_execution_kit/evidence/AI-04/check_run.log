@@ -1,5 +1,5 @@
-$ .venv/bin/python evidence/AI-04/check_intent.py
-2026-11-11T21:20:17+08:00
+$ .venv/bin/python evidence/AI-04/check_intent.py   (recheck after AI-07 fixes)
+2026-11-12T21:51:52+08:00
 PASS parse: 2026年10月的商品金额是多少？ -> ok 
 PASS parse: 上个月有多少单？ -> ok 
 PASS parse: 2025年的客单价是多少 -> ok 

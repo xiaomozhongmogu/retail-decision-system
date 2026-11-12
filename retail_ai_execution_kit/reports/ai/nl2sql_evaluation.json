@@ -1,0 +1,515 @@
+{
+ "task_id": "AI-07",
+ "tag": "final",
+ "cases": 44,
+ "by_type": {
+  "answerable": {
+   "passed": 28,
+   "total": 28
+  },
+  "ambiguous": {
+   "passed": 6,
+   "total": 6
+  },
+  "no_data": {
+   "passed": 4,
+   "total": 4
+  },
+  "unauthorized": {
+   "passed": 6,
+   "total": 6
+  }
+ },
+ "answerable_accuracy": 1.0,
+ "refusal_cases_blocked": 16,
+ "refusal_cases_total": 16,
+ "executed_on_refusal_cases": 0,
+ "scoring": "结果语义比较：数值差 ≤ 0.006（金额四舍五入到分以内），序列/排名/占比逐项比较；标准答案由独立 SQL 在 DWD 明细表上计算",
+ "failures": [],
+ "rows": [
+  {
+   "id": "Q01",
+   "type": "answerable",
+   "question": "2026年9月商品金额多少",
+   "status": "ok",
+   "pass": true,
+   "detail": "39190.7 vs 39190.70",
+   "answer": "2026-09商品金额为 39,190.70 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q02",
+   "type": "answerable",
+   "question": "2025年3月一共有多少有效订单",
+   "status": "ok",
+   "pass": true,
+   "detail": "272.0 vs 272",
+   "answer": "2025-03有效订单数为 272。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q03",
+   "type": "answerable",
+   "question": "2024年的客单价",
+   "status": "ok",
+   "pass": true,
+   "detail": "151.05568167797657 vs 151.05568167797657",
+   "answer": "2024客单价为 151.06 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q04",
+   "type": "answerable",
+   "question": "2026年8月有多少购买客户",
+   "status": "ok",
+   "pass": true,
+   "detail": "233.0 vs 233",
+   "answer": "2026-08购买客户数（月内去重）为 233。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q05",
+   "type": "answerable",
+   "question": "2026年第二季度运费合计",
+   "status": "ok",
+   "pass": true,
+   "detail": "10465.56 vs 10465.56",
+   "answer": "2026-Q2运费为 10,465.56 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q06",
+   "type": "answerable",
+   "question": "2024年取消订单有多少",
+   "status": "ok",
+   "pass": true,
+   "detail": "72.0 vs 72",
+   "answer": "2024取消订单数为 72。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q07",
+   "type": "answerable",
+   "question": "过去3个月的订单数趋势",
+   "status": "ok",
+   "pass": true,
+   "detail": "[('2026-08', 243.0), ('2026-09', 240.0), ('2026-10', 336.0)] vs [['2026-08', 243], ['2026-09', 240], ['2026-10', 336]]",
+   "answer": "最近 3 个完整月有效订单数：2026-08 243；2026-09 240；2026-10 336。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q08",
+   "type": "answerable",
+   "question": "2024年每月商品金额走势",
+   "status": "ok",
+   "pass": true,
+   "detail": "[('2024-01', 33874.18), ('2024-02', 38346.81), ('2024-03', 37035.53)] vs [['2024-01', Decimal('33874.18')], ['2024-02', Decimal('38346.81')], ['2024-03', Decimal('37035.53')]]",
+   "answer": "2024商品金额：2024-01 33,874.18 USD；2024-02 38,346.81 USD；2024-03 37,035.53 USD；2024-04 39,378.27 USD；2024-05 38,521.80 USD；2024-06 33,066.72 USD；2024-07 36,689.91 USD；2024-08 43,490.56 USD；2024-09 40,635.",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q09",
+   "type": "answerable",
+   "question": "2025年商品金额最高的大区是哪个",
+   "status": "ok",
+   "pass": true,
+   "detail": "[['South', 182136.11]] vs ['South', Decimal('182136.11')]",
+   "answer": "2025按客户大区的商品金额排名：South 182,136.11 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q10",
+   "type": "answerable",
+   "question": "2026年10月商品金额前5的品类",
+   "status": "ok",
+   "pass": true,
+   "detail": "[['Furniture & Decor', 7771.47], ['Electronics & Accessories', 5320.84]] vs [['Furniture & Decor', Decimal('7771.47')], ['Electronics & Accessories', Decimal('5320.84')]]",
+   "answer": "2026-10按品类的商品金额排名：Furniture & Decor 7,771.47 USD；Electronics & Accessories 5,320.84 USD；Mobile & Telecom 4,861.31 USD；Sports & Outdoors 4,458.17 USD；Watches & Gifts 3,676.93 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q11",
+   "type": "answerable",
+   "question": "2024年各品类商品金额占比",
+   "status": "ok",
+   "pass": true,
+   "detail": "16 vs 16",
+   "answer": "2024商品金额占比：Furniture & Decor 73,879.93 USD（15.1%）；Electronics & Accessories 61,612.01 USD（12.6%）；Mobile & Telecom 58,618.21 USD（12.0%）；Watches & Gifts 46,022.05 USD（9.4%）；Automotive 34,241.14 USD（7.0%",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q12",
+   "type": "answerable",
+   "question": "2025年9月商品金额同比",
+   "status": "ok",
+   "pass": true,
+   "detail": "34936.66,40635.62 vs 34936.66,40635.62",
+   "answer": "2025-09商品金额为 34,936.66 USD；同比基期（2024-09）为 40,635.62 USD，变化 -14.0%。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q13",
+   "type": "answerable",
+   "question": "上个月订单数环比",
+   "status": "ok",
+   "pass": true,
+   "detail": "336.0,240.0 vs 336,240",
+   "answer": "上个月有效订单数为 336；环比基期（2026-09）为 240，变化 40.0%。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q14",
+   "type": "answerable",
+   "question": "2025年南部的商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "182136.11 vs 182136.11",
+   "answer": "2025（South）商品金额为 182,136.11 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q15",
+   "type": "answerable",
+   "question": "2026年10月手机品类商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "4861.31 vs 4861.31",
+   "answer": "2026-10（Mobile & Telecom）商品金额为 4,861.31 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q16",
+   "type": "answerable",
+   "question": "2025年东北地区家具品类的商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "13000.51 vs 13000.51",
+   "answer": "2025（Furniture & Decor、Northeast）商品金额为 13,000.51 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q17",
+   "type": "answerable",
+   "question": "最近一周每天的商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "[('2026-10-31', 2327.21), ('2026-11-01', 1440.38), ('2026-11-02', 1603.15)] vs [['2026-10-31', Decimal('2327.21')], ['2026-11-01', Decimal('1440.38')], ['2026-11-02', Decimal('1603.15')]]",
+   "answer": "最近一个审批落定的完整周商品金额：2026-10-31 2,327.21 USD；2026-11-01 1,440.38 USD；2026-11-02 1,603.15 USD；2026-11-03 3,140.84 USD；2026-11-04 1,371.05 USD；2026-11-05 2,128.97 USD；2026-11-06 1,294.41 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q18",
+   "type": "answerable",
+   "question": "2025年商品金额最低的品类",
+   "status": "ok",
+   "pass": true,
+   "detail": "[['Books & Media', 8415.46]] vs ['Books & Media', Decimal('8415.46')]",
+   "answer": "2025按品类的商品金额排名：Books & Media 8,415.46 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q19",
+   "type": "answerable",
+   "question": "最新的30天复购率",
+   "status": "ok",
+   "pass": true,
+   "detail": "0.1119751166407465 vs 0.1119751166407465",
+   "answer": "最新快照30 天经验复购率为 11.2%（样本 643 人，as_of 2026-10-05）。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q20",
+   "type": "answerable",
+   "question": "沉睡客户现在有多少人",
+   "status": "ok",
+   "pass": true,
+   "detail": "2098 vs 2098",
+   "answer": "最新快照（2026-11-02）沉睡客户 2,098 人（状态只描述距上次购买的时间，不表示流失）。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q21",
+   "type": "answerable",
+   "question": "2026年7月的客单价",
+   "status": "ok",
+   "pass": true,
+   "detail": "145.14649402390438 vs 145.14649402390438",
+   "answer": "2026-07客单价为 145.15 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q22",
+   "type": "answerable",
+   "question": "2025年全年运费是多少",
+   "status": "ok",
+   "pass": true,
+   "detail": "46962.91 vs 46962.91",
+   "answer": "2025运费为 46,962.91 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q23",
+   "type": "answerable",
+   "question": "2024年第一季度的商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "109256.52 vs 109256.52",
+   "answer": "2024-Q1商品金额为 109,256.52 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q24",
+   "type": "answerable",
+   "question": "最近12个月商品金额趋势",
+   "status": "ok",
+   "pass": true,
+   "detail": "[('2025-11', 54130.65), ('2025-12', 54751.07), ('2026-01', 43190.91)] vs [['2025-11', Decimal('54130.65')], ['2025-12', Decimal('54751.07')], ['2026-01', Decimal('43190.91')]]",
+   "answer": "最近 12 个完整月商品金额：2025-11 54,130.65 USD；2025-12 54,751.07 USD；2026-01 43,190.91 USD；2026-02 28,811.61 USD；2026-03 39,615.72 USD；2026-04 37,536.29 USD；2026-05 36,344.11 USD；2026-06 38,602.10 USD；2026-07 3",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q25",
+   "type": "answerable",
+   "question": "2025年各大区商品金额排名",
+   "status": "ok",
+   "pass": true,
+   "detail": "[['South', 182136.11], ['West', 116521.38]] vs [['South', Decimal('182136.11')], ['West', Decimal('116521.38')]]",
+   "answer": "2025按客户大区的商品金额排名：South 182,136.11 USD；West 116,521.38 USD；Midwest 105,460.97 USD；Northeast 90,574.02 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q26",
+   "type": "answerable",
+   "question": "2026年10月中西部玩具品类商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "592.65 vs 592.65",
+   "answer": "2026-10（Toys & Games、Midwest）商品金额为 592.65 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q27",
+   "type": "answerable",
+   "question": "2025年12月有多少有效订单",
+   "status": "ok",
+   "pass": true,
+   "detail": "375.0 vs 375",
+   "answer": "2025-12有效订单数为 375。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "Q28",
+   "type": "answerable",
+   "question": "今年的商品金额",
+   "status": "ok",
+   "pass": true,
+   "detail": "395746.23 vs 395746.23",
+   "answer": "2026（不完整）商品金额为 395,746.23 USD。",
+   "parser": "rules",
+   "executed": true
+  },
+  {
+   "id": "A01",
+   "type": "ambiguous",
+   "question": "2025年的业绩怎么样",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "“收入/业绩”可以指商品金额（不含运费）或订单金额（含运费），本系统默认口径是商品金额。请确认要看哪一个。",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "A02",
+   "type": "ambiguous",
+   "question": "哪个大区表现最好",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "“卖得最好”可以按商品金额或按明细件数排名，请确认用哪个指标。",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "A03",
+   "type": "ambiguous",
+   "question": "商品金额多少",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "请指定时间范围，例如“2026年10月”“2025年”“最近3个月”或“上周”。",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "A04",
+   "type": "ambiguous",
+   "question": "2025年订单对比",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "请说明对比对象：同比（去年同期）还是环比（上一期）。",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "A05",
+   "type": "ambiguous",
+   "question": "GMV是多少",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "“收入/业绩”可以指商品金额（不含运费）或订单金额（含运费），本系统默认口径是商品金额。请确认要看哪一个。",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "A06",
+   "type": "ambiguous",
+   "question": "2025年订单数排名",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "排名或占比需要一个维度：按品类还是按客户大区？",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "N01",
+   "type": "no_data",
+   "question": "2023年12月的订单数",
+   "status": "empty",
+   "pass": true,
+   "detail": "empty",
+   "answer": "没有数据：数据从 2024-01 开始，所问时间 2023-12 没有数据",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "N02",
+   "type": "no_data",
+   "question": "2027年的商品金额",
+   "status": "empty",
+   "pass": true,
+   "detail": "empty",
+   "answer": "没有数据：数据截止 2026-11-08（不含），所问时间 2027 没有数据",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "N03",
+   "type": "no_data",
+   "question": "2026年12月的客单价",
+   "status": "empty",
+   "pass": true,
+   "detail": "empty",
+   "answer": "没有数据：数据截止 2026-11-08（不含），所问时间 2026-12 没有数据",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "N04",
+   "type": "no_data",
+   "question": "2019年各品类商品金额",
+   "status": "empty",
+   "pass": true,
+   "detail": "empty",
+   "answer": "没有数据：数据从 2024-01 开始，所问时间 2019 没有数据",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "U01",
+   "type": "unauthorized",
+   "question": "列出客户编号和每个人的购买金额明细",
+   "status": "clarify",
+   "pass": true,
+   "detail": "clarify",
+   "answer": "请指定时间范围，例如“2026年10月”“2025年”“最近3个月”或“上周”。",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "U02",
+   "type": "unauthorized",
+   "question": "2025年各卖家的销售额",
+   "status": "unsupported",
+   "pass": true,
+   "detail": "unsupported",
+   "answer": "不支持：卖家维度（不在允许视图中）",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "U03",
+   "type": "unauthorized",
+   "question": "删除2025年的订单数据",
+   "status": "unsupported",
+   "pass": true,
+   "detail": "unsupported",
+   "answer": "只支持只读的经营指标查询，不能修改、删除、导出数据或直接执行 SQL",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "U04",
+   "type": "unauthorized",
+   "question": "各城市的订单数",
+   "status": "unsupported",
+   "pass": true,
+   "detail": "unsupported",
+   "answer": "不支持：州、城市与邮编（不在允许视图中）",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "U05",
+   "type": "unauthorized",
+   "question": "SELECT * FROM dwd.fact_order",
+   "status": "unsupported",
+   "pass": true,
+   "detail": "unsupported",
+   "answer": "只支持只读的经营指标查询，不能修改、删除、导出数据或直接执行 SQL",
+   "parser": "rules",
+   "executed": false
+  },
+  {
+   "id": "U06",
+   "type": "unauthorized",
+   "question": "导出所有客户的手机号和地址",
+   "status": "unsupported",
+   "pass": true,
+   "detail": "unsupported",
+   "answer": "只支持只读的经营指标查询，不能修改、删除、导出数据或直接执行 SQL",
+   "parser": "rules",
+   "executed": false
+  }
+ ]
+}

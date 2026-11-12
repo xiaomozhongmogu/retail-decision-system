@@ -198,6 +198,9 @@ def run_plan(plan: dict) -> dict:
     post = plan.get('post', {})
     if post.get('latest_snapshot'):
         last = max(d['as_of_date'] for d in data)
+        if post.get('state'):
+            n = sum(int(d['customers']) for d in data if d['as_of_date'] == last and d['lifecycle_state'] == post['state'])
+            return {'status': 'ok', 'kind': 'value', 'value': n, 'unit': 'customers', 'as_of': last, 'state': post['state'], 'evidence_ids': ev, 'dataset_version': r['dataset_version']}
         return {'status': 'ok', 'kind': 'table', 'columns': ['lifecycle_state', 'customers'], 'rows': [[d['lifecycle_state'], int(d['customers'])] for d in data if d['as_of_date'] == last],
                 'as_of': last, 'evidence_ids': ev, 'dataset_version': r['dataset_version']}
     if post.get('latest_matured'):
@@ -243,7 +246,8 @@ def run_plan(plan: dict) -> dict:
             table = [[*k, v, (v / tot) if tot else None] for *k, v in table]
         table.sort(key=lambda x: x[len(group)] or 0, reverse=(post.get('rank') or {}).get('descending', True))
         if post.get('rank'):
-            table = table[:post['rank']['top_n'] or 1]
+            if post['rank']['top_n']:
+                table = table[:post['rank']['top_n']]
         res.update({'kind': 'table', 'columns': group + [m] + (['share'] if post.get('share') else []), 'rows': [[*x[:-1], float(x[-1]) if x[-1] is not None else None] if not post.get('share') else [*x[:-2], float(x[-2]), float(x[-1]) if x[-1] is not None else None] for x in table]})
     elif post.get('by_month') or post.get('by_day'):
         keys = sorted({d[timekey][:7] if timekey == 'month' else d['day'] for d in cur})

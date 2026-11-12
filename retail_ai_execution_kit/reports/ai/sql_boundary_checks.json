@@ -1,7 +1,7 @@
 {
  "task_id": "AI-05",
- "passed": 49,
- "total": 49,
+ "passed": 50,
+ "total": 50,
  "checks": [
   {
    "group": "allowed",
@@ -217,7 +217,7 @@
    "group": "sandbox",
    "check": "sandbox holds only the allowed views as tables (no dwd/dws/customer tables)",
    "status": "passed",
-   "detail": "{'ads.kpi_daily', 'ads.repurchase_rate_weekly', 'ads.sales_month_category_region', 'ads.cohort_retention', 'ads.risk_summary_latest', 'ads.lifecycle_mix_weekly', 'ads.kpi_monthly'}"
+   "detail": "{'ads.lifecycle_mix_weekly', 'ads.risk_summary_latest', 'ads.sales_month_category_region', 'ads.repurchase_rate_weekly', 'ads.kpi_monthly', 'ads.kpi_daily', 'ads.cohort_retention'}"
   },
   {
    "group": "sandbox",
@@ -287,9 +287,15 @@
   },
   {
    "group": "plans",
-   "check": "lifecycle latest snapshot includes dormant 2,098",
+   "check": "a named lifecycle state returns its count: dormant 2,098 (behaviour since AI-07)",
    "status": "passed",
-   "detail": "{'status': 'ok', 'kind': 'table', 'columns': ['lifecycle_state', 'customers'], 'rows': [['active', 683], ['at_risk', 530], ['dormant', 2098], ['new', 21]], 'as_of': '2026-11-02', 'evidence_ids': ['view:ads.lifecycle_mix_weekly', 'sql:5cb0fd"
+   "detail": "{'status': 'ok', 'kind': 'value', 'value': 2098, 'unit': 'customers', 'as_of': '2026-11-02', 'state': 'dormant', 'evidence_ids': ['view:ads.lifecycle_mix_weekly', 'sql:5cb0fd5b'], 'dataset_version': 'wh-d3aaa559048c'}"
+  },
+  {
+   "group": "plans",
+   "check": "an unnamed lifecycle question still returns all states",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'kind': 'table', 'columns': ['lifecycle_state', 'customers'], 'rows': [['new', 21], ['active', 683], ['at_risk', 530], ['dormant', 2098]], 'as_of': '2026-11-02', 'evidence_ids': ['view:ads.lifecycle_mix_weekly', 'sql:5cb0fd"
   },
   {
    "group": "design",

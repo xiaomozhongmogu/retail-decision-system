@@ -1,5 +1,5 @@
-$ .venv/bin/python evidence/AI-06/check_assistant.py
-2026-11-12T21:48:09+08:00
+$ .venv/bin/python evidence/AI-06/check_assistant.py   (recheck after AI-07 fixes; lifecycle expectation updated to the new behaviour)
+2026-11-12T21:52:30+08:00
 PASS answer value comes from the executed query and equals DWD 
 PASS envelope shows view, columns, SQL text, metric definition, as_of, dataset version, evidence ids 
 PASS follow-up “那西部呢” reuses time and metric, adds the region filter, value = DWD 
@@ -13,7 +13,7 @@ PASS cancelled before execution -> cancelled, no query run
 PASS cancel applies only once; next question runs 
 PASS execution error -> error state with no answer numbers 
 PASS comparison answer states base period and change from executed values 
-PASS lifecycle answer from the latest snapshot 
+PASS lifecycle answer from the latest snapshot (named state -> its count, since AI-07) 
 PASS share answer lists four regions with percentages 
 PASS LLM notes (when present) contain no digits 
 PASS every ok answer carries evidence ids and a dataset version 

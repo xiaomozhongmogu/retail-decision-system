@@ -71,7 +71,7 @@ l = keep(QA.Session('H').ask('2026年10月商品金额同比变化'))
 b25 = float(q1(f"SELECT sum(merch_usd) FROM dwd.fact_order WHERE {V} AND strftime(purchase_ts,'%Y-%m')='2025-10'")[0])
 check('comparison answer states base period and change from executed values', l['status'] == 'ok' and abs(l['result']['base_value'] - b25) < 0.005 and '2025-10' in l['answer'], l['answer'])
 m = keep(QA.Session('I').ask('现在沉睡客户有多少'))
-check('lifecycle answer from the latest snapshot', m['status'] == 'ok' and '沉睡 2,098' in m['answer'], m['answer'])
+check('lifecycle answer from the latest snapshot (named state -> its count, since AI-07)', m['status'] == 'ok' and '沉睡客户 2,098 人' in m['answer'] and '不表示流失' in m['answer'], m['answer'])
 n = keep(QA.Session('J').ask('2025年各大区商品金额占比'))
 check('share answer lists four regions with percentages', n['status'] == 'ok' and n['answer'].count('%') == 4, n['answer'])
 notes = [x.get('note') for x in examples if x.get('note')]

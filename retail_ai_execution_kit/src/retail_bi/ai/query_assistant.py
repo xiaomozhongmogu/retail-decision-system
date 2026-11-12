@@ -111,7 +111,7 @@ class Session:
             out = {**env, 'status': res.get('status', 'error'), 'answer': '所选条件没有数据。' if res.get('status') == 'empty' else '查询没有返回结果。', 'result': res}
             self.history.append(out)
             return out
-        env.update({'status': 'ok', 'result': {k: res[k] for k in res if k in ('kind', 'value', 'columns', 'rows', 'base_value', 'base_months', 'change', 'change_status', 'n', 'as_of', 'cohorts', 'note')},
+        env.update({'status': 'ok', 'result': {k: res[k] for k in res if k in ('kind', 'value', 'columns', 'rows', 'base_value', 'base_months', 'change', 'change_status', 'n', 'as_of', 'cohorts', 'note', 'state')},
                     'answer': self._sentence(intent, res)})
         note = self._llm_note(intent, env['answer']) if self.use_llm else None
         if note:
@@ -132,6 +132,9 @@ class Session:
             cmp = '同比' if intent.get('compare') == 'yoy' else '环比'
             return f"{scope}{name}为 {fmt(res['value'], unit)}；{cmp}基期（{'、'.join(res['base_months'])}）为 {fmt(res['base_value'], unit)}，变化 {ch}。"
         if k == 'value':
+            if res.get('state'):
+                zh = {'new': '新客', 'active': '活跃', 'at_risk': '沉默预警', 'dormant': '沉睡'}
+                return f"最新快照（{res['as_of']}）{zh[res['state']]}客户 {int(res['value']):,} 人（状态只描述距上次购买的时间，不表示流失）。"
             extra = f"（样本 {res['n']:,} 人，as_of {res['as_of']}）" if res.get('n') and res.get('as_of') else (f"（{res['cohorts']} 个成熟 cohort，共 {res['n']:,} 人）" if res.get('cohorts') else '')
             return f"{scope}{name}为 {fmt(res['value'], unit)}{extra}。"
         if k == 'series':

@@ -69,7 +69,7 @@
 | AI-04 | 实现查询意图与Schema约束 | final | done | AI-01, DW-06 |
 | AI-05 | 实现受限SQL执行器 | final | done | AI-04, DW-10 |
 | AI-06 | 实现查询回答与结果证据 | final | done | AI-05 |
-| AI-07 | 完成NL2SQL标准集验收 | final | todo | AI-06 |
+| AI-07 | 完成NL2SQL标准集验收 | final | done | AI-06 |
 | AI-08 | 实现周报事实计算 | final | done | EDA-04, DW-06 |
 | AI-09 | 实现周报生成与数值校验 | final | done | AI-08, AI-01, AI-02 |
 | AI-10 | 完成周报场景验收 | final | in_review | AI-09 |
@@ -1009,7 +1009,7 @@
 2. 输出结构化意图，歧义问题澄清；不支持字段/时间明确说明。
 3. 默认可信SQL构造器；若开启模型生成SQL，明确额外校验路径。
 
-证据：evidence/AI-04/2026-11-11-intent.json
+证据：evidence/AI-04/2026-11-12-intent-recheck.json
 
 ### AI-05 实现受限SQL执行器
 
@@ -1026,7 +1026,7 @@
 2. 只读之外关闭外部访问，阻止文件表函数、COPY/ATTACH/扩展安装加载等非授权能力。
 3. 测试写入、文件读取、跨表越权、注入及资源消耗；解析库与AGENTS都不是安全边界。
 
-证据：evidence/AI-05/2026-11-12-executor.json
+证据：evidence/AI-05/2026-11-12-executor-recheck.json
 
 ### AI-06 实现查询回答与结果证据
 
@@ -1043,11 +1043,11 @@
 2. 空结果、取消、时间无覆盖、执行错误有明确状态，不让模型补造数据。
 3. 多轮会话筛选和上下文隔离，不把其他客户/会话状态混入回答。
 
-证据：evidence/AI-06/2026-11-12-assistant.json
+证据：evidence/AI-06/2026-11-12-assistant-recheck.json
 
 ### AI-07 完成NL2SQL标准集验收
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q05, Q06。
 - 前置：AI-06。
 - 允许修改：`eval`, `reports/ai`, `tests/ai`；另可写本任务证据/交接。
@@ -1060,7 +1060,7 @@
 2. 可回答问题按结果语义比较，目标正确率≥90%；报告分子分母，不只算SQL执行率。
 3. 已声明拒绝测例全部拦截；失败案例与修复重测记录保留，不宣称普遍100%安全。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-07/2026-11-12-nl2sql.json
 
 ### AI-08 实现周报事实计算
 

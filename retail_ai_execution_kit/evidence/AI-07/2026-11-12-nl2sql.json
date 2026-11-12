@@ -1,0 +1,98 @@
+{
+  "task_id": "AI-07",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；标准答案为 DWD 明细表上的独立 SQL；真实 LLM 只用于规则兜底与口径提示",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python eval/nl2sql_eval.py --tag final",
+  "exit_code": 0,
+  "summary": "问答标准集 44 个固定测例：可回答 28（金额、订单、客单价、单月客户、运费、取消、趋势、排名/前 N、占比、同比/环比、品类与大区筛选、按天、复购率、生命周期）、歧义 6、无数据 4、越权 6；问法均为新写，不在任何提示示例中。按结果语义与 DWD 独立 SQL 对比。首测（未修改）可回答 24/28 = 85.7%，越权 5/6（删除请求被当作查询执行，沙箱只读未造成写入）；修复 5 个系统问题后第二次 27/28，第三次 28/28；歧义、无数据、越权 16/16 全部拦截，越权测例 0 次执行查询。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "98b6f1a9f40b5b2e81bea0d35190afe74553886833321da5966043b0538a0150"
+    },
+    {
+      "path": "src/retail_bi/ai/query_intent.py",
+      "sha256": "a575c5c1dd020ca6755e09e511e28f514910266644a201c533b39af4cb928bc8"
+    },
+    {
+      "path": "src/retail_bi/ai/sql_executor.py",
+      "sha256": "41eedce347087ad32c28d506564dd55ce3e0a07e0d12755e4677582659bd311e"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "eval/nl2sql_cases.jsonl",
+      "sha256": "a5377368d6b424cffc29ca0e7a55bd6088e9dda938afb062e57256f619125291"
+    },
+    {
+      "path": "eval/nl2sql_eval.py",
+      "sha256": "98a7eb5adf3a6da16d52f44d884552515ee466d604ec9e56ae0e90c5b43c682a"
+    },
+    {
+      "path": "reports/ai/nl2sql_evaluation.json",
+      "sha256": "6d6ededed38480b8dc2764c75d2bc5012e4b82ee4e000bdcfa3fc07275c74936"
+    },
+    {
+      "path": "evidence/AI-07/eval_run.log",
+      "sha256": "04d457bb4683665ab3885b3ba8216811aa73c8c84c15fb0676f1b118d0c9e96a"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_1.log",
+      "sha256": "439503eb87af10269349f4516de3ec9713699a94d1b67f0a55a8f89604fc8b73"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_1_results.json",
+      "sha256": "e84c7d320b1e89e115654a414792b785f2a1b43472b112ca8e561ebc09be326a"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_2.log",
+      "sha256": "76df554e8dfa0322d573582aca36f42ee31b9aeb214ea4ec0bb67f5df5197f88"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_2_results.json",
+      "sha256": "6d8dcde677dae5678a8bfeb928c22f0566edebf693755a875e454793022e7afa"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "44 个固定测例（≥40），其中可回答 28（≥24），含歧义 6、无数据 4、越权 6；查询意图层没有 few-shot 示例，测例问法均未出现在 AI-04 检查集或任何提示中。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "按结果语义比较（数值、序列、排名、占比、同比基期与变化），标准答案来自 DWD 明细表的独立 SQL，不是系统所用的 ADS 视图；报告分子分母：首测 24/28（85.7%，低于 90% 目标），修复后 28/28；不只统计 SQL 执行率。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "最终 16/16 个声明拒绝的测例全部拦截且未执行查询；首测与第二次的失败案例和结果保存在 evidence/AI-07/，修复内容记录在 AI-04/05/06 的复核证据中；结论只针对本测例集，不宣称普遍 100% 正确或安全。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "修复是在看到本测例集的失败后做的，最终 100% 偏乐观；未经修改的首测 85.7% 更能代表对新问法的表现。今后应另写一批未见过的测例做复测。",
+    "测例与标准 SQL 由实现者编写，不是独立标注。",
+    "LLM 兜底路径只在规则识别不出指标时使用，本测例集中几乎没有触发。"
+  ],
+  "steps": [
+    "认领 AI-07。",
+    "编写 44 个测例与 DWD 标准 SQL、结果语义评分脚本。",
+    "首测 24/28 + 15/16：维度词位置、排名默认只取第一、生命周期具体状态、写入请求未拦截。",
+    "修改 query_intent、sql_executor、query_assistant；第二次 27/28（排名数为空时仍取 1）；修正后第三次 28/28 + 16/16。",
+    "重跑 AI-04/05/06 检查并按新行为更新两条生命周期检查，重新登记这三项证据。"
+  ],
+  "task_spec_sha256": "9d5a211ca6b3ffe525a0b25cdc27741ed547ef963291537afeccba5970474c14",
+  "performed_at": "2026-11-12T21:53:07.149655+08:00"
+}

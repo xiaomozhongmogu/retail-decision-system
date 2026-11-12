@@ -6,7 +6,7 @@
    "question": "2026年10月的商品金额是多少？",
    "status": "ok",
    "answer": "2026-10商品金额为 47,590.59 USD。",
-   "note": "本结果为模拟数据，仅按商品金额口径统计，供参考。",
+   "note": "该结果基于当前查询条件与既定指标口径计算，仅供模拟演示参考。",
    "intent": {
     "parser": "rules",
     "metric": "merchandise_sales_usd",
@@ -453,7 +453,7 @@
    "question": "2026年10月商品金额同比变化",
    "status": "ok",
    "answer": "2026-10商品金额为 47,590.59 USD；同比基期（2025-10）为 49,547.36 USD，变化 -3.9%。",
-   "note": "口径提示：本结果基于完全合成的模拟数据，仅反映商品金额指标在所列期间的对比，不涉及其他维度或字段。",
+   "note": "本结果基于完全合成的模拟数据，仅反映所查询指标在给定口径下的对比，不代表真实业务情况。",
    "intent": {
     "parser": "rules",
     "metric": "merchandise_sales_usd",
@@ -532,8 +532,8 @@
    "session_id": "I",
    "question": "现在沉睡客户有多少",
    "status": "ok",
-   "answer": "最新快照（2026-11-02）生命周期人数：新客 21，活跃 683，沉默预警 530，沉睡 2,098。",
-   "note": "口径为生命周期状态人数，按最新快照统计，单位 customers；数据为完全合成的模拟数据。",
+   "answer": "最新快照（2026-11-02）沉睡客户 2,098 人（状态只描述距上次购买的时间，不表示流失）。",
+   "note": "口径为最新快照下的生命周期状态人数，仅反映距上次购买的时间，不代表流失；数据为模拟数据。",
    "intent": {
     "parser": "rules",
     "metric": "lifecycle_customers",
@@ -555,7 +555,8 @@
     "where": {},
     "sql": "SELECT as_of_date, lifecycle_state, customers FROM ads.lifecycle_mix_weekly LIMIT 5000",
     "post_processing": {
-     "latest_snapshot": true
+     "latest_snapshot": true,
+     "state": "dormant"
     },
     "periods": []
    },
@@ -573,30 +574,10 @@
    ],
    "warnings": [],
    "result": {
-    "kind": "table",
-    "columns": [
-     "lifecycle_state",
-     "customers"
-    ],
-    "rows": [
-     [
-      "new",
-      21
-     ],
-     [
-      "active",
-      683
-     ],
-     [
-      "at_risk",
-      530
-     ],
-     [
-      "dormant",
-      2098
-     ]
-    ],
-    "as_of": "2026-11-02"
+    "kind": "value",
+    "value": 2098,
+    "as_of": "2026-11-02",
+    "state": "dormant"
    },
    "error": null
   },

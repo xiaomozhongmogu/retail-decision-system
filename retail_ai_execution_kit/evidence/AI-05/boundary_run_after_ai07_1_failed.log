@@ -1,0 +1,55 @@
+$ .venv/bin/python evidence/AI-05/boundary_checks.py   (recheck after AI-07 fixes)
+2026-11-12T21:51:54+08:00
+PASS [allowed] single SELECT on an allowed view with a bound parameter 
+PASS [allowed] CTE + aggregation + whitelisted functions 
+PASS [layer1] refused: insert 
+PASS [layer1] refused: delete 
+PASS [layer1] refused: update 
+PASS [layer1] refused: create 
+PASS [layer1] refused: drop 
+PASS [layer1] refused: copy 
+PASS [layer1] refused: attach 
+PASS [layer1] refused: install 
+PASS [layer1] refused: load 
+PASS [layer1] refused: pragma 
+PASS [layer1] refused: set 
+PASS [layer1] refused: two statements 
+PASS [layer1] refused: stacked injection 
+PASS [layer1] refused: read_csv 
+PASS [layer1] refused: read_text 
+PASS [layer1] refused: glob 
+PASS [layer1] refused: read_parquet url 
+PASS [layer1] refused: dwd table 
+PASS [layer1] refused: customer-level scores 
+PASS [layer1] refused: customer profile 
+PASS [layer1] refused: catalog 
+PASS [layer1] refused: duckdb_tables() 
+PASS [layer1] refused: getenv 
+PASS [layer1] refused: unknown column 
+PASS [layer1] refused: param count 
+PASS [sandbox] blocked inside the sandbox without layer 1: read_csv file 
+PASS [sandbox] blocked inside the sandbox without layer 1: read_text file 
+PASS [sandbox] blocked inside the sandbox without layer 1: glob 
+PASS [sandbox] blocked inside the sandbox without layer 1: http parquet 
+PASS [sandbox] blocked inside the sandbox without layer 1: dwd table 
+PASS [sandbox] blocked inside the sandbox without layer 1: model scores 
+PASS [sandbox] blocked inside the sandbox without layer 1: customer profile 
+PASS [sandbox] blocked inside the sandbox without layer 1: getenv 
+PASS [sandbox] sandbox holds only the allowed views as tables (no dwd/dws/customer tables) 
+PASS [sandbox] external access off and configuration locked in the worker 
+PASS [resources] runaway query killed at the timeout 
+PASS [resources] result over the row limit refused (row_limit_exceeded) 
+PASS [injection] quote injection in a bound value matches nothing 
+PASS [injection] stacked-statement text in a bound value is only data; table intact 
+PASS [plans] 2026-10 merchandise = DWD 
+PASS [plans] 2025 AOV recomputed from sums = DWD 
+PASS [plans] 2025 top category by merchandise = DWD 
+PASS [plans] year-on-year base = 2025-10 from DWD and change computed 
+PASS [plans] region shares sum to 1 
+PASS [plans] trend returns six months 2026-05..2026-10 
+Traceback (most recent call last):
+  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/evidence/AI-05/boundary_checks.py", line 85, in <module>
+    check('plans', 'lifecycle latest snapshot includes dormant 2,098', dict(r['rows']).get('dormant') == 2098, r)
+                                                                            ~^^^^^^^^
+KeyError: 'rows'
+exit=1

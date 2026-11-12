@@ -1,5 +1,5 @@
-$ .venv/bin/python evidence/AI-05/boundary_checks.py
-2026-11-12T14:25:52+08:00
+$ .venv/bin/python evidence/AI-05/boundary_checks.py   (recheck after AI-07 fixes; lifecycle expectation updated to the new behaviour)
+2026-11-12T21:52:24+08:00
 PASS [allowed] single SELECT on an allowed view with a bound parameter 
 PASS [allowed] CTE + aggregation + whitelisted functions 
 PASS [layer1] refused: insert 
@@ -47,7 +47,8 @@ PASS [plans] 2025 top category by merchandise = DWD
 PASS [plans] year-on-year base = 2025-10 from DWD and change computed 
 PASS [plans] region shares sum to 1 
 PASS [plans] trend returns six months 2026-05..2026-10 
-PASS [plans] lifecycle latest snapshot includes dormant 2,098 
+PASS [plans] a named lifecycle state returns its count: dormant 2,098 (behaviour since AI-07) 
+PASS [plans] an unnamed lifecycle question still returns all states 
 PASS [design] trusted plans never build SQL from the question (run_plan uses query_view only) 
-49/49 checks passed
+50/50 checks passed
 exit=0

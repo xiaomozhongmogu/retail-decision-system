@@ -2083,7 +2083,7 @@
         "默认可信SQL构造器；若开启模型生成SQL，明确额外校验路径。"
       ],
       "evidence": [
-        "evidence/AI-04/2026-11-11-intent.json"
+        "evidence/AI-04/2026-11-12-intent-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2123,7 +2123,7 @@
         "测试写入、文件读取、跨表越权、注入及资源消耗；解析库与AGENTS都不是安全边界。"
       ],
       "evidence": [
-        "evidence/AI-05/2026-11-12-executor.json"
+        "evidence/AI-05/2026-11-12-executor-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2162,7 +2162,7 @@
         "多轮会话筛选和上下文隔离，不把其他客户/会话状态混入回答。"
       ],
       "evidence": [
-        "evidence/AI-06/2026-11-12-assistant.json"
+        "evidence/AI-06/2026-11-12-assistant-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2175,10 +2175,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2202,7 +2202,9 @@
         "可回答问题按结果语义比较，目标正确率≥90%；报告分子分母，不只算SQL执行率。",
         "已声明拒绝测例全部拦截；失败案例与修复重测记录保留，不宣称普遍100%安全。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-07/2026-11-12-nl2sql.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

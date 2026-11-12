@@ -97,6 +97,8 @@ def parse(question: str) -> dict:
     base = {'question': q, 'parser': 'rules', 'metric': None, 'dims': [], 'filters': {}, 'time': None, 'compare': None, 'top_n': None, 'grain': None}
     if not q:
         return {**base, 'status': 'clarify', 'clarification': '请输入一个经营问题。'}
+    if re.search(r'删除|修改|更新|插入|清空|写入|导出|下载|备份|drop|delete|update|insert|truncate|alter|^\s*select\b', q, re.I):
+        return {**base, 'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只支持只读的经营指标查询，不能修改、删除、导出数据或直接执行 SQL'}}
     for pat, why in UNSUPPORTED.items():
         if re.search(pat, q):
             return {**base, 'status': 'unsupported', 'error': {'code': 'capability_not_supported', 'message': f'不支持：{why}'}}
@@ -136,10 +138,16 @@ def parse(question: str) -> dict:
         kind = 'comparison'
     if re.search(r'占比|比例|份额|贡献', q):
         kind = 'share'
+    if kind in ('ranking', 'share'):
+        if not dims and re.search(r'品类|类目|类别', q) and not cats:
+            dims.append('product_category')
+        if not dims and re.search(r'地区|大区|区域', q) and not regs:
+            dims.append('customer_region')
     t = parse_time(q)
+    state = next((v for k, v in {'沉睡': 'dormant', '活跃': 'active', '预警': 'at_risk', '新客': 'new'}.items() if k in q), None) if metric == 'lifecycle_customers' else None
     intent = {**base, 'metric': metric, 'dims': dims, 'filters': filters, 'time': t, 'kind': kind, 'grain': grain,
-              'top_n': (int(top.group(1)) if top.group(1).isdigit() else CN_NUM[top.group(1)]) if top else (1 if kind == 'ranking' else None),
-              'descending': not re.search(r'最低|最少', q)}
+              'top_n': (int(top.group(1)) if top.group(1).isdigit() else CN_NUM[top.group(1)]) if top else (1 if kind == 'ranking' and re.search(r'最|哪个|哪一', q) else None),
+              'descending': not re.search(r'最低|最少', q), 'lifecycle_state': state}
     if kind == 'comparison':
         intent['compare'] = 'yoy' if re.search(r'同比|去年', q) else 'mom' if re.search(r'环比|上个?月|上周', q) else None
         if intent['compare'] is None:
@@ -191,7 +199,7 @@ def plan(intent: dict) -> dict:
     m, t, sliced = intent['metric'], intent.get('time'), bool(intent['dims'] or intent['filters'])
     if m == 'lifecycle_customers':
         return {'status': 'ok', 'calls': [{'view': 'ads.lifecycle_mix_weekly', 'columns': ['as_of_date', 'lifecycle_state', 'customers'], 'where': {}}],
-                'post': {'latest_snapshot': True}}
+                'post': {'latest_snapshot': True, 'state': intent.get('lifecycle_state')}}
     if m == 'repurchase_rate_30d':
         return {'status': 'ok', 'calls': [{'view': 'ads.repurchase_rate_weekly', 'columns': ['as_of_date', 'population', 'repurchasers', 'repurchase_rate_30d'], 'where': {}}],
                 'post': {'latest_matured': True}}

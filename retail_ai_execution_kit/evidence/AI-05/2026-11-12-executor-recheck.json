@@ -1,0 +1,90 @@
+{
+  "task_id": "AI-05",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；沙箱库只含允许视图",
+    "network": "无"
+  },
+  "command": ".venv/bin/python evidence/AI-05/boundary_checks.py",
+  "exit_code": 0,
+  "summary": "受限执行器两层：第一层用 DuckDB 自身解析器（json_serialize_sql）只接受单条 SELECT，表限于允许视图或本查询 CTE，禁止表函数，函数与列走白名单，值必须参数化；第二层（安全边界）在独立子进程中查询只含允许视图数据的沙箱库，只读打开，关闭外部访问与扩展自动安装/加载，限内存与线程并锁定配置，超时杀进程、超行数拒绝。另执行 AI-04 的可信计划（只用 query_view）。49/49 检查通过，包括跳过第一层后直接攻击沙箱。 复核：2026-11-12 AI-07 标准集首测暴露 5 个问题后修改：写入/导出/直接 SQL 请求改为拒绝；排名/占比时“最高的大区”“最低的品类”中的维度词也作分组；“各…排名”返回全部而非第一名；问到具体生命周期状态时只返回该状态人数。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_intent.py",
+      "sha256": "a575c5c1dd020ca6755e09e511e28f514910266644a201c533b39af4cb928bc8"
+    },
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "docs/query_runtime.md",
+      "sha256": "9df883c2ba71b6170a5fcfa2aa283d3586f39bd18123da8871260b0a6454cfd9"
+    },
+    {
+      "path": "evidence/AI-05/boundary_checks.py",
+      "sha256": "6fbf04df3e357c84e5cb57752afaad6a154e89cd9a091ae859bade6a19007b85"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/sql_executor.py",
+      "sha256": "41eedce347087ad32c28d506564dd55ce3e0a07e0d12755e4677582659bd311e"
+    },
+    {
+      "path": "reports/ai/sql_boundary_checks.json",
+      "sha256": "14246ac0847de4d3ce2e9545232cab147761138c1d1f564a0aa0f8f06849f28a"
+    },
+    {
+      "path": "evidence/AI-05/boundary_run.log",
+      "sha256": "df0cf3c1c9d9e1c6823052823835520cf425646c43a9cd428132cbe9c956ef59"
+    },
+    {
+      "path": "evidence/AI-05/boundary_run_before_ai07_fixes.log",
+      "sha256": "03b719f534002cdeec9f14a0414e9effe4190d00646b0ee690460ee987e71ecd"
+    },
+    {
+      "path": "evidence/AI-05/boundary_run_after_ai07_1_failed.log",
+      "sha256": "1979b0c7d50dcd193199b57562b91271e10e452664a96b4447f0b349197ebe17"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "单条语句与只允许 SELECT 由 DuckDB 解析器判断（非 SELECT 无法序列化、两条语句被拒）；表、函数、列走 AST 白名单；参数个数必须与绑定值一致；结果超过上限返回 row_limit_exceeded；独立子进程执行，超时（测试 3 秒）被终止。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "沙箱中 enable_external_access=false、lock_configuration=true（实测读取设置）；跳过第一层时 read_csv/read_text/glob/远程 parquet 均为权限错误，dwd 表与客户级表在沙箱中不存在，getenv 不可用；第一层另拒绝 COPY、ATTACH、INSTALL、LOAD、PRAGMA、SET。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "测试覆盖写入（INSERT/UPDATE/DELETE/CREATE/DROP）、文件读取、跨表越权（dwd、模型分数、客户画像、系统目录）、注入（堆叠语句与参数中的引号/DROP 只作数据，表保持 35 行）与资源消耗（万亿级交叉连接超时、交叉结果超行数）；安全边界以沙箱与数据库配置实测证明，不依赖解析器或 AGENTS 规则。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "沙箱库按发布版本建一次（warehouse/sandbox/，不提交），发布新版本后自动重建。",
+    "每次查询启动一个子进程，耗时约 0.3–1 秒，适合交互问答，不适合大批量查询。",
+    "run_plan 的后处理覆盖 AI-04 文档列出的问题类别；回答生成与证据展示属于 AI-06。"
+  ],
+  "steps": [
+    "认领 AI-05。",
+    "确认没有 sqlglot，改用 DuckDB 的 json_serialize_sql 取得 AST。",
+    "编写 sql_executor.py（校验、沙箱构建、子进程执行、可信计划执行）。",
+    "编写边界测试，49/49 一次通过；逐条查看沙箱拦截原因（权限错误、表不存在、超时、行数上限）确认是按设计被挡住。",
+    "AI-07 修改后第一次重跑因生命周期检查仍按旧行为（返回表格）写而报错；按新行为更新该检查并新增“未指明状态时仍返回全部状态”的检查，50/50。"
+  ],
+  "task_spec_sha256": "51222fdf04e53435a5f0502e5b7bb47530da9fd9bdaccf75718d050a9085431b",
+  "performed_at": "2026-11-12T21:53:07.084748+08:00"
+}
