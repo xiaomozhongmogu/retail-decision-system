@@ -1,0 +1,201 @@
+{
+ "request_id": "trace-live-1",
+ "customer_id": "customer_000002",
+ "trace": [
+  {
+   "step": 1,
+   "tool": "get_profile",
+   "ok": true,
+   "ms": 16.1,
+   "result": {
+    "lifecycle_state": "dormant",
+    "recency_days": 194.60618055555557,
+    "frequency_90d": 0
+   }
+  },
+  {
+   "step": 2,
+   "tool": "get_risk",
+   "ok": true,
+   "ms": 12.7,
+   "result": {
+    "applicability": "out_of_population",
+    "p_repurchase_30d": null,
+    "model_version": "repurchase-logreg-v1",
+    "caveat": "模型个体排序接近随机（测试 ROC-AUC 0.515），只作参考，不参与判定"
+   }
+  },
+  {
+   "step": 3,
+   "tool": "retrieve_policy",
+   "ok": true,
+   "ms": 10.8,
+   "result": [
+    "doc:retention_policy#5-模型的使用@retention-policy-v1",
+    "doc:retention_policy#4-折扣上限@retention-policy-v1",
+    "doc:retention_policy#6-频率与预算@retention-policy-v1",
+    "doc:retention_policy#3-资格规则@retention-policy-v1"
+   ]
+  },
+  {
+   "step": 4,
+   "tool": "llm_propose",
+   "ok": true,
+   "result": {
+    "action": "reminder",
+    "discount": 0,
+    "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；按规则仅可发提醒，且无价值层级依据支持优惠，故建议提醒。",
+    "evidence": [
+     "doc:retention_policy#5-模型的使用@retention-policy-v1",
+     "doc:retention_policy#4-折扣上限@retention-policy-v1",
+     "doc:retention_policy#3-资格规则@retention-policy-v1"
+    ]
+   }
+  },
+  {
+   "step": 5,
+   "tool": "check_budget",
+   "ok": true,
+   "ms": 0.1,
+   "result": {
+    "decision": "allow",
+    "code": null,
+    "action": {
+     "type": "reminder",
+     "discount": 0.0,
+     "draft_only": true
+    },
+    "cost_usd": 0.05
+   }
+  },
+  {
+   "step": 6,
+   "tool": "llm_copy",
+   "ok": true,
+   "result": {
+    "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。"
+   }
+  },
+  {
+   "step": 7,
+   "tool": "save_draft",
+   "ok": true,
+   "ms": 0.9,
+   "result": {
+    "draft_id": "draft-17a182cb86c5",
+    "created": true,
+    "status": "pending_review",
+    "sent": false
+   }
+  }
+ ],
+ "sent": false,
+ "delivery": "not_sent",
+ "state": "draft_saved",
+ "seconds": 2.158,
+ "proposal": {
+  "action": "reminder",
+  "discount": 0.0,
+  "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；按规则仅可发提醒，且无价值层级依据支持优惠，故建议提醒。",
+  "evidence": [
+   "doc:retention_policy#5-模型的使用@retention-policy-v1",
+   "doc:retention_policy#4-折扣上限@retention-policy-v1",
+   "doc:retention_policy#3-资格规则@retention-policy-v1"
+  ],
+  "mode": "live_llm"
+ },
+ "decision": {
+  "decision": "allow",
+  "code": null,
+  "requested": {
+   "type": "reminder",
+   "discount": 0.0
+  },
+  "action": {
+   "type": "reminder",
+   "discount": 0.0,
+   "draft_only": true
+  },
+  "cost_usd": 0.05,
+  "cost_if_allowed_usd": 0.05,
+  "value_tier": "lapsed_high",
+  "budget_after_usd": 0.05,
+  "reasons": [],
+  "checks": [
+   {
+    "rule": "营销同意",
+    "passed": true,
+    "detail": "consent=True（未知按未同意处理）",
+    "basis": "demo_config"
+   },
+   {
+    "rule": "未结投诉",
+    "passed": true,
+    "detail": "无",
+    "basis": "demo_config"
+   },
+   {
+    "rule": "触达频率",
+    "passed": true,
+    "detail": "30 天内已触达 0 次，上限 2",
+    "basis": "demo_config"
+   },
+   {
+    "rule": "触达间隔",
+    "passed": true,
+    "detail": "距上次触达 None 天，至少 7 天",
+    "basis": "demo_config"
+   },
+   {
+    "rule": "单客成本上限",
+    "passed": true,
+    "detail": "成本 0.05 USD，上限 20.0",
+    "basis": "demo_config"
+   },
+   {
+    "rule": "每周预算",
+    "passed": true,
+    "detail": "已用 0.00 + 本次 0.05 USD，周预算 200.0",
+    "basis": "demo_config"
+   }
+  ],
+  "model_reference": {
+   "applicability": "out_of_population",
+   "p_repurchase_30d": null,
+   "used_for_decision": false,
+   "note": "模型个体排序接近随机（ML-09），概率不参与资格、折扣和预算判定"
+  },
+  "demo_config_used": {
+   "consent": true,
+   "contacts_last_30d": 0,
+   "days_since_last_contact": null,
+   "gross_margin": 0.3,
+   "in_stock": true,
+   "open_complaint": false
+  }
+ },
+ "draft_created": true,
+ "evidence": [
+  "profile:customer_000002@wh-d3aaa559048c",
+  "risk:customer_000002@repurchase-logreg-v1",
+  "doc:retention_policy#5-模型的使用@retention-policy-v1",
+  "doc:retention_policy#4-折扣上限@retention-policy-v1",
+  "doc:retention_policy#6-频率与预算@retention-policy-v1",
+  "doc:retention_policy#3-资格规则@retention-policy-v1"
+ ],
+ "draft": {
+  "draft_id": "draft-17a182cb86c5",
+  "status": "pending_review",
+  "sent": false,
+  "delivery": "not_sent",
+  "action": "reminder",
+  "discount": 0.0,
+  "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。",
+  "mode": "live_llm",
+  "policy_version": "retention-policy-v1",
+  "budget": {
+   "cost_usd": 0.05,
+   "budget_after_usd": 0.05
+  }
+ }
+}

@@ -2381,10 +2381,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2408,7 +2408,9 @@
         "只开放读取画像/风险、检索政策、预算检查、保存草稿等工具。",
         "无真实营销发送/发券权限；引用事实和政策，不从数据内容接收新系统指令。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-12/2026-11-12-agent.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
