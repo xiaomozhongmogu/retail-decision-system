@@ -1,0 +1,93 @@
+{
+  "task_id": "AI-14",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；同意等为演示配置；7 个场景用真实 LLM（DeepSeek）",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python eval/agent_eval.py",
+  "exit_code": 0,
+  "summary": "Agent 边界场景 36 个、16 类：未知用户 3、无优惠 4（活跃近期购买者与新客请求优惠）、预算不足 3、频率限制 3、缺字段 2、模型不适用 3、工具失败 3、未同意 2、投诉 1、缺货 1、折扣超上限 1、注入 2、正常真实 LLM 5、步数上限 1、重复请求 1、LLM 不可用 1。逐例检查终止状态、工具调用顺序、折扣不超过价值层级与毛利上限、被拒绝时不产生草稿、草稿带画像与政策证据、从不标为已发送、重复请求不产生第二份草稿、注入不放大折扣。首测 34/36（两例的轨迹缺少模板文案步骤），修正后 36/36，关键违规 0 次。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/retention_agent.py",
+      "sha256": "9819ffcc51df156bb1f9c75caee8327c7b62749a68de0e7b2042d135cd3dc2f6"
+    },
+    {
+      "path": "src/retail_bi/ai/drafts.py",
+      "sha256": "56a1778197501dd52ed3e38fd69179db5431e948debc3e3dc1a8799950206adc"
+    },
+    {
+      "path": "src/retail_bi/ai/policy_engine.py",
+      "sha256": "b2c759d5837fc59b8fb972671b7dcf87d37657235fedb727f8d90f1304936a3a"
+    },
+    {
+      "path": "knowledge/retention_policy.md",
+      "sha256": "8ef15c67bffb900f4f68a8da5b11369b11661721912227117b94c98cc792637d"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "eval/agent_cases.jsonl",
+      "sha256": "6b8ae625bf6395c9bbfb58c3dafc258be961a85bd5b2480679932a722a331659"
+    },
+    {
+      "path": "eval/agent_eval.py",
+      "sha256": "f55d1d8c9a4ba7c56844a131a0b5a08e5eea1f50981c470bf3e35db8fe7631a1"
+    },
+    {
+      "path": "reports/ai/agent_evaluation.json",
+      "sha256": "f51f980847823b15f22515c68f330e94b16631ae63f40a0d822b085effdd1443"
+    },
+    {
+      "path": "evidence/AI-14/eval_run.log",
+      "sha256": "9752694ff998af2d6f86160a50a5c6bf34dafac5bb545851a699c37465789b07"
+    },
+    {
+      "path": "evidence/AI-14/eval_run_1.log",
+      "sha256": "d3ddd5a2d2110ba2dcc2d094f94ea5b010f8fa883adc7ec5cb175db1d5d9db4f"
+    },
+    {
+      "path": "evidence/AI-14/eval_run_1_results.json",
+      "sha256": "b76b239c71933e6753cc6ffbdfbcf57315eaec795af78e1a5a5bc3f63e2f99c8"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "36 个案例（≥30），覆盖未知用户、无优惠、预算不足、频率限制、缺字段、模型不适用（母体外客户按规则判定）与工具失败（读风险、检索政策、保存草稿分别注入故障），另有同意、投诉、缺货、折扣超上限、注入、步数上限、重复请求与 LLM 不可用。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "每例检查工作流顺序、工具参数（由编排器构造）、约束（折扣 ≤ 价值层级与毛利上限、周预算不超）与证据；已声明的关键违规（发送、拒绝场景仍生成草稿、超上限折扣、预算超支、重复草稿、注入放大折扣）0 次出现。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "7 个场景使用真实 LLM 提议与文案，完整轨迹保存在 reports/ai/agent_evaluation.json 的 live_traces；约束类场景用固定提议的替身只为证明规则引擎决定结果，并在用例中标明，不冒充 Agent 能力。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "首测 34/36：不使用 LLM 时模板文案步骤未写入轨迹，已在 AI-12 中补记并复核。",
+    "真实 LLM 的提议偏保守：多数沉睡或沉默预警客户只建议提醒，理由常是“缺少价值层级信息”——提示中没有提供规则引擎计算的价值层级与折扣上限；不影响安全（最终由规则引擎判定），属于后续改进项。",
+    "同意、投诉、触达、库存、毛利、预算均为演示配置；结果只针对这些场景。"
+  ],
+  "steps": [
+    "认领 AI-14。",
+    "编写 36 个场景与评测脚本（真实客户编号、故障注入、固定提议替身、真实 LLM 子集）。",
+    "首测 34/36，修正 AI-12 的轨迹记录后 36/36；重跑 AI-12（14/14）与 AI-13（15/15）。",
+    "抽查真实 LLM 的提议与文案：合规，注入均被拒绝，但提议偏保守，记为限制。"
+  ],
+  "task_spec_sha256": "a27f6bfc06fab6805fa4ff496a3f3357309e07d7578a1770ecea57defef377e2",
+  "performed_at": "2026-11-12T22:07:46.379336+08:00"
+}

@@ -1,5 +1,5 @@
-$ .venv/bin/python evidence/AI-13/check_drafts.py
-2026-11-12T22:04:50+08:00
+$ .venv/bin/python evidence/AI-13/check_drafts.py   (recheck after AI-14 fix)
+2026-11-12T22:07:06+08:00
 PASS saved fields: suggestion, reasons, evidence, rule version, budget result, copy, pending status 
 PASS saved draft is explicitly not sent 
 PASS same request again returns the same draft, no second row 

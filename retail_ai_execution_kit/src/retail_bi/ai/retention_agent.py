@@ -197,6 +197,7 @@ class RetentionAgent:
         pct = round(act['discount'] * 100)
         tmpl = (f'您好，好久不见！我们为您准备了一张 {pct}% 的专属优惠，欢迎回来看看。' if act['type'] == 'coupon' else '您好，最近有新的商品上架，欢迎回来看看。')
         if not self.use_llm:
+            trace.append({'step': len(trace) + 1, 'tool': 'llm_copy', 'ok': True, 'result': 'LLM 未启用，使用模板文案'})
             return tmpl, 'template'
         msgs = [{'role': 'system', 'content': '为电商客户写一条维系短信草稿，只输出 JSON {"copy": 字符串}。不超过 60 字；不写客户姓名、地址等个人信息；'
                  '不承诺“保证、一定、免费、包邮、返现、最后机会”等；不编造商品或活动；优惠时只能写给定的折扣百分比，不写其他数字。'},

@@ -2409,7 +2409,7 @@
         "无真实营销发送/发券权限；引用事实和政策，不从数据内容接收新系统指令。"
       ],
       "evidence": [
-        "evidence/AI-12/2026-11-12-agent.json"
+        "evidence/AI-12/2026-11-12-agent-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2449,7 +2449,7 @@
         "保存草稿不等于消息已发送，UI和日志不得混淆。"
       ],
       "evidence": [
-        "evidence/AI-13/2026-11-12-drafts.json"
+        "evidence/AI-13/2026-11-12-drafts-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2462,10 +2462,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2489,7 +2489,9 @@
         "检查工作流完成、工具参数、约束和证据，已声明的关键违规场景均被阻止。",
         "保留真实LLM调用的代表性完整轨迹，不能只用静态预置文案冒充Agent。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-14/2026-11-12-agent-eval.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
