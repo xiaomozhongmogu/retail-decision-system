@@ -67,7 +67,7 @@
 | AI-02 | 建立业务知识库与检索 | final | done | DW-06, ML-12 |
 | AI-03 | 评测知识检索和依据引用 | final | done | AI-02, AI-01 |
 | AI-04 | 实现查询意图与Schema约束 | final | done | AI-01, DW-06 |
-| AI-05 | 实现受限SQL执行器 | final | todo | AI-04, DW-10 |
+| AI-05 | 实现受限SQL执行器 | final | done | AI-04, DW-10 |
 | AI-06 | 实现查询回答与结果证据 | final | todo | AI-05 |
 | AI-07 | 完成NL2SQL标准集验收 | final | todo | AI-06 |
 | AI-08 | 实现周报事实计算 | final | done | EDA-04, DW-06 |
@@ -1013,7 +1013,7 @@
 
 ### AI-05 实现受限SQL执行器
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：U04, Q06。
 - 前置：AI-04, DW-10。
 - 允许修改：`src/retail_bi/ai`, `tests/ai`, `reports/ai`；另可写本任务证据/交接。
@@ -1026,7 +1026,7 @@
 2. 只读之外关闭外部访问，阻止文件表函数、COPY/ATTACH/扩展安装加载等非授权能力。
 3. 测试写入、文件读取、跨表越权、注入及资源消耗；解析库与AGENTS都不是安全边界。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-05/2026-11-12-executor.json
 
 ### AI-06 实现查询回答与结果证据
 

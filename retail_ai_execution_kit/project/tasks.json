@@ -2096,10 +2096,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "U04",
         "Q06"
@@ -2122,7 +2122,9 @@
         "只读之外关闭外部访问，阻止文件表函数、COPY/ATTACH/扩展安装加载等非授权能力。",
         "测试写入、文件读取、跨表越权、注入及资源消耗；解析库与AGENTS都不是安全边界。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-05/2026-11-12-executor.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

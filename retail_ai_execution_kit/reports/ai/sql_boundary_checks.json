@@ -1,0 +1,301 @@
+{
+ "task_id": "AI-05",
+ "passed": 49,
+ "total": 49,
+ "checks": [
+  {
+   "group": "allowed",
+   "check": "single SELECT on an allowed view with a bound parameter",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'columns': ['month', 'merchandise_sales_usd'], 'rows': [['2026-10', 47590.59]], 'mode': 'live', 'dataset_version': 'wh-d3aaa559048c', 'evidence_ids': ['sql:5fc8fccc'], 'validation': {'tables': ['ads.kpi_monthly'], 'function"
+  },
+  {
+   "group": "allowed",
+   "check": "CTE + aggregation + whitelisted functions",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'columns': ['y', 's'], 'rows': [['2024', 489722.52], ['2025', 494692.48], ['2026', 395746.23]], 'mode': 'live', 'dataset_version': 'wh-d3aaa559048c', 'evidence_ids': ['sql:b890b262'], 'validation': {'tables': ['.m', 'ads.kp"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: insert",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: delete",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: update",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: create",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: drop",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: copy",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: attach",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: install",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: load",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: pragma",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: set",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: two statements",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许一条语句', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: stacked injection",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '只允许单条只读 SELECT（Only SELECT statements can be serialized to json!）', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: read_csv",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"read_csv\"', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: read_text",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"read_text\"', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: glob",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"glob\"', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: read_parquet url",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"read_parquet\"', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: dwd table",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许的表：dwd.fact_order', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: customer-level scores",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许的表：ads.model_scores', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: customer profile",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许的表：ads.customer_profile_latest', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: catalog",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许的表：information_schema.tables', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: duckdb_tables()",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"duckdb_tables\"', 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: getenv",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': \"不允许的函数：['getenv']\", 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: unknown column",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'unknown_field', 'message': \"不允许的列：['customer_id']\", 'retryable': False}}"
+  },
+  {
+   "group": "layer1",
+   "check": "refused: param count",
+   "status": "passed",
+   "detail": "{'status': 'unsupported', 'error': {'code': 'invalid_argument', 'message': '参数个数不符：SQL 中 1 个，提供 0 个', 'retryable': False}}"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: read_csv file",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/etc/passwd\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (SELECT * FROM read_"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: read_text file",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/etc/hosts\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (SELECT * FROM read_t"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: glob",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/Users/*\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (SELECT * FROM glob(\\'/"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: http parquet",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"https://example.com/x.parquet\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (S"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: dwd table",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name \"dwd.fact_order\" does not exist because schema \"dwd\" does not exist.\\n\\nLINE 1: SELECT * FROM (SELECT * FROM dwd.fact_order) AS q LI"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: model scores",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name model_scores does not exist!\\nDid you mean \"sales_month_category_region\"?\\n\\nLINE 1: SELECT * FROM (SELECT * FROM ads.model_scores) "
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: customer profile",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name customer_profile_latest does not exist!\\nDid you mean \"cohort_retention\"?\\n\\nLINE 1: SELECT * FROM (SELECT * FROM ads.customer_profi"
+  },
+  {
+   "group": "sandbox",
+   "check": "blocked inside the sandbox without layer 1: getenv",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Scalar Function with name getenv does not exist!\\nDid you mean \"get_current_time\"?\\n\\nLINE 1: SELECT * FROM (SELECT getenv(\\'HOME\\') AS h) AS q LIMI"
+  },
+  {
+   "group": "sandbox",
+   "check": "sandbox holds only the allowed views as tables (no dwd/dws/customer tables)",
+   "status": "passed",
+   "detail": "{'ads.kpi_daily', 'ads.repurchase_rate_weekly', 'ads.sales_month_category_region', 'ads.cohort_retention', 'ads.risk_summary_latest', 'ads.lifecycle_mix_weekly', 'ads.kpi_monthly'}"
+  },
+  {
+   "group": "sandbox",
+   "check": "external access off and configuration locked in the worker",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'columns': ['e', 'l'], 'rows': [[False, True]], 'mode': 'live', 'dataset_version': 'wh-d3aaa559048c', 'evidence_ids': ['sql:1be63c1c'], 'validation': {}}"
+  },
+  {
+   "group": "resources",
+   "check": "runaway query killed at the timeout",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'timeout', 'message': '查询超过 3 秒被终止', 'retryable': True}}"
+  },
+  {
+   "group": "resources",
+   "check": "result over the row limit refused (row_limit_exceeded)",
+   "status": "passed",
+   "detail": "{'status': 'error', 'error': {'code': 'row_limit_exceeded', 'message': '结果超过 1000 行', 'retryable': False}}"
+  },
+  {
+   "group": "injection",
+   "check": "quote injection in a bound value matches nothing",
+   "status": "passed",
+   "detail": "{'status': 'empty', 'columns': ['month'], 'rows': [], 'mode': 'live', 'dataset_version': 'wh-d3aaa559048c', 'evidence_ids': ['sql:0c8cec2a'], 'validation': {'tables': ['ads.kpi_monthly'], 'functions': [], 'params': 1, 'release': 'wh-d3aaa55"
+  },
+  {
+   "group": "injection",
+   "check": "stacked-statement text in a bound value is only data; table intact",
+   "status": "passed",
+   "detail": "({'status': 'empty', 'columns': ['month'], 'rows': [], 'mode': 'live', 'dataset_version': 'wh-d3aaa559048c', 'evidence_ids': ['sql:e00989cb'], 'validation': {'tables': ['ads.kpi_monthly'], 'functions': [], 'params': 1, 'release': 'wh-d3aaa5"
+  },
+  {
+   "group": "plans",
+   "check": "2026-10 merchandise = DWD",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'measure': 'merchandise_sales_usd', 'evidence_ids': ['view:ads.kpi_monthly', 'sql:59a46515'], 'dataset_version': 'wh-d3aaa559048c', 'aov_recomputed_from_sums': False, 'kind': 'value', 'value': 47590.59, 'n_rows': 1}"
+  },
+  {
+   "group": "plans",
+   "check": "2025 AOV recomputed from sums = DWD",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'measure': 'aov_usd', 'evidence_ids': ['view:ads.kpi_monthly', 'sql:59a46515'], 'dataset_version': 'wh-d3aaa559048c', 'aov_recomputed_from_sums': True, 'kind': 'value', 'value': 149.6347489413188, 'n_rows': 12}"
+  },
+  {
+   "group": "plans",
+   "check": "2025 top category by merchandise = DWD",
+   "status": "passed",
+   "detail": "([['Furniture & Decor', 72912.86]], ('Furniture & Decor', Decimal('72912.86')))"
+  },
+  {
+   "group": "plans",
+   "check": "year-on-year base = 2025-10 from DWD and change computed",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'measure': 'merchandise_sales_usd', 'evidence_ids': ['view:ads.kpi_monthly', 'sql:59a46515'], 'dataset_version': 'wh-d3aaa559048c', 'aov_recomputed_from_sums': False, 'kind': 'value', 'value': 47590.59, 'n_rows': 1, 'base_v"
+  },
+  {
+   "group": "plans",
+   "check": "region shares sum to 1",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'measure': 'merchandise_sales_usd', 'evidence_ids': ['view:ads.sales_month_category_region', 'sql:cb6525a4'], 'dataset_version': 'wh-d3aaa559048c', 'aov_recomputed_from_sums': False, 'kind': 'table', 'columns': ['customer_r"
+  },
+  {
+   "group": "plans",
+   "check": "trend returns six months 2026-05..2026-10",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'measure': 'merchandise_sales_usd', 'evidence_ids': ['view:ads.kpi_monthly', 'sql:59a46515'], 'dataset_version': 'wh-d3aaa559048c', 'aov_recomputed_from_sums': False, 'kind': 'series', 'columns': ['month', 'merchandise_sale"
+  },
+  {
+   "group": "plans",
+   "check": "lifecycle latest snapshot includes dormant 2,098",
+   "status": "passed",
+   "detail": "{'status': 'ok', 'kind': 'table', 'columns': ['lifecycle_state', 'customers'], 'rows': [['active', 683], ['at_risk', 530], ['dormant', 2098], ['new', 21]], 'as_of': '2026-11-02', 'evidence_ids': ['view:ads.lifecycle_mix_weekly', 'sql:5cb0fd"
+  },
+  {
+   "group": "design",
+   "check": "trusted plans never build SQL from the question (run_plan uses query_view only)",
+   "status": "passed",
+   "detail": ""
+  }
+ ]
+}
