@@ -1,0 +1,715 @@
+{
+ "task_id": "AI-06",
+ "examples": [
+  {
+   "session_id": "A",
+   "question": "2026年10月的商品金额是多少？",
+   "status": "ok",
+   "answer": "2026-10商品金额为 47,590.59 USD。",
+   "note": "本结果为模拟数据，仅按商品金额口径统计，供参考。",
+   "intent": {
+    "parser": "rules",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": {
+    "view": "ads.kpi_monthly",
+    "columns": [
+     "month",
+     "valid_orders",
+     "merchandise_sales_usd",
+     "shipping_usd",
+     "buyers",
+     "cancelled_orders",
+     "partial_period"
+    ],
+    "where": {},
+    "sql": "SELECT month, valid_orders, merchandise_sales_usd, shipping_usd, buyers, cancelled_orders, partial_period FROM ads.kpi_monthly LIMIT 5000",
+    "post_processing": {
+     "filters": {},
+     "group_by": [],
+     "by_month": false,
+     "by_day": false,
+     "measure": "merchandise_sales_usd",
+     "aov_recomputed_from_sums": false,
+     "rank": null,
+     "share": false,
+     "compare": null
+    },
+    "periods": [
+     [
+      "2026-10"
+     ]
+    ]
+   },
+   "metric_definition": {
+    "id": "merchandise_sales_usd",
+    "name": "商品金额",
+    "unit": "USD",
+    "definition": "有效订单明细 item_price_usd 之和；不含运费，不是已支付 GMV、净收入或利润"
+   },
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": "wh-d3aaa559048c",
+   "evidence_ids": [
+    "view:ads.kpi_monthly",
+    "sql:59a46515"
+   ],
+   "warnings": [],
+   "result": {
+    "kind": "value",
+    "value": 47590.59
+   },
+   "error": null
+  },
+  {
+   "session_id": "A",
+   "question": "那西部呢",
+   "status": "ok",
+   "answer": "2026-10（West）商品金额为 10,514.63 USD。",
+   "note": "口径为商品金额（USD），仅反映该地区该月汇总，未含其他维度。",
+   "intent": {
+    "parser": "follow_up",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {
+     "customer_region": [
+      "West"
+     ]
+    },
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": "2026年10月的商品金额是多少？"
+   },
+   "query": {
+    "view": "ads.sales_month_category_region",
+    "columns": [
+     "month",
+     "product_category",
+     "customer_region",
+     "valid_lines",
+     "merchandise_sales_usd"
+    ],
+    "where": {},
+    "sql": "SELECT month, product_category, customer_region, valid_lines, merchandise_sales_usd FROM ads.sales_month_category_region LIMIT 5000",
+    "post_processing": {
+     "filters": {
+      "customer_region": [
+       "West"
+      ]
+     },
+     "group_by": [],
+     "by_month": false,
+     "by_day": false,
+     "measure": "merchandise_sales_usd",
+     "aov_recomputed_from_sums": false,
+     "rank": null,
+     "share": false,
+     "compare": null
+    },
+    "periods": [
+     [
+      "2026-10"
+     ]
+    ]
+   },
+   "metric_definition": {
+    "id": "merchandise_sales_usd",
+    "name": "商品金额",
+    "unit": "USD",
+    "definition": "有效订单明细 item_price_usd 之和；不含运费，不是已支付 GMV、净收入或利润"
+   },
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": "wh-d3aaa559048c",
+   "evidence_ids": [
+    "view:ads.sales_month_category_region",
+    "sql:cb6525a4"
+   ],
+   "warnings": [],
+   "result": {
+    "kind": "value",
+    "value": 10514.63
+   },
+   "error": null
+  },
+  {
+   "session_id": "A",
+   "question": "换成订单数",
+   "status": "unsupported",
+   "answer": "有效订单数没有按品类或地区的允许视图（品类×地区视图只有商品金额、明细行和含该品类订单数）",
+   "note": null,
+   "intent": {
+    "parser": "follow_up",
+    "metric": "valid_orders",
+    "kind": "value",
+    "dims": [],
+    "filters": {
+     "customer_region": [
+      "West"
+     ]
+    },
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": "那西部呢"
+   },
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": {
+    "code": "unknown_field",
+    "message": "有效订单数没有按品类或地区的允许视图（品类×地区视图只有商品金额、明细行和含该品类订单数）"
+   }
+  },
+  {
+   "session_id": "A",
+   "question": "去年呢",
+   "status": "ok",
+   "answer": "2025（West）商品金额为 116,521.38 USD。",
+   "note": "本回答基于完全合成的模拟数据，仅反映所查询指标的口径，不代表真实经营情况。",
+   "intent": {
+    "parser": "follow_up",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {
+     "customer_region": [
+      "West"
+     ]
+    },
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025"
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": "那西部呢"
+   },
+   "query": {
+    "view": "ads.sales_month_category_region",
+    "columns": [
+     "month",
+     "product_category",
+     "customer_region",
+     "valid_lines",
+     "merchandise_sales_usd"
+    ],
+    "where": {},
+    "sql": "SELECT month, product_category, customer_region, valid_lines, merchandise_sales_usd FROM ads.sales_month_category_region LIMIT 5000",
+    "post_processing": {
+     "filters": {
+      "customer_region": [
+       "West"
+      ]
+     },
+     "group_by": [],
+     "by_month": false,
+     "by_day": false,
+     "measure": "merchandise_sales_usd",
+     "aov_recomputed_from_sums": false,
+     "rank": null,
+     "share": false,
+     "compare": null
+    },
+    "periods": [
+     [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12"
+     ]
+    ]
+   },
+   "metric_definition": {
+    "id": "merchandise_sales_usd",
+    "name": "商品金额",
+    "unit": "USD",
+    "definition": "有效订单明细 item_price_usd 之和；不含运费，不是已支付 GMV、净收入或利润"
+   },
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": "wh-d3aaa559048c",
+   "evidence_ids": [
+    "view:ads.sales_month_category_region",
+    "sql:cb6525a4"
+   ],
+   "warnings": [],
+   "result": {
+    "kind": "value",
+    "value": 116521.38
+   },
+   "error": null
+  },
+  {
+   "session_id": "B",
+   "question": "那西部呢",
+   "status": "clarify",
+   "answer": "没有识别出指标，请换一种说法。",
+   "note": null,
+   "intent": {
+    "parser": "llm",
+    "metric": null,
+    "kind": "value",
+    "dims": [
+     "customer_region"
+    ],
+    "filters": {
+     "customer_region": [
+      "West"
+     ]
+    },
+    "time": null,
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": null
+  },
+  {
+   "session_id": "C",
+   "question": "2023年的商品金额",
+   "status": "empty",
+   "answer": "没有数据：数据从 2024-01 开始，所问时间 2023 没有数据",
+   "note": null,
+   "intent": {
+    "parser": "rules",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2023-01",
+     "end": "2023-12",
+     "grain": "year",
+     "label": "2023",
+     "incomplete": false
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": {
+    "code": "out_of_range",
+    "message": "数据从 2024-01 开始，所问时间 2023 没有数据"
+   }
+  },
+  {
+   "session_id": "D",
+   "question": "各品类的毛利是多少",
+   "status": "unsupported",
+   "answer": "不支持：毛利与利润（数据中没有成本）",
+   "note": null,
+   "intent": {
+    "parser": "rules",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": {
+    "code": "capability_not_supported",
+    "message": "不支持：毛利与利润（数据中没有成本）"
+   }
+  },
+  {
+   "session_id": "E",
+   "question": "2025年的收入是多少",
+   "status": "clarify",
+   "answer": "“收入/业绩”可以指商品金额（不含运费）或订单金额（含运费），本系统默认口径是商品金额。请确认要看哪一个。",
+   "note": null,
+   "intent": {
+    "parser": "rules",
+    "metric": null,
+    "kind": null,
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": null
+  },
+  {
+   "session_id": "F",
+   "question": "2026年10月的商品金额是多少？",
+   "status": "cancelled",
+   "answer": "已取消，本次没有执行查询。",
+   "note": null,
+   "intent": null,
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": null
+  },
+  {
+   "session_id": "G",
+   "question": "2026年10月的商品金额是多少？",
+   "status": "error",
+   "answer": "查询执行失败，没有结果可以解释。",
+   "note": null,
+   "intent": {
+    "parser": "rules",
+    "metric": "merchandise_sales_usd",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": null,
+   "metric_definition": null,
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": null,
+   "evidence_ids": null,
+   "warnings": null,
+   "result": null,
+   "error": {
+    "code": "error",
+    "message": "RuntimeError",
+    "retryable": true
+   }
+  },
+  {
+   "session_id": "H",
+   "question": "2026年10月商品金额同比变化",
+   "status": "ok",
+   "answer": "2026-10商品金额为 47,590.59 USD；同比基期（2025-10）为 49,547.36 USD，变化 -3.9%。",
+   "note": "口径提示：本结果基于完全合成的模拟数据，仅反映商品金额指标在所列期间的对比，不涉及其他维度或字段。",
+   "intent": {
+    "parser": "rules",
+    "metric": "merchandise_sales_usd",
+    "kind": "comparison",
+    "dims": [],
+    "filters": {},
+    "time": {
+     "start": "2026-10",
+     "end": "2026-10",
+     "grain": "month",
+     "label": "2026-10"
+    },
+    "compare": "yoy",
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": {
+    "view": "ads.kpi_monthly",
+    "columns": [
+     "month",
+     "valid_orders",
+     "merchandise_sales_usd",
+     "shipping_usd",
+     "buyers",
+     "cancelled_orders",
+     "partial_period"
+    ],
+    "where": {},
+    "sql": "SELECT month, valid_orders, merchandise_sales_usd, shipping_usd, buyers, cancelled_orders, partial_period FROM ads.kpi_monthly LIMIT 5000",
+    "post_processing": {
+     "filters": {},
+     "group_by": [],
+     "by_month": false,
+     "by_day": false,
+     "measure": "merchandise_sales_usd",
+     "aov_recomputed_from_sums": false,
+     "rank": null,
+     "share": false,
+     "compare": "yoy"
+    },
+    "periods": [
+     [
+      "2026-10"
+     ],
+     [
+      "2025-10"
+     ]
+    ]
+   },
+   "metric_definition": {
+    "id": "merchandise_sales_usd",
+    "name": "商品金额",
+    "unit": "USD",
+    "definition": "有效订单明细 item_price_usd 之和；不含运费，不是已支付 GMV、净收入或利润"
+   },
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": "wh-d3aaa559048c",
+   "evidence_ids": [
+    "view:ads.kpi_monthly",
+    "sql:59a46515"
+   ],
+   "warnings": [],
+   "result": {
+    "kind": "value",
+    "value": 47590.59,
+    "base_value": 49547.36,
+    "base_months": [
+     "2025-10"
+    ],
+    "change": -0.03949292151993567,
+    "change_status": "ok"
+   },
+   "error": null
+  },
+  {
+   "session_id": "I",
+   "question": "现在沉睡客户有多少",
+   "status": "ok",
+   "answer": "最新快照（2026-11-02）生命周期人数：新客 21，活跃 683，沉默预警 530，沉睡 2,098。",
+   "note": "口径为生命周期状态人数，按最新快照统计，单位 customers；数据为完全合成的模拟数据。",
+   "intent": {
+    "parser": "rules",
+    "metric": "lifecycle_customers",
+    "kind": "value",
+    "dims": [],
+    "filters": {},
+    "time": null,
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": {
+    "view": "ads.lifecycle_mix_weekly",
+    "columns": [
+     "as_of_date",
+     "lifecycle_state",
+     "customers"
+    ],
+    "where": {},
+    "sql": "SELECT as_of_date, lifecycle_state, customers FROM ads.lifecycle_mix_weekly LIMIT 5000",
+    "post_processing": {
+     "latest_snapshot": true
+    },
+    "periods": []
+   },
+   "metric_definition": {
+    "id": "lifecycle_customers",
+    "name": "生命周期状态人数",
+    "unit": "customers",
+    "definition": null
+   },
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": "wh-d3aaa559048c",
+   "evidence_ids": [
+    "view:ads.lifecycle_mix_weekly",
+    "sql:5cb0fd5b"
+   ],
+   "warnings": [],
+   "result": {
+    "kind": "table",
+    "columns": [
+     "lifecycle_state",
+     "customers"
+    ],
+    "rows": [
+     [
+      "new",
+      21
+     ],
+     [
+      "active",
+      683
+     ],
+     [
+      "at_risk",
+      530
+     ],
+     [
+      "dormant",
+      2098
+     ]
+    ],
+    "as_of": "2026-11-02"
+   },
+   "error": null
+  },
+  {
+   "session_id": "J",
+   "question": "2025年各大区商品金额占比",
+   "status": "ok",
+   "answer": "2025商品金额占比：South 182,136.11 USD（36.8%）；West 116,521.38 USD（23.6%）；Midwest 105,460.97 USD（21.3%）；Northeast 90,574.02 USD（18.3%）。",
+   "note": "本结果基于完全合成的模拟数据，仅反映所给口径下的汇总占比，不代表真实业务情况。",
+   "intent": {
+    "parser": "rules",
+    "metric": "merchandise_sales_usd",
+    "kind": "share",
+    "dims": [
+     "customer_region"
+    ],
+    "filters": {},
+    "time": {
+     "start": "2025-01",
+     "end": "2025-12",
+     "grain": "year",
+     "label": "2025",
+     "incomplete": false
+    },
+    "compare": null,
+    "top_n": null,
+    "follow_up_of": null
+   },
+   "query": {
+    "view": "ads.sales_month_category_region",
+    "columns": [
+     "month",
+     "product_category",
+     "customer_region",
+     "valid_lines",
+     "merchandise_sales_usd"
+    ],
+    "where": {},
+    "sql": "SELECT month, product_category, customer_region, valid_lines, merchandise_sales_usd FROM ads.sales_month_category_region LIMIT 5000",
+    "post_processing": {
+     "filters": {},
+     "group_by": [
+      "customer_region"
+     ],
+     "by_month": false,
+     "by_day": false,
+     "measure": "merchandise_sales_usd",
+     "aov_recomputed_from_sums": false,
+     "rank": null,
+     "share": true,
+     "compare": null
+    },
+    "periods": [
+     [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12"
+     ]
+    ]
+   },
+   "metric_definition": {
+    "id": "merchandise_sales_usd",
+    "name": "商品金额",
+    "unit": "USD",
+    "definition": "有效订单明细 item_price_usd 之和；不含运费，不是已支付 GMV、净收入或利润"
+   },
+   "as_of": "2026-11-08T00:00:00+00:00",
+   "dataset_version": "wh-d3aaa559048c",
+   "evidence_ids": [
+    "view:ads.sales_month_category_region",
+    "sql:cb6525a4"
+   ],
+   "warnings": [],
+   "result": {
+    "kind": "table",
+    "columns": [
+     "customer_region",
+     "merchandise_sales_usd",
+     "share"
+    ],
+    "rows": [
+     [
+      "South",
+      182136.11,
+      0.36818047042073493
+     ],
+     [
+      "West",
+      116521.38,
+      0.23554305899293235
+     ],
+     [
+      "Midwest",
+      105460.97,
+      0.2131849063078541
+     ],
+     [
+      "Northeast",
+      90574.02,
+      0.1830915642784786
+     ]
+    ]
+   },
+   "error": null
+  }
+ ]
+}

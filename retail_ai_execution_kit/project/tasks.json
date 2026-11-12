@@ -2136,10 +2136,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2161,7 +2161,9 @@
         "空结果、取消、时间无覆盖、执行错误有明确状态，不让模型补造数据。",
         "多轮会话筛选和上下文隔离，不把其他客户/会话状态混入回答。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/AI-06/2026-11-12-assistant.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

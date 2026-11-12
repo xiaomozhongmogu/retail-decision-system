@@ -68,7 +68,7 @@
 | AI-03 | 评测知识检索和依据引用 | final | done | AI-02, AI-01 |
 | AI-04 | 实现查询意图与Schema约束 | final | done | AI-01, DW-06 |
 | AI-05 | 实现受限SQL执行器 | final | done | AI-04, DW-10 |
-| AI-06 | 实现查询回答与结果证据 | final | todo | AI-05 |
+| AI-06 | 实现查询回答与结果证据 | final | done | AI-05 |
 | AI-07 | 完成NL2SQL标准集验收 | final | todo | AI-06 |
 | AI-08 | 实现周报事实计算 | final | done | EDA-04, DW-06 |
 | AI-09 | 实现周报生成与数值校验 | final | done | AI-08, AI-01, AI-02 |
@@ -1030,7 +1030,7 @@
 
 ### AI-06 实现查询回答与结果证据
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q05。
 - 前置：AI-05。
 - 允许修改：`src/retail_bi/ai`, `reports/ai`；另可写本任务证据/交接。
@@ -1043,7 +1043,7 @@
 2. 空结果、取消、时间无覆盖、执行错误有明确状态，不让模型补造数据。
 3. 多轮会话筛选和上下文隔离，不把其他客户/会话状态混入回答。
 
-证据：尚无已登记验收证据。
+证据：evidence/AI-06/2026-11-12-assistant.json
 
 ### AI-07 完成NL2SQL标准集验收
 
