@@ -47,6 +47,10 @@ check('placeholder misused as another quantity (unit after it, repeated) rejecte
 bad_sem = json.dumps({'explanation': '相对前 {{F08}} 的基期偏高。', 'actions': ['按渠道拆分订单'], 'hypotheses': ['待验证：x']}, ensure_ascii=False)
 e = G.validate_llm(json.loads(bad_sem), sel)
 check('placeholder used as a period count and unavailable field (渠道) rejected — seen in live run 4', any('计数或期数' in x for x in e) and any('数据中没有的字段' in x for x in e), e)
+e = G.validate_llm({'explanation': '本周商品金额 {{F01}}。', 'actions': ['a'], 'hypotheses': ['待验证：截止前最后一天审批落定后会使本周金额上升']}, sel)
+check('last day counted in the report week rejected (GPT blind review R22/R24)', any('最后一天' in x for x in e), e)
+check('wrong currency and partial-month comparison caught in the final text (GPT blind review R01/R07)',
+      any('USD' in x for x in G.final_check('## 关键数字\n13,306.01 元\n## 提示', sel, facts)) and any('不完整月份' in x for x in G.final_check('## 关键数字\n本月商品金额已经低于上月全月。\n## 提示', sel, facts)))
 f = Fake([bad_digit, good])
 r = G.generate_weekly_report(facts, client=f, mode='live')
 check('one repair then accepted', r['mode'] == 'live' and [a['result'] for a in r['attempts']] == ['validation_failed', 'ok'] and f.calls == 2)

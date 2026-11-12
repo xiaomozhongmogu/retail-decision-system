@@ -1,0 +1,28 @@
+$ .venv/bin/python evidence/AI-09/recheck_blind_packet.py   (after narrowing the last-day rule)
+2026-11-12T14:22:21+08:00
+PASS R01 S01 ['单位']  ['金额单位不是 USD：元']
+PASS R02 S02 []  []
+PASS R03 S02 ['引用']  ['未知 evidence_id fact:0badc0de']
+PASS R04 S04 []  []
+PASS R05 S02 ['窗口']  ['最终文本含未知数字 30']
+PASS R06 S03 []  []
+PASS R07 S05 ['不完整周期']  ['不完整月份与完整月份直接比较：本月商品金额已经低于上月全月，月度业绩明显下滑']
+PASS R08 S01 []  []
+PASS R09 S01 ['数字']  ['最终文本含未知数字 16,306.01']
+PASS R10 S02 ['不存在字段']  ['提到数据中没有的字段']
+PASS R11 S05 []  []
+PASS R12 S02 []  []
+PASS R13 S05 []  []
+PASS R14 S03 []  []
+PASS R15 S01 []  []
+PASS R16 S01 []  []
+PASS R17 S01 ['因果']  ['解释中的原因推测未标待验证：本周金额上升是因为促销活动效果显著']
+PASS R18 S01 []  []
+PASS R19 S04 []  []
+PASS R20 S03 ['特殊情况处理']  ['最终文本含未知数字 0%']
+PASS R21 S02 []  []
+PASS R22 S04 [] R22/24 ['把截止前最后一天算进报告周：- 待验证：截止前最后一天审批落定后，该日订单会使本周有效订']
+PASS R23 S03 []  []
+PASS R24 S05 [] R22/24 ['把截止前最后一天算进报告周：- 待验证：截止前最后一天审批未落定的订单在审批落定后，会改']
+flagged 10/10 known problem reports; clean reports flagged: 0/14
+exit=0

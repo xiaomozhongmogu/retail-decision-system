@@ -2279,7 +2279,7 @@
         "修复次数有上限，仍失败回退可信模板；输出标真实LLM或回放模式。"
       ],
       "evidence": [
-        "evidence/AI-09/2026-11-11-weekly-report.json"
+        "evidence/AI-09/2026-11-12-weekly-report-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2321,7 +2321,7 @@
       "evidence": [
         "evidence/AI-10/2026-11-11-blind-review.json"
       ],
-      "blocker": "剩余：人工抽查（真人从 eval/blind_packet/reports 的 24 份中任选至少 5 份，按 eval/blind_test_plan.md 第 3 节检查项复核并记录）；另有 3 类校验器漏洞待在 AI-09 中修复。",
+      "blocker": "剩余：人工抽查（真人从 eval/blind_packet/reports 的 24 份中任选至少 5 份，按 eval/blind_test_plan.md 第 3 节检查项复核并记录）。盲测发现的 3 类校验器漏洞已于 2026-11-12 在 AI-09 中修复并复查（10/10 拦截、0/14 误判）；AI-10 的证据需在人工抽查后按当前生成器重新登记。",
       "skip_reason": null,
       "execution_required": true
     },

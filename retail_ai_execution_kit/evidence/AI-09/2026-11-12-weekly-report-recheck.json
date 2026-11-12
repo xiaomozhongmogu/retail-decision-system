@@ -1,0 +1,155 @@
+{
+  "task_id": "AI-09",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；真实 LLM（DeepSeek）+ 夹具",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python evidence/AI-09/verify_report.py; .venv/bin/python evidence/AI-09/recheck_blind_packet.py",
+  "exit_code": 0,
+  "summary": "周报生成：关键数字表与模板由代码从 AI-08 事实填入；LLM 只写解释、行动和待验证假设，数字只能通过占位符引用。校验拒绝：占位符外的阿拉伯数字或中文数量、未知或重复占位符、占位符后接单位或当作期数、未标“待验证”的原因推测、数据中没有的字段（渠道、毛利等）。修复最多 2 次，仍失败回退可信模板；最终文本的数字再次复核只能是事实值或期间日期；每个关键数字引用 evidence_id；输出标真实 LLM / 回放 / 模板。17/17 检查通过；真实调用的文本首次即通过并与回放一致。 2026-11-12 根据 AI-10 的 GPT 盲测补充三条规则（金额单位不是 USD、未结束月份与完整月份比较、把截止前最后一天算进报告周）并改写模板假设措辞：检查 19/19；用新校验器复查盲测的 24 份报告，10 份已知有问题的全部拦住（8 份植入 + 2 份真实 LLM 错误），14 份合格报告无误判。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/report_facts.py",
+      "sha256": "7e4365a2e01be6da739d95cccf7dbf6ff619a6d5d1ebfdd9fbe5f728fa06a867"
+    },
+    {
+      "path": "src/retail_bi/ai/client.py",
+      "sha256": "0b47028bc9e4847ece30f0a9171a82d1e19bcef377ef7e8532c808dac46bde35"
+    },
+    {
+      "path": "src/retail_bi/ai/retrieval.py",
+      "sha256": "cc9d2b87c37e4c91df4090e51208d3d1659a84c77640d3bab2a482b29d0e3db8"
+    },
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "evidence/AI-09/verify_report.py",
+      "sha256": "321f379b80afb6b8296dcf43e7c50b554c384e7536b6a93d00a5187de8827ca5"
+    },
+    {
+      "path": "eval/blind_key/answer_key.json",
+      "sha256": "25c77da76f1343b0bf9aa08c96e4e212d1378316974ba36af5b70a43480b2f77"
+    },
+    {
+      "path": "eval/blind_packet/gpt_review.jsonl",
+      "sha256": "a48473974449840c8d33caaef0a33dda96045f5dd5a352492d7931f6e2d0c841"
+    },
+    {
+      "path": "eval/make_blind_packet.py",
+      "sha256": "84ab0d9942e66cd1020982c53c630822a2de858813e77ece03e054e4e8364c12"
+    },
+    {
+      "path": "evidence/AI-09/recheck_blind_packet.py",
+      "sha256": "bc72a54ed484291be2044e9b94cd5c2e07cd43c1c75502352cf8a88e482df70a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/report_generator.py",
+      "sha256": "ee84198159fe95482eb6838ba01347b6cfc339e52aa08a4887c374d383845ea4"
+    },
+    {
+      "path": "reports/ai/weekly_report_example.md",
+      "sha256": "02c1eb1d90da108ffc5dfd4c2404043dade8a05f43942ef03ca29618cd324f15"
+    },
+    {
+      "path": "reports/ai/weekly_report_replay.json",
+      "sha256": "515e24514bab7d25e709f27dbf07b59d480da4a5602837777bd0364c1cec7765"
+    },
+    {
+      "path": "evidence/AI-09/verify_run.log",
+      "sha256": "4ead25b11508d95e196fd780221b928e0d6fbf7ab3e4c1424c4bfe622144c7d7"
+    },
+    {
+      "path": "evidence/AI-09/verify_run_1_before_misuse_rule.log",
+      "sha256": "fc248deae6b6274b43898e7871dc6d39208924c9452fd2243a2ea9a46337b055"
+    },
+    {
+      "path": "evidence/AI-09/verify_run_2_context_with_numbers.log",
+      "sha256": "b353add224c0b0b1e2d855b7f86bbd5e49ed6f93ffb791c4e0b691a1293c39bb"
+    },
+    {
+      "path": "evidence/AI-09/verify_run_3_label_with_number.log",
+      "sha256": "96c1c33a993b5fd3889da2fde528febfd41d095f7f6e252d56b9afc6e2462fa5"
+    },
+    {
+      "path": "evidence/AI-09/live_run_1_fallback.json",
+      "sha256": "2e1a2ca31725677c32afa86c6cb47bb44e514906a8f9350b5e1bad5a64c8dd3f"
+    },
+    {
+      "path": "evidence/AI-09/live_run_1_fallback_report.md",
+      "sha256": "786bdc195b13d7438246f28a9e38c5840e3a4b25ce9106e1c5a57be0c9e07d78"
+    },
+    {
+      "path": "evidence/AI-09/live_run_2_placeholder_misuse_report.md",
+      "sha256": "0179c99d76b5337a6ec0103bfc6dae1b0ac70adffe0cf2da1277d22342191491"
+    },
+    {
+      "path": "evidence/AI-09/live_run_3_semantic_error_report.md",
+      "sha256": "f6b6300d8429036fd78fb8b5a872f03e948de0b0a3647487f382f05a141cc3a0"
+    },
+    {
+      "path": "evidence/AI-09/live_run_4_channel_and_misuse_report.md",
+      "sha256": "1379570dfcc55b2f21eb09d0e414609ac1ad2f3bc256206c5886c912178a9c44"
+    },
+    {
+      "path": "evidence/AI-09/recheck_blind_packet.json",
+      "sha256": "a43172d73799dfb75a9c8a9d1ee7d0858bbe7e3baeef95dfd875c2cefe1e7e10"
+    },
+    {
+      "path": "evidence/AI-09/recheck_blind_packet.log",
+      "sha256": "b21a9424f04e6c39394f5a359fa0cc5011a1bbbaaabf58988223fe2903bfbd00"
+    },
+    {
+      "path": "evidence/AI-09/recheck_blind_packet_1_r19_false_positive.json",
+      "sha256": "8ba5f7b2ca0dfa1eaa4958979ad36e3eb2df2a79f2f51c3b41ed3ed9e8c8c90f"
+    },
+    {
+      "path": "evidence/AI-09/verify_run_4_before_blind_fixes.log",
+      "sha256": "3b8e2053b010944a03f7e5d3fcdbbfb52c3d9516675bafd8007ff611a64e705b"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "关键数字表、模板和占位符的值全部由代码从事实 JSON 生成；LLM 文本出现占位符外的数字、中文数量、未知占位符或把占位符当作别的数量时被拒绝（夹具与真实运行均触发过）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "原因推测只能放在以“待验证：”开头的假设中，解释里的原因用语被拒绝；最终文本再次复核数字（夹具中插入 777 被发现）、单位随事实格式、期间来自事实窗口、每个关键数字附 evidence_id，并列出引用的知识段落。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "MAX_REPAIRS=2：持续不合格时恰好 3 次调用后回退可信模板（夹具与真实运行 1、2 次均如此）；LLM 不可用时直接用模板并注明；报告首行写明生成模式（真实 LLM / 回放 / 可信模板），回放能复现记录的真实文本。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "代码只能检查数字、占位符用法、原因措辞和不可用字段；LLM 文本的语义是否完全准确仍需人工阅读：早期真实运行出现过把占位符当作期数、把报告周说成未落定、建议按渠道拆分等问题（证据中保留了这些输出），已通过规则与提示修正，但不能保证以后不再出现，周报应作为待审草稿。",
+    "校验较严（如“八周”这类中文数量被拒绝），真实调用可能需要修复或回退模板，回退时报告仍然正确但没有 LLM 解释。",
+    "真实运行费用约每份 0.0003–0.001 USD（按 .env 单价估算）。",
+    "盲测复查的第一版“最后一天”规则误判了 R19（把“下一报告周期”当作报告周），收窄后为 0 误判；第一次结果保留。这些规则是针对已发现的错误写的，不能保证覆盖所有语义错误。"
+  ],
+  "steps": [
+    "认领 AI-09。",
+    "编写 report_generator.py（占位符、校验、有限修复、模板回退、最终数字复核、三种模式）。",
+    "真实运行 1：最终复核把 evidence_id 中的数字当作未知数字 → 修正复核；运行 2：占位符被当作期数 → 增加单位/重复规则；运行 3：报告周被说成未落定 → 提示中加入口径说明；该说明含数字导致回退 → 改为不含数字；运行 4：建议按渠道拆分、占位符当作期数 → 增加规则；事实标签含“8 周”诱导写数字 → 标签去掉数字。",
+    "最后一次 verify_report.py 17/17，真实文本首次通过；先读报告全文再写本记录。",
+    "2026-11-12：按 GPT 盲测结果加入三条规则与模板措辞修改；盲测复查第一次误判 R19，收窄规则后 10/10 拦截、0/14 误判；verify_report.py 19/19，真实文本首次通过。"
+  ],
+  "task_spec_sha256": "048acdd6802e8e9c5d631205a9623ba5e6f92ffab38d4bc5a7ac5db508a6e167",
+  "performed_at": "2026-11-12T14:22:52.897547+08:00"
+}

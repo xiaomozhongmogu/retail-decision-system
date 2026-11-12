@@ -1,0 +1,232 @@
+[
+ {
+  "report": "R01",
+  "planted": [
+   "单位"
+  ],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [
+   "金额单位不是 USD：元"
+  ],
+  "match": true
+ },
+ {
+  "report": "R02",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R03",
+  "planted": [
+   "引用"
+  ],
+  "real_new_issue": false,
+  "flags_before": 1,
+  "flags_now": [
+   "未知 evidence_id fact:0badc0de"
+  ],
+  "match": true
+ },
+ {
+  "report": "R04",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R05",
+  "planted": [
+   "窗口"
+  ],
+  "real_new_issue": false,
+  "flags_before": 1,
+  "flags_now": [
+   "最终文本含未知数字 30"
+  ],
+  "match": true
+ },
+ {
+  "report": "R06",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R07",
+  "planted": [
+   "不完整周期"
+  ],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [
+   "不完整月份与完整月份直接比较：本月商品金额已经低于上月全月，月度业绩明显下滑"
+  ],
+  "match": true
+ },
+ {
+  "report": "R08",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R09",
+  "planted": [
+   "数字"
+  ],
+  "real_new_issue": false,
+  "flags_before": 1,
+  "flags_now": [
+   "最终文本含未知数字 16,306.01"
+  ],
+  "match": true
+ },
+ {
+  "report": "R10",
+  "planted": [
+   "不存在字段"
+  ],
+  "real_new_issue": false,
+  "flags_before": 1,
+  "flags_now": [
+   "提到数据中没有的字段"
+  ],
+  "match": true
+ },
+ {
+  "report": "R11",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R12",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R13",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R14",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R15",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R16",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R17",
+  "planted": [
+   "因果"
+  ],
+  "real_new_issue": false,
+  "flags_before": 1,
+  "flags_now": [
+   "解释中的原因推测未标待验证：本周金额上升是因为促销活动效果显著"
+  ],
+  "match": true
+ },
+ {
+  "report": "R18",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R19",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [
+   "把截止前最后一天算进报告周：- 待验证：截止前最后一天审批未落定的订单，可能在审批落定后"
+  ],
+  "match": false
+ },
+ {
+  "report": "R20",
+  "planted": [
+   "特殊情况处理"
+  ],
+  "real_new_issue": false,
+  "flags_before": 1,
+  "flags_now": [
+   "最终文本含未知数字 0%"
+  ],
+  "match": true
+ },
+ {
+  "report": "R21",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R22",
+  "planted": [],
+  "real_new_issue": true,
+  "flags_before": 0,
+  "flags_now": [
+   "把截止前最后一天算进报告周：- 待验证：截止前最后一天审批落定后，该日订单会使本周有效订"
+  ],
+  "match": true
+ },
+ {
+  "report": "R23",
+  "planted": [],
+  "real_new_issue": false,
+  "flags_before": 0,
+  "flags_now": [],
+  "match": true
+ },
+ {
+  "report": "R24",
+  "planted": [],
+  "real_new_issue": true,
+  "flags_before": 0,
+  "flags_now": [
+   "把截止前最后一天算进报告周：- 待验证：截止前最后一天审批未落定的订单在审批落定后，会改"
+  ],
+  "match": true
+ }
+]
