@@ -1,0 +1,148 @@
+### Page
+- Page URL: http://localhost:8599/ai
+- Page Title: 电商零售智能决策与 AI 运营助手
+### Snapshot
+```yaml
+- tabpanel "经营周报" [ref=f1e3294]:
+  - generic [ref=f1e3295]:
+    - generic [ref=f1e3297]:
+      - paragraph [ref=f1e3301]: 生成方式
+      - radiogroup "生成方式" [ref=f1e3302]:
+        - generic [ref=f1e3304] [cursor=pointer]:
+          - radio "真实 LLM" [checked] [ref=f1e3306]
+          - paragraph [ref=f1e3311]: 真实 LLM
+        - generic [ref=f1e3313] [cursor=pointer]:
+          - radio "可信模板（不调用 LLM）" [ref=f1e3315]
+          - paragraph [ref=f1e3319]: 可信模板（不调用 LLM）
+        - generic [ref=f1e3321] [cursor=pointer]:
+          - radio "回放上次记录的 LLM 文本" [ref=f1e3323]
+          - paragraph [ref=f1e3327]: 回放上次记录的 LLM 文本
+    - button [active] [ref=f1e3330] [cursor=pointer]:
+      - paragraph [ref=f1e3335]: 生成本周周报
+    - paragraph [ref=f1e3357]:
+      - text: 生成模式
+      - strong [ref=f1e3358]: live
+      - text: （请求 live） · LLM 尝试 1 次 · 最终数字复核
+      - strong [ref=f1e3359]: 通过
+    - group [ref=f1e3362]:
+      - generic [ref=f1e3364] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f1e3366]: keyboard_arrow_right
+        - paragraph [ref=f1e3369]: LLM 尝试与校验记录
+    - generic [ref=f1e3373]:
+      - heading "经营周报（2026-10-31 至 2026-11-07，不含结束日）" [level=1] [ref=f1e3375]:
+        - text: 经营周报（2026-10-31 至 2026-11-07，不含结束日）
+        - generic [ref=f1e3376]:
+          - link "Link to heading":
+            - /url: "#2026-10-31-2026-11-07"
+      - list [ref=f1e3377]:
+        - listitem [ref=f1e3378]:
+          - text: 生成模式：
+          - strong [ref=f1e3379]: 真实 LLM
+          - text: ；数字全部由程序从事实 JSON 填入
+        - listitem [ref=f1e3380]: 数据：src=synthetic;rel=wh-d3aaa559048c，metrics@e84d17c3；完全合成的模拟数据，不是真实企业
+      - heading "关键数字" [level=2] [ref=f1e3382]:
+        - text: 关键数字
+        - generic [ref=f1e3383]:
+          - link "Link to heading":
+            - /url: "#dc991076"
+      - table [ref=f1e3384]:
+        - rowgroup [ref=f1e3385]:
+          - row [ref=f1e3386]:
+            - columnheader "指标" [ref=f1e3387]
+            - columnheader "值" [ref=f1e3388]
+            - columnheader "依据" [ref=f1e3389]
+        - rowgroup [ref=f1e3390]:
+          - row [ref=f1e3391]:
+            - cell "本周商品金额" [ref=f1e3392]
+            - cell "13,306.01 USD" [ref=f1e3393]
+            - cell [ref=f1e3394]:
+              - code [ref=f1e3395]: fact:a31927a7
+          - row [ref=f1e3396]:
+            - cell "本周有效订单" [ref=f1e3397]
+            - cell "86" [ref=f1e3398]
+            - cell [ref=f1e3399]:
+              - code [ref=f1e3400]: fact:ab7e9a82
+          - row [ref=f1e3401]:
+            - cell "本周客单价" [ref=f1e3402]
+            - cell "154.72 USD" [ref=f1e3403]
+            - cell [ref=f1e3404]:
+              - code [ref=f1e3405]: fact:afdd8b01
+          - row [ref=f1e3406]:
+            - cell "商品金额环比" [ref=f1e3407]
+            - cell "+44.2%" [ref=f1e3408]
+            - cell [ref=f1e3409]:
+              - code [ref=f1e3410]: fact:31cf2f70
+          - row [ref=f1e3411]:
+            - cell "订单环比" [ref=f1e3412]
+            - cell "+36.5%" [ref=f1e3413]
+            - cell [ref=f1e3414]:
+              - code [ref=f1e3415]: fact:0e8603be
+          - row [ref=f1e3416]:
+            - cell "客单价环比" [ref=f1e3417]
+            - cell "+5.6%" [ref=f1e3418]
+            - cell [ref=f1e3419]:
+              - code [ref=f1e3420]: fact:efdd31dc
+          - row [ref=f1e3421]:
+            - cell "商品金额同比（去年同期同星期）" [ref=f1e3422]
+            - cell "-0.4%" [ref=f1e3423]
+            - cell [ref=f1e3424]:
+              - code [ref=f1e3425]: fact:56489918
+          - row [ref=f1e3426]:
+            - cell "本周商品金额相对近期周基线的 z 值（基线为报告周之前的若干完整周）" [ref=f1e3427]
+            - cell "2.07" [ref=f1e3428]
+            - cell [ref=f1e3429]:
+              - code [ref=f1e3430]: fact:f42e59c4
+          - row [ref=f1e3431]:
+            - cell "截止前最后一天的有效订单（审批未落定）" [ref=f1e3432]
+            - cell "2" [ref=f1e3433]
+            - cell [ref=f1e3434]:
+              - code [ref=f1e3435]: fact:81a0bd95
+          - row [ref=f1e3436]:
+            - cell "环比金额变化中订单数的影响" [ref=f1e3437]
+            - cell "3,468.17 USD" [ref=f1e3438]
+            - cell [ref=f1e3439]:
+              - code [ref=f1e3440]: fact:b99bf8fb
+          - row [ref=f1e3441]:
+            - cell "环比金额变化中客单价的影响" [ref=f1e3442]
+            - cell "607.85 USD" [ref=f1e3443]
+            - cell [ref=f1e3444]:
+              - code [ref=f1e3445]: fact:b99bf8fb
+      - heading "解释" [level=2] [ref=f1e3447]:
+        - text: 解释
+        - generic [ref=f1e3448]:
+          - link "Link to heading":
+            - /url: "#4e595732"
+      - paragraph [ref=f1e3449]: 报告周为完整可比的一周，所有订单审批均已落定；金额、订单数与客单价均按下单时间归属，有效订单口径为已审批订单。本周商品金额为 13,306.01 USD，有效订单为 86，客单价为 154.72 USD。环比看，商品金额变化 +44.2%，订单数变化 +36.5%，客单价变化 +5.6%；同比去年同期同星期，商品金额变化 -0.4%。相对报告周之前的若干完整周基线，本周商品金额的 z 值为 2.07。环比金额变化中，订单数的影响为 3,468.17 USD，客单价的影响为 607.85 USD。截止前最后一天的有效订单为 2，该日审批未落定，不在报告周内，也不参与比较。
+      - heading "行动建议" [level=2] [ref=f1e3451]:
+        - text: 行动建议
+        - generic [ref=f1e3452]:
+          - link "Link to heading":
+            - /url: "#bd8bc4f0"
+      - list [ref=f1e3453]:
+        - listitem [ref=f1e3454]: 按商品品类与客户地区拆分本周有效订单与商品金额，定位环比变化集中的品类和地区，作为下周跟进重点。
+        - listitem [ref=f1e3455]: 对本周评价内容做归类整理，结合订单与品类分布核对客单价变化涉及的品类结构，形成下周观察清单。
+        - listitem [ref=f1e3456]: 保持按审批口径统计的日报节奏，对下单后尚未审批的订单单独跟踪，待审批落定后再纳入对应周的口径复盘。
+      - heading "待验证假设" [level=2] [ref=f1e3458]:
+        - text: 待验证假设
+        - generic [ref=f1e3459]:
+          - link "Link to heading":
+            - /url: "#5301c73b"
+      - list [ref=f1e3460]:
+        - listitem [ref=f1e3461]: 待验证：本周商品金额环比变化主要由订单数变动贡献，客单价变动的影响相对较小。
+        - listitem [ref=f1e3462]: 待验证：本周商品金额相对近期周基线的偏离，与部分品类订单集中度上升有关。
+        - listitem [ref=f1e3463]: 待验证：客单价环比变化与高单价品类在订单结构中的占比变化有关。
+        - listitem [ref=f1e3464]: 待验证：同比差异与去年同期同星期的品类和地区订单结构差异有关。
+      - heading "提示" [level=2] [ref=f1e3466]:
+        - text: 提示
+        - generic [ref=f1e3467]:
+          - link "Link to heading":
+            - /url: "#2dd85a4e"
+      - list [ref=f1e3468]:
+        - listitem [ref=f1e3469]: 2026-11-07 当天的订单可能尚未审批，只单独列出，不参与环比/同比
+        - listitem [ref=f1e3470]: 2026-11 为不完整月，月度比较使用 2026-10
+        - listitem [ref=f1e3471]: 引用资料：doc:transaction_rules#1-有效购买@transaction-rules-v1, doc:transaction_rules#2-时间归属与可观察性@transaction-rules-v1
+        - listitem [ref=f1e3472]: 解释部分引用的事实：fact:a31927a7, fact:ab7e9a82, fact:afdd8b01, fact:31cf2f70, fact:0e8603be, fact:efdd31dc, fact:56489918, fact:f42e59c4, fact:81a0bd95, fact:b99bf8fb
+    - paragraph [ref=f1e3477]: 引用：doc:transaction_rules#1-有效购买@transaction-rules-v1、doc:transaction_rules#2-时间归属与可观察性@transaction-rules-v1、fact:0e8603be、fact:31cf2f70、fact:56489918、fact:81a0bd95、fact:a31927a7、fact:ab7e9a82、fact:afdd8b01、fact:b99bf8fb、fact:efdd31dc、fact:f42e59c4
+    - button [ref=f1e3480] [cursor=pointer]:
+      - paragraph [ref=f1e3485]: 下载周报 Markdown
+```

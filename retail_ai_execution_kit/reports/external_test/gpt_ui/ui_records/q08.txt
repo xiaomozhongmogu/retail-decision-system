@@ -1,0 +1,20 @@
+和上个月比呢？
+### Result
+"已回答 · 上个月（West）商品金额为 10,514.63 USD。\n\n口径提示（LLM 生成，已校验不含数字）：本回答为模拟数据，仅反映商品金额口径，未包含其他维度；与上月的对比请以相同口径解读。\n\nkeyboard_arrow_down\n\n查询与证据\n\nSELECT month, product_category, customer_region, valid_lines, merchandise_sales_usd FROM ads.sales_month_category_region LIMIT 5000\n{...}"
+### Ran Playwright code
+```js
+await (async (page) => {
+const replies=page.getByRole('group',{name:'Chat message from assistant',exact:true});
+const n=await replies.count();
+await page.getByRole('textbox',{name:'输入经营问题',exact:true}).fill("和上个月比呢？");
+await page.getByRole('textbox',{name:'输入经营问题',exact:true}).press('Enter');
+await page.getByRole('button',{name:'执行',exact:true}).click();
+await replies.nth(n).waitFor({state:'visible',timeout:60000});
+const last=replies.nth(n);
+const evidence=last.getByText('查询与证据',{exact:true});
+if(await evidence.count()) await evidence.click();
+
+await last.screenshot({path:'output/playwright/q08.png'});
+return await last.innerText();
+})(page);
+```

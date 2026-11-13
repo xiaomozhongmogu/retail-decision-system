@@ -1,0 +1,87 @@
+- generic [ref=f1e2]:
+  - link "Skip to main content" [ref=f1e3] [cursor=pointer]:
+    - /url: "#stMain"
+  - region "Sidebar" [ref=f1e7]:
+    - navigation "App pages" [ref=f1e10]:
+      - list [ref=f1e11]:
+        - generic [ref=f1e12]:
+          - paragraph [ref=f1e16] [cursor=pointer]: 数据口径
+          - listitem [ref=f1e17]:
+            - link [ref=f1e19] [cursor=pointer]:
+              - /url: http://localhost:8599/
+              - paragraph [ref=f1e22]: 数据口径与质量
+        - generic [ref=f1e23]:
+          - paragraph [ref=f1e27] [cursor=pointer]: 经营
+          - listitem [ref=f1e28]:
+            - link [ref=f1e30] [cursor=pointer]:
+              - /url: http://localhost:8599/business
+              - paragraph [ref=f1e33]: 经营总览
+        - generic [ref=f1e34]:
+          - paragraph [ref=f1e38] [cursor=pointer]: 客户
+          - listitem [ref=f1e39]:
+            - link [ref=f1e41] [cursor=pointer]:
+              - /url: http://localhost:8599/customers
+              - paragraph [ref=f1e44]: 生命周期与分群
+        - generic [ref=f1e45]:
+          - paragraph [ref=f1e49] [cursor=pointer]: 预测
+          - listitem [ref=f1e50]:
+            - link [ref=f1e52] [cursor=pointer]:
+              - /url: http://localhost:8599/prediction
+              - paragraph [ref=f1e55]: 复购预测
+        - generic [ref=f1e56]:
+          - paragraph [ref=f1e60] [cursor=pointer]: AI 工作台
+          - listitem [ref=f1e61]:
+            - link [ref=f1e63] [cursor=pointer]:
+              - /url: http://localhost:8599/ai
+              - paragraph [ref=f1e66]: AI 工作台
+  - generic [ref=f1e4]:
+    - banner [ref=f1e70]:
+      - generic [ref=f1e73]:
+        - button "Deploy" [ref=f1e75] [cursor=pointer]
+        - button "Main menu" [ref=f1e79] [cursor=pointer]
+    - main [ref=f1e5]:
+      - generic [ref=f1e83]:
+        - heading "数据口径与质量" [level=1] [ref=f1e88]:
+          - text: 数据口径与质量
+          - generic [ref=f1e89]:
+            - link "Link to heading":
+              - /url: "#179e8733"
+        - paragraph [ref=f1e94]:
+          - strong [ref=f1e95]: 数据版本
+          - code [ref=f1e96]: wh-d3aaa559048c
+          - text: ·
+          - strong [ref=f1e97]: 数据时间范围
+          - text: 2024-01-01 至 2026-11-07 ·
+          - strong [ref=f1e98]: as_of（截止，不含）
+          - text: 2026-11-08
+        - paragraph [ref=f1e103]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+        - generic [ref=f1e105]:
+          - tablist [ref=f1e106]:
+            - tab [ref=f1e107] [cursor=pointer]:
+              - paragraph [ref=f1e109]: 来源与版本
+            - tab [ref=f1e111] [cursor=pointer]:
+              - paragraph [ref=f1e113]: 规模与覆盖
+            - tab [active] [selected] [ref=f1e114] [cursor=pointer]:
+              - paragraph [ref=f1e116]: 质量检查
+            - tab [ref=f1e117] [cursor=pointer]:
+              - paragraph [ref=f1e119]: 有效购买对账
+            - tab [ref=f1e120] [cursor=pointer]:
+              - paragraph [ref=f1e122]: 缺失与重复
+            - tab [ref=f1e123] [cursor=pointer]:
+              - paragraph [ref=f1e125]: 指标解释
+            - tab [ref=f1e126] [cursor=pointer]:
+              - paragraph [ref=f1e128]: 问题样本
+          - tabpanel "质量检查" [ref=f1e384]:
+            - generic [ref=f1e385]:
+              - paragraph [ref=f1e390]:
+                - text: 质量门槛：
+                - strong [ref=f1e391]: passed
+                - text: （10/10）
+              - generic [ref=f1e396]:
+                - button "Show/hide columns" [ref=f1e400] [cursor=pointer]
+                - button "Download as CSV" [ref=f1e406] [cursor=pointer]
+                - button "Search" [ref=f1e412] [cursor=pointer]
+                - button "Fullscreen" [ref=f1e418] [cursor=pointer]
+              - alert [ref=f1e432]:
+                - paragraph [ref=f1e436]: 2026-Q4：不完整季度（截止前只有少数周快照），正例不足 100，不能单独作为测试期；ML-04 切分时须与相邻完整季度合并或排除
+              - paragraph [ref=f1e441]: 正负类数量按冻结口径（审批早于 as_of；标签窗后留 1 天成熟）重算；比例低（约 7%），分类评估以 PR-AUC 与校准为主

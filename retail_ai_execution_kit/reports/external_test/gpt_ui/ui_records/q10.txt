@@ -1,0 +1,20 @@
+2026年12月的商品销售总额是多少？
+### Result
+"没有数据 · 没有数据：数据截止 2026-11-08（不含），所问时间 2026-12 没有数据"
+### Ran Playwright code
+```js
+await (async (page) => {
+const replies=page.getByRole('group',{name:'Chat message from assistant',exact:true});
+const n=await replies.count();
+await page.getByRole('textbox',{name:'输入经营问题',exact:true}).fill("2026年12月的商品销售总额是多少？");
+await page.getByRole('textbox',{name:'输入经营问题',exact:true}).press('Enter');
+await page.getByRole('button',{name:'执行',exact:true}).click();
+await replies.nth(n).waitFor({state:'visible',timeout:60000});
+const last=replies.nth(n);
+const evidence=last.getByText('查询与证据',{exact:true});
+if(await evidence.count()) await evidence.click();
+
+await last.screenshot({path:'output/playwright/q10.png'});
+return await last.innerText();
+})(page);
+```

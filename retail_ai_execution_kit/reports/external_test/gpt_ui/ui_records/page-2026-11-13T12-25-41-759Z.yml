@@ -1,0 +1,114 @@
+- generic [ref=f7e2]:
+  - link "Skip to main content" [ref=f7e3] [cursor=pointer]:
+    - /url: "#stMain"
+  - region "Sidebar":
+    - generic [ref=f7e4]:
+      - navigation "App pages":
+        - list:
+          - generic:
+            - paragraph [ref=f7e6] [cursor=pointer]: 数据口径
+            - listitem:
+              - link [ref=f7e7] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f7e8]: 数据口径与质量
+          - generic:
+            - paragraph [ref=f7e10] [cursor=pointer]: 经营
+            - listitem:
+              - link [ref=f7e11] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f7e12]: 经营总览
+          - generic:
+            - paragraph [ref=f7e14] [cursor=pointer]: 客户
+            - listitem:
+              - link [ref=f7e15] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f7e16]: 生命周期与分群
+          - generic:
+            - paragraph [ref=f7e18] [cursor=pointer]: 预测
+            - listitem:
+              - link [ref=f7e19] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f7e20]: 复购预测
+          - generic:
+            - paragraph [ref=f7e22] [cursor=pointer]: AI 工作台
+            - listitem:
+              - link [ref=f7e23] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f7e24]: AI 工作台
+  - generic [ref=f7e27]:
+    - banner [ref=f7e28]:
+      - generic [ref=f7e30]:
+        - button "Expand sidebar" [ref=f7e535] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f7e537]: keyboard_double_arrow_right
+        - generic [ref=f7e36]:
+          - button "Deploy" [ref=f7e38] [cursor=pointer]
+          - button "Main menu" [ref=f7e42] [cursor=pointer]
+    - main [ref=f7e46]:
+      - generic [ref=f7e48]:
+        - heading "数据口径与质量" [level=1] [ref=f7e387]:
+          - text: 数据口径与质量
+          - generic [ref=f7e388]:
+            - link "Link to heading":
+              - /url: "#179e8733"
+        - paragraph [ref=f7e393]:
+          - strong [ref=f7e394]: 数据版本
+          - code [ref=f7e395]: wh-d3aaa559048c
+          - text: ·
+          - strong [ref=f7e396]: 数据时间范围
+          - text: 2024-01-01 至 2026-11-07 ·
+          - strong [ref=f7e397]: as_of（截止，不含）
+          - text: 2026-11-08
+        - paragraph [ref=f7e402]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+        - generic [ref=f7e403]:
+          - generic [ref=f7e404]:
+            - tablist [ref=f7e405]:
+              - tab [selected] [ref=f7e406] [cursor=pointer]:
+                - paragraph [ref=f7e408]: 来源与版本
+              - tab [ref=f7e410] [cursor=pointer]:
+                - paragraph [ref=f7e412]: 规模与覆盖
+              - tab [ref=f7e413] [cursor=pointer]:
+                - paragraph [ref=f7e415]: 质量检查
+              - tab [ref=f7e416] [cursor=pointer]:
+                - paragraph [ref=f7e418]: 有效购买对账
+              - tab [ref=f7e419] [cursor=pointer]:
+                - paragraph [ref=f7e421]: 缺失与重复
+              - tab [ref=f7e422] [cursor=pointer]:
+                - paragraph [ref=f7e424]: 指标解释
+              - tab [ref=f7e425] [cursor=pointer]:
+                - paragraph [ref=f7e427]: 问题样本
+            - tabpanel "来源与版本" [ref=f7e428]:
+              - generic [ref=f7e429]:
+                - paragraph [ref=f7e434]:
+                  - strong [ref=f7e435]: 数据性质
+                  - text: ：完全合成数据（生成器运行 simulation_run_20260721_003414_baseline_seed42）；不是真实企业或顾客
+                - paragraph [ref=f7e440]:
+                  - strong [ref=f7e441]: 使用依据
+                  - text: ：D012 用户授权的工作假设（D013 冻结主数据）；教师确认：无；不得写成教师已确认
+                - paragraph [ref=f7e446]:
+                  - strong [ref=f7e447]: 原始数据包
+                  - text: ：
+                  - code [ref=f7e448]: ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip
+                  - text: ，SHA-256
+                  - code [ref=f7e449]: d50ee64a0478d8ae…
+                  - text: ，1,310,750 字节（解压后 CSV 7,974,631 字节）
+                - paragraph [ref=f7e454]:
+                  - strong [ref=f7e455]: 许可说明
+                  - text: ：网站下载件未标明数据许可；同作者仓库同类样例为 CC0，代码为 MIT；原始数据只用于课程，不对外发布（C07）
+                - generic [ref=f7e460]:
+                  - button "Show/hide columns" [ref=f7e464] [cursor=pointer]
+                  - button "Download as CSV" [ref=f7e470] [cursor=pointer]
+                  - button "Search" [ref=f7e476] [cursor=pointer]
+                  - button "Fullscreen" [ref=f7e482] [cursor=pointer]
+                - paragraph [ref=f7e498]:
+                  - strong [ref=f7e499]: 尚未确定的事项
+                - list [ref=f7e504]:
+                  - listitem [ref=f7e505]: 教师是否认可完全合成数据作为课程“原始数据”，以及时效按哪个日期判断（D001/D006，GOV-04）
+                - list [ref=f7e510]:
+                  - listitem [ref=f7e511]: 课程最终提交时的数据交付方式（压缩包、仓库链接或其他），教师没有规定
+                - list [ref=f7e516]:
+                  - listitem [ref=f7e517]: 网站下载件未标明数据许可（同作者同类样例为 CC0）
+                - list [ref=f7e522]:
+                  - listitem [ref=f7e523]: 源时间没有时区（UTC 是工程假设）
+                - list [ref=f7e528]:
+                  - listitem [ref=f7e529]: 其他成员的电脑（Windows 或 Intel）没有验证重建（REL-02）
+          - button "Scroll tabs left" [ref=f7e538] [cursor=pointer]

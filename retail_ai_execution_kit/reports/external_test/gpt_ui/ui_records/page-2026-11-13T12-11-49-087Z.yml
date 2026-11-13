@@ -1,0 +1,90 @@
+- generic:
+  - generic [ref=f1e927]:
+    - log
+    - log
+  - generic [ref=f1e2]:
+    - link "Skip to main content" [ref=f1e1049] [cursor=pointer]:
+      - /url: "#stMain"
+    - region "Sidebar" [ref=f1e1050]:
+      - generic [ref=f1e8]:
+        - button "Collapse sidebar" [expanded] [ref=f1e443] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f1e445]: keyboard_double_arrow_left
+        - navigation "App pages" [ref=f1e1051]:
+          - list [ref=f1e11]:
+            - generic [ref=f1e12]:
+              - paragraph [ref=f1e16] [cursor=pointer]: 数据口径
+              - listitem [ref=f1e17]:
+                - link [ref=f1e1052] [cursor=pointer]:
+                  - /url: http://localhost:8599/
+                  - paragraph [ref=f1e22]: 数据口径与质量
+            - generic [ref=f1e23]:
+              - paragraph [ref=f1e27] [cursor=pointer]: 经营
+              - listitem [ref=f1e28]:
+                - link [ref=f1e1053] [cursor=pointer]:
+                  - /url: http://localhost:8599/business
+                  - paragraph [ref=f1e33]: 经营总览
+            - generic [ref=f1e34]:
+              - paragraph [ref=f1e38] [cursor=pointer]: 客户
+              - listitem [ref=f1e39]:
+                - link [ref=f1e1054] [cursor=pointer]:
+                  - /url: http://localhost:8599/customers
+                  - paragraph [ref=f1e44]: 生命周期与分群
+            - generic [ref=f1e45]:
+              - paragraph [ref=f1e49] [cursor=pointer]: 预测
+              - listitem [ref=f1e50]:
+                - link [ref=f1e1055] [cursor=pointer]:
+                  - /url: http://localhost:8599/prediction
+                  - paragraph [ref=f1e55]: 复购预测
+            - generic [ref=f1e56]:
+              - paragraph [ref=f1e60] [cursor=pointer]: AI 工作台
+              - listitem [ref=f1e61]:
+                - link [ref=f1e1056] [cursor=pointer]:
+                  - /url: http://localhost:8599/ai
+                  - paragraph [ref=f1e66]: AI 工作台
+    - generic [ref=f1e4]:
+      - banner [ref=f1e70]:
+        - generic [ref=f1e73]:
+          - button "Deploy" [ref=f1e1057] [cursor=pointer]
+          - button "Main menu" [ref=f1e1058] [cursor=pointer]
+      - main [ref=f1e5]:
+        - generic [ref=f1e83]:
+          - heading "AI 工作台" [level=1] [ref=f1e1536]:
+            - text: AI 工作台
+            - generic [ref=f1e1537]:
+              - link "Link to heading":
+                - /url: "#ai"
+          - paragraph [ref=f1e1542]:
+            - strong [ref=f1e1543]: 数据版本
+            - code [ref=f1e1544]: wh-d3aaa559048c
+            - text: ·
+            - strong [ref=f1e1545]: 数据时间范围
+            - text: 2024-01-01 至 2026-11-07 ·
+            - strong [ref=f1e1546]: as_of（截止，不含）
+            - text: 2026-11-08
+          - paragraph [ref=f1e1551]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+          - generic [ref=f1e1553]:
+            - paragraph [ref=f1e1560]: LLM：已配置（deepseek-chat） · 会话 ui-fdb15e70 · 结果只保存在本浏览器会话中
+            - generic [ref=f1e1565] [cursor=pointer]:
+              - switch "使用 LLM" [checked] [ref=f1e1567]
+              - paragraph [ref=f1e1574]: 使用 LLM
+          - generic [ref=f1e1576]:
+            - tablist [ref=f1e1577]:
+              - tab [selected] [ref=f1e1578] [cursor=pointer]:
+                - paragraph [ref=f1e1580]: 查询助手
+              - tab [ref=f1e1582] [cursor=pointer]:
+                - paragraph [ref=f1e1584]: 经营周报
+              - tab [ref=f1e1585] [cursor=pointer]:
+                - paragraph [ref=f1e1587]: 挽回 Agent
+            - tabpanel "查询助手" [ref=f1e1588]:
+              - generic [ref=f1e1589]:
+                - paragraph [ref=f1e1594]: 示例：2026年10月的商品金额是多少？ / 那西部呢 / 2025年哪个品类的商品金额最高？ / 最近6个月订单数趋势。数字只来自实际执行的查询。
+                - generic [ref=f1e1598]:
+                  - textbox "输入经营问题" [active] [ref=f1e1600]
+                  - button "Send message" [disabled] [ref=f1e1602]
+                - status [ref=f1e1608]:
+                  - paragraph [ref=f1e1612]: 待执行：刚过去的完整月份一共卖了多少钱？只算商品，不算邮费。
+                - generic [ref=f1e1614]:
+                  - button [ref=f1e1619] [cursor=pointer]:
+                    - paragraph [ref=f1e1624]: 执行
+                  - button [ref=f1e1629] [cursor=pointer]:
+                    - paragraph [ref=f1e1634]: 取消

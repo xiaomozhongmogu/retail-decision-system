@@ -1,0 +1,91 @@
+- generic [ref=f2e2]:
+  - link "Skip to main content" [ref=f2e3] [cursor=pointer]:
+    - /url: "#stMain"
+  - region "Sidebar" [ref=f2e7]:
+    - navigation "App pages" [ref=f2e10]:
+      - list [ref=f2e11]:
+        - generic [ref=f2e12]:
+          - paragraph [ref=f2e16] [cursor=pointer]: 数据口径
+          - listitem [ref=f2e17]:
+            - link [ref=f2e19] [cursor=pointer]:
+              - /url: http://localhost:8599/
+              - paragraph [ref=f2e22]: 数据口径与质量
+        - generic [ref=f2e23]:
+          - paragraph [ref=f2e27] [cursor=pointer]: 经营
+          - listitem [ref=f2e28]:
+            - link [ref=f2e30] [cursor=pointer]:
+              - /url: http://localhost:8599/business
+              - paragraph [ref=f2e33]: 经营总览
+        - generic [ref=f2e34]:
+          - paragraph [ref=f2e38] [cursor=pointer]: 客户
+          - listitem [ref=f2e39]:
+            - link [ref=f2e41] [cursor=pointer]:
+              - /url: http://localhost:8599/customers
+              - paragraph [ref=f2e44]: 生命周期与分群
+        - generic [ref=f2e45]:
+          - paragraph [ref=f2e49] [cursor=pointer]: 预测
+          - listitem [ref=f2e50]:
+            - link [ref=f2e52] [cursor=pointer]:
+              - /url: http://localhost:8599/prediction
+              - paragraph [ref=f2e55]: 复购预测
+        - generic [ref=f2e56]:
+          - paragraph [ref=f2e60] [cursor=pointer]: AI 工作台
+          - listitem [ref=f2e61]:
+            - link [ref=f2e63] [cursor=pointer]:
+              - /url: http://localhost:8599/ai
+              - paragraph [ref=f2e66]: AI 工作台
+  - generic [ref=f2e4]:
+    - banner [ref=f2e70]:
+      - generic [ref=f2e73]:
+        - button "Deploy" [ref=f2e75] [cursor=pointer]
+        - button "Main menu" [ref=f2e79] [cursor=pointer]
+    - main [ref=f2e5]:
+      - generic [ref=f2e83]:
+        - heading "客户生命周期与分群" [level=1] [ref=f2e166]:
+          - text: 客户生命周期与分群
+          - generic [ref=f2e167]:
+            - link "Link to heading":
+              - /url: "#7b341262"
+        - paragraph [ref=f2e172]:
+          - strong [ref=f2e173]: 数据版本
+          - code [ref=f2e174]: wh-d3aaa559048c
+          - text: ·
+          - strong [ref=f2e175]: 数据时间范围
+          - text: 2024-01-01 至 2026-11-07 ·
+          - strong [ref=f2e176]: as_of（截止，不含）
+          - text: 2026-11-08
+        - paragraph [ref=f2e181]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+        - paragraph [ref=f2e186]:
+          - text: 三个概念分开：
+          - strong [ref=f2e187]: 生命周期阶段
+          - text: （距上次购买多久，规则 lifecycle-v1）、
+          - strong [ref=f2e188]: 价值群
+          - text: （近 90 天 RFM 规则分群，segments-v1）、
+          - strong [ref=f2e189]: 复购风险
+          - text: （模型 repurchase-logreg-v1，个体排序接近随机）。它们回答不同问题，不能互相替代。
+        - generic [ref=f2e191]:
+          - tablist [ref=f2e192]:
+            - tab [ref=f2e193] [cursor=pointer]:
+              - paragraph [ref=f2e195]: 生命周期阶段
+            - tab [ref=f2e197] [cursor=pointer]:
+              - paragraph [ref=f2e199]: 价值群
+            - tab [active] [selected] [ref=f2e200] [cursor=pointer]:
+              - paragraph [ref=f2e202]: 复购风险
+            - tab [ref=f2e203] [cursor=pointer]:
+              - paragraph [ref=f2e205]: cohort 留存
+            - tab [ref=f2e206] [cursor=pointer]:
+              - paragraph [ref=f2e208]: 查看客户
+          - tabpanel "复购风险" [ref=f2e469]:
+            - generic [ref=f2e470]:
+              - generic [ref=f2e472]:
+                - generic [ref=f2e477]:
+                  - paragraph [ref=f2e481]: 已评分客户
+                  - paragraph [ref=f2e484]: "704"
+                - generic [ref=f2e489]:
+                  - paragraph [ref=f2e493]: 平均 30 天复购概率
+                  - paragraph [ref=f2e496]: 8.0%
+                - generic [ref=f2e501]:
+                  - paragraph [ref=f2e505]: 母体外（近 90 天无购买）
+                  - paragraph [ref=f2e508]: 2,628
+              - alert [ref=f2e511]:
+                - paragraph [ref=f2e515]: 复购风险 = 1 − 复购概率。模型测试 ROC-AUC 0.515 [0.483, 0.546]，周内个体排序接近随机：只用平均水平作参考，不用来挑选个人、不显示“高风险名单”；母体外客户没有模型概率（docs/model_card.md）。

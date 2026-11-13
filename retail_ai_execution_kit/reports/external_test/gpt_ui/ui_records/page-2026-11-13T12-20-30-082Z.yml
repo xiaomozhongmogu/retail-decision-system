@@ -1,0 +1,167 @@
+- generic [ref=f2e2]:
+  - link "Skip to main content" [ref=f2e3] [cursor=pointer]:
+    - /url: "#stMain"
+  - region "Sidebar" [ref=f2e7]:
+    - generic [ref=f2e8]:
+      - button "Collapse sidebar" [expanded] [ref=f2e159] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f2e161]: keyboard_double_arrow_left
+      - navigation "App pages" [ref=f2e10]:
+        - list [ref=f2e11]:
+          - generic [ref=f2e12]:
+            - paragraph [ref=f2e16] [cursor=pointer]: 数据口径
+            - listitem [ref=f2e17]:
+              - link [ref=f2e19] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f2e22]: 数据口径与质量
+          - generic [ref=f2e23]:
+            - paragraph [ref=f2e27] [cursor=pointer]: 经营
+            - listitem [ref=f2e28]:
+              - link [ref=f2e30] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f2e33]: 经营总览
+          - generic [ref=f2e34]:
+            - paragraph [ref=f2e38] [cursor=pointer]: 客户
+            - listitem [ref=f2e39]:
+              - link [active] [ref=f2e41] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f2e44]: 生命周期与分群
+          - generic [ref=f2e45]:
+            - paragraph [ref=f2e49] [cursor=pointer]: 预测
+            - listitem [ref=f2e50]:
+              - link [ref=f2e52] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f2e55]: 复购预测
+          - generic [ref=f2e56]:
+            - paragraph [ref=f2e60] [cursor=pointer]: AI 工作台
+            - listitem [ref=f2e61]:
+              - link [ref=f2e63] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f2e66]: AI 工作台
+  - generic [ref=f2e4]:
+    - banner [ref=f2e70]:
+      - generic [ref=f2e73]:
+        - button "Deploy" [ref=f2e75] [cursor=pointer]
+        - button "Main menu" [ref=f2e79] [cursor=pointer]
+    - main [ref=f2e5]:
+      - generic [ref=f2e83]:
+        - heading "客户生命周期与分群" [level=1] [ref=f2e166]:
+          - text: 客户生命周期与分群
+          - generic [ref=f2e167]:
+            - link "Link to heading":
+              - /url: "#7b341262"
+        - paragraph [ref=f2e172]:
+          - strong [ref=f2e173]: 数据版本
+          - code [ref=f2e174]: wh-d3aaa559048c
+          - text: ·
+          - strong [ref=f2e175]: 数据时间范围
+          - text: 2024-01-01 至 2026-11-07 ·
+          - strong [ref=f2e176]: as_of（截止，不含）
+          - text: 2026-11-08
+        - paragraph [ref=f2e181]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+        - paragraph [ref=f2e186]:
+          - text: 三个概念分开：
+          - strong [ref=f2e187]: 生命周期阶段
+          - text: （距上次购买多久，规则 lifecycle-v1）、
+          - strong [ref=f2e188]: 价值群
+          - text: （近 90 天 RFM 规则分群，segments-v1）、
+          - strong [ref=f2e189]: 复购风险
+          - text: （模型 repurchase-logreg-v1，个体排序接近随机）。它们回答不同问题，不能互相替代。
+        - generic [ref=f2e191]:
+          - tablist [ref=f2e192]:
+            - tab [selected] [ref=f2e193] [cursor=pointer]:
+              - paragraph [ref=f2e195]: 生命周期阶段
+            - tab [ref=f2e197] [cursor=pointer]:
+              - paragraph [ref=f2e199]: 价值群
+            - tab [ref=f2e200] [cursor=pointer]:
+              - paragraph [ref=f2e202]: 复购风险
+            - tab [ref=f2e203] [cursor=pointer]:
+              - paragraph [ref=f2e205]: cohort 留存
+            - tab [ref=f2e206] [cursor=pointer]:
+              - paragraph [ref=f2e208]: 查看客户
+          - tabpanel "生命周期阶段" [ref=f2e209]:
+            - generic [ref=f2e210]:
+              - generic [ref=f2e212]:
+                - generic [ref=f2e217]:
+                  - paragraph [ref=f2e221]: 新客
+                  - paragraph [ref=f2e224]: "21"
+                - generic [ref=f2e229]:
+                  - paragraph [ref=f2e233]: 活跃
+                  - paragraph [ref=f2e236]: "683"
+                - generic [ref=f2e241]:
+                  - paragraph [ref=f2e245]: 沉默预警
+                  - paragraph [ref=f2e248]: "530"
+                - generic [ref=f2e253]:
+                  - paragraph [ref=f2e257]: 沉睡
+                  - paragraph [ref=f2e260]: 2,098
+              - paragraph [ref=f2e265]: 快照 as_of 2026-11-02（每周一）。规则：新客 = 首次可观测购买在 30 天内；活跃 = 最近购买在 90 天内；沉默预警 = 90–180 天；沉睡 = 180 天以上。
+              - list [ref=f2e270]:
+                - listitem [ref=f2e271]:
+                  - text: 未知：尚无购买
+                  - strong [ref=f2e272]: "315"
+                  - text: 人（共 3,647 名合成客户中截至快照没有可见有效购买，不进入快照、分群和模型）。
+                - listitem [ref=f2e273]:
+                  - text: 未知：匿名
+                  - strong [ref=f2e274]: "0"
+                  - text: 单（本数据所有订单都有客户编号）。
+              - paragraph [ref=f2e279]:
+                - strong [ref=f2e280]: 沉睡客户按距上次购买天数
+                - text: （长期沉睡仍是“沉睡”，不标为已流失）
+              - generic [ref=f2e285]:
+                - button "Show/hide columns" [ref=f2e289] [cursor=pointer]
+                - button "Download as CSV" [ref=f2e295] [cursor=pointer]
+                - button "Search" [ref=f2e301] [cursor=pointer]
+                - button "Fullscreen" [ref=f2e307] [cursor=pointer]
+              - status [ref=f2e321]:
+                - paragraph [ref=f2e325]: 各状态未来 180 天再次购买的比例几乎相同（活跃 35.0%、预警 35.1%、沉睡 35.2%、新客 36.3%，docs/lifecycle_rules.md）：状态描述跟进时机，不预测流失。
+              - generic [ref=f2e328]:
+                - generic [ref=f2e330]:
+                  - button "Show data" [ref=f2e333] [cursor=pointer]
+                  - button "Download as PNG" [ref=f2e339] [cursor=pointer]
+                  - button "Copy Vega-Lite spec" [ref=f2e345] [cursor=pointer]
+                  - button "Fullscreen" [ref=f2e351] [cursor=pointer]
+                - generic "Vega visualization" [ref=f2e355]:
+                  - img [ref=f2e356]:
+                    - generic [ref=f2e361]:
+                      - generic "X-axis titled '快照日期' for a time scale with values from Monday, 01 April 2024, 8:00:00 AM to Monday, 02 November 2026, 8:00:00 AM" [ref=f2e365]:
+                        - generic [ref=f2e367]:
+                          - generic:
+                            - generic: July
+                            - generic: October
+                            - generic: "2025"
+                            - generic: April
+                            - generic: July
+                            - generic: October
+                            - generic: "2026"
+                            - generic: April
+                            - generic: July
+                            - generic: October
+                          - generic: 快照日期
+                      - generic "Y-axis titled '客户数（人）' for a linear scale with values from 0 to 2,200" [ref=f2e368]:
+                        - generic [ref=f2e370]:
+                          - generic:
+                            - generic: "0"
+                            - generic: "200"
+                            - generic: "400"
+                            - generic: "600"
+                            - generic: "800"
+                            - generic: 1,000
+                            - generic: 1,200
+                            - generic: 1,400
+                            - generic: 1,600
+                            - generic: 1,800
+                            - generic: 2,000
+                            - generic: 2,200
+                          - generic: 客户数（人）
+                      - generic [ref=f2e371]:
+                        - 'generic "快照日期: Apr 01, 2024; 客户数（人）: 444; 状态: 活跃" [ref=f2e376]'
+                        - 'generic "快照日期: Jul 01, 2024; 客户数（人）: 5; 状态: 沉睡" [ref=f2e381]'
+                        - 'generic "快照日期: Apr 01, 2024; 客户数（人）: 4; 状态: 沉默预警" [ref=f2e386]'
+                        - 'generic "快照日期: Apr 01, 2024; 客户数（人）: 173; 状态: 新客" [ref=f2e391]'
+                      - 'generic "Symbol legend titled ''状态'' for stroke color with 4 values: 新客, 沉睡, 沉默预警, 活跃" [ref=f2e392]':
+                        - generic [ref=f2e394]:
+                          - generic [ref=f2e398]:
+                            - generic [ref=f2e399]: 新客
+                            - generic [ref=f2e402]: 沉睡
+                            - generic [ref=f2e405]: 沉默预警
+                            - generic [ref=f2e408]: 活跃
+                          - generic: 状态

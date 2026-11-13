@@ -1,0 +1,114 @@
+- generic [ref=f7e2]:
+  - link "Skip to main content" [ref=f7e3] [cursor=pointer]:
+    - /url: "#stMain"
+  - region "Sidebar":
+    - generic [ref=f7e4]:
+      - navigation "App pages":
+        - list:
+          - generic:
+            - paragraph [ref=f7e6] [cursor=pointer]: 数据口径
+            - listitem:
+              - link [ref=f7e7] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f7e8]: 数据口径与质量
+          - generic:
+            - paragraph [ref=f7e10] [cursor=pointer]: 经营
+            - listitem:
+              - link [ref=f7e11] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f7e12]: 经营总览
+          - generic:
+            - paragraph [ref=f7e14] [cursor=pointer]: 客户
+            - listitem:
+              - link [ref=f7e15] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f7e16]: 生命周期与分群
+          - generic:
+            - paragraph [ref=f7e18] [cursor=pointer]: 预测
+            - listitem:
+              - link [ref=f7e19] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f7e20]: 复购预测
+          - generic:
+            - paragraph [ref=f7e22] [cursor=pointer]: AI 工作台
+            - listitem:
+              - link [ref=f7e23] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f7e24]: AI 工作台
+  - generic [ref=f7e27]:
+    - banner [ref=f7e28]:
+      - generic [ref=f7e30]:
+        - button "Expand sidebar" [ref=f7e535] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f7e537]: keyboard_double_arrow_right
+        - generic [ref=f7e36]:
+          - button "Deploy" [ref=f7e38] [cursor=pointer]
+          - button "Main menu" [ref=f7e42] [cursor=pointer]
+    - main [ref=f7e46]:
+      - generic [ref=f7e48]:
+        - heading "数据口径与质量" [level=1] [ref=f7e387]:
+          - text: 数据口径与质量
+          - generic [ref=f7e388]:
+            - link "Link to heading":
+              - /url: "#179e8733"
+        - paragraph [ref=f7e393]:
+          - strong [ref=f7e394]: 数据版本
+          - code [ref=f7e395]: wh-d3aaa559048c
+          - text: ·
+          - strong [ref=f7e396]: 数据时间范围
+          - text: 2024-01-01 至 2026-11-07 ·
+          - strong [ref=f7e397]: as_of（截止，不含）
+          - text: 2026-11-08
+        - paragraph [ref=f7e402]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+        - generic [ref=f7e403]:
+          - generic [ref=f7e404]:
+            - tablist [ref=f7e405]:
+              - tab [ref=f7e406] [cursor=pointer]:
+                - paragraph [ref=f7e408]: 来源与版本
+              - tab [ref=f7e410] [cursor=pointer]:
+                - paragraph [ref=f7e412]: 规模与覆盖
+              - tab [ref=f7e413] [cursor=pointer]:
+                - paragraph [ref=f7e415]: 质量检查
+              - tab [ref=f7e416] [cursor=pointer]:
+                - paragraph [ref=f7e418]: 有效购买对账
+              - tab [ref=f7e419] [cursor=pointer]:
+                - paragraph [ref=f7e421]: 缺失与重复
+              - tab [active] [selected] [ref=f7e422] [cursor=pointer]:
+                - paragraph [ref=f7e424]: 指标解释
+              - tab [ref=f7e425] [cursor=pointer]:
+                - paragraph [ref=f7e427]: 问题样本
+            - tabpanel "指标解释" [ref=f7e543]:
+              - generic [ref=f7e544]:
+                - generic [ref=f7e546]:
+                  - paragraph [ref=f7e550]: 选择指标
+                  - group [ref=f7e552]:
+                    - combobox "选择指标" [ref=f7e553]: 有效订单数（valid_orders）
+                    - button "Open" [ref=f7e554] [cursor=pointer]
+                - paragraph [ref=f7e562]:
+                  - strong [ref=f7e563]: 定义
+                  - text: ：窗口内下单且截至 as_of 已审批的订单去重数
+                - paragraph [ref=f7e568]:
+                  - strong [ref=f7e569]: 单位
+                  - text: ：orders
+                - paragraph [ref=f7e574]:
+                  - strong [ref=f7e575]: 对象
+                  - text: ：全部订单
+                - paragraph [ref=f7e580]:
+                  - strong [ref=f7e581]: 包含
+                  - text: ：有效购买：approved_ts 非空且 approved_ts < as_of（已审批）；按 purchase_ts 归属窗口
+                - paragraph [ref=f7e586]:
+                  - strong [ref=f7e587]: 排除
+                  - text: ：已取消（无审批）；截至 as_of 尚未审批
+                - paragraph [ref=f7e592]:
+                  - strong [ref=f7e593]: 分子
+                  - text: ：count(distinct order_id)
+                - paragraph [ref=f7e598]:
+                  - strong [ref=f7e599]: 时间窗
+                  - text: ：左闭右开 [start, end)，按 purchase_ts（UTC 工程假设）；as_of 默认等于数据截止 2026-11-08T00:00:00Z
+                - paragraph [ref=f7e604]:
+                  - strong [ref=f7e605]: 空值与零
+                  - text: ：计数和金额在空窗口返回 0；比率分母为 0 返回 null 并附 zero_denominator 警告
+                - paragraph [ref=f7e610]:
+                  - strong [ref=f7e611]: 可用维度
+                  - text: ：purchase date/week/month, customer_state, customer_region, product_category, seller_id, payment_type
+                - paragraph [ref=f7e616]: 口径版本 transaction-rules-v1（frozen_v1），唯一维护位置 contracts/metrics.json；详细规则见 docs/transaction_rules.md。
+          - button "Scroll tabs left" [ref=f7e538] [cursor=pointer]

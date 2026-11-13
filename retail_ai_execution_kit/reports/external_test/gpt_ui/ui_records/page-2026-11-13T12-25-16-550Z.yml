@@ -1,0 +1,140 @@
+- generic [ref=f7e2]:
+  - link "Skip to main content" [ref=f7e3] [cursor=pointer]:
+    - /url: "#stMain"
+  - region "Sidebar":
+    - generic [ref=f7e4]:
+      - navigation "App pages":
+        - list:
+          - generic:
+            - paragraph [ref=f7e6] [cursor=pointer]: 数据口径
+            - listitem:
+              - link [ref=f7e7] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f7e8]: 数据口径与质量
+          - generic:
+            - paragraph [ref=f7e10] [cursor=pointer]: 经营
+            - listitem:
+              - link [ref=f7e11] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f7e12]: 经营总览
+          - generic:
+            - paragraph [ref=f7e14] [cursor=pointer]: 客户
+            - listitem:
+              - link [ref=f7e15] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f7e16]: 生命周期与分群
+          - generic:
+            - paragraph [ref=f7e18] [cursor=pointer]: 预测
+            - listitem:
+              - link [ref=f7e19] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f7e20]: 复购预测
+          - generic:
+            - paragraph [ref=f7e22] [cursor=pointer]: AI 工作台
+            - listitem:
+              - link [ref=f7e23] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f7e24]: AI 工作台
+  - generic [ref=f7e27]:
+    - banner [ref=f7e28]:
+      - generic [ref=f7e30]:
+        - button "Expand sidebar" [ref=f7e33] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f7e35]: keyboard_double_arrow_right
+        - generic [ref=f7e36]:
+          - button "Deploy" [ref=f7e38] [cursor=pointer]
+          - button "Main menu" [ref=f7e42] [cursor=pointer]
+    - main [ref=f7e46]:
+      - generic [ref=f7e48]:
+        - heading "AI 工作台" [level=1] [ref=f7e53]:
+          - text: AI 工作台
+          - generic [ref=f7e54]:
+            - link "Link to heading":
+              - /url: "#ai"
+        - paragraph [ref=f7e59]:
+          - strong [ref=f7e60]: 数据版本
+          - code [ref=f7e61]: wh-d3aaa559048c
+          - text: ·
+          - strong [ref=f7e62]: 数据时间范围
+          - text: 2024-01-01 至 2026-11-07 ·
+          - strong [ref=f7e63]: as_of（截止，不含）
+          - text: 2026-11-08
+        - paragraph [ref=f7e68]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+        - generic [ref=f7e70]:
+          - paragraph [ref=f7e77]: LLM：已配置（deepseek-chat） · 会话 ui-11247ceb · 结果只保存在本浏览器会话中
+          - generic [ref=f7e82] [cursor=pointer]:
+            - switch "使用 LLM" [ref=f7e84]
+            - paragraph [ref=f7e91]: 使用 LLM
+        - generic [ref=f7e93]:
+          - tablist [ref=f7e94]:
+            - tab [ref=f7e95] [cursor=pointer]:
+              - paragraph [ref=f7e97]: 查询助手
+            - tab [ref=f7e99] [cursor=pointer]:
+              - paragraph [ref=f7e101]: 经营周报
+            - tab [active] [selected] [ref=f7e102] [cursor=pointer]:
+              - paragraph [ref=f7e104]: 挽回 Agent
+          - tabpanel "挽回 Agent" [ref=f7e124]:
+            - generic [ref=f7e125]:
+              - generic [ref=f7e127]:
+                - generic [ref=f7e129]:
+                  - generic [ref=f7e131]:
+                    - paragraph [ref=f7e135]: 客户编号（示例：沉睡或沉默预警的多单客户）
+                    - group [ref=f7e137]:
+                      - combobox "客户编号（示例：沉睡或沉默预警的多单客户）" [ref=f7e138]: customer_000002
+                      - button "Open" [ref=f7e139] [cursor=pointer]
+                  - generic [ref=f7e144]:
+                    - paragraph [ref=f7e148]: 或输入其他客户编号
+                    - textbox "或输入其他客户编号" [ref=f7e151]:
+                      - /placeholder: ""
+                - group [ref=f7e156]:
+                  - generic [ref=f7e158] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e160]: keyboard_arrow_down
+                    - paragraph [ref=f7e163]: 演示配置（不是数据事实）
+                  - generic [ref=f7e165]:
+                    - generic [ref=f7e168] [cursor=pointer]:
+                      - checkbox "已同意营销" [checked] [ref=f7e170]
+                      - paragraph [ref=f7e178]: 已同意营销
+                    - generic [ref=f7e181] [cursor=pointer]:
+                      - checkbox "有未结投诉" [ref=f7e183]
+                      - paragraph [ref=f7e189]: 有未结投诉
+                    - generic [ref=f7e192] [cursor=pointer]:
+                      - checkbox "相关商品有货" [checked] [ref=f7e194]
+                      - paragraph [ref=f7e202]: 相关商品有货
+                    - generic [ref=f7e204]:
+                      - paragraph [ref=f7e208]: 近 30 天已触达次数
+                      - generic [ref=f7e210]:
+                        - spinbutton "近 30 天已触达次数" [ref=f7e211]: "0"
+                        - generic [ref=f7e212]:
+                          - button "Decrement" [disabled] [ref=f7e213]
+                          - button "Increment" [ref=f7e216] [cursor=pointer]
+                    - generic [ref=f7e220]:
+                      - paragraph [ref=f7e224]: 本周已用预算（USD）
+                      - generic [ref=f7e226]:
+                        - spinbutton "本周已用预算（USD）" [ref=f7e227]: "0.00"
+                        - generic [ref=f7e228]:
+                          - button "Decrement" [disabled] [ref=f7e229]
+                          - button "Increment" [ref=f7e232] [cursor=pointer]
+              - button [ref=f7e237] [cursor=pointer]:
+                - paragraph [ref=f7e242]: 运行 Agent（生成待审草稿）
+              - heading "草稿审核" [level=3] [ref=f7e247]:
+                - text: 草稿审核
+                - generic [ref=f7e248]:
+                  - link "Link to heading":
+                    - /url: "#73302f06"
+              - generic [ref=f7e253]:
+                - button "Show/hide columns" [ref=f7e257] [cursor=pointer]
+                - button "Download as CSV" [ref=f7e263] [cursor=pointer]
+                - button "Search" [ref=f7e269] [cursor=pointer]
+                - button "Fullscreen" [ref=f7e275] [cursor=pointer]
+              - generic [ref=f7e288]:
+                - generic [ref=f7e292]:
+                  - paragraph [ref=f7e296]: 待审草稿
+                  - group [ref=f7e298]:
+                    - combobox "待审草稿" [ref=f7e299]: draft-3fed55e2976c
+                    - button "Open" [ref=f7e300] [cursor=pointer]
+                - button [ref=f7e308] [cursor=pointer]:
+                  - paragraph [ref=f7e313]: 通过
+                - button [ref=f7e318] [cursor=pointer]:
+                  - paragraph [ref=f7e323]: 驳回
+                - button [ref=f7e328] [cursor=pointer]:
+                  - paragraph [ref=f7e333]: 撤回
+              - paragraph [ref=f7e338]: “通过”只表示内容获准，不会发送消息或发放优惠。

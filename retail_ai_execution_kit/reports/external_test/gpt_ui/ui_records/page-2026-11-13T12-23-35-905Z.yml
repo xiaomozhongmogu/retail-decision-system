@@ -1,0 +1,275 @@
+- generic [active]:
+  - generic [ref=f2e1329]:
+    - log
+    - log
+  - generic [ref=f2e2]:
+    - link "Skip to main content" [ref=f2e1723] [cursor=pointer]:
+      - /url: "#stMain"
+    - region "Sidebar" [ref=f2e1724]:
+      - navigation "App pages" [ref=f2e1725]:
+        - list [ref=f2e11]:
+          - generic [ref=f2e12]:
+            - paragraph [ref=f2e16] [cursor=pointer]: 数据口径
+            - listitem [ref=f2e17]:
+              - link [ref=f2e1726] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f2e22]: 数据口径与质量
+          - generic [ref=f2e23]:
+            - paragraph [ref=f2e27] [cursor=pointer]: 经营
+            - listitem [ref=f2e28]:
+              - link [ref=f2e1727] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f2e33]: 经营总览
+          - generic [ref=f2e34]:
+            - paragraph [ref=f2e38] [cursor=pointer]: 客户
+            - listitem [ref=f2e39]:
+              - link [ref=f2e1728] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f2e44]: 生命周期与分群
+          - generic [ref=f2e45]:
+            - paragraph [ref=f2e49] [cursor=pointer]: 预测
+            - listitem [ref=f2e50]:
+              - link [ref=f2e1729] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f2e55]: 复购预测
+          - generic [ref=f2e56]:
+            - paragraph [ref=f2e60] [cursor=pointer]: AI 工作台
+            - listitem [ref=f2e61]:
+              - link [ref=f2e1730] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f2e66]: AI 工作台
+    - generic [ref=f2e4]:
+      - banner [ref=f2e70]:
+        - generic [ref=f2e73]:
+          - button "Deploy" [ref=f2e1731] [cursor=pointer]
+          - button "Main menu" [ref=f2e1732] [cursor=pointer]
+      - main [ref=f2e5]:
+        - generic [ref=f2e83]:
+          - heading "经营总览" [level=1] [ref=f2e1733]:
+            - text: 经营总览
+            - generic [ref=f2e853]:
+              - link "Link to heading":
+                - /url: "#7f4e651c"
+          - paragraph [ref=f2e858]:
+            - strong [ref=f2e859]: 数据版本
+            - code [ref=f2e860]: wh-d3aaa559048c
+            - text: ·
+            - strong [ref=f2e861]: 数据时间范围
+            - text: 2024-01-01 至 2026-11-07 ·
+            - strong [ref=f2e862]: as_of（截止，不含）
+            - text: 2026-11-08
+          - paragraph [ref=f2e867]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+          - heading "1. 时间趋势（上卷 / 下钻）" [level=3] [ref=f2e1734]:
+            - text: 1. 时间趋势（上卷 / 下钻）
+            - generic [ref=f2e873]:
+              - link "Link to heading":
+                - /url: "#1"
+          - generic [ref=f2e875]:
+            - generic [ref=f2e879]:
+              - paragraph [ref=f2e883]: 开始月份
+              - group [ref=f2e885]:
+                - combobox "开始月份" [ref=f2e1735]: 2024-01
+                - button "Open" [ref=f2e1736] [cursor=pointer]
+            - generic [ref=f2e894]:
+              - paragraph [ref=f2e898]: 结束月份
+              - group [ref=f2e900]:
+                - combobox "结束月份" [ref=f2e1737]: 2026-11
+                - button "Open" [ref=f2e1738] [cursor=pointer]
+            - generic [ref=f2e909]:
+              - paragraph [ref=f2e913]: 粒度
+              - radiogroup "粒度" [ref=f2e1739]:
+                - generic [ref=f2e916] [cursor=pointer]:
+                  - radio "年" [ref=f2e1740]
+                  - paragraph [ref=f2e922]: 年
+                - generic [ref=f2e924] [cursor=pointer]:
+                  - radio "季度" [ref=f2e1741]
+                  - paragraph [ref=f2e930]: 季度
+                - generic [ref=f2e932] [cursor=pointer]:
+                  - radio "月" [checked] [ref=f2e1742]
+                  - paragraph [ref=f2e939]: 月
+                - generic [ref=f2e941] [cursor=pointer]:
+                  - radio "周（周一开始）" [ref=f2e1743]
+                  - paragraph [ref=f2e947]: 周（周一开始）
+                - generic [ref=f2e949] [cursor=pointer]:
+                  - radio "日" [ref=f2e1744]
+                  - paragraph [ref=f2e955]: 日
+          - generic [ref=f2e957]:
+            - generic [ref=f2e962]:
+              - paragraph [ref=f2e966]: 有效订单
+              - paragraph [ref=f2e969]: 9,113
+            - generic [ref=f2e974]:
+              - paragraph [ref=f2e978]: 商品金额（USD）
+              - paragraph [ref=f2e981]: 1,380,161.23
+            - generic [ref=f2e986]:
+              - paragraph [ref=f2e990]: 客单价（USD）
+              - paragraph [ref=f2e993]: "151.45"
+            - generic [ref=f2e998]:
+              - paragraph [ref=f2e1002]: 运费（USD）
+              - paragraph [ref=f2e1005]: 129,459.18
+          - paragraph [ref=f2e1010]: 客单价 = 期间商品金额合计 ÷ 有效订单合计（不对各期客单价取平均）。购买客户按月去重，跨月不能相加，只在“月”粒度显示。
+          - alert [ref=f2e1013]:
+            - paragraph [ref=f2e1017]: 标记为不完整的期间不能与完整期间直接比较：2026-11
+          - generic [ref=f2e1020]:
+            - generic [ref=f2e1022]:
+              - button "Show data" [ref=f2e1745] [cursor=pointer]
+              - button "Download as PNG" [ref=f2e1746] [cursor=pointer]
+              - button "Copy Vega-Lite spec" [ref=f2e1747] [cursor=pointer]
+              - button "Fullscreen" [ref=f2e1748] [cursor=pointer]
+            - generic "Vega visualization" [ref=f2e1749]:
+              - img [ref=f2e1048]:
+                - generic [ref=f2e1053]:
+                  - 'generic "X-axis titled ''期间（月）'' for a discrete scale with 35 values: 2024-01, 2024-02, 2024-03, 2024-04, 2024-05, ending with 2026-11" [ref=f2e1750]':
+                    - generic [ref=f2e1059]:
+                      - generic:
+                        - generic: 2024-01
+                        - generic: 2024-02
+                        - generic: 2024-03
+                        - generic: 2024-04
+                        - generic: 2024-05
+                        - generic: 2024-06
+                        - generic: 2024-07
+                        - generic: 2024-08
+                        - generic: 2024-09
+                        - generic: 2024-10
+                        - generic: 2024-11
+                        - generic: 2024-12
+                        - generic: 2025-01
+                        - generic: 2025-02
+                        - generic: 2025-03
+                        - generic: 2025-04
+                        - generic: 2025-05
+                        - generic: 2025-06
+                        - generic: 2025-07
+                        - generic: 2025-08
+                        - generic: 2025-09
+                        - generic: 2025-10
+                        - generic: 2025-11
+                        - generic: 2025-12
+                        - generic: 2026-01
+                        - generic: 2026-02
+                        - generic: 2026-03
+                        - generic: 2026-04
+                        - generic: 2026-05
+                        - generic: 2026-06
+                        - generic: 2026-07
+                        - generic: 2026-08
+                        - generic: 2026-09
+                        - generic: 2026-10
+                        - generic: 2026-11
+                      - generic: 期间（月）
+                  - generic "Y-axis titled '商品金额（USD）' for a linear scale with values from 0 to 55,000" [ref=f2e1751]:
+                    - generic [ref=f2e1062]:
+                      - generic:
+                        - generic: "0"
+                        - generic: 10,000
+                        - generic: 20,000
+                        - generic: 30,000
+                        - generic: 40,000
+                        - generic: 50,000
+                      - generic: 商品金额（USD）
+                  - generic [ref=f2e1063]:
+                    - 'generic "期间（月）: 2024-01; 商品金额（USD）: 33874.18; 状态: 完整; period: 2024-01; valid_orders: 229; merchandise_sales_usd: 33874.18; aov_usd: 147.92" [ref=f2e1752]'
+                    - 'generic "期间（月）: 2024-02; 商品金额（USD）: 38346.81; 状态: 完整; period: 2024-02; valid_orders: 258; merchandise_sales_usd: 38346.81; aov_usd: 148.63" [ref=f2e1753]'
+                    - 'generic "期间（月）: 2024-03; 商品金额（USD）: 37035.53; 状态: 完整; period: 2024-03; valid_orders: 247; merchandise_sales_usd: 37035.53; aov_usd: 149.94" [ref=f2e1754]'
+                    - 'generic "期间（月）: 2024-04; 商品金额（USD）: 39378.27; 状态: 完整; period: 2024-04; valid_orders: 236; merchandise_sales_usd: 39378.27; aov_usd: 166.86" [ref=f2e1755]'
+                    - 'generic "期间（月）: 2024-05; 商品金额（USD）: 38521.8; 状态: 完整; period: 2024-05; valid_orders: 250; merchandise_sales_usd: 38521.8; aov_usd: 154.09" [ref=f2e1756]'
+                    - 'generic "期间（月）: 2024-06; 商品金额（USD）: 33066.72; 状态: 完整; period: 2024-06; valid_orders: 226; merchandise_sales_usd: 33066.72; aov_usd: 146.31" [ref=f2e1757]'
+                    - 'generic "期间（月）: 2024-07; 商品金额（USD）: 36689.91; 状态: 完整; period: 2024-07; valid_orders: 240; merchandise_sales_usd: 36689.91; aov_usd: 152.87" [ref=f2e1758]'
+                    - 'generic "期间（月）: 2024-08; 商品金额（USD）: 43490.56; 状态: 完整; period: 2024-08; valid_orders: 269; merchandise_sales_usd: 43490.56; aov_usd: 161.67" [ref=f2e1759]'
+                    - 'generic "期间（月）: 2024-09; 商品金额（USD）: 40635.62; 状态: 完整; period: 2024-09; valid_orders: 258; merchandise_sales_usd: 40635.62; aov_usd: 157.5" [ref=f2e1760]'
+                    - 'generic "期间（月）: 2024-10; 商品金额（USD）: 50806.86; 状态: 完整; period: 2024-10; valid_orders: 340; merchandise_sales_usd: 50806.86; aov_usd: 149.43" [ref=f2e1761]'
+                    - 'generic "期间（月）: 2024-11; 商品金额（USD）: 49376.41; 状态: 完整; period: 2024-11; valid_orders: 322; merchandise_sales_usd: 49376.41; aov_usd: 153.34" [ref=f2e1762]'
+                    - 'generic "期间（月）: 2024-12; 商品金额（USD）: 48499.85; 状态: 完整; period: 2024-12; valid_orders: 367; merchandise_sales_usd: 48499.85; aov_usd: 132.15" [ref=f2e1763]'
+                    - 'generic "期间（月）: 2025-01; 商品金额（USD）: 40616.33; 状态: 完整; period: 2025-01; valid_orders: 260; merchandise_sales_usd: 40616.33; aov_usd: 156.22" [ref=f2e1764]'
+                    - 'generic "期间（月）: 2025-02; 商品金额（USD）: 31363.42; 状态: 完整; period: 2025-02; valid_orders: 226; merchandise_sales_usd: 31363.42; aov_usd: 138.78" [ref=f2e1765]'
+                    - 'generic "期间（月）: 2025-03; 商品金额（USD）: 38588.44; 状态: 完整; period: 2025-03; valid_orders: 272; merchandise_sales_usd: 38588.44; aov_usd: 141.87" [ref=f2e1766]'
+                    - 'generic "期间（月）: 2025-04; 商品金额（USD）: 36221.21; 状态: 完整; period: 2025-04; valid_orders: 224; merchandise_sales_usd: 36221.21; aov_usd: 161.7" [ref=f2e1767]'
+                    - 'generic "期间（月）: 2025-05; 商品金额（USD）: 36936.24; 状态: 完整; period: 2025-05; valid_orders: 233; merchandise_sales_usd: 36936.24; aov_usd: 158.52" [ref=f2e1768]'
+                    - 'generic "期间（月）: 2025-06; 商品金额（USD）: 35505.84; 状态: 完整; period: 2025-06; valid_orders: 250; merchandise_sales_usd: 35505.84; aov_usd: 142.02" [ref=f2e1769]'
+                    - 'generic "期间（月）: 2025-07; 商品金额（USD）: 41459.91; 状态: 完整; period: 2025-07; valid_orders: 272; merchandise_sales_usd: 41459.91; aov_usd: 152.43" [ref=f2e1770]'
+                    - 'generic "期间（月）: 2025-08; 商品金额（USD）: 40635.35; 状态: 完整; period: 2025-08; valid_orders: 272; merchandise_sales_usd: 40635.35; aov_usd: 149.39" [ref=f2e1771]'
+                    - 'generic "期间（月）: 2025-09; 商品金额（USD）: 34936.66; 状态: 完整; period: 2025-09; valid_orders: 233; merchandise_sales_usd: 34936.66; aov_usd: 149.94" [ref=f2e1772]'
+                    - 'generic "期间（月）: 2025-10; 商品金额（USD）: 49547.36; 状态: 完整; period: 2025-10; valid_orders: 329; merchandise_sales_usd: 49547.36; aov_usd: 150.6" [ref=f2e1773]'
+                    - 'generic "期间（月）: 2025-11; 商品金额（USD）: 54130.65; 状态: 完整; period: 2025-11; valid_orders: 360; merchandise_sales_usd: 54130.65; aov_usd: 150.36" [ref=f2e1774]'
+                    - 'generic "期间（月）: 2025-12; 商品金额（USD）: 54751.07; 状态: 完整; period: 2025-12; valid_orders: 375; merchandise_sales_usd: 54751.07; aov_usd: 146" [ref=f2e1775]'
+                    - 'generic "期间（月）: 2026-01; 商品金额（USD）: 43190.91; 状态: 完整; period: 2026-01; valid_orders: 255; merchandise_sales_usd: 43190.91; aov_usd: 169.38" [ref=f2e1776]'
+                    - 'generic "期间（月）: 2026-02; 商品金额（USD）: 28811.61; 状态: 完整; period: 2026-02; valid_orders: 187; merchandise_sales_usd: 28811.61; aov_usd: 154.07" [ref=f2e1777]'
+                    - 'generic "期间（月）: 2026-03; 商品金额（USD）: 39615.72; 状态: 完整; period: 2026-03; valid_orders: 260; merchandise_sales_usd: 39615.72; aov_usd: 152.37" [ref=f2e1778]'
+                    - 'generic "期间（月）: 2026-04; 商品金额（USD）: 37536.29; 状态: 完整; period: 2026-04; valid_orders: 230; merchandise_sales_usd: 37536.29; aov_usd: 163.2" [ref=f2e1779]'
+                    - 'generic "期间（月）: 2026-05; 商品金额（USD）: 36344.11; 状态: 完整; period: 2026-05; valid_orders: 240; merchandise_sales_usd: 36344.11; aov_usd: 151.43" [ref=f2e1780]'
+                    - 'generic "期间（月）: 2026-06; 商品金额（USD）: 38602.1; 状态: 完整; period: 2026-06; valid_orders: 245; merchandise_sales_usd: 38602.1; aov_usd: 157.56" [ref=f2e1781]'
+                    - 'generic "期间（月）: 2026-07; 商品金额（USD）: 36431.77; 状态: 完整; period: 2026-07; valid_orders: 251; merchandise_sales_usd: 36431.77; aov_usd: 145.15" [ref=f2e1782]'
+                    - 'generic "期间（月）: 2026-08; 商品金额（USD）: 37247.83; 状态: 完整; period: 2026-08; valid_orders: 243; merchandise_sales_usd: 37247.83; aov_usd: 153.28" [ref=f2e1783]'
+                    - 'generic "期间（月）: 2026-09; 商品金额（USD）: 39190.7; 状态: 完整; period: 2026-09; valid_orders: 240; merchandise_sales_usd: 39190.7; aov_usd: 163.29" [ref=f2e1784]'
+                    - 'generic "期间（月）: 2026-10; 商品金额（USD）: 47590.59; 状态: 完整; period: 2026-10; valid_orders: 336; merchandise_sales_usd: 47590.59; aov_usd: 141.64" [ref=f2e1785]'
+                    - 'generic "期间（月）: 2026-11; 商品金额（USD）: 11184.6; 状态: 不完整; period: 2026-11; valid_orders: 78; merchandise_sales_usd: 11184.6; aov_usd: 143.39" [ref=f2e1786]'
+                  - 'generic "Symbol legend titled ''状态'' for fill color with 2 values: 完整, 不完整" [ref=f2e1787]':
+                    - generic [ref=f2e1101]:
+                      - generic [ref=f2e1105]:
+                        - generic [ref=f2e1106]: 完整
+                        - generic [ref=f2e1109]: 不完整
+                      - generic: 状态
+          - generic [ref=f2e1116]:
+            - button "Show/hide columns" [ref=f2e1788] [cursor=pointer]
+            - button "Download as CSV" [ref=f2e1789] [cursor=pointer]
+            - button "Search" [ref=f2e1790] [cursor=pointer]
+            - button "Fullscreen" [ref=f2e1791] [cursor=pointer]
+          - group [ref=f2e1152]:
+            - generic [ref=f2e1154] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f2e1156]: keyboard_arrow_right
+              - paragraph [ref=f2e1159]: 逐级下钻：年 → 季度 → 月 → 日
+          - heading "2. 品类 × 客户大区（切片 / 切块 / 旋转）" [level=3] [ref=f2e1793]:
+            - text: 2. 品类 × 客户大区（切片 / 切块 / 旋转）
+            - generic [ref=f2e1165]:
+              - link "Link to heading":
+                - /url: "#2"
+          - generic [ref=f2e1167]:
+            - generic [ref=f2e1171]:
+              - paragraph [ref=f2e1175]: 行维度
+              - group [ref=f2e1177]:
+                - combobox "行维度" [ref=f2e1794]: 品类
+                - button "Open" [ref=f2e1795] [cursor=pointer]
+            - generic [ref=f2e1186]:
+              - paragraph [ref=f2e1190]: 列维度（旋转）
+              - group [ref=f2e1192]:
+                - combobox "列维度（旋转）" [ref=f2e1796]: 月份
+                - button "Open" [ref=f2e1797] [cursor=pointer]
+            - generic [ref=f2e1201]:
+              - paragraph [ref=f2e1205]: 指标
+              - group [ref=f2e1207]:
+                - combobox "指标" [ref=f2e1798]: 商品金额（USD）
+                - button "Open" [ref=f2e1799] [cursor=pointer]
+            - generic [ref=f2e1217] [cursor=pointer]:
+              - checkbox "交换行列" [ref=f2e1800]
+              - paragraph [ref=f2e1225]: 交换行列
+          - generic [ref=f2e1227]:
+            - generic [ref=f2e1231]:
+              - paragraph [ref=f2e1235]: 年份筛选
+              - group [ref=f2e1237]:
+                - generic [ref=f2e1238]:
+                  - group "Selected values" [ref=f2e1801]:
+                    - generic "2026" [ref=f2e1802]:
+                      - button "Remove 2026" [ref=f2e1804] [cursor=pointer]
+                  - combobox "年份筛选" [ref=f2e1523]
+                - button "Clear all" [ref=f2e1805] [cursor=pointer]
+                - button "Open" [ref=f2e1806] [cursor=pointer]
+            - generic [ref=f2e1247]:
+              - paragraph [ref=f2e1251]: 客户大区筛选
+              - group [ref=f2e1253]:
+                - combobox "客户大区筛选" [ref=f2e1807]
+                - button "Open" [ref=f2e1808] [cursor=pointer]
+            - generic [ref=f2e1263]:
+              - paragraph [ref=f2e1267]: 品类筛选
+              - group [ref=f2e1269]:
+                - combobox "品类筛选" [ref=f2e1809]
+                - button "Open" [ref=f2e1810] [cursor=pointer]
+          - paragraph [ref=f2e1280]: 当前操作：切片。单值筛选 = 切片；两个以上维度同时筛选 = 切块；交换行列 = 旋转。
+          - generic [ref=f2e1666]:
+            - button "Show/hide columns" [ref=f2e1811] [cursor=pointer]
+            - button "Download as CSV" [ref=f2e1812] [cursor=pointer]
+            - button "Search" [ref=f2e1813] [cursor=pointer]
+            - button "Fullscreen" [ref=f2e1823] [cursor=pointer]
+          - paragraph [ref=f2e1323]: 单位：USD。合计 395,746.23 USD
+          - alert [ref=f2e1702]:
+            - paragraph [ref=f2e1706]: 2026-11 为不完整月（截至 2026-11-07）。
+          - paragraph [ref=f2e1711]: 客户大区按客户所在地（人口普查四区）；州、渠道、毛利不在允许视图或数据中。金额为商品金额，不含运费。

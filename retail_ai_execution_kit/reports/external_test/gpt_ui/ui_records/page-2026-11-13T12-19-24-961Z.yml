@@ -1,0 +1,159 @@
+- generic:
+  - generic [ref=f1e927]:
+    - log
+    - log
+  - generic [ref=f1e2]:
+    - link "Skip to main content" [ref=f1e1049] [cursor=pointer]:
+      - /url: "#stMain"
+    - region "Sidebar" [ref=f1e1050]:
+      - navigation "App pages" [ref=f1e1051]:
+        - list [ref=f1e11]:
+          - generic [ref=f1e12]:
+            - paragraph [ref=f1e16] [cursor=pointer]: 数据口径
+            - listitem [ref=f1e17]:
+              - link [ref=f1e1052] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f1e22]: 数据口径与质量
+          - generic [ref=f1e23]:
+            - paragraph [ref=f1e27] [cursor=pointer]: 经营
+            - listitem [ref=f1e28]:
+              - link [ref=f1e1053] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f1e33]: 经营总览
+          - generic [ref=f1e34]:
+            - paragraph [ref=f1e38] [cursor=pointer]: 客户
+            - listitem [ref=f1e39]:
+              - link [ref=f1e1054] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f1e44]: 生命周期与分群
+          - generic [ref=f1e45]:
+            - paragraph [ref=f1e49] [cursor=pointer]: 预测
+            - listitem [ref=f1e50]:
+              - link [ref=f1e1055] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f1e55]: 复购预测
+          - generic [ref=f1e56]:
+            - paragraph [ref=f1e60] [cursor=pointer]: AI 工作台
+            - listitem [ref=f1e61]:
+              - link [ref=f1e1056] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f1e66]: AI 工作台
+    - generic [ref=f1e4]:
+      - banner [ref=f1e70]:
+        - generic [ref=f1e73]:
+          - button "Deploy" [ref=f1e1057] [cursor=pointer]
+          - button "Main menu" [ref=f1e1058] [cursor=pointer]
+      - main [ref=f1e5]:
+        - generic [ref=f1e83]:
+          - heading "AI 工作台" [level=1] [ref=f1e1536]:
+            - text: AI 工作台
+            - generic [ref=f1e1537]:
+              - link "Link to heading":
+                - /url: "#ai"
+          - paragraph [ref=f1e1542]:
+            - strong [ref=f1e1543]: 数据版本
+            - code [ref=f1e1544]: wh-d3aaa559048c
+            - text: ·
+            - strong [ref=f1e1545]: 数据时间范围
+            - text: 2024-01-01 至 2026-11-07 ·
+            - strong [ref=f1e1546]: as_of（截止，不含）
+            - text: 2026-11-08
+          - paragraph [ref=f1e1551]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+          - generic [ref=f1e1553]:
+            - paragraph [ref=f1e1560]: LLM：已配置（deepseek-chat） · 会话 ui-fdb15e70 · 结果只保存在本浏览器会话中
+            - generic [ref=f1e1565] [cursor=pointer]:
+              - switch "使用 LLM" [ref=f1e1567]
+              - paragraph [ref=f1e1574]: 使用 LLM
+          - generic [ref=f1e1576]:
+            - tablist [ref=f1e1577]:
+              - tab [ref=f1e1578] [cursor=pointer]:
+                - paragraph [ref=f1e1580]: 查询助手
+              - tab [ref=f1e1582] [cursor=pointer]:
+                - paragraph [ref=f1e1584]: 经营周报
+              - tab [selected] [ref=f1e1585] [cursor=pointer]:
+                - paragraph [ref=f1e1587]: 挽回 Agent
+            - tabpanel "挽回 Agent" [ref=f1e3487]:
+              - generic [ref=f1e3488]:
+                - generic [ref=f1e3490]:
+                  - generic [ref=f1e3492]:
+                    - generic [ref=f1e3494]:
+                      - paragraph [ref=f1e3498]: 客户编号（示例：沉睡或沉默预警的多单客户）
+                      - group [ref=f1e3500]:
+                        - combobox "客户编号（示例：沉睡或沉默预警的多单客户）" [ref=f1e3501]: customer_000002
+                        - button "Open" [ref=f1e3502] [cursor=pointer]
+                    - generic [ref=f1e3507]:
+                      - paragraph [ref=f1e3511]: 或输入其他客户编号
+                      - textbox "或输入其他客户编号" [ref=f1e3514]:
+                        - /placeholder: ""
+                  - group [ref=f1e3519]:
+                    - generic [ref=f1e3521] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f1e3523]: keyboard_arrow_down
+                      - paragraph [ref=f1e3526]: 演示配置（不是数据事实）
+                    - generic [ref=f1e3528]:
+                      - generic [ref=f1e3531] [cursor=pointer]:
+                        - checkbox "已同意营销" [checked] [ref=f1e3533]
+                        - paragraph [ref=f1e3541]: 已同意营销
+                      - generic [ref=f1e3544] [cursor=pointer]:
+                        - checkbox "有未结投诉" [checked] [ref=f1e3546]
+                        - paragraph [ref=f1e3552]: 有未结投诉
+                      - generic [ref=f1e3555] [cursor=pointer]:
+                        - checkbox "相关商品有货" [checked] [ref=f1e3557]
+                        - paragraph [ref=f1e3565]: 相关商品有货
+                      - generic [ref=f1e3567]:
+                        - paragraph [ref=f1e3571]: 近 30 天已触达次数
+                        - generic [ref=f1e3573]:
+                          - spinbutton "近 30 天已触达次数" [ref=f1e3574]: "0"
+                          - generic [ref=f1e3575]:
+                            - button "Decrement" [disabled] [ref=f1e3576]
+                            - button "Increment" [ref=f1e3579] [cursor=pointer]
+                      - generic [ref=f1e3583]:
+                        - paragraph [ref=f1e3587]: 本周已用预算（USD）
+                        - generic [ref=f1e3589]:
+                          - spinbutton "本周已用预算（USD）" [ref=f1e3590]: "0.00"
+                          - generic [ref=f1e3591]:
+                            - button "Decrement" [disabled] [ref=f1e3592]
+                            - button "Increment" [ref=f1e3595] [cursor=pointer]
+                - button [active] [ref=f1e3600] [cursor=pointer]:
+                  - paragraph [ref=f1e3605]: 运行 Agent（生成待审草稿）
+                - paragraph [ref=f1e3988]:
+                  - text: 结束状态
+                  - strong [ref=f1e3989]: not_eligible
+                  - text: · 用时 0.035 秒 ·
+                  - strong [ref=f1e3990]: 未发送
+                  - text: （本系统没有发送或发券能力）
+                - generic [ref=f1e3994]:
+                  - button "Show/hide columns" [ref=f1e3998] [cursor=pointer]
+                  - button "Download as CSV" [ref=f1e4004] [cursor=pointer]
+                  - button "Search" [ref=f1e4010] [cursor=pointer]
+                  - button "Fullscreen" [ref=f1e4016] [cursor=pointer]
+                - paragraph [ref=f1e4031]: LLM/规则提议（rule_fallback）：coupon 0.05 — 规则默认：沉默预警或沉睡客户试用小额优惠，其余只提醒
+                - paragraph [ref=f1e3701]:
+                  - text: 规则判定：
+                  - strong [ref=f1e4032]: deny
+                  - text: ；成本 0.0 USD；周预算使用后 0.0 USD；价值层级 lapsed_high
+                - paragraph [ref=f1e4132]: · 未结投诉：有未结投诉，转人工服务
+                - button [ref=f1e3733] [cursor=pointer]:
+                  - paragraph [ref=f1e3738]: 导出本次轨迹 JSON
+                - heading "草稿审核" [level=3] [ref=f1e4136]:
+                  - text: 草稿审核
+                  - generic [ref=f1e4137]:
+                    - link "Link to heading":
+                      - /url: "#73302f06"
+                - generic [ref=f1e4142]:
+                  - button "Show/hide columns" [ref=f1e4146] [cursor=pointer]
+                  - button "Download as CSV" [ref=f1e4152] [cursor=pointer]
+                  - button "Search" [ref=f1e4158] [cursor=pointer]
+                  - button "Fullscreen" [ref=f1e4164] [cursor=pointer]
+                - generic [ref=f1e4177]:
+                  - generic [ref=f1e4181]:
+                    - paragraph [ref=f1e4185]: 待审草稿
+                    - group [ref=f1e4187]:
+                      - combobox "待审草稿" [ref=f1e4188]: draft-3fed55e2976c
+                      - button "Open" [ref=f1e4189] [cursor=pointer]
+                  - button [ref=f1e4197] [cursor=pointer]:
+                    - paragraph [ref=f1e4202]: 通过
+                  - button [ref=f1e4207] [cursor=pointer]:
+                    - paragraph [ref=f1e4212]: 驳回
+                  - button [ref=f1e4217] [cursor=pointer]:
+                    - paragraph [ref=f1e4222]: 撤回
+                - paragraph [ref=f1e4227]: “通过”只表示内容获准，不会发送消息或发放优惠。

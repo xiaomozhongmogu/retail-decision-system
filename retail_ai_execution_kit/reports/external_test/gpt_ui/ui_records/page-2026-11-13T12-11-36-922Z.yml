@@ -1,0 +1,228 @@
+- generic:
+  - generic [ref=f1e927]:
+    - log
+    - log
+  - generic [ref=f1e2]:
+    - link "Skip to main content" [ref=f1e1049] [cursor=pointer]:
+      - /url: "#stMain"
+    - region "Sidebar" [ref=f1e1050]:
+      - navigation "App pages" [ref=f1e1051]:
+        - list [ref=f1e11]:
+          - generic [ref=f1e12]:
+            - paragraph [ref=f1e16] [cursor=pointer]: 数据口径
+            - listitem [ref=f1e17]:
+              - link [ref=f1e1052] [cursor=pointer]:
+                - /url: http://localhost:8599/
+                - paragraph [ref=f1e22]: 数据口径与质量
+          - generic [ref=f1e23]:
+            - paragraph [ref=f1e27] [cursor=pointer]: 经营
+            - listitem [ref=f1e28]:
+              - link [ref=f1e1053] [cursor=pointer]:
+                - /url: http://localhost:8599/business
+                - paragraph [ref=f1e33]: 经营总览
+          - generic [ref=f1e34]:
+            - paragraph [ref=f1e38] [cursor=pointer]: 客户
+            - listitem [ref=f1e39]:
+              - link [ref=f1e1054] [cursor=pointer]:
+                - /url: http://localhost:8599/customers
+                - paragraph [ref=f1e44]: 生命周期与分群
+          - generic [ref=f1e45]:
+            - paragraph [ref=f1e49] [cursor=pointer]: 预测
+            - listitem [ref=f1e50]:
+              - link [ref=f1e1055] [cursor=pointer]:
+                - /url: http://localhost:8599/prediction
+                - paragraph [ref=f1e55]: 复购预测
+          - generic [ref=f1e56]:
+            - paragraph [ref=f1e60] [cursor=pointer]: AI 工作台
+            - listitem [ref=f1e61]:
+              - link [ref=f1e1056] [cursor=pointer]:
+                - /url: http://localhost:8599/ai
+                - paragraph [ref=f1e66]: AI 工作台
+    - generic [ref=f1e4]:
+      - banner [ref=f1e70]:
+        - generic [ref=f1e73]:
+          - button "Deploy" [ref=f1e1057] [cursor=pointer]
+          - button "Main menu" [ref=f1e1058] [cursor=pointer]
+      - main [ref=f1e5]:
+        - generic [ref=f1e83]:
+          - heading "经营总览" [level=1] [ref=f1e1059]:
+            - text: 经营总览
+            - generic [ref=f1e451]:
+              - link "Link to heading":
+                - /url: "#7f4e651c"
+          - paragraph [ref=f1e456]:
+            - strong [ref=f1e457]: 数据版本
+            - code [ref=f1e458]: wh-d3aaa559048c
+            - text: ·
+            - strong [ref=f1e459]: 数据时间范围
+            - text: 2024-01-01 至 2026-11-07 ·
+            - strong [ref=f1e460]: as_of（截止，不含）
+            - text: 2026-11-08
+          - paragraph [ref=f1e465]: 完全合成数据，模拟的历史区间，不是真实企业，也不是 2026 年实时经营。金额单位 USD（商品金额，不含运费）。
+          - heading "1. 时间趋势（上卷 / 下钻）" [level=3] [ref=f1e1060]:
+            - text: 1. 时间趋势（上卷 / 下钻）
+            - generic [ref=f1e471]:
+              - link "Link to heading":
+                - /url: "#1"
+          - generic [ref=f1e473]:
+            - generic [ref=f1e477]:
+              - paragraph [ref=f1e481]: 开始月份
+              - group [ref=f1e483]:
+                - combobox "开始月份" [ref=f1e484]: 2026-10
+                - button "Open" [ref=f1e1061] [cursor=pointer]
+            - generic [ref=f1e492]:
+              - paragraph [ref=f1e496]: 结束月份
+              - group [ref=f1e498]:
+                - combobox "结束月份" [ref=f1e1062]: 2026-10
+                - button "Open" [ref=f1e1063] [cursor=pointer]
+            - generic [ref=f1e507]:
+              - paragraph [ref=f1e511]: 粒度
+              - radiogroup "粒度" [ref=f1e1064]:
+                - generic [ref=f1e514] [cursor=pointer]:
+                  - radio "年" [ref=f1e1065]
+                  - paragraph [ref=f1e520]: 年
+                - generic [ref=f1e522] [cursor=pointer]:
+                  - radio "季度" [ref=f1e1066]
+                  - paragraph [ref=f1e528]: 季度
+                - generic [ref=f1e530] [cursor=pointer]:
+                  - radio "月" [checked] [ref=f1e1067]
+                  - paragraph [ref=f1e537]: 月
+                - generic [ref=f1e539] [cursor=pointer]:
+                  - radio "周（周一开始）" [ref=f1e1068]
+                  - paragraph [ref=f1e545]: 周（周一开始）
+                - generic [ref=f1e547] [cursor=pointer]:
+                  - radio "日" [ref=f1e1069]
+                  - paragraph [ref=f1e553]: 日
+          - generic [ref=f1e555]:
+            - generic [ref=f1e560]:
+              - paragraph [ref=f1e564]: 有效订单
+              - paragraph [ref=f1e567]: "336"
+            - generic [ref=f1e572]:
+              - paragraph [ref=f1e576]: 商品金额（USD）
+              - paragraph [ref=f1e579]: 47,590.59
+            - generic [ref=f1e584]:
+              - paragraph [ref=f1e588]: 客单价（USD）
+              - paragraph [ref=f1e591]: "141.64"
+            - generic [ref=f1e596]:
+              - paragraph [ref=f1e600]: 运费（USD）
+              - paragraph [ref=f1e603]: 4,493.37
+          - paragraph [ref=f1e608]: 客单价 = 期间商品金额合计 ÷ 有效订单合计（不对各期客单价取平均）。购买客户按月去重，跨月不能相加，只在“月”粒度显示。
+          - generic [ref=f1e1109]:
+            - generic [ref=f1e1111]:
+              - button "Show data" [ref=f1e1114] [cursor=pointer]
+              - button "Download as PNG" [ref=f1e1120] [cursor=pointer]
+              - button "Copy Vega-Lite spec" [ref=f1e1126] [cursor=pointer]
+              - button "Fullscreen" [ref=f1e1132] [cursor=pointer]
+            - generic "Vega visualization" [ref=f1e1136]:
+              - img [ref=f1e1137]:
+                - generic [ref=f1e1142]:
+                  - 'generic "X-axis titled ''期间（月）'' for a discrete scale with 1 value: 2026-10" [ref=f1e1146]':
+                    - generic [ref=f1e1148]:
+                      - generic: 2026-10
+                      - generic: 期间（月）
+                  - generic "Y-axis titled '商品金额（USD）' for a linear scale with values from 0 to 50,000" [ref=f1e1149]:
+                    - generic [ref=f1e1151]:
+                      - generic:
+                        - generic: "0"
+                        - generic: 10,000
+                        - generic: 20,000
+                        - generic: 30,000
+                        - generic: 40,000
+                        - generic: 50,000
+                      - generic: 商品金额（USD）
+                  - 'generic "期间（月）: 2026-10; 商品金额（USD）: 47590.59; 状态: 完整; period: 2026-10; valid_orders: 336; merchandise_sales_usd: 47590.59; aov_usd: 141.64" [ref=f1e1153]'
+                  - 'generic "Symbol legend titled ''状态'' for fill color with 2 values: 完整, 不完整" [ref=f1e1154]':
+                    - generic [ref=f1e1156]:
+                      - generic [ref=f1e1160]:
+                        - generic [ref=f1e1161]: 完整
+                        - generic [ref=f1e1164]: 不完整
+                      - generic: 状态
+          - generic [ref=f1e1170]:
+            - button "Show/hide columns" [ref=f1e1174] [cursor=pointer]
+            - button "Download as CSV" [ref=f1e1180] [cursor=pointer]
+            - button "Search" [ref=f1e1186] [cursor=pointer]
+            - button "Fullscreen" [ref=f1e1192] [cursor=pointer]
+          - group [ref=f1e1206]:
+            - generic [ref=f1e1208] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f1e1369]: keyboard_arrow_down
+              - paragraph [ref=f1e1213]: 逐级下钻：年 → 季度 → 月 → 日
+            - generic [ref=f1e1371]:
+              - generic [ref=f1e1373]:
+                - paragraph [ref=f1e1377]: 年份
+                - group [ref=f1e1379]:
+                  - combobox "年份" [ref=f1e1380]: "2024"
+                  - button "Open" [ref=f1e1381] [cursor=pointer]
+              - generic [ref=f1e1389]:
+                - button "Show/hide columns" [ref=f1e1393] [cursor=pointer]
+                - button "Download as CSV" [ref=f1e1399] [cursor=pointer]
+                - button "Search" [ref=f1e1405] [cursor=pointer]
+                - button "Fullscreen" [ref=f1e1411] [cursor=pointer]
+              - generic [ref=f1e1424]:
+                - paragraph [ref=f1e1428]: 季度
+                - group [ref=f1e1430]:
+                  - combobox "季度" [ref=f1e1431]: 2024-Q1
+                  - button "Open" [ref=f1e1432] [cursor=pointer]
+              - generic [ref=f1e1440]:
+                - button "Show/hide columns" [ref=f1e1444] [cursor=pointer]
+                - button "Download as CSV" [ref=f1e1450] [cursor=pointer]
+                - button "Search" [ref=f1e1456] [cursor=pointer]
+                - button "Fullscreen" [ref=f1e1462] [cursor=pointer]
+              - generic [ref=f1e1475]:
+                - paragraph [ref=f1e1479]: 月份
+                - group [ref=f1e1481]:
+                  - combobox "月份" [ref=f1e1482]: 2024-01
+                  - button "Open" [ref=f1e1483] [cursor=pointer]
+              - generic [ref=f1e1491]:
+                - button "Show/hide columns" [ref=f1e1495] [cursor=pointer]
+                - button "Download as CSV" [ref=f1e1501] [cursor=pointer]
+                - button "Search" [ref=f1e1507] [cursor=pointer]
+                - button "Fullscreen" [ref=f1e1513] [cursor=pointer]
+              - paragraph [ref=f1e1529]: 日粒度中标记为不完整的日期：截止前最后一天的订单可能尚未审批（下单到审批最长 24 小时）。
+          - heading "2. 品类 × 客户大区（切片 / 切块 / 旋转）" [level=3] [ref=f1e1218]:
+            - text: 2. 品类 × 客户大区（切片 / 切块 / 旋转）
+            - generic [ref=f1e1219]:
+              - link "Link to heading":
+                - /url: "#2"
+          - generic [ref=f1e1221]:
+            - generic [ref=f1e1225]:
+              - paragraph [ref=f1e1229]: 行维度
+              - group [ref=f1e1231]:
+                - combobox "行维度" [ref=f1e1232]: 品类
+                - button "Open" [ref=f1e1233] [cursor=pointer]
+            - generic [ref=f1e1240]:
+              - paragraph [ref=f1e1244]: 列维度（旋转）
+              - group [ref=f1e1246]:
+                - combobox "列维度（旋转）" [ref=f1e1247]: 客户大区
+                - button "Open" [ref=f1e1248] [cursor=pointer]
+            - generic [ref=f1e1255]:
+              - paragraph [ref=f1e1259]: 指标
+              - group [ref=f1e1261]:
+                - combobox "指标" [ref=f1e1262]: 商品金额（USD）
+                - button "Open" [ref=f1e1263] [cursor=pointer]
+            - generic [ref=f1e1271] [cursor=pointer]:
+              - checkbox "交换行列" [checked] [active] [ref=f1e1273]
+              - paragraph [ref=f1e1279]: 交换行列
+          - generic [ref=f1e765]:
+            - generic [ref=f1e1281]:
+              - paragraph [ref=f1e1285]: 年份筛选
+              - group [ref=f1e1287]:
+                - combobox "年份筛选" [ref=f1e1289]
+                - button "Open" [ref=f1e1290] [cursor=pointer]
+            - generic [ref=f1e1295]:
+              - paragraph [ref=f1e1299]: 客户大区筛选
+              - group [ref=f1e1301]:
+                - combobox "客户大区筛选" [ref=f1e1303]
+                - button "Open" [ref=f1e1304] [cursor=pointer]
+            - generic [ref=f1e1309]:
+              - paragraph [ref=f1e1313]: 品类筛选
+              - group [ref=f1e1315]:
+                - combobox "品类筛选" [ref=f1e1317]
+                - button "Open" [ref=f1e1318] [cursor=pointer]
+          - paragraph [ref=f1e1326]: 当前操作：旋转。单值筛选 = 切片；两个以上维度同时筛选 = 切块；交换行列 = 旋转。
+          - generic [ref=f1e1330]:
+            - button "Show/hide columns" [ref=f1e1334] [cursor=pointer]
+            - button "Download as CSV" [ref=f1e1340] [cursor=pointer]
+            - button "Search" [ref=f1e1346] [cursor=pointer]
+            - button "Fullscreen" [ref=f1e1352] [cursor=pointer]
+          - paragraph [ref=f1e1367]: 单位：USD。合计 1,380,161.23 USD
+          - paragraph [ref=f1e921]: 客户大区按客户所在地（人口普查四区）；州、渠道、毛利不在允许视图或数据中。金额为商品金额，不含运费。

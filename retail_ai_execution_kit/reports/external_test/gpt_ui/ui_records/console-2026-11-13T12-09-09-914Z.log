@@ -1,0 +1,19 @@
+[    1299ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost:8599/static/media/SourceCodeVF-Upright.ttf.BjWn63N-.woff2 @ http://localhost:8599/:1
+[  663482ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/ai/_stcore/health:1
+[  663485ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/ai/_stcore/host-config:1
+[  663660ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost:8599/static/media/SourceCodeVF-Upright.ttf.BjWn63N-.woff2 @ http://localhost:8599/static/js/index.DormvYxC.js:19
+[  928885ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost:8599/static/media/SourceCodeVF-Upright.ttf.BjWn63N-.woff2 @ http://localhost:8599/static/js/index.DormvYxC.js:19
+[  929676ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/business/_stcore/host-config:1
+[  929677ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/business/_stcore/health:1
+[  930122ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/customers/_stcore/health:1
+[  930127ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/customers/_stcore/host-config:1
+[  930386ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/prediction/_stcore/health:1
+[  930387ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/prediction/_stcore/host-config:1
+[  930826ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/ai/_stcore/health:1
+[  930827ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/ai/_stcore/host-config:1
+[ 1019664ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/business/_stcore/health:1
+[ 1019665ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/business/_stcore/host-config:1
+[ 1020586ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/customers/_stcore/health:1
+[ 1020587ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/customers/_stcore/host-config:1
+[ 1021069ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/prediction/_stcore/host-config:1
+[ 1021069ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8599/prediction/_stcore/health:1
