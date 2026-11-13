@@ -1963,7 +1963,7 @@
         "完成真实小请求并保留脱敏证据；无密钥时可开发夹具但不得标在线集成完成。"
       ],
       "evidence": [
-        "evidence/AI-01/2026-11-11-live.json"
+        "evidence/AI-01/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2043,7 +2043,7 @@
         "固定评测集与提示示例分离，保留实际测试和失败案例。"
       ],
       "evidence": [
-        "evidence/AI-03/2026-11-11-rag-eval.json"
+        "evidence/AI-03/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2083,7 +2083,7 @@
         "默认可信SQL构造器；若开启模型生成SQL，明确额外校验路径。"
       ],
       "evidence": [
-        "evidence/AI-04/2026-11-12-intent-recheck.json"
+        "evidence/AI-04/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2123,7 +2123,7 @@
         "测试写入、文件读取、跨表越权、注入及资源消耗；解析库与AGENTS都不是安全边界。"
       ],
       "evidence": [
-        "evidence/AI-05/2026-11-12-executor-recheck.json"
+        "evidence/AI-05/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2162,7 +2162,7 @@
         "多轮会话筛选和上下文隔离，不把其他客户/会话状态混入回答。"
       ],
       "evidence": [
-        "evidence/AI-06/2026-11-12-assistant-recheck.json"
+        "evidence/AI-06/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2203,7 +2203,7 @@
         "已声明拒绝测例全部拦截；失败案例与修复重测记录保留，不宣称普遍100%安全。"
       ],
       "evidence": [
-        "evidence/AI-07/2026-11-12-nl2sql.json"
+        "evidence/AI-07/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2244,7 +2244,7 @@
         "LLM不承担金额求和或比例计算；与经营页面同一指标口径。"
       ],
       "evidence": [
-        "evidence/AI-08/2026-11-11-weekly-facts.json"
+        "evidence/AI-08/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2285,7 +2285,7 @@
         "修复次数有上限，仍失败回退可信模板；输出标真实LLM或回放模式。"
       ],
       "evidence": [
-        "evidence/AI-09/2026-11-12-weekly-report-recheck.json"
+        "evidence/AI-09/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2368,7 +2368,7 @@
         "资格、折扣上限、频率和预算用确定性代码检查，有边界夹具。"
       ],
       "evidence": [
-        "evidence/AI-11/2026-11-11-policy.json"
+        "evidence/AI-11/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2409,7 +2409,7 @@
         "无真实营销发送/发券权限；引用事实和政策，不从数据内容接收新系统指令。"
       ],
       "evidence": [
-        "evidence/AI-12/2026-11-13-agent-recheck.json"
+        "evidence/AI-12/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2449,7 +2449,7 @@
         "保存草稿不等于消息已发送，UI和日志不得混淆。"
       ],
       "evidence": [
-        "evidence/AI-13/2026-11-13-drafts-recheck.json"
+        "evidence/AI-13/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2490,7 +2490,7 @@
         "保留真实LLM调用的代表性完整轨迹，不能只用静态预置文案冒充Agent。"
       ],
       "evidence": [
-        "evidence/AI-14/2026-11-13-agent-eval-recheck.json"
+        "evidence/AI-14/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2535,7 +2535,7 @@
         "在线、无密钥、超时、限流和回放模式可区分；系统卡列实际通过与未覆盖边界。"
       ],
       "evidence": [
-        "evidence/AI-15/2026-11-13-integration.json"
+        "evidence/AI-15/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": "联调已实现并检查（14/14，系统卡已写）；剩余：依赖 AI-10 的人工抽查完成后，按当前代码重跑并正式验收。",
       "skip_reason": null,
@@ -2575,7 +2575,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-13-ui06-recheck.json"
+        "evidence/UI-01/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2654,7 +2654,7 @@
         "空结果、未知维度、不完整周期有明确提示。"
       ],
       "evidence": [
-        "evidence/UI-03/2026-11-11-business-page.json"
+        "evidence/UI-03/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2774,7 +2774,7 @@
         "各会话状态隔离，回放输出有醒目标识且不能替代真实调用验收。"
       ],
       "evidence": [
-        "evidence/UI-06/2026-11-13-ai-page-draft.json"
+        "evidence/UI-06/2026-11-13-ext-test-recheck.json"
       ],
       "blocker": "页面已实现并检查（AppTest 18/18、浏览器真实调用）；剩余：依赖 AI-15 完成后重新运行检查并正式验收。",
       "skip_reason": null,

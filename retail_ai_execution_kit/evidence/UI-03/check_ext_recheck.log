@@ -1,0 +1,30 @@
+2026-11-13 20:54:57.357 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:54:58.653 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:54:59.215 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:54:59.929 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:55:00.308 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:55:00.737 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:55:01.989 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:55:03.144 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 20:55:03.289 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+PASS page renders without exception 
+PASS full-range KPIs equal DWD: orders, merchandise, AOV recomputed from sums 
+PASS incomplete month flagged (2026-11) 
+PASS cube over everything sums to the same merchandise total (no join amplification) 
+PASS year roll-up: 2025 equals DWD and is complete; 2026 is flagged incomplete 
+PASS drill year > quarter > month > day matches DW-08 q4a (2025-11 by day) 
+PASS drill quarter table has the three months of 2025-Q4 
+PASS quarter rows of 2025 add up to the year 
+PASS slice year=2025 by region matches DW-08 q1 
+PASS operation label shows 切片 
+PASS dice (year x region x category) lines equal DWD 
+PASS operation label shows 切块 
+PASS pivot month x region (2026) matches DW-08 q5 for Jan-Mar 
+PASS 2026-11 in a month view is flagged incomplete 
+PASS rotate (swap rows/columns) gives the transposed table 
+PASS unknown/unsupported dimension shows an explicit message 
+PASS orders_containing refused when categories would be added up 
+PASS empty period (start after end) shows an empty-state message 
+PASS day grain flags 2026-11-07 (approval still pending) as incomplete 
+PASS month grain shows monthly distinct buyers equal to ads.kpi_monthly 
+20/20 checks passed

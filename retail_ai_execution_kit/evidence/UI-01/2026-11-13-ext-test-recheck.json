@@ -1,0 +1,137 @@
+{
+  "task_id": "UI-01",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "仅本机 localhost；关闭 Streamlit 使用统计"
+  },
+  "command": ".venv/bin/python evidence/UI-01/smoke.py; curl localhost:8599 health and page paths (server started via .claude/launch.json)",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：10/10 页面冒烟（含无发布版本时的空状态）；服务器健康检查与 5 个页面路径 200。改动：release_info() 在发布目录损坏、缺字段或文件缺失时返回空状态（G-029）。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：复核（UI-06 修改 pages/ai.py 后）：Streamlit 多页骨架：数据口径、经营、客户、预测、AI 工作台五组入口，全部只经只读运行时读取允许视图；每页显示数据版本、数据时间范围与 as_of，并标注合成历史数据、非 2026 实时经营。AppTest 有发布 5/5、无发布空状态 5/5；真实服务健康 ok、六个路径 200；内置浏览器打开经营页确认渲染。 复核：AppTest 有发布 5/5、无发布 5/5；服务健康 200、五个页面路径 200。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "src/retail_bi/warehouse/release.py",
+      "sha256": "078b6fb34921edc79e197f53b3bb90bc30e1aa2bb51b5cc4c6b3504f77bfae7d"
+    },
+    {
+      "path": "docs/query_runtime.md",
+      "sha256": "9df883c2ba71b6170a5fcfa2aa283d3586f39bd18123da8871260b0a6454cfd9"
+    },
+    {
+      "path": "evidence/UI-01/smoke.py",
+      "sha256": "a357acd6b7bfbba076eb0e9dc3d4b7bde3873f1b09eef1e154994cada9bd2472"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "app.py",
+      "sha256": "2a7b194a5cfeee4fa289e4183c8cc675352d4be3649db43d6f9f60054705c225"
+    },
+    {
+      "path": "reports/ui/navigation_smoke.md",
+      "sha256": "386226ab46b15085b4fe399a447cf17e1aab8ca9272ff8c943cc0941791ba083"
+    },
+    {
+      "path": "src/retail_bi/ui/common.py",
+      "sha256": "8d2cf41e61082691d8376ce5e041fbd29801aa13aca2271d2fb1129874057751"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/data.py",
+      "sha256": "ea959e9f5e611b7119b2228c81fdf8ac5beff11093394f16828c6c6930448450"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/business.py",
+      "sha256": "ac36f7410c99ac0d886787e10fde8b368cbba5e260cb685d09cf8955a885403c"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/customers.py",
+      "sha256": "646bb3e6295f57046b0351a595ebc28683c4230b079592601e24524cbdaa5e06"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/prediction.py",
+      "sha256": "2af3344072d01e435fe2d85149f13c74cd285a7b391bd4dc1bf3b5e9c0a28224"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/ai.py",
+      "sha256": "9511fd4bf34287d1eeda544a831e0a93fc09a9d36ea66c309a3f34512471d737"
+    },
+    {
+      "path": "evidence/UI-01/smoke_run.log",
+      "sha256": "95874c95b23f73730462e47e2c235b2634f846862bd04fc280f00d31ba4c6490"
+    },
+    {
+      "path": "evidence/UI-01/server_check.log",
+      "sha256": "3dcdafb921de46ab169175255169e7d406c97e2afe9f68e7c5f215b057b61588"
+    },
+    {
+      "path": "evidence/UI-01/business_page_browser.jpg",
+      "sha256": "c275822671134b19417efaf66add9b9c23d2a90b77d315bea85f1dae84961b84"
+    },
+    {
+      "path": "evidence/UI-01/smoke_run_ui06_recheck.log",
+      "sha256": "1871015cd479b42e18cdf6685e3a3ebe986d30088889d60789256427413924dd"
+    },
+    {
+      "path": "evidence/UI-01/server_check_ui06_recheck.log",
+      "sha256": "174b4e3fb14ce804cba238c09210b04ce678b43aef15b9178f6ea03e500e403e"
+    },
+    {
+      "path": "evidence/UI-01/smoke_run_ext_recheck.log",
+      "sha256": "f78708ad9c86948d12025668bbad99a89ec30558e4b80ed39f992dcf021e852e"
+    },
+    {
+      "path": "evidence/UI-01/server_check_ext_recheck.log",
+      "sha256": "72309e0e4e3d26998556efe5c102e3dc25d108297cabac132927ed6ea76b1824"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "st.navigation 提供数据口径、经营、客户、预测、AI 工作台五组页面入口（各一页，路径 /data、/business、/customers、/prediction、/ai），浏览器截图显示侧栏五组。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "共用 banner() 在每页显示数据版本（发布 wh-d3aaa559048c）、数据时间范围 2024-01-01 至 2026-11-07、as_of 2026-11-08，并写明完全合成、模拟历史区间、不是 2026 年实时经营；AppTest 断言五页均包含这些文字。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "应用实际启动（健康检查 ok，六个路径 200，内置浏览器渲染经营页并截图）；发布目录为空时五页都显示“尚无已发布的数据版本”与操作提示且无异常，不是只交静态截图。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "骨架阶段：详细页面由 UI-02 至 UI-06 接入。",
+    "本机 8765 端口被 Anki 占用，前两次服务检查无效，已保留记录。",
+    "复核时把无发布空状态的判定从“页面没有任何表格”细化为“不显示发布数据”：数据页（UI-02）在没有发布时仍显示来自报告文件的表格，其发布核对处显示空状态；其他页面仍要求没有表格。第一次复核按旧判定为 9/10（只有数据页不符），修改判定后 10/10。",
+    "UI-03 把共用页头由三张指标卡改为一行文字（窄窗口下指标卡会截断）；冒烟检查读取页面文字，仍检查数据版本、时间范围、as_of 与合成声明。",
+    "UI-04 复核的第一次冒烟为 9/10（客户页无发布时显示报告分群表），曾被误记为通过；修正客户页后第二次 10/10，本记录以第二次为准。",
+    "UI-05 复核第一次冒烟 9/10：无发布时预测页显示冻结的模型评估表（来自报告文件）。与数据页相同，判定改为：评估报告可显示，名单试算必须显示“暂无评分名单”空状态；第二次 10/10。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "06ea732a6f804d164144fc69f6be1c770f5278e2efdc9273506fb24d5287a29b",
+  "performed_at": "2026-11-13T21:02:04.128297+08:00"
+}

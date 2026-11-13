@@ -1847,6 +1847,11 @@
             "previous": 2102,
             "change": -4
           },
+          "active": {
+            "customers": 683,
+            "previous": 682,
+            "change": 1
+          },
           "at_risk": {
             "customers": 530,
             "previous": 527,
@@ -1856,11 +1861,6 @@
             "customers": 21,
             "previous": 19,
             "change": 2
-          },
-          "active": {
-            "customers": 683,
-            "previous": 682,
-            "change": 1
           }
         },
         "unit": "customers",

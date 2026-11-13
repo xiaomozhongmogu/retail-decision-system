@@ -31,7 +31,11 @@ S = st.session_state
 S.setdefault('sid', 'ui-' + uuid.uuid4().hex[:8])
 c1, c2 = st.columns([3, 1])
 c1.caption(f"LLM：{'已配置（' + cfg.model + '）' if llm_ready else '未配置或未授权付费，AI 部分将使用规则与模板'} · 会话 {S['sid']} · 结果只保存在本浏览器会话中")
-use_llm = c2.toggle('使用 LLM', value=llm_ready, disabled=not llm_ready, key='use_llm')
+# the switch is kept in the URL (?llm=0), so a page refresh does not silently turn paid calls back on (external UI test U-005)
+use_llm = c2.toggle('使用 LLM', value=llm_ready and st.query_params.get('llm', '1') != '0', disabled=not llm_ready, key='use_llm')
+st.query_params['llm'] = '1' if use_llm else '0'
+st.caption('刷新页面会清空本页的对话、周报与 Agent 结果（“使用 LLM”开关和草稿库会保留）；需要保存时请先用各处的导出按钮。')
+TIER_ZH = {'high': '高价值（近 90 天常买）', 'normal': '普通（近 90 天买过）', 'lapsed_high': '历史高价值（近 90 天未买）', 'lapsed_normal': '历史普通（近 90 天未买）'}
 STATE_ZH = {'ok': '已回答', 'clarify': '需要澄清', 'unsupported': '不支持', 'empty': '没有数据', 'error': '执行失败', 'cancelled': '已取消'}
 
 t1, t2, t3 = st.tabs(['查询助手', '经营周报', '挽回 Agent'])
@@ -135,7 +139,8 @@ with t3:
         complaint = st.checkbox('有未结投诉', value=False, key='ag_complaint')
         stock = st.checkbox('相关商品有货', value=True, key='ag_stock')
         contacts = st.number_input('近 30 天已触达次数', 0, 5, 0, key='ag_contacts')
-        spent = st.number_input('本周已用预算（USD）', 0.0, 200.0, 0.0, 1.0, key='ag_spent')
+        # no upper bound: an invalid entry used to keep the old value silently (U-004); the rule engine denies over-budget runs
+        spent = st.number_input('本周已用预算（USD，周预算 200）', min_value=0.0, value=0.0, step=1.0, key='ag_spent')
     ctx = {'consent': consent, 'open_complaint': complaint, 'in_stock': stock, 'contacts_last_30d': int(contacts)}
     rid = 'ui-' + hashlib.sha256(json.dumps([cid, ctx, spent, use_llm, S['sid']], sort_keys=True).encode()).hexdigest()[:12]
     S.setdefault('ag_runs', {})
@@ -155,7 +160,9 @@ with t3:
             st.caption(f"LLM/规则提议（{run['proposal'].get('mode')}）：{run['proposal'].get('action')} {run['proposal'].get('discount')} — {run['proposal'].get('rationale')}")
         if run.get('decision'):
             d = run['decision']
-            st.markdown(f"规则判定：**{d['decision']}**；成本 {d['cost_usd']} USD；周预算使用后 {d['budget_after_usd']} USD；价值层级 {d['value_tier']}")
+            st.markdown(f"规则判定：**{d['decision']}**；成本 {d['cost_usd']} USD；周预算使用后 {d['budget_after_usd']} USD；"
+                        f"价值层级 **{TIER_ZH.get(d['value_tier'], d['value_tier'])}**")
+            st.caption('价值层级由规则按历史购买计算，只决定折扣上限；是否给优惠还要看资格、库存、毛利和预算，模型概率不参与判定。')
             for x in d['reasons']:
                 st.caption('· ' + x)
         if run.get('error'):

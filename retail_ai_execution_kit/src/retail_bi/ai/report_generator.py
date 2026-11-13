@@ -21,12 +21,49 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'src/retail_bi/ai'))
 
 MAX_REPAIRS = 2
+RF_WEEKLY_Z = 2.0      # report_facts.WEEKLY_Z (anomaly threshold for the weekly z-score)
 PH = re.compile(r'\{\{(F\d{2})\}\}')
-NUM = re.compile(r'\d[\d,]*(?:\.\d+)?%?')
-CN_NUM = re.compile(r'[零〇一二两三四五六七八九十百千万]+(?:周|天|日|个月|月|年|倍|成|个百分点|百分点|单|人|位|元|美元)')
-UNAVAILABLE = re.compile(r'渠道|毛利|利润率|库存|优惠券|广告|曝光|点击|浏览|加购')
+NUM = re.compile(r'\d(?:[\d,]*\d)?(?:\.\d+)?%?')
+CN_NUM = re.compile(r'[零〇一二两三四五六七八九十百千万亿]+(?:余|多|来)?(?:周|天|日|个月|月|年|倍|成|个百分点|百分点|单|笔|件|条|项|名|家|类|种|款|人|位|元|美元)'
+                    r'|[零〇一二两三四五六七八九十百千]*分之[零〇一二两三四五六七八九十百千]+|[壹贰叁肆伍陆柒捌玖拾佰仟]')
+UNAVAILABLE = re.compile(r'渠道|毛利|利润|库存|优惠券|广告|曝光|点击|浏览|加购|ROI|投产比|退货|退款|转化率|成本|供应商|年龄|性别|投放', re.I)
 CN_OK = {'一天', '一日', '一周'}   # generic period words (the report week, the excluded last day), not quantities
-CAUSE = re.compile(r'原因|由于|因为|导致|驱动|归因')
+CAUSE = re.compile(r'原因|由于|因为|导致|驱动|归因|拉动|推高|推动|带动|拉低|源于|促使|致使|造成|使得|得益于|归功于|所致|效应')
+HIDDEN = re.compile(r'[\u200b-\u200f\u202a-\u202e\u2060-\u2064\ufeff\u00ad]')
+MARKUP = re.compile(r'https?://|www\.|\]\(|<\s*/?\s*[A-Za-z!]|javascript:', re.I)
+ROMAN = re.compile(r'[\u2160-\u2188]')
+PH_KIND = {'USD': 'USD', 'orders': 'orders', 'count': 'orders', 'ratio': 'ratio', 'z-score': 'z'}
+CTX = re.compile(r'客单价|金额|美元|USD|订单|单量|环比|同比|变化|z\s*值|基线', re.I)
+
+
+def normalize(t: str) -> str:
+    """NFKC (full-width and circled digits become ASCII) with invisible characters removed, so the checks see what a reader sees."""
+    import unicodedata
+    return unicodedata.normalize('NFKC', HIDDEN.sub('', t))
+
+
+def _ctx_kind(word: str) -> str:
+    w = word.lower()
+    return 'aov' if w == '客单价' else 'USD' if w in ('金额', '美元', 'usd') else 'orders' if w in ('订单', '单量') else 'z' if w.startswith('z') or w == '基线' else 'ratio'
+
+
+def placeholder_context(t: str, sel: list[dict]) -> list[str]:
+    """The metric word right before a placeholder must fit the fact it stands for (G-011: orders written as an amount)."""
+    by, errs = {x['ph']: x for x in sel}, []
+    for m in PH.finditer(t):
+        x = by.get(m.group(1))
+        if not x:
+            continue
+        words = CTX.findall(PH.sub('', t[max(0, m.start() - 12):m.start()]))
+        if not words:
+            continue
+        got = _ctx_kind(words[-1])
+        want = 'aov' if x['metric'].endswith('.aov') and x['unit'] == 'USD' and x['metric'].startswith('report_week') else PH_KIND.get(x['unit'], x['unit'])
+        ok = got == want or (x['metric'].startswith('split_') and got in ('USD', 'orders', 'aov')) or (want == 'ratio' and got == 'ratio') \
+            or (want == 'aov' and got == 'USD')
+        if not ok:
+            errs.append(f"占位符 {{{{{m.group(1)}}}}}（{x['label']}）用在了“{words[-1]}”的语境里")
+    return errs
 
 
 def fmt(v, unit):
@@ -60,6 +97,13 @@ def pick_facts(facts: dict) -> list[dict]:
     for i, x in enumerate(out, 1):
         x['ph'] = f'F{i:02d}'
         x['text'] = fmt(x['value'], x['unit'])
+        x['display'] = x['label']
+    z = F.get('report_week_z.sales')
+    for x in out:      # the table shows the exact baseline; the prompt label stays digit-free (numbers in labels invite the model to write numbers)
+        if x['metric'] == 'report_week_z.sales' and z.get('compare_window'):
+            cw = z['compare_window']
+            x['display'] = (f"本周商品金额相对前 {z.get('sample_size', 8)} 个完整周（{cw['start']} 至 {cw['end']}，不含结束日）周均值的 z 值；"
+                            f"|z| ≥ {RF_WEEKLY_Z} 记为异常候选，需人工核实")
     return out
 
 
@@ -77,10 +121,11 @@ def prompt(sel: list[dict], knowledge: list[dict]) -> list[dict]:
     return [{'role': 'system', 'content': sys_msg}, {'role': 'user', 'content': user}]
 
 
-WRONG_CURRENCY = re.compile(r'(?<!美)元|人民币|RMB|[¥￥]')
-TAIL = re.compile(r'最后一天')
+WRONG_CURRENCY = re.compile(r'(?<![美多单公纪二])元(?![素旦宇数])|人民币|RMB|CNY|美金|块钱|[¥￥]', re.I)
+TAIL = re.compile(r'最后一[天日]|尾日|截止前(?:的)?(?:一天|当天|那天)')
+POST_CUTOFF = re.compile(r'截止日?之后|截止后的|as_of\s*之后|之后的最新数据|实时数据', re.I)
 TAIL_IN_WEEK = re.compile(r'本周|该周|(?<!下一)(?<!下个)报告周(?!期)')
-TAIL_EFFECT = re.compile(r'使|改变|计入|上升|下降|修正|增加|提高|降低|影响|低估|高估')
+TAIL_EFFECT = re.compile(r'使|改变|计入|并入|纳入|拉低|拉高|上升|下降|修正|增加|提高|降低|影响|低估|高估')
 TAIL_NEG = re.compile(r'不在|不参与|不并入|不纳入|不计入|单独|单列|不属于')
 PARTIAL_MONTH = re.compile(r'本月|当月|这个月|月度')
 FULL_MONTH = re.compile(r'上月|上个月|全月|前一个月')
@@ -89,12 +134,17 @@ FULL_MONTH = re.compile(r'上月|上个月|全月|前一个月')
 def semantic_flags(text: str) -> list[str]:
     """Rules added after the GPT blind review (AI-10): wrong currency, partial month vs full month, last day counted in the week."""
     errs = []
+    text = normalize(text)
     if WRONG_CURRENCY.search(text):
         errs.append(f'金额单位不是 USD：{WRONG_CURRENCY.search(text).group(0)}')
-    for snt in re.split(r'[。；\n]', text):
-        if TAIL.search(snt) and TAIL_IN_WEEK.search(snt) and TAIL_EFFECT.search(snt) and not TAIL_NEG.search(snt):
+    if POST_CUTOFF.search(text):
+        errs.append(f'引用截止日之后的数据：{POST_CUTOFF.search(text).group(0)}')
+    for snt in re.split(r'[。；;\n]', text):
+        # clause by clause, so “虽然最后一天不在本周，但它仍使本周……被低估” is still caught (G-018)
+        if TAIL.search(snt) and any((TAIL_IN_WEEK.search(c) or '它' in c) and TAIL_EFFECT.search(c) and not TAIL_NEG.search(c)
+                                    for c in re.split(r'[，,]|但是?|却|仍然?', snt)):
             errs.append(f'把截止前最后一天算进报告周：{snt.strip()[:30]}')
-        if PARTIAL_MONTH.search(snt) and FULL_MONTH.search(snt) and re.search(r'低于|高于|超过|不及|下滑|增长|上升|下降|对比|相比', snt):
+        if PARTIAL_MONTH.search(snt) and FULL_MONTH.search(snt) and re.search(r'低于|高于|超过|不及|下滑|增长|上升|下降|对比|相比|弱于|强于|落后|领先|不如|优于', snt):
             errs.append(f'不完整月份与完整月份直接比较：{snt.strip()[:30]}')
     return errs
 
@@ -104,14 +154,23 @@ def validate_llm(obj: dict, sel: list[dict]) -> list[str]:
     if not isinstance(obj, dict) or not isinstance(obj.get('explanation'), str) or not isinstance(obj.get('actions'), list) or not isinstance(obj.get('hypotheses'), list):
         return ['结构不符：需要 explanation（字符串）、actions 与 hypotheses（列表）']
     known = {x['ph'] for x in sel}
-    texts = [obj['explanation']] + [str(a) for a in obj['actions']] + [str(h) for h in obj['hypotheses']]
+    raw = [obj['explanation']] + [str(a) for a in obj['actions']] + [str(h) for h in obj['hypotheses']]
+    for t in raw:
+        if HIDDEN.search(t):
+            errs.append('含不可见字符（零宽字符等），不能用来隐藏内容')
+        if MARKUP.search(t):
+            errs.append(f'含链接或 HTML 标记：{MARKUP.search(t).group(0)}')
+        if ROMAN.search(t):
+            errs.append(f'用罗马数字写了数量：{ROMAN.search(t).group(0)}')
+    texts = [normalize(t) for t in raw]
     for t in texts:
+        errs += placeholder_context(t, sel)
         for p in PH.findall(t):
             if p not in known:
                 errs.append(f'未知占位符 {{{{{p}}}}}')
         if re.search(r'[0-9%％]', PH.sub('', t)):
             errs.append(f'占位符之外出现数字：{PH.sub("", t)[:40]}')
-        if re.search(r'\{\{F\d{2}\}\}\s*(?:个|周|天|日|月|年|倍|次|单|人|位|元|美元|USD|%)', t):
+        if re.search(r'\{\{F\d{2}\}\}\s*(?:个|周|天|日|月|年|倍|次|单|笔|件|条|项|名|人|位|元|美元|USD|%)', t):
             errs.append(f'占位符后接了单位或量词（值已含单位，不能当作别的数量用）：{t[:40]}')
         if re.search(r'(?:前|第|近|后|每)\s*\{\{F\d{2}\}\}', t):
             errs.append(f'占位符被当作计数或期数使用（前/第/近）：{t[:40]}')
@@ -125,9 +184,10 @@ def validate_llm(obj: dict, sel: list[dict]) -> list[str]:
             errs.append(f'用中文数字写了数量：{cn[0]}')
     for t in texts:
         errs += semantic_flags(t)
-    for s in re.split(r'[。；\n]', obj['explanation']):
-        if CAUSE.search(s) and '待验证' not in s:
-            errs.append(f'解释中的原因推测未标“待验证”：{s[:30]}')
+    for t in texts[:1 + len(obj['actions'])]:                # explanation and actions; hypotheses must start with 待验证 anyway (G-017)
+        for s in re.split(r'[。；;\n]', t):
+            if CAUSE.search(s) and '待验证' not in s:
+                errs.append(f'解释或建议中的原因推测未标“待验证”：{s[:30]}')
     for h in obj['hypotheses']:
         if not str(h).startswith('待验证'):
             errs.append(f'假设未以“待验证”开头：{str(h)[:30]}')
@@ -154,7 +214,7 @@ def assemble(facts: dict, sel: list[dict], body: dict, mode: str, knowledge: lis
          f"- 生成模式：**{ {'live': '真实 LLM', 'replay': '回放（离线记录的 LLM 文本）', 'template': '可信模板（未使用 LLM 文本）'}[mode] }**；数字全部由程序从事实 JSON 填入",
          f"- 数据：{facts['dataset_version']}，{facts['metric_version']}；完全合成的模拟数据，不是真实企业", '',
          '## 关键数字', '', '| 指标 | 值 | 依据 |', '|---|---:|---|']
-    L += [f"| {x['label']} | {x['text']} | `{x['evidence_id']}` |" for x in sel]
+    L += [f"| {x.get('display', x['label'])} | {x['text']} | `{x['evidence_id']}` |" for x in sel]
     L += ['', '## 解释', '', sub(body['explanation']), '', '## 行动建议', '']
     L += [f'- {sub(a)}' for a in body['actions']]
     L += ['', '## 待验证假设', ''] + [f'- {sub(h)}' for h in body['hypotheses']]
@@ -169,13 +229,14 @@ def final_check(text: str, sel: list[dict], facts: dict) -> list[str]:
     """Every number in the final text must be a fact value, a period date part, or a fixed template number."""
     allowed = set()
     for x in sel:
-        allowed |= set(NUM.findall(x['text']))
+        allowed |= set(NUM.findall(x['text'] + ' ' + x.get('display', '')))
     for w in facts['data']['periods'].values():
         allowed |= set(NUM.findall(w['start'] + ' ' + w['end']))
-    allowed |= set(NUM.findall(facts['dataset_version'] + ' ' + facts['metric_version'] + ' ' + ' '.join(x['evidence_id'] for x in sel)))
     allowed |= set(NUM.findall(' '.join(w['message'] for w in facts.get('warnings', []))))
     allowed |= {'52', '8', '24'}
-    bad = [n for n in NUM.findall(re.sub(r'`[^`]*`|(?:doc|metric|fact|sql):[^\s,，]+', '', text)) if n not in allowed]
+    # identifiers are removed before counting numbers; their digits are no longer allowed in prose (G-009)
+    ids = re.escape(facts['dataset_version']) + '|' + re.escape(facts['metric_version']) + r'|(?m:^- 数据：.*$)|scenario=S\d+|facts_S\d+\.json|wh-[0-9a-f]{6,}|metrics@[0-9a-f]+'
+    bad = [n for n in NUM.findall(re.sub(r'`[^`]*`|(?:doc|metric|fact|sql):[^\s,，]+|' + ids, '', normalize(text))) if n not in allowed]
     body = text.split('## 关键数字', 1)[-1].split('## 提示', 1)[0]
     extra = semantic_flags(body)
     return [f'最终文本含未知数字 {n}' for n in sorted(set(bad))] + extra
@@ -218,7 +279,8 @@ def generate_weekly_report(facts: dict | None = None, client=None, mode: str = '
     if body is None:
         body = template_text(sel)
         if mode != 'template':
-            notes.append(f'LLM 文本未通过校验或调用失败（{len(attempts)} 次尝试），已回退为可信模板')
+            # no digit in the note: version-id digits used to be allowed and hid this count from the final check (G-009)
+            notes.append('LLM 文本未通过校验或调用失败，已回退为可信模板（尝试次数见尝试记录）')
     text = assemble(facts, sel, body, used_mode, kn, notes)
     fc = final_check(text, sel, facts)
     if fc and used_mode != 'template':

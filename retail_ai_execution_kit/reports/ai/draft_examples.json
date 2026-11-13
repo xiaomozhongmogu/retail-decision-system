@@ -9,7 +9,7 @@
    "customer_id": "customer_000001",
    "action": "coupon",
    "discount": 0.1,
-   "copy": "您好，欢迎回来看看新上架的商品。",
+   "copy": "您好，欢迎回来看看，10% 的专属优惠为您保留。",
    "reasons": [
     "所有检查通过"
    ],
@@ -26,23 +26,23 @@
    "status": "approved",
    "sent": false,
    "delivery": "not_sent",
-   "created_at": "2026-11-13T05:03:48+00:00",
-   "updated_at": "2026-11-13T05:03:48+00:00",
+   "created_at": "2026-11-13T12:54:56+00:00",
+   "updated_at": "2026-11-13T12:54:56+00:00",
    "history": [
     {
-     "at": "2026-11-13T05:03:48+00:00",
+     "at": "2026-11-13T12:54:56+00:00",
      "event": "created",
      "status": "pending_review"
     },
     {
-     "at": "2026-11-13T05:03:48+00:00",
+     "at": "2026-11-13T12:54:56+00:00",
      "event": "修改文案",
      "status": "pending_review",
      "_previous_copy": "您好，我们为您准备了一张 10% 的专属优惠。",
      "_editor": "运营审核员"
     },
     {
-     "at": "2026-11-13T05:03:48+00:00",
+     "at": "2026-11-13T12:54:56+00:00",
      "event": "审核",
      "status": "approved",
      "_reviewer": "运营审核员",
@@ -75,16 +75,16 @@
    "status": "withdrawn",
    "sent": false,
    "delivery": "not_sent",
-   "created_at": "2026-11-13T05:03:48+00:00",
-   "updated_at": "2026-11-13T05:03:48+00:00",
+   "created_at": "2026-11-13T12:54:56+00:00",
+   "updated_at": "2026-11-13T12:54:56+00:00",
    "history": [
     {
-     "at": "2026-11-13T05:03:48+00:00",
+     "at": "2026-11-13T12:54:56+00:00",
      "event": "created",
      "status": "pending_review"
     },
     {
-     "at": "2026-11-13T05:03:48+00:00",
+     "at": "2026-11-13T12:54:56+00:00",
      "event": "撤回",
      "status": "withdrawn",
      "_by": "运营审核员",
@@ -120,11 +120,11 @@
    "status": "pending_review",
    "sent": false,
    "delivery": "not_sent",
-   "created_at": "2026-11-13T05:03:48+00:00",
-   "updated_at": "2026-11-13T05:03:48+00:00",
+   "created_at": "2026-11-13T12:54:56+00:00",
+   "updated_at": "2026-11-13T12:54:56+00:00",
    "history": [
     {
-     "at": "2026-11-13T05:03:48+00:00",
+     "at": "2026-11-13T12:54:56+00:00",
      "event": "created",
      "status": "pending_review"
     }

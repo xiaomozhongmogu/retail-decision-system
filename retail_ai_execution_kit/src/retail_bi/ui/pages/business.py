@@ -25,6 +25,8 @@ months = sorted(monthly.month)
 GRAINS = {'year': '年', 'quarter': '季度', 'month': '月', 'week': '周（周一开始）', 'day': '日'}
 
 # ---------------- 1. time roll-up / drill-down ----------------
+ZH_COLS = {'period': '期间', 'valid_orders': '有效订单', 'merchandise_sales_usd': '商品金额 USD', 'shipping_usd': '运费 USD',
+           'aov_usd': '客单价 USD', 'buyers': '购买客户（月内去重）', 'complete': '完整期间'}
 st.subheader('1. 时间趋势（上卷 / 下钻）')
 c1, c2, c3 = st.columns(3)
 start = c1.selectbox('开始月份', months, index=0, key='start')
@@ -49,22 +51,21 @@ else:
         color=alt.Color('状态:N', scale=alt.Scale(domain=['完整', '不完整'], range=['#4C78A8', '#BAB0AC'])),
         tooltip=['period', 'valid_orders', 'merchandise_sales_usd', 'aov_usd'])
     st.altair_chart(chart, width='stretch')
-    st.dataframe(ts.rename(columns={'period': '期间', 'valid_orders': '有效订单', 'merchandise_sales_usd': '商品金额 USD', 'shipping_usd': '运费 USD',
-                                    'aov_usd': '客单价 USD', 'buyers': '购买客户（月内去重）', 'complete': '完整期间'}), hide_index=True)
+    st.dataframe(ts.rename(columns=ZH_COLS), hide_index=True)
 
 with st.expander('逐级下钻：年 → 季度 → 月 → 日'):
     years = sorted({m[:4] for m in months})
     y = st.selectbox('年份', years, key='dy')
     _, q, _ = time_series(monthly, daily, 'quarter', f'{y}-01', f'{y}-12')
-    st.dataframe(q, hide_index=True)
+    st.dataframe(q.rename(columns=ZH_COLS), hide_index=True)            # Chinese headers (external UI test U-006)
     qs = list(q.period) if q is not None else []
     qq = st.selectbox('季度', qs, key='dq')
     qn = int(qq[-1])
     _, mm, _ = time_series(monthly, daily, 'month', f'{y}-{3 * qn - 2:02d}', f'{y}-{3 * qn:02d}')
-    st.dataframe(mm, hide_index=True)
+    st.dataframe(mm.rename(columns=ZH_COLS), hide_index=True)
     mo = st.selectbox('月份', list(mm.period), key='dm')
     _, dd, _ = time_series(monthly, daily, 'day', mo, mo)
-    st.dataframe(dd, hide_index=True)
+    st.dataframe(dd.rename(columns=ZH_COLS), hide_index=True)
     st.caption('日粒度中标记为不完整的日期：截止前最后一天的订单可能尚未审批（下单到审批最长 24 小时）。')
 
 # ---------------- 2. category x region cube ----------------

@@ -14,11 +14,11 @@
    "module": "query_assistant",
    "outcome": "ok",
    "mode": "live",
-   "seconds": 0.67,
+   "seconds": 1.206,
    "llm": {
     "calls": 1,
     "tokens_in": 114,
-    "tokens_out": 23,
+    "tokens_out": 20,
     "cost_usd": 2.2e-05
    }
   },
@@ -27,12 +27,12 @@
    "module": "weekly_report",
    "outcome": "ok",
    "mode": "live",
-   "seconds": 2.426,
+   "seconds": 5.095,
    "llm": {
-    "calls": 1,
-    "tokens_in": 1101,
-    "tokens_out": 334,
-    "cost_usd": 0.000248
+    "calls": 2,
+    "tokens_in": 2570,
+    "tokens_out": 686,
+    "cost_usd": 0.000551
    }
   },
   {
@@ -40,12 +40,12 @@
    "module": "retention_agent",
    "outcome": "draft_saved",
    "mode": "live",
-   "seconds": 2.427,
+   "seconds": 2.787,
    "llm": {
     "calls": 2,
-    "tokens_in": 1189,
-    "tokens_out": 151,
-    "cost_usd": 0.000209
+    "tokens_in": 1261,
+    "tokens_out": 156,
+    "cost_usd": 0.000221
    }
   },
   {
@@ -53,7 +53,7 @@
    "module": "query_assistant",
    "outcome": "ok",
    "mode": "fallback_no_key",
-   "seconds": 0.001,
+   "seconds": 0.0,
    "llm": {
     "calls": 0,
     "tokens_in": 0,
@@ -64,9 +64,9 @@
   {
    "scenario": "nokey",
    "module": "weekly_report",
-   "outcome": "error",
+   "outcome": "ok",
    "mode": "fallback_no_key",
-   "seconds": 0.009,
+   "seconds": 0.005,
    "llm": {
     "calls": 0,
     "tokens_in": 0,
@@ -79,7 +79,7 @@
    "module": "retention_agent",
    "outcome": "draft_saved",
    "mode": "fallback_no_key",
-   "seconds": 0.043,
+   "seconds": 0.037,
    "llm": {
     "calls": 0,
     "tokens_in": 0,
@@ -103,7 +103,7 @@
   {
    "scenario": "timeout",
    "module": "weekly_report",
-   "outcome": "error",
+   "outcome": "ok",
    "mode": "timeout",
    "seconds": 0.004,
    "llm": {
@@ -118,7 +118,7 @@
    "module": "retention_agent",
    "outcome": "draft_saved",
    "mode": "timeout",
-   "seconds": 0.029,
+   "seconds": 0.033,
    "llm": {
     "calls": 4,
     "tokens_in": 0,
@@ -142,9 +142,9 @@
   {
    "scenario": "ratelimit",
    "module": "weekly_report",
-   "outcome": "error",
+   "outcome": "ok",
    "mode": "rate_limited",
-   "seconds": 0.003,
+   "seconds": 0.004,
    "llm": {
     "calls": 2,
     "tokens_in": 0,
@@ -157,7 +157,7 @@
    "module": "retention_agent",
    "outcome": "draft_saved",
    "mode": "rate_limited",
-   "seconds": 0.027,
+   "seconds": 0.03,
    "llm": {
     "calls": 4,
     "tokens_in": 0,
@@ -180,36 +180,36 @@
   }
  ],
  "live_budget": {
-  "calls": 4,
+  "calls": 5,
   "max_calls": 50,
-  "cost_usd": 0.000479,
+  "cost_usd": 0.000794,
   "max_cost_usd": 0.5,
-  "tokens_in": 2404,
-  "tokens_out": 508
+  "tokens_in": 3945,
+  "tokens_out": 862
  },
  "event_example": {
-  "at": "2026-11-13T05:03:36+00:00",
+  "at": "2026-11-13T13:00:18+00:00",
   "module": "retention_agent",
   "request": "int-live",
   "outcome": "draft_saved",
   "mode": "live",
-  "seconds": 2.427,
+  "seconds": 2.787,
   "llm": {
    "calls": 2,
-   "tokens_in": 1189,
-   "tokens_out": 151,
-   "cost_usd": 0.000209
+   "tokens_in": 1261,
+   "tokens_out": 156,
+   "cost_usd": 0.000221
   },
   "tools": [
    {
     "tool": "get_profile",
     "ok": true,
-    "ms": 30.4
+    "ms": 17.0
    },
    {
     "tool": "get_risk",
     "ok": true,
-    "ms": 14.9
+    "ms": 13.7
    },
    {
     "tool": "retrieve_policy",
@@ -219,27 +219,27 @@
    {
     "tool": "llm_propose",
     "ok": true,
-    "ms": 1551.9
+    "ms": 1764.6
    },
    {
     "tool": "check_budget",
     "ok": true,
-    "ms": 0.8
+    "ms": 0.1
    },
    {
     "tool": "llm_copy",
     "ok": true,
-    "ms": 825.0
+    "ms": 990.2
    },
    {
     "tool": "save_draft",
     "ok": true,
-    "ms": 2.7
+    "ms": 1.0
    }
   ],
   "evidence_ids": [
-   "profile:customer_000002@wh-d3aaa559048c",
-   "risk:customer_000002@repurchase-logreg-v1",
+   "profile:cust#7cdfbc22@wh-d3aaa559048c",
+   "risk:cust#7cdfbc22@repurchase-logreg-v1",
    "doc:retention_policy#5-模型的使用@retention-policy-v1",
    "doc:retention_policy#4-折扣上限@retention-policy-v1",
    "doc:retention_policy#6-频率与预算@retention-policy-v1",

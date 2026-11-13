@@ -54,10 +54,63 @@ def avg_order_value(c: dict) -> Decimal | None:
     return None
 
 
+def _finite(v) -> bool:
+    import math
+    try:
+        return math.isfinite(float(v))
+    except (TypeError, ValueError):
+        return False
+
+
+SENT_CLAIM = re.compile(r'已(?:为您|给您|经|帮您)?(?:发放|发送|到账|领取|存入|充值|发券|发到)|已发|请(?:及时)?(?:查收|领取|使用)|已为您准备好')
+OFFER_WORD = re.compile(r'优惠|券|折扣|打折|[几一二三四五六七八九]折|立减|满减|减免|红包|返现|返利|赠送|免单|半价|特价')
+CN_AMOUNT = re.compile(r'[零〇一二两三四五六七八九十百千万壹贰叁肆伍陆柒捌玖拾佰仟]+\s*(?:元|块|美元|折|成|倍|张|%|个百分点)')
+KEYLIKE = re.compile(r'sk[-_][A-Za-z0-9_-]{4,}|Bearer\s+\S+|Token\s+\S+', re.I)
+
+
+def copy_violations(copy: str, action_type: str, discount: float, promise=None) -> list[str]:
+    """Draft copy must match the decided action (G-012/G-034): nothing is sent or issued, and the only number a coupon
+    may carry is its own percentage; a reminder mentions no offer at all."""
+    import unicodedata
+    c = unicodedata.normalize('NFKC', re.sub(r'[\u200b-\u200f\u2060-\u2064\ufeff\u00ad]', '', str(copy)))
+    errs = []
+    pct = f'{float(discount) * 100:g}'
+    if len(c) > 80:
+        errs.append('文案超过 80 字')
+    if '\x00' in c or re.search(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', c):
+        errs.append('文案含控制字符')
+    if SENT_CLAIM.search(c):
+        errs.append(f'文案声称已发送或已发放：{SENT_CLAIM.search(c).group(0)}（草稿不会发送，也不发券）')
+    if KEYLIKE.search(c):
+        errs.append('文案含类似密钥的字符串')
+    if re.search(r'customer_\d+|先生|女士', c):
+        errs.append('文案含客户编号或称谓')
+    if promise is not None and promise.search(c):
+        errs.append(f'文案含承诺用语：{promise.search(c).group(0)}')
+    nums = re.findall(r'\d+(?:\.\d+)?', c)
+    if action_type == 'coupon':
+        if [n for n in nums if n != pct] or CN_AMOUNT.search(c) or re.search(r'立减|满减|红包|返现|免单|半价|[几一二三四五六七八九]折', c):
+            errs.append(f'优惠文案只能写本次折扣 {pct}%，不能写其他数字或优惠形式')
+        if pct not in nums:
+            errs.append(f'优惠文案没有写明本次折扣 {pct}%')
+    else:
+        if nums or CN_AMOUNT.search(c):
+            errs.append('提醒文案不能写数字或金额')
+        if OFFER_WORD.search(c):
+            errs.append(f'提醒文案不能提优惠：{OFFER_WORD.search(c).group(0)}（规则只批准了提醒）')
+    return errs
+
+
 def decide(customer: dict, action: dict, context: dict | None = None, budget: dict | None = None, policy: dict | None = None) -> dict:
     P = policy or load_policy()
     ctx = {**P['demo_defaults'], **(context or {})}
     demo_keys = sorted(k for k in P['demo_defaults'])
+    import math
+    nums = {'spent_usd': (budget or {}).get('spent_usd', 0), 'gross_margin': ctx.get('gross_margin'), 'discount': action.get('discount', 0)}
+    bad = [k for k, v in nums.items() if v is not None and not (isinstance(v, (int, float, Decimal, str)) and _finite(v))]
+    if bad or float(nums['spent_usd'] or 0) < 0:       # NaN / inf crashed Decimal (G-030); a negative margin gives a cap of 0 below
+        return {'status': 'error', 'mode': 'live', 'data': {}, 'error': {'code': 'invalid_argument', 'retryable': False,
+                'message': f'输入不是有效的非负有限数：{bad or ["spent_usd"]}'}}
     spent = usd((budget or {}).get('spent_usd', 0))
     checks, reasons = [], []
 
@@ -104,7 +157,7 @@ def decide(customer: dict, action: dict, context: dict | None = None, budget: di
         else:
             cap_tier = Decimal(str(P['discount_cap_by_tier'][tier]))
             cap_margin = (Decimal(str(ctx['gross_margin'])) * Decimal(str(P['margin_share_for_discount']))).quantize(Decimal('0.0001'))
-            cap = min(cap_tier, cap_margin)
+            cap = max(Decimal(0), min(cap_tier, cap_margin))
             checks.append({'rule': '折扣上限', 'passed': want <= cap, 'basis': 'fact (value tier) + demo_config (margin)',
                            'detail': f'请求 {want}，价值层级 {tier} 上限 {cap_tier}，毛利上限 {cap_margin}（毛利 {ctx["gross_margin"]} × {P["margin_share_for_discount"]}）'})
             if want > cap:

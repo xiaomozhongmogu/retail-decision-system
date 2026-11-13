@@ -1,0 +1,28 @@
+PASS live run ok, mode live, computed by code 
+PASS deterministic: two runs identical 
+PASS every fact has evidence_id, unit, window, status, query, versions, sample size 48
+PASS evidence ids unique 
+PASS null values always carry a non-ok status 
+PASS report week orders and sales equal an independent DWD recompute (86, 13306.01)
+PASS previous week and week-on-week change equal the recompute (63, 9229.99)
+PASS report month orders, distinct buyers, sales equal the recompute 
+PASS category contributions equal the recompute 
+PASS open tail day reported separately as partial_period (orders still awaiting approval) valid 2, approved after cutoff 4
+PASS split_vs_previous_week: parts add up to the total change exactly ({'orders': 3468.17, 'aov': 607.85}, 4076.02)
+PASS split_vs_same_week_last_year: parts add up to the total change exactly ({'orders': -1466.27, 'aov': 1418.98}, -47.29)
+PASS month_split_vs_previous_month: parts add up to the total change exactly ({'buyers': 14713.55, 'orders_per_buyer': -159.51, 'aov': -6154.15}, 8399.89)
+PASS month_split_vs_same_month_last_year: parts add up to the total change exactly ({'buyers': 750.59, 'orders_per_buyer': 271.81, 'aov': -2979.17}, -1956.77)
+PASS month_contribution_vs_previous_month.product_category: contributions sum to the month change 
+PASS month_contribution_vs_previous_month.customer_region: contributions sum to the month change 
+PASS month_contribution_vs_same_month_last_year.product_category: contributions sum to the month change 
+PASS month_contribution_vs_same_month_last_year.customer_region: contributions sum to the month change 
+PASS kpi_daily summed over 2026-10 equals kpi_monthly 2026-10 shown on the business page 
+PASS report month is the latest complete month (2026-11 partial is not used) 
+PASS fact module does not import the LLM client 
+PASS fixture zero base week: aov and change get zero_denominator, value null 
+PASS fixture short history: same-week-last-year and its change are incomplete_period 
+PASS fixture short history: same-month-last-year split is incomplete_period, previous month split ok 
+PASS fixture small base (14 orders < 30): growth withheld as small_sample 
+PASS fixture tail-day drop: candidate notes pending approval [{'type': 'daily', 'metric': 'orders', 'day': '2026-11-07', 'z': -6.74, 'evidence_id': 'fact:ca950455', 'note': '2026-11-07 日有效订单=1，前 56 天中位数 11，稳健 z=-6.74；该日订单尚未全部审批（下单到审批最长 24 小时），偏低是预期的，不代表经营变化'}]
+PASS fixture spike day: daily candidate raised 
+27/27 checks passed

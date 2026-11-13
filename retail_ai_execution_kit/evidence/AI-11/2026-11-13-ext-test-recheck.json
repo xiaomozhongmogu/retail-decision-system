@@ -1,0 +1,99 @@
+{
+  "task_id": "AI-11",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；同意/投诉/触达/库存/毛利/预算为演示配置",
+    "network": "无；不调用 LLM"
+  },
+  "command": ".venv/bin/python evidence/AI-11/policy_checks.py",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：27/27。改动：非有限数（NaN/inf）返回 invalid_argument，负毛利时折扣上限取 0 并改为提醒；新增 copy_violations() 文案规则（G-030、G-012）。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：建立受约束挽回政策 retention-policy-v1：knowledge/retention_policy.md 是唯一维护位置（规则文字＋engine 读取的 JSON 配置块），policy_engine.decide 用确定性代码检查资格、频率、折扣上限、成本与周预算，返回 allow/modify/deny、原因、每条检查的依据（事实或演示配置）和确定性成本；只生成待审草稿。27/27 边界检查通过；真实 704 人名单批量判定中周预算 200 USD 在第 65 位用完，总花费 199.98 USD 未超出。",
+  "inputs": [
+    {
+      "path": "contracts/interfaces.md",
+      "sha256": "f26d02796ab3a9eb48862c2cc95d859eb8a3e0afe1f7edcb9d948c4daa5386fc"
+    },
+    {
+      "path": "reports/model/rfm_segments.md",
+      "sha256": "b2ab4811bda1d9013f6d6aab8bd2b4d12f0b11b42e340d7ecc8aa19624faa33c"
+    },
+    {
+      "path": "docs/model_card.md",
+      "sha256": "74bf33f4430c64dd1349f2d3cbdfb13ef205fa684df2387e783fe8292dc491e5"
+    },
+    {
+      "path": "sql/scores.sql",
+      "sha256": "5c5b051322e95cb3c329c605419fdc29a0e2bea4248d1f3129181f31169a3f58"
+    },
+    {
+      "path": "evidence/AI-11/policy_checks.py",
+      "sha256": "d8dc17b78df32c6f1bb9a97b2f8c971280658c26306ae03081a495882a201d67"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "knowledge/retention_policy.md",
+      "sha256": "8ef15c67bffb900f4f68a8da5b11369b11661721912227117b94c98cc792637d"
+    },
+    {
+      "path": "src/retail_bi/ai/policy_engine.py",
+      "sha256": "1260000d673544047b8f33e217d00b7fbb60c5f8b5cf658db87fb6ad220b7332"
+    },
+    {
+      "path": "reports/ai/policy_checks.json",
+      "sha256": "07b83225b38f7ca3e9a1ea652473140cf6dcf3ac6392fb0af6cab4738ca9085e"
+    },
+    {
+      "path": "evidence/AI-11/policy_run.log",
+      "sha256": "88891425dcd303dc01ad751556915c264a3e57a08934e628a4eb5cb7c9c7ac40"
+    },
+    {
+      "path": "evidence/AI-11/policy_checks_ext_recheck.log",
+      "sha256": "7d391b36dcc45a703daff49178dec53b8ab2179ca5fa6bca09d1f77efe8d7252"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "价值层级（与 ML-05 规则分群同一切分点）与毛利共同决定折扣上限；生命周期与近期购买决定是否只发提醒；退货规则保留（数据无退货，注明不触发）；成本和周预算/单客上限最终把关。夹具证明 p=0.05 与 p=0.95 的客户得到相同动作和成本：风险不加码折扣；模型概率因个体排序接近随机只作参考（used_for_decision=false），母体外客户按规则判定。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "政策文档第 1 节把事实字段、数据中不存在的字段（退货）和演示配置（同意、投诉、触达、库存、毛利、预算）分表列出；每次判定的 checks 标注 basis=fact / demo_config，demo_config_used 单独返回，并附 demo_config 警告。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "边界夹具：价值切分 203.18/203.19、折扣恰好等于上限通过、超过下调、毛利上限先于层级上限生效、30 天触达 1 次通过 2 次拒绝、间隔 7 天通过 6 天拒绝、单客成本 20.00 通过 20.01 拒绝、周预算恰好用满通过多 1 分拒绝、未知同意按未同意、非法动作报错。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "所有演示配置都是假设值；真实批量运行假设全部客户已同意营销、无投诉、无近期触达。",
+    "超出单客上限时直接拒绝而不自动降低折扣（政策写明）；本次 5 名高客单客户因此被拒。",
+    "第一次运行有 1 项检查失败：夹具客户金额 199.5 落在“一般”层级（上限 5%），是检查写错而非引擎错误；改为高价值夹具并把批量拒绝按规则拆分后重跑 27/27。policy_run.log 只保留重跑的输出（第一次的日志被覆盖），第一次的失败以本条为准。",
+    "批量中“预算用完后”一项检查较弱，主要保证是总花费不超过周预算。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "dc43bf275a72095eff78bf9bd04d288cd9a22ab824fa3bb4b204ea035abac258",
+  "performed_at": "2026-11-13T21:02:03.901456+08:00"
+}

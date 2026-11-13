@@ -1,0 +1,106 @@
+{
+  "task_id": "AI-07",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；标准答案为 DWD 明细表上的独立 SQL；真实 LLM 只用于规则兜底与口径提示",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python eval/nl2sql_eval.py --tag final",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：可回答 28/28，拒答 16/16，拒答题执行 0 次。另有 Gemini 独立出题复测：支持范围 23/25（另 2 题改为明确说明不支持），边界 14/15（剩余 1 题为新支持的跨月区间，答案 180,884.24 USD 与 DWD 一致）。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：问答标准集 44 个固定测例：可回答 28（金额、订单、客单价、单月客户、运费、取消、趋势、排名/前 N、占比、同比/环比、品类与大区筛选、按天、复购率、生命周期）、歧义 6、无数据 4、越权 6；问法均为新写，不在任何提示示例中。按结果语义与 DWD 独立 SQL 对比。首测（未修改）可回答 24/28 = 85.7%，越权 5/6（删除请求被当作查询执行，沙箱只读未造成写入）；修复 5 个系统问题后第二次 27/28，第三次 28/28；歧义、无数据、越权 16/16 全部拦截，越权测例 0 次执行查询。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "c7eedc3b3b10de13671e59ad264a5cb1c0b278f132d2d9da7cad6611d7ff393d"
+    },
+    {
+      "path": "src/retail_bi/ai/query_intent.py",
+      "sha256": "0d4a934e6987f0e56bc1f37d39880913306e92e0b915e3410ceb667c909947c1"
+    },
+    {
+      "path": "src/retail_bi/ai/sql_executor.py",
+      "sha256": "1e50cc876fe9fd1cd4606aad70ed811dd41dcb332d76209c47852cda3d7a3b6e"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "eval/nl2sql_cases.jsonl",
+      "sha256": "a5377368d6b424cffc29ca0e7a55bd6088e9dda938afb062e57256f619125291"
+    },
+    {
+      "path": "eval/nl2sql_eval.py",
+      "sha256": "98a7eb5adf3a6da16d52f44d884552515ee466d604ec9e56ae0e90c5b43c682a"
+    },
+    {
+      "path": "reports/ai/nl2sql_evaluation.json",
+      "sha256": "6d6ededed38480b8dc2764c75d2bc5012e4b82ee4e000bdcfa3fc07275c74936"
+    },
+    {
+      "path": "evidence/AI-07/eval_run.log",
+      "sha256": "04d457bb4683665ab3885b3ba8216811aa73c8c84c15fb0676f1b118d0c9e96a"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_1.log",
+      "sha256": "439503eb87af10269349f4516de3ec9713699a94d1b67f0a55a8f89604fc8b73"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_1_results.json",
+      "sha256": "e84c7d320b1e89e115654a414792b785f2a1b43472b112ca8e561ebc09be326a"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_2.log",
+      "sha256": "76df554e8dfa0322d573582aca36f42ee31b9aeb214ea4ec0bb67f5df5197f88"
+    },
+    {
+      "path": "evidence/AI-07/eval_run_2_results.json",
+      "sha256": "6d8dcde677dae5678a8bfeb928c22f0566edebf693755a875e454793022e7afa"
+    },
+    {
+      "path": "evidence/AI-07/nl2sql_run_ext_recheck.log",
+      "sha256": "a3647e8807add7aea7da2790badfd9ff308f6c859a962c8d9415180a726613a0"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "44 个固定测例（≥40），其中可回答 28（≥24），含歧义 6、无数据 4、越权 6；查询意图层没有 few-shot 示例，测例问法均未出现在 AI-04 检查集或任何提示中。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "按结果语义比较（数值、序列、排名、占比、同比基期与变化），标准答案来自 DWD 明细表的独立 SQL，不是系统所用的 ADS 视图；报告分子分母：首测 24/28（85.7%，低于 90% 目标），修复后 28/28；不只统计 SQL 执行率。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "最终 16/16 个声明拒绝的测例全部拦截且未执行查询；首测与第二次的失败案例和结果保存在 evidence/AI-07/，修复内容记录在 AI-04/05/06 的复核证据中；结论只针对本测例集，不宣称普遍 100% 正确或安全。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "修复是在看到本测例集的失败后做的，最终 100% 偏乐观；未经修改的首测 85.7% 更能代表对新问法的表现。今后应另写一批未见过的测例做复测。",
+    "测例与标准 SQL 由实现者编写，不是独立标注。",
+    "LLM 兜底路径只在规则识别不出指标时使用，本测例集中几乎没有触发。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "9d5a211ca6b3ffe525a0b25cdc27741ed547ef963291537afeccba5970474c14",
+  "performed_at": "2026-11-13T21:02:03.794590+08:00"
+}

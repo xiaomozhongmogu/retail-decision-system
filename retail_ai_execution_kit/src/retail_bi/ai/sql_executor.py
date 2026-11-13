@@ -16,6 +16,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from decimal import Decimal
@@ -80,13 +81,19 @@ def validate(sql: str, params: list | None = None) -> dict:
     import duckdb
     if not isinstance(sql, str) or not sql.strip() or len(sql) > 4000:
         raise Refused('invalid_argument', 'SQL 为空或过长')
+    if re.search(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', sql):
+        raise Refused('invalid_argument', 'SQL 含控制字符')                    # NUL bytes (G-035)
     j = json.loads(duckdb.connect().execute('SELECT json_serialize_sql(?)', [sql]).fetchone()[0])
     if j.get('error'):
         raise Refused('query_rejected', f"只允许单条只读 SELECT（{j.get('error_message', '')[:80]}）")
     if len(j['statements']) != 1:
         raise Refused('query_rejected', '只允许一条语句')
+    if '"SHOW_REF"' in json.dumps(j):                                          # SHOW / DESCRIBE / SUMMARIZE parse as SELECT (G-015)
+        raise Refused('query_rejected', '不允许查看库结构（SHOW / DESCRIBE / SUMMARIZE）')
     acc = {'tables': set(), 'table_functions': set(), 'functions': set(), 'columns': set(), 'params': 0, 'subqueries': 0, 'aliases': set(), 'ctes': set()}
     _walk(j['statements'][0], acc)
+    if not acc['tables']:
+        raise Refused('query_rejected', '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）')
     ptr, cols = _allowed()
     allowed_tables = {tuple(v.split('.', 1)) for v in ptr['allowed_views']}
     for sch, name in acc['tables']:
@@ -144,7 +151,11 @@ for s in ["SET enable_external_access = false", "SET autoload_known_extensions =
           "SET memory_limit = '256MB'", "SET threads = 1", "SET lock_configuration = true"]:
     con.execute(s)
 try:
-    cur = con.execute("SELECT * FROM (" + req['sql'] + ") AS q LIMIT " + str(req['max_rows'] + 1), req['params'])
+    # layer 2 on its own: exactly one SELECT statement before it is wrapped; newlines keep a trailing -- comment inside (G-016/G-031)
+    st = con.extract_statements(req['sql'])
+    if len(st) != 1 or st[0].type != duckdb.StatementType.SELECT or '\x00' in req['sql']:
+        raise PermissionError('only one SELECT statement is allowed')
+    cur = con.execute("SELECT * FROM (\n" + req['sql'] + "\n) AS q LIMIT " + str(req['max_rows'] + 1), req['params'])
     cols = [d[0] for d in cur.description]
     rows = [[None if v is None else (v if isinstance(v, (int, float, str, bool)) else str(v)) for v in r] for r in cur.fetchall()]
     print(json.dumps({'ok': True, 'columns': cols, 'rows': rows}))
@@ -258,7 +269,7 @@ def run_plan(plan: dict) -> dict:
         if post.get('compare') and len(post['periods']) > 1:
             base = select(post['periods'][1])
             b = agg(base) if base else None
-            res.update({'base_value': float(b) if b is not None else None, 'base_months': post['periods'][1]['months'],
+            res.update({'base_value': float(b) if b is not None else None, 'base_months': post['periods'][1]['months'] or [f"{post['periods'][1]['days'][0]} 至 {post['periods'][1]['days'][1]}（不含）"],
                         'change': float((v - b) / b) if (b not in (None, 0) and v is not None) else None,
                         'change_status': 'ok' if b not in (None, 0) else 'zero_denominator' if b == 0 else 'no_base'})
     if m in ('valid_lines', 'merchandise_sales_usd') and any(d.get('month') == '2026-11' for d in cur) or any(str(d.get('partial_period')) == 'True' for d in cur):

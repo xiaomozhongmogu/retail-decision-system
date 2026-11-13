@@ -958,7 +958,7 @@
 2. 统一超时、有限重试、结构化输出、调用次数和费用预算；未授权付费或超预算不调用。
 3. 完成真实小请求并保留脱敏证据；无密钥时可开发夹具但不得标在线集成完成。
 
-证据：evidence/AI-01/2026-11-11-live.json
+证据：evidence/AI-01/2026-11-13-ext-test-recheck.json
 
 ### AI-02 建立业务知识库与检索
 
@@ -992,7 +992,7 @@
 2. 报告检索命中、引用对应和无依据拒答，不只用另一个LLM主观打分。
 3. 固定评测集与提示示例分离，保留实际测试和失败案例。
 
-证据：evidence/AI-03/2026-11-11-rag-eval.json
+证据：evidence/AI-03/2026-11-13-ext-test-recheck.json
 
 ### AI-04 实现查询意图与Schema约束
 
@@ -1009,7 +1009,7 @@
 2. 输出结构化意图，歧义问题澄清；不支持字段/时间明确说明。
 3. 默认可信SQL构造器；若开启模型生成SQL，明确额外校验路径。
 
-证据：evidence/AI-04/2026-11-12-intent-recheck.json
+证据：evidence/AI-04/2026-11-13-ext-test-recheck.json
 
 ### AI-05 实现受限SQL执行器
 
@@ -1026,7 +1026,7 @@
 2. 只读之外关闭外部访问，阻止文件表函数、COPY/ATTACH/扩展安装加载等非授权能力。
 3. 测试写入、文件读取、跨表越权、注入及资源消耗；解析库与AGENTS都不是安全边界。
 
-证据：evidence/AI-05/2026-11-12-executor-recheck.json
+证据：evidence/AI-05/2026-11-13-ext-test-recheck.json
 
 ### AI-06 实现查询回答与结果证据
 
@@ -1043,7 +1043,7 @@
 2. 空结果、取消、时间无覆盖、执行错误有明确状态，不让模型补造数据。
 3. 多轮会话筛选和上下文隔离，不把其他客户/会话状态混入回答。
 
-证据：evidence/AI-06/2026-11-12-assistant-recheck.json
+证据：evidence/AI-06/2026-11-13-ext-test-recheck.json
 
 ### AI-07 完成NL2SQL标准集验收
 
@@ -1060,7 +1060,7 @@
 2. 可回答问题按结果语义比较，目标正确率≥90%；报告分子分母，不只算SQL执行率。
 3. 已声明拒绝测例全部拦截；失败案例与修复重测记录保留，不宣称普遍100%安全。
 
-证据：evidence/AI-07/2026-11-12-nl2sql.json
+证据：evidence/AI-07/2026-11-13-ext-test-recheck.json
 
 ### AI-08 实现周报事实计算
 
@@ -1077,7 +1077,7 @@
 2. 每项事实有evidence_id、单位、时间窗口、查询版本，分母为0或周期不全给状态。
 3. LLM不承担金额求和或比例计算；与经营页面同一指标口径。
 
-证据：evidence/AI-08/2026-11-11-weekly-facts.json
+证据：evidence/AI-08/2026-11-13-ext-test-recheck.json
 
 ### AI-09 实现周报生成与数值校验
 
@@ -1094,7 +1094,7 @@
 2. 可能原因标为待验证假设；最终文本的数字、单位、窗口、引用再次检查。
 3. 修复次数有上限，仍失败回退可信模板；输出标真实LLM或回放模式。
 
-证据：evidence/AI-09/2026-11-12-weekly-report-recheck.json
+证据：evidence/AI-09/2026-11-13-ext-test-recheck.json
 
 ### AI-10 完成周报场景验收
 
@@ -1130,7 +1130,7 @@
 2. 公开数据缺触达/投诉/同意/库存/毛利/优惠时明确演示配置，与事实字段分开。
 3. 资格、折扣上限、频率和预算用确定性代码检查，有边界夹具。
 
-证据：evidence/AI-11/2026-11-11-policy.json
+证据：evidence/AI-11/2026-11-13-ext-test-recheck.json
 
 ### AI-12 实现有限步骤运营Agent
 
@@ -1147,7 +1147,7 @@
 2. 只开放读取画像/风险、检索政策、预算检查、保存草稿等工具。
 3. 无真实营销发送/发券权限；引用事实和政策，不从数据内容接收新系统指令。
 
-证据：evidence/AI-12/2026-11-13-agent-recheck.json
+证据：evidence/AI-12/2026-11-13-ext-test-recheck.json
 
 ### AI-13 实现草稿存储和审阅状态
 
@@ -1164,7 +1164,7 @@
 2. 同一请求可追踪不重复创建不可控副作用，修改/撤回草稿行为明确。
 3. 保存草稿不等于消息已发送，UI和日志不得混淆。
 
-证据：evidence/AI-13/2026-11-13-drafts-recheck.json
+证据：evidence/AI-13/2026-11-13-ext-test-recheck.json
 
 ### AI-14 完成Agent边界场景验收
 
@@ -1181,7 +1181,7 @@
 2. 检查工作流完成、工具参数、约束和证据，已声明的关键违规场景均被阻止。
 3. 保留真实LLM调用的代表性完整轨迹，不能只用静态预置文案冒充Agent。
 
-证据：evidence/AI-14/2026-11-13-agent-eval-recheck.json
+证据：evidence/AI-14/2026-11-13-ext-test-recheck.json
 
 ### AI-15 完成三模块联调与可观测性
 
@@ -1200,7 +1200,7 @@
 
 **当前阻塞：** 联调已实现并检查（14/14，系统卡已写）；剩余：依赖 AI-10 的人工抽查完成后，按当前代码重跑并正式验收。
 
-证据：evidence/AI-15/2026-11-13-integration.json
+证据：evidence/AI-15/2026-11-13-ext-test-recheck.json
 
 
 ## UI — Streamlit
@@ -1220,7 +1220,7 @@
 2. 全局显示数据版本、数据时间和as_of，历史数据不标实时2026。
 3. 应用实际启动，空数据状态可理解，不能只交静态截图。
 
-证据：evidence/UI-01/2026-11-13-ui06-recheck.json
+证据：evidence/UI-01/2026-11-13-ext-test-recheck.json
 
 ### UI-02 接入数据质量与口径页面
 
@@ -1254,7 +1254,7 @@
 2. 图表数字与ADS一致，筛选后的分母和单位正确，不连接放大或重复累计。
 3. 空结果、未知维度、不完整周期有明确提示。
 
-证据：evidence/UI-03/2026-11-11-business-page.json
+证据：evidence/UI-03/2026-11-13-ext-test-recheck.json
 
 ### UI-04 接入客户生命周期与分群
 
@@ -1307,7 +1307,7 @@
 
 **当前阻塞：** 页面已实现并检查（AppTest 18/18、浏览器真实调用）；剩余：依赖 AI-15 完成后重新运行检查并正式验收。
 
-证据：evidence/UI-06/2026-11-13-ai-page-draft.json
+证据：evidence/UI-06/2026-11-13-ext-test-recheck.json
 
 ### UI-07 完成可读性、缓存与异常交互验收
 

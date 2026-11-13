@@ -1,0 +1,106 @@
+{
+  "task_id": "AI-04",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；规则解析 + 可选真实 LLM（DeepSeek）",
+    "network": "联网：api.deepseek.com（仅 LLM 路径 2 次调用）"
+  },
+  "command": ".venv/bin/python evidence/AI-04/check_intent.py",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：43/43。改动：问题中出现而意图没有用上的条件（品类、大区、季度、日期、周、多个年份、“平均”）要求澄清；新增单日、月份区间、去年/今年第N季度、“N个品类”、“排在第一”与客单价同义说法；取消订单金额与分组同比明确不支持（G-001–G-007、G-014、U-001、U-002）。修改中曾把“生命周期”的“周”误当按周提问，AI-05 检查发现后已修复。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：查询意图层：规则解析器把经营问题转成结构化意图（指标、维度、筛选、时间、问题类型、对比），经目录校验（指标、维度、枚举与发布一致、时间范围、可加性）后由可信构造器生成 query_view 调用计划，不产生 SQL 文本。支持 15 类问题；歧义（收入口径、卖得最好、缺时间、缺维度、缺对比对象）返回澄清；不支持字段与不可加指标明确说明；规则识别不出时才走 LLM 路径，其结果同样必须通过目录校验。43/43 检查通过。 复核：2026-11-12 AI-07 标准集首测暴露 5 个问题后修改：写入/导出/直接 SQL 请求改为拒绝；排名/占比时“最高的大区”“最低的品类”中的维度词也作分组；“各…排名”返回全部而非第一名；问到具体生命周期状态时只返回该状态人数。",
+  "inputs": [
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "src/retail_bi/ai/report_facts.py",
+      "sha256": "23db6c043d3c4d36bf13ba817c694bd140047b0bb08eae703e324d4363e12903"
+    },
+    {
+      "path": "evidence/AI-04/check_intent.py",
+      "sha256": "1be876f50dc93c4d4bf90786d180ee28cad877a9699bba51f332f139d0ef541c"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/query_intent.py",
+      "sha256": "0d4a934e6987f0e56bc1f37d39880913306e92e0b915e3410ceb667c909947c1"
+    },
+    {
+      "path": "docs/nl2sql_supported_queries.md",
+      "sha256": "35d39bdb2ee545b59487728f8257f76ea9cf001f49e1afff1b612f9a5fd4876f"
+    },
+    {
+      "path": "reports/ai/query_intent_checks.json",
+      "sha256": "85250b445528598ee97ed82c995a18d419a045cbeb64bd1ed8c703f829743be8"
+    },
+    {
+      "path": "evidence/AI-04/check_run.log",
+      "sha256": "8fedf1c7aa5a2983544489df60c98c176849a38394b91b2dd579e53330b23013"
+    },
+    {
+      "path": "evidence/AI-04/check_run_1_failed.log",
+      "sha256": "ed3ab3ef842b971e73ac13a81c26a9d21a91baec43902eb5805f5b16b4fdd5b6"
+    },
+    {
+      "path": "evidence/AI-04/check_run_before_ai07_fixes.log",
+      "sha256": "e5f05a8000592447597f36e384d2675c6570ce71b10b70cb5c47d48fa27d2908"
+    },
+    {
+      "path": "evidence/AI-04/check_intent_ext_recheck.log",
+      "sha256": "c9fdab235f8cf9f600334dd653d4f42f8d38b9a8b1a366a6b5f9c8d3d83a73f1"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "15 类问题（金额、订单、客单价、单月客户、运费、取消、月度/按天趋势、排名与前 N、占比、同比/环比、品类×大区筛选、复购率、留存率、生命周期人数）；目录包含允许视图、字段、指标口径、16 个品类与 4 个大区枚举（与发布核对一致）、时间语义和文档中的已验示例。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "输出结构化意图；6 种歧义返回澄清；毛利、渠道、州、按品类客户数、跨月去重客户等返回不支持并说明原因；数据范围外的时间返回 empty；本月等不完整期间附提示。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "默认可信构造器只产生 query_view 调用（检查确认计划中没有 SQL 文本、视图都在允许清单内）；LLM 只在规则识别不出指标时填写意图 JSON，必须通过同一目录校验，否则转为澄清；模型生成 SQL 未开启，额外校验路径写在 docs/nl2sql_supported_queries.md §5。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次运行 41/43：取消订单被识别成有效订单、筛选中的“地区/品类”被当成分组维度，属于解析器错误，已修正（check_run_1_failed.log）。",
+    "规则解析只覆盖文档列出的表达方式；口语化或少见说法依赖 LLM 路径，LLM 路径只测了 2 句。",
+    "执行与回答属于 AI-05、AI-06，本任务不执行查询。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "ab7c0196e4aa6ecb8d0f05a9bb3a931f7edfc9ce16c0f9ce10f4406b3541ea24",
+  "performed_at": "2026-11-13T21:02:03.687866+08:00"
+}

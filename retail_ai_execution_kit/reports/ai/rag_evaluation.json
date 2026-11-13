@@ -45,10 +45,10 @@
         "doc:business_scope#4"
       ],
       "supported": true,
-      "answer": "不是。生命周期从首次可观测购买开始定义；生成器自带的阶段标签不能当真值或模型特征。",
+      "answer": "不是。生命周期从首次可观测购买开始，生成器自带的阶段标签不能当真值或模型特征。",
       "citations": [
-        "doc:business_scope#4-明确不做-不宣称@v2",
-        "doc:business_scope#2-四个生命周期阶段@v2"
+        "doc:business_scope#2-四个生命周期阶段@v2",
+        "doc:business_scope#4-明确不做-不宣称@v2"
       ],
       "llm": "called",
       "retrieval_hit": true,
@@ -156,7 +156,7 @@
         "doc:transaction_rules#1"
       ],
       "supported": true,
-      "answer": "未审批订单不计入有效购买；as_of 早于截止时无法区分待审批与将被取消，故取消指标只在完整历史期间使用。",
+      "answer": "未审批订单不计入有效购买，归为取消订单数；as_of 早于截止时无法区分待审批与将被取消，故取消指标只在完整历史期使用。",
       "citations": [
         "doc:transaction_rules#1-有效购买@transaction-rules-v1",
         "doc:transaction_rules#3-取消@transaction-rules-v1"
@@ -210,7 +210,7 @@
         "doc:business_scope#2"
       ],
       "supported": true,
-      "answer": "最近一次有效购买早于 t−180 天即为沉睡；历史不足 180 天时归为观察期不足。",
+      "answer": "最近一次有效购买早于 t−180 天；历史不足 180 天则归为观察期不足。",
       "citations": [
         "doc:lifecycle_rules#1-规则-按优先级-先满足者生效@lifecycle-v1",
         "doc:business_scope#3-四个概念分开定义-验收条件-3@v2"
@@ -261,7 +261,7 @@
         "doc:model_card#4"
       ],
       "supported": true,
-      "answer": "测试集 ROC-AUC 为 0.515（95% 区间 [0.483, 0.546]），与随机相当。",
+      "answer": "测试集 ROC-AUC 为 0.515（客户分块 95% 区间 [0.483, 0.546]），与随机水平相当。",
       "citations": [
         "doc:model_card#4-评估-测试集-只使用一次-reports-model-test-metric@repurchase-logreg-v1",
         "doc:retention_policy#5-模型的使用@retention-policy-v1"
@@ -289,7 +289,7 @@
         "doc:retention_policy#5"
       ],
       "supported": true,
-      "answer": "不能用于挑选个人客户或宣称识别高风险客户；仅可展示平均复购水平。限制：复购与历史行为关系弱、训练测试重叠74%、系数非因果、无营销增量数据。",
+      "answer": "不能用于挑选个人客户或宣称识别高风险客户；仅可展示汇总平均复购水平。限制：复购与历史行为关系弱、74%测试客户见于训练集、系数非因果、无触达数据不估营销增量。",
       "citations": [
         "doc:model_card#1-用途@repurchase-logreg-v1",
         "doc:model_card#5-限制@repurchase-logreg-v1"
@@ -390,7 +390,7 @@
         "metric:cohort_retention_rate"
       ],
       "supported": true,
-      "answer": "分母是 cohort 客户数（cohort_customers），即首次可观测有效购买月内至少有一次有效购买的客户数。",
+      "answer": "分母是 cohort 客户数（cohort_customers），即首次可观测有效购买月内至少一次有效购买的客户数。",
       "citations": [
         "metric:cohort_retention_rate@transaction-rules-v1"
       ],
@@ -415,7 +415,7 @@
         "metric:buyers"
       ],
       "supported": true,
-      "answer": "按窗口内至少一单有效订单的已知 customer_id 去重计数；有效指 approved_ts 非空且早于 as_of，按 purchase_ts 归属窗口，不同窗口不可相加。",
+      "answer": "按窗口内至少有一单有效订单的已知 customer_id 去重计数，不同窗口不能相加。",
       "citations": [
         "metric:buyers@transaction-rules-v1",
         "doc:transaction_rules#6-客户身份@transaction-rules-v1"
@@ -442,7 +442,7 @@
         "metric:repurchase_rate_30d_observed"
       ],
       "supported": true,
-      "answer": "对 as_of 时母体客户，在 [as_of, as_of+30d) 内至少有一单有效购买；标签窗结束后再等1天让审批落定。",
+      "answer": "对 as_of 时母体客户，[as_of, as_of+30d) 内至少一单有效购买；标签窗结束后再等1天让审批落定。",
       "citations": [
         "metric:repurchase_30d@transaction-rules-v1"
       ],
@@ -468,7 +468,7 @@
         "doc:transaction_rules#8"
       ],
       "supported": true,
-      "answer": "不是。有效购买指已审批订单（approved_ts 非空），含已送达、已发货、处理中；仅算已送达只是敏感性对照口径。",
+      "answer": "不是。有效购买指已审批订单（approved_ts 非空），含已送达、已发货、处理中；仅算已送达是敏感性对照口径。",
       "citations": [
         "doc:transaction_rules#1-有效购买@transaction-rules-v1"
       ],
@@ -495,10 +495,10 @@
         "doc:business_scope#4"
       ],
       "supported": true,
-      "answer": "不是。生命周期从首次可观测购买开始定义；生成器自带的阶段标签不能当真值或模型特征。",
+      "answer": "不是。生命周期从首次可观测购买开始，生成器自带的阶段标签不能当真值或模型特征。",
       "citations": [
-        "doc:business_scope#4-明确不做-不宣称@v2",
-        "doc:business_scope#2-四个生命周期阶段@v2"
+        "doc:business_scope#2-四个生命周期阶段@v2",
+        "doc:business_scope#4-明确不做-不宣称@v2"
       ],
       "llm": "called",
       "retrieval_hit": true,
@@ -549,7 +549,7 @@
         "doc:business_scope#3"
       ],
       "supported": true,
-      "answer": "不对。状态只描述距上次购买的时间，不代表流失可能性；不得把“沉睡”说成“已流失”。",
+      "answer": "不对。状态只描述距上次购买的时间，不代表流失可能性；资料明确不得把“沉睡”说成“已流失”。",
       "citations": [
         "doc:lifecycle_rules#2-阈值的依据@lifecycle-v1"
       ],
@@ -574,7 +574,7 @@
         "doc:retention_policy#4"
       ],
       "supported": true,
-      "answer": "不是。折扣上限只由价值层级和毛利决定，不按风险加码；高价值上限10%，一般5%，且不超过毛利率一半。",
+      "answer": "不是。折扣上限只由价值层级和毛利决定，不按风险加码；高价值上限10%，一般5%，流失前高价值15%仅限小规模试验。",
       "citations": [
         "doc:retention_policy#4-折扣上限@retention-policy-v1"
       ],
@@ -597,7 +597,7 @@
       ],
       "expected_evidence": [],
       "supported": false,
-      "answer": "资料明确不含获客渠道、营销触达与成本数据，无法计算渠道投入产出比。",
+      "answer": "资料明确不含获客渠道、营销触达与成本毛利数据，无法计算渠道投入产出比。",
       "citations": [
         "doc:data_dictionary#4-数据中没有的内容@synthetic-transaction-v1",
         "doc:business_scope#2-四个生命周期阶段@v2"
@@ -634,7 +634,7 @@
       ],
       "expected_evidence": [],
       "supported": false,
-      "answer": "资料未提供各品类毛利率；毛利率仅为演示配置，缺省30%，非事实数据。",
+      "answer": "资料未提供各品类毛利率；毛利率仅为演示配置缺省值30%，非真实数据。",
       "citations": [
         "doc:retention_policy#1-事实字段与演示配置的区别@retention-policy-v1"
       ],
@@ -680,10 +680,10 @@
   "budget": {
     "calls": 25,
     "max_calls": 60,
-    "cost_usd": 0.004264,
+    "cost_usd": 0.004265,
     "max_cost_usd": 0.05,
     "tokens_in": 27181,
-    "tokens_out": 1639
+    "tokens_out": 1642
   },
   "scoring": "全部为确定性规则（检索命中、引用 id 是否被检索到且对应期望证据、答案数字是否出现在引用原文、关键事实、无依据拒答），不使用 LLM 打分",
   "labels": "期望证据由 claude-opus-5-5 对照 docs/、contracts/metrics.json、knowledge/ 原文标注，不是独立人工标注"

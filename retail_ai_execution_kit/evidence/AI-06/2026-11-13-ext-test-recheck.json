@@ -1,0 +1,102 @@
+{
+  "task_id": "AI-06",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；真实 LLM（DeepSeek）只写无数字的口径提示",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python evidence/AI-06/check_assistant.py",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：17/17。改动：追问“上个月呢/去年呢”相对上一轮期间平移，“和上个月比呢”在上一轮期间上做环比，追问同样经过覆盖检查（G-026、U-003）。行为变化：“2026年10月西部”后追问“去年呢”得到 2025-10（原为 2025 全年），检查已按 DWD 2025-10 西部金额更新。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：查询助手：问题 → AI-04 意图（规则优先、LLM 兜底）→ 可信计划 → AI-05 执行 → 由程序根据结果生成答案句与表格，LLM 只补一句不含数字的口径提示（不合格即丢弃）。返回信封展示视图、列、条件、SQL 文本与哈希、指标口径、as_of、数据版本与证据编号；状态 ok/clarify/unsupported/empty/error/cancelled。多轮追问（那西部呢、换成订单数、去年呢）只使用本会话的上一意图，会话之间隔离。17/17 检查通过，答案数值与直接查询 DWD 一致。 复核：2026-11-12 AI-07 标准集首测暴露 5 个问题后修改：写入/导出/直接 SQL 请求改为拒绝；排名/占比时“最高的大区”“最低的品类”中的维度词也作分组；“各…排名”返回全部而非第一名；问到具体生命周期状态时只返回该状态人数。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_intent.py",
+      "sha256": "0d4a934e6987f0e56bc1f37d39880913306e92e0b915e3410ceb667c909947c1"
+    },
+    {
+      "path": "src/retail_bi/ai/sql_executor.py",
+      "sha256": "1e50cc876fe9fd1cd4606aad70ed811dd41dcb332d76209c47852cda3d7a3b6e"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "evidence/AI-06/check_assistant.py",
+      "sha256": "822fe4bca2b9e32db63b77bafccfe7f742ef4951fcdf93cf8fadbfa9215ed11b"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "c7eedc3b3b10de13671e59ad264a5cb1c0b278f132d2d9da7cad6611d7ff393d"
+    },
+    {
+      "path": "reports/ai/query_examples.json",
+      "sha256": "2f24a2618b0a697c3a2c24c2ed89a2c82b5935506cac5c056bfc747abe406408"
+    },
+    {
+      "path": "evidence/AI-06/check_run.log",
+      "sha256": "e17edea1ce8410c9b8ec1cf65e400b14613d9abe272b6233b201eb441c58d10b"
+    },
+    {
+      "path": "evidence/AI-06/check_run_before_ai07_fixes.log",
+      "sha256": "0faee186a2850c5002642d52d9f0a55512740fd736c2f1d20b873cfc5ec89569"
+    },
+    {
+      "path": "evidence/AI-06/check_run_after_ai07_1_failed.log",
+      "sha256": "b94c3896733efd947360206835cf332c3f071192c73956bd8739394f87e93ef0"
+    },
+    {
+      "path": "evidence/AI-06/check_assistant_ext_recheck.log",
+      "sha256": "10e6f9562c7616edebb3a485e84bb7e43af4bf0862a08795a6daeb7e83407863"
+    },
+    {
+      "path": "evidence/AI-06/check_assistant.py",
+      "sha256": "822fe4bca2b9e32db63b77bafccfe7f742ef4951fcdf93cf8fadbfa9215ed11b"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "每个 ok 回答都先执行查询再由程序成句（2026-10 商品金额、西部、2025 西部、同比基期等与 DWD 重算一致）；信封展示视图、列、条件与 SQL 文本、口径定义、as_of 2026-11-08 与数据版本 wh-d3aaa559048c。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "时间无覆盖（2023 年）→ empty 并说明；取消 → cancelled 且不执行查询；执行错误（注入故障）→ error 且答案不含数字；歧义 → clarify；不支持字段 → unsupported；LLM 提示不含数字（6 条均通过）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "多轮追问合并本会话上一个有效意图（筛选、指标、时间），无法支持的追问（按地区的订单数）被拒绝而不猜测；新会话中同样的追问不会使用其他会话的状态（返回澄清，last_intent 为空）；会话状态只保存在各自的 Session 对象中，回答不涉及客户级数据。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "追问识别只覆盖短句（指标、时间、地区/品类、按维度）；复杂改写需要用户重新完整提问。",
+    "会话状态保存在进程内存，应用重启后不保留。",
+    "标准集评测（40 题）属于 AI-07。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "a13e1b2977759f57befe4255cbf669a282bc8268b063ddfe05474a6933f6bb76",
+  "performed_at": "2026-11-13T21:02:03.759950+08:00"
+}

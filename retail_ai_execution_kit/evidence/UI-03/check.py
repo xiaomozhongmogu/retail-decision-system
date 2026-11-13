@@ -66,12 +66,14 @@ check('year roll-up: 2025 equals DWD and is complete; 2026 is flagged incomplete
 by_key(at, 'dy').set_value('2025').run()
 by_key(at, 'dq').set_value('2025-Q4').run()
 by_key(at, 'dm').set_value('2025-11').run()
-days = at.dataframe[3].value
+# drill tables show Chinese headers since the external UI test (U-006); map back for the comparison
+EN = {'期间': 'period', '有效订单': 'valid_orders', '商品金额 USD': 'merchandise_sales_usd', '运费 USD': 'shipping_usd', '客单价 USD': 'aov_usd', '完整期间': 'complete'}
+days = at.dataframe[3].value.rename(columns=EN)
 s4a = OL['q4a_drill_month_to_day']['sample']
 check('drill year > quarter > month > day matches DW-08 q4a (2025-11 by day)', [[r.period, str(r.valid_orders), f'{r.merchandise_sales_usd:.2f}'] for r in days.head(3).itertuples()] == s4a[:3], days.head(3))
-months_q4 = at.dataframe[2].value
+months_q4 = at.dataframe[2].value.rename(columns=EN)
 check('drill quarter table has the three months of 2025-Q4', list(months_q4.period) == ['2025-10', '2025-11', '2025-12'])
-check('quarter rows of 2025 add up to the year', abs(at.dataframe[1].value.merchandise_sales_usd.sum() - y['2025']['商品金额 USD']) < 0.01)
+check('quarter rows of 2025 add up to the year', abs(at.dataframe[1].value.rename(columns=EN).merchandise_sales_usd.sum() - y['2025']['商品金额 USD']) < 0.01)
 
 # slice: year 2025 by region (DW-08 q1)
 at = page()

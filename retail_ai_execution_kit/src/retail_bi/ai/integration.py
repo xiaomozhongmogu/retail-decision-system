@@ -24,20 +24,24 @@ sys.path.insert(0, str(ROOT / 'src/retail_bi/warehouse'))
 import client as C  # noqa: E402
 
 EVENTS = ROOT / 'logs/ai/events.jsonl'
-KEYLIKE = re.compile(r'sk-[A-Za-z0-9_-]{8,}|Bearer\s+\S+|api[_-]?key["\']?\s*[:=]\s*["\']?[^"\'\s,}]+', re.I)
+KEYLIKE = C.KEYLIKE
+CUSTOMER = re.compile(r'customer_\d+')
 
 
 def redact(obj):
-    """Mask key-like substrings in every string value (structure is kept intact)."""
-    if isinstance(obj, dict):
-        return {k: redact(v) for k, v in obj.items()}
-    if isinstance(obj, (list, tuple)):
-        return [redact(v) for v in obj]
-    if isinstance(obj, str):
-        return KEYLIKE.sub('[REDACTED]', obj)
-    if obj is None or isinstance(obj, (int, float, bool)):
-        return obj
-    return KEYLIKE.sub('[REDACTED]', str(obj))
+    """Mask key-like substrings (dict keys included) and replace customer ids by a short hash: the event log keeps
+    no customer identifiers (G-021)."""
+    r = C.redact(obj)
+
+    def cust(o):
+        if isinstance(o, dict):
+            return {k: cust(v) for k, v in o.items()}
+        if isinstance(o, list):
+            return [cust(v) for v in o]
+        if isinstance(o, str):
+            return CUSTOMER.sub(lambda m: 'cust#' + hashlib.sha256(m.group(0).encode()).hexdigest()[:8], o)
+        return o
+    return cust(r)
 
 
 def versions():
@@ -69,7 +73,7 @@ class Hub:
         if used_llm_text:
             return 'live'
         codes = [e.get('code') for e in errors if isinstance(e, dict)]
-        for c, m in (('llm_unavailable', 'fallback_no_key'), ('timeout', 'timeout'), ('rate_limited', 'rate_limited')):
+        for c, m in (('llm_unavailable', 'fallback_no_key'), ('timeout', 'timeout'), ('rate_limited', 'rate_limited'), ('budget_denied', 'budget_exhausted')):
             if c in codes:
                 return m
         return 'llm_error' if codes else 'fallback_no_key'
@@ -88,13 +92,15 @@ class Hub:
 
     def _wrap_client(self):
         """Record error codes the client returns, without changing its behaviour."""
-        self._errs = []
+        self._errs, self._oks = [], 0
         orig = self.client.chat
 
         def chat(*a, **k):
             r = orig(*a, **k)
             if r.get('status') != 'ok' and r.get('error'):
                 self._errs.append({'code': r['error'].get('code')})
+            elif r.get('status') == 'ok':
+                self._oks += 1
             return r
         self.client.chat = chat
         return orig
@@ -103,18 +109,18 @@ class Hub:
     def run_query(self, question: str, session=None):
         import query_assistant as QA
         s = session or QA.Session('hub', use_llm=self.use_llm, client=self.client)
-        s.client = self.client
+        s.client, s.use_llm = self.client, self.use_llm          # the hub's setting wins over the session's (G-022)
         b0, t0, orig = self.client.budget(), time.perf_counter(), self._wrap_client()
         try:
             a = s.ask(question)
         finally:
             self.client.chat = orig
-        used = bool(a.get('note')) or (a.get('intent') or {}).get('parser') == 'llm'
+        used = bool(a.get('note')) or ((a.get('intent') or {}).get('parser') == 'llm' and self._oks > 0)   # a failed intent call is not live (G-028)
         ev = self._log({'module': 'query_assistant', 'request': hashlib.sha256(question.encode()).hexdigest()[:10], 'outcome': a['status'],
                         'mode': self._mode(self._llm_errors(), used, self.use_llm), 'seconds': round(time.perf_counter() - t0, 3), 'llm': self._llm_delta(b0),
                         'tools': ['understand', 'plan', 'run_plan'] if a.get('query') else ['understand'], 'evidence_ids': a.get('evidence_ids', []),
                         'errors': [a['error']] if a.get('error') else [], 'result_dataset_version': a.get('dataset_version')})
-        return a, ev
+        return C.redact(a), ev              # the caller gets no key-like strings back either (G-021)
 
     def run_report(self, mode: str = 'live', replay_text: str | None = None):
         import report_generator as G
@@ -132,7 +138,7 @@ class Hub:
                         'attempts': [{k: x.get(k) for k in ('attempt', 'result', 'errors')} for x in r.get('attempts', [])],
                         'evidence_ids': r.get('evidence_ids', []), 'errors': [{'code': e} for e in r.get('final_check_errors', [])],
                         'result_dataset_version': facts['dataset_version']})
-        return r, ev
+        return C.redact(r), ev
 
     def run_agent(self, request: dict, store=None):
         import retention_agent as RA
@@ -142,10 +148,11 @@ class Hub:
             r = RA.RetentionAgent(store or DraftStore(), client=self.client, use_llm=self.use_llm).run(request)
         finally:
             self.client.chat = orig
-        used = (r.get('proposal') or {}).get('mode') == 'live_llm'
+        # live only when both model steps were used; one fallback makes the run a fallback with the error's mode (G-028)
+        used = (r.get('proposal') or {}).get('mode') == 'live_llm' and (r.get('draft') or {}).get('mode', 'live_llm') == 'live_llm'
         ev = self._log({'module': 'retention_agent', 'request': r['request_id'], 'outcome': r['state'], 'mode': self._mode(self._llm_errors(), used, self.use_llm),
                         'seconds': round(time.perf_counter() - t0, 3), 'llm': self._llm_delta(b0),
                         'tools': [{'tool': t['tool'], 'ok': t['ok'], 'ms': t.get('ms')} for t in r['trace']], 'evidence_ids': r.get('evidence', []),
                         'errors': [r['error']] if r.get('error') else [], 'sent': False,
                         'result_dataset_version': next((e.split('@')[1] for e in r.get('evidence', []) if e.startswith('profile:')), None)})
-        return r, ev
+        return C.redact(r), ev

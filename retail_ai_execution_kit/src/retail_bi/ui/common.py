@@ -25,9 +25,13 @@ def release_dir() -> Path:
 
 
 def release_info():
+    """None (empty state) when there is no usable release: missing, unreadable, incomplete or pointing to a missing file (G-029)."""
     try:
-        return pointer(release_dir())
-    except (ReleaseError, FileNotFoundError, OSError):
+        info = pointer(release_dir())
+        if not all(k in info for k in ('version', 'file', 'allowed_views')) or not (release_dir() / info['file']).exists():
+            return None
+        return info
+    except (ReleaseError, OSError, ValueError, KeyError, TypeError):
         return None
 
 

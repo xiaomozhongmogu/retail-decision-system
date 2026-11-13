@@ -1,0 +1,29 @@
+PASS config parsed from knowledge/retention_policy.md 
+PASS tier boundary: 2 orders in 90d -> high; 1 order and 203.18 USD -> normal; 203.19 USD -> high 
+PASS lapsed tiers: no purchase in 90d split by history 
+PASS discount exactly at the high-value cap (10%) is allowed unchanged 
+PASS discount above the cap is lowered to the cap (modify) 
+PASS normal tier cap is 5% 
+PASS margin cap binds below tier cap (lapsed_high 15% vs margin 20% x 0.5 = 10%) 
+PASS risk does not raise the discount: p=0.05 and p=0.95 get the same action and cost 
+PASS out-of-population customer is decided by rules without a model probability 
+PASS consent unknown (default) -> deny not_eligible 
+PASS consent false -> deny 
+PASS open complaint -> deny 
+PASS frequency: 1 contact in 30 days allowed, 2 (= cap) denied 
+PASS gap: 7 days allowed, 6 days denied 
+PASS new customer (tenure 29 < 30 days) gets a reminder instead of a coupon 
+PASS active recent buyer gets a reminder instead of a coupon 
+PASS out of stock (demo) -> reminder 
+PASS return rate 0.31 > 0.30 -> reminder; None (no returns in data) noted, not triggered 
+PASS deterministic cost = discount x 90-day avg order + reminder 
+PASS per-customer cap: cost 20.00 allowed, 20.01 denied (budget_denied) 
+PASS weekly budget: spent so that total equals 200 allowed; one cent more denied 
+PASS invalid action rejected 
+PASS demo settings reported separately from facts 
+PASS policy engine does not import the LLM client 
+PASS real batch: weekly budget never exceeded 
+PASS real batch: weekly budget runs out partway down the ranked list; afterwards only actions that still fit are allowed 
+PASS real batch: every decision has a reason or passes all checks 
+{"release": "wh-d3aaa559048c", "population_ranked": 704, "decisions": {"modify": 48, "allow": 14, "deny": 642}, "deny_codes": {"budget_denied": 642}, "deny_by_rule": {"单客成本上限": 5, "每周预算": 637}, "actions": {"reminder": 48, "coupon": 14}, "tiers": {"high": 249, "normal": 455}, "spent_usd": 199.98, "weekly_budget_usd": 200.0, "first_weekly_budget_denied_rank": 65, "assumptions": "演示：所有客户假设已同意营销、无投诉、无近期触达、毛利 30%、有货；请求 10% 优惠；名单按冻结规则排序", "examples": [{"decision": "modify", "action": {"type": "reminder", "discount": 0.0, "draft_only": true}, "cost_usd": 0.05, "tier": "high", "reasons": ["近期购买者不发优惠：活跃且 15.3 天前刚买过"]}, {"decision": "modify", "action": {"type": "reminder", "discount": 0.0, "draft_only": true}, "cost_usd": 0.05, "tier": "high", "reasons": ["近期购买者不发优惠：活跃且 1.2 天前刚买过"]}, {"decision": "modify", "action": {"type": "reminder", "discount": 0.0, "draft_only": true}, "cost_usd": 0.05, "tier": "high", "reasons": ["近期购买者不发优惠：活跃且 9.2 天前刚买过"]}, {"decision": "deny", "code": "budget_denied", "cost_usd": 0.0, "tier": "high", "reasons": ["单客成本上限：成本 34.65 USD，上限 20.0"]}, {"decision": "deny", "code": "budget_denied", "tier": "high", "reasons": ["每周预算：已用 199.88 + 本次 6.77 USD，周预算 200.0"]}]}
+27/27 checks passed

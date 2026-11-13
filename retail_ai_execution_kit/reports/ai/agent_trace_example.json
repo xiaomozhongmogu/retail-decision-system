@@ -6,7 +6,7 @@
    "step": 1,
    "tool": "get_profile",
    "ok": true,
-   "ms": 15.8,
+   "ms": 39.3,
    "result": {
     "lifecycle_state": "dormant",
     "recency_days": 194.60618055555557,
@@ -17,7 +17,7 @@
    "step": 2,
    "tool": "get_risk",
    "ok": true,
-   "ms": 12.2,
+   "ms": 21.1,
    "result": {
     "applicability": "out_of_population",
     "p_repurchase_30d": null,
@@ -41,16 +41,16 @@
    "step": 4,
    "tool": "llm_propose",
    "ok": true,
-   "ms": 1456.9,
+   "ms": 1912.1,
    "usage": {
-    "prompt_tokens": 1067,
-    "completion_tokens": 163,
-    "cost_usd": 0.000195
+    "prompt_tokens": 1139,
+    "completion_tokens": 147,
+    "cost_usd": 0.000201
    },
    "result": {
     "action": "reminder",
     "discount": 0,
-    "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；无价值层级信息，按一般层级折扣上限5%，且无近90天订单时优惠成本按历史平均每单金额计算，缺乏该数据无法核算，故仅建议提醒。",
+    "rationale": "客户处于沉睡状态且历史高价值，但近90天无购买、模型不适用；按政策仅可提醒，且折扣上限受层级与毛利约束，建议先以提醒触达。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
@@ -63,7 +63,7 @@
    "step": 5,
    "tool": "check_budget",
    "ok": true,
-   "ms": 0.6,
+   "ms": 1.1,
    "result": {
     "decision": "allow",
     "code": null,
@@ -79,21 +79,21 @@
    "step": 6,
    "tool": "llm_copy",
    "ok": true,
-   "ms": 667.9,
+   "ms": 1313.3,
    "usage": {
     "prompt_tokens": 122,
-    "completion_tokens": 26,
+    "completion_tokens": 24,
     "cost_usd": 2.4e-05
    },
    "result": {
-    "copy": "好久不见，我们惦记着您。回来看看新动态，有需要随时联系，期待为您服务。"
+    "copy": "好久不见，我们记得您。欢迎回来看看，有任何需要随时联系，期待为您服务。"
    }
   },
   {
    "step": 7,
    "tool": "save_draft",
    "ok": true,
-   "ms": 2.0,
+   "ms": 1.1,
    "result": {
     "draft_id": "draft-17a182cb86c5",
     "created": true,
@@ -105,11 +105,11 @@
  "sent": false,
  "delivery": "not_sent",
  "state": "draft_saved",
- "seconds": 2.166,
+ "seconds": 3.298,
  "proposal": {
   "action": "reminder",
   "discount": 0.0,
-  "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；无价值层级信息，按一般层级折扣上限5%，且无近90天订单时优惠成本按历史平均每单金额计算，缺乏该数据无法核算，故仅建议提醒。",
+  "rationale": "客户处于沉睡状态且历史高价值，但近90天无购买、模型不适用；按政策仅可提醒，且折扣上限受层级与毛利约束，建议先以提醒触达。",
   "evidence": [
    "doc:retention_policy#5-模型的使用@retention-policy-v1",
    "doc:retention_policy#4-折扣上限@retention-policy-v1",
@@ -204,7 +204,7 @@
   "delivery": "not_sent",
   "action": "reminder",
   "discount": 0.0,
-  "copy": "好久不见，我们惦记着您。回来看看新动态，有需要随时联系，期待为您服务。",
+  "copy": "好久不见，我们记得您。欢迎回来看看，有任何需要随时联系，期待为您服务。",
   "mode": "live_llm",
   "policy_version": "retention-policy-v1",
   "budget": {

@@ -97,25 +97,25 @@
    "group": "layer1",
    "check": "refused: read_csv",
    "status": "passed",
-   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"read_csv\"', 'retryable': False}}"
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）', 'retryable': False}}"
   },
   {
    "group": "layer1",
    "check": "refused: read_text",
    "status": "passed",
-   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"read_text\"', 'retryable': False}}"
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）', 'retryable': False}}"
   },
   {
    "group": "layer1",
    "check": "refused: glob",
    "status": "passed",
-   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"glob\"', 'retryable': False}}"
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）', 'retryable': False}}"
   },
   {
    "group": "layer1",
    "check": "refused: read_parquet url",
    "status": "passed",
-   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"read_parquet\"', 'retryable': False}}"
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）', 'retryable': False}}"
   },
   {
    "group": "layer1",
@@ -145,13 +145,13 @@
    "group": "layer1",
    "check": "refused: duckdb_tables()",
    "status": "passed",
-   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '不允许表函数（如读取文件）：\"duckdb_tables\"', 'retryable': False}}"
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）', 'retryable': False}}"
   },
   {
    "group": "layer1",
    "check": "refused: getenv",
    "status": "passed",
-   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': \"不允许的函数：['getenv']\", 'retryable': False}}"
+   "detail": "{'status': 'unsupported', 'error': {'code': 'query_rejected', 'message': '查询必须读取允许的视图（不接受 VALUES 或无表 SELECT）', 'retryable': False}}"
   },
   {
    "group": "layer1",
@@ -169,55 +169,55 @@
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: read_csv file",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/etc/passwd\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (SELECT * FROM read_"
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/etc/passwd\" - file system operations are disabled by configuration\\n\\nLINE 2: SELECT * FROM read_csv(\\'/etc/pass"
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: read_text file",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/etc/hosts\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (SELECT * FROM read_t"
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/etc/hosts\" - file system operations are disabled by configuration\\n\\nLINE 2: SELECT * FROM read_text(\\'/etc/host"
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: glob",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/Users/*\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (SELECT * FROM glob(\\'/"
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"/Users/*\" - file system operations are disabled by configuration\\n\\nLINE 2: SELECT * FROM glob(\\'/Users/*\\')\\n   "
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: http parquet",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"https://example.com/x.parquet\" - file system operations are disabled by configuration\\n\\nLINE 1: SELECT * FROM (S"
+   "detail": "{'status': 'error', 'error': {'code': 'query_rejected', 'message': 'PermissionException: Permission Error: Cannot access file \"https://example.com/x.parquet\" - file system operations are disabled by configuration\\n\\nLINE 2: SELECT * FROM re"
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: dwd table",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name \"dwd.fact_order\" does not exist because schema \"dwd\" does not exist.\\n\\nLINE 1: SELECT * FROM (SELECT * FROM dwd.fact_order) AS q LI"
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name \"dwd.fact_order\" does not exist because schema \"dwd\" does not exist.\\n\\nLINE 2: SELECT * FROM dwd.fact_order\\n                      "
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: model scores",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name model_scores does not exist!\\nDid you mean \"sales_month_category_region\"?\\n\\nLINE 1: SELECT * FROM (SELECT * FROM ads.model_scores) "
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name model_scores does not exist!\\nDid you mean \"sales_month_category_region\"?\\n\\nLINE 2: SELECT * FROM ads.model_scores\\n               "
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: customer profile",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name customer_profile_latest does not exist!\\nDid you mean \"cohort_retention\"?\\n\\nLINE 1: SELECT * FROM (SELECT * FROM ads.customer_profi"
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Table with name customer_profile_latest does not exist!\\nDid you mean \"cohort_retention\"?\\n\\nLINE 2: SELECT * FROM ads.customer_profile_latest\\n    "
   },
   {
    "group": "sandbox",
    "check": "blocked inside the sandbox without layer 1: getenv",
    "status": "passed",
-   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Scalar Function with name getenv does not exist!\\nDid you mean \"get_current_time\"?\\n\\nLINE 1: SELECT * FROM (SELECT getenv(\\'HOME\\') AS h) AS q LIMI"
+   "detail": "{'status': 'error', 'error': {'code': 'error', 'message': 'CatalogException: Catalog Error: Scalar Function with name getenv does not exist!\\nDid you mean \"get_current_time\"?\\n\\nLINE 2: SELECT getenv(\\'HOME\\') AS h\\n               ^^^^^^^^^"
   },
   {
    "group": "sandbox",
    "check": "sandbox holds only the allowed views as tables (no dwd/dws/customer tables)",
    "status": "passed",
-   "detail": "{'ads.lifecycle_mix_weekly', 'ads.risk_summary_latest', 'ads.sales_month_category_region', 'ads.repurchase_rate_weekly', 'ads.kpi_monthly', 'ads.kpi_daily', 'ads.cohort_retention'}"
+   "detail": "{'ads.repurchase_rate_weekly', 'ads.cohort_retention', 'ads.kpi_daily', 'ads.kpi_monthly', 'ads.lifecycle_mix_weekly', 'ads.risk_summary_latest', 'ads.sales_month_category_region'}"
   },
   {
    "group": "sandbox",
@@ -295,7 +295,7 @@
    "group": "plans",
    "check": "an unnamed lifecycle question still returns all states",
    "status": "passed",
-   "detail": "{'status': 'ok', 'kind': 'table', 'columns': ['lifecycle_state', 'customers'], 'rows': [['new', 21], ['active', 683], ['at_risk', 530], ['dormant', 2098]], 'as_of': '2026-11-02', 'evidence_ids': ['view:ads.lifecycle_mix_weekly', 'sql:5cb0fd"
+   "detail": "{'status': 'ok', 'kind': 'table', 'columns': ['lifecycle_state', 'customers'], 'rows': [['dormant', 2098], ['active', 683], ['new', 21], ['at_risk', 530]], 'as_of': '2026-11-02', 'evidence_ids': ['view:ads.lifecycle_mix_weekly', 'sql:5cb0fd"
   },
   {
    "group": "design",

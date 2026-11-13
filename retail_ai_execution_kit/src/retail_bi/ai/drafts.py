@@ -67,10 +67,17 @@ class DraftStore:
                             'data': self._row(old)}
                 return {'status': 'ok', 'created': False, 'data': self._row(old)}
             t = _now()
-            c.execute('INSERT INTO drafts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?)',
-                      [did, request_id, sha, customer_id, action, float(discount), copy, json.dumps(reasons, ensure_ascii=False), json.dumps(evidence, ensure_ascii=False),
-                       policy_version, json.dumps(budget, ensure_ascii=False), mode, 'pending_review', 'not_sent', t, t,
-                       json.dumps([{'at': t, 'event': 'created', 'status': 'pending_review'}], ensure_ascii=False)])
+            try:
+                c.execute('INSERT INTO drafts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?)',
+                          [did, request_id, sha, customer_id, action, float(discount), copy, json.dumps(reasons, ensure_ascii=False), json.dumps(evidence, ensure_ascii=False),
+                           policy_version, json.dumps(budget, ensure_ascii=False), mode, 'pending_review', 'not_sent', t, t,
+                           json.dumps([{'at': t, 'event': 'created', 'status': 'pending_review'}], ensure_ascii=False)])
+            except sqlite3.IntegrityError:                     # another writer saved the same request first (G-025): same rules as above
+                old = c.execute('SELECT * FROM drafts WHERE request_id = ?', [request_id]).fetchone()
+                if old is None or old['payload_sha'] != sha:
+                    return {'status': 'error', 'error': {'code': 'idempotency_conflict', 'message': '同一请求编号已保存过内容不同的草稿，未覆盖', 'retryable': False},
+                            'data': self._row(old) if old else None}
+                return {'status': 'ok', 'created': False, 'data': self._row(old)}
             return {'status': 'ok', 'created': True, 'data': self._row(c.execute('SELECT * FROM drafts WHERE draft_id = ?', [did]).fetchone())}
 
     def get(self, draft_id: str):
@@ -99,6 +106,14 @@ class DraftStore:
             return {'status': 'ok', 'data': self._row(c.execute('SELECT * FROM drafts WHERE draft_id = ?', [draft_id]).fetchone())}
 
     def revise(self, draft_id: str, new_copy: str, editor: str):
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import policy_engine as PE
+        cur0 = self.get(draft_id)
+        if cur0 and cur0['status'] == 'pending_review':      # other states are refused below as invalid_state
+            v = PE.copy_violations(new_copy, cur0['action'], cur0['discount'])      # same copy rules as the agent (G-034)
+            if v:
+                return {'status': 'error', 'error': {'code': 'invalid_argument', 'message': '修改后的文案未通过校验：' + '；'.join(v), 'retryable': False}, 'data': cur0}
         cur = self.get(draft_id)
         return self._transition(draft_id, {'pending_review'}, 'pending_review', '修改文案', copy=new_copy,
                                 _previous_copy=cur['copy'] if cur else None, _editor=editor)

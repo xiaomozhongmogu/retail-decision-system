@@ -26,9 +26,9 @@ CAT_ALIAS = {'汽车': 'Automotive', '母婴': 'Baby Products', '图书': 'Books
              '运动': 'Sports & Outdoors', '玩具': 'Toys & Games', '手表': 'Watches & Gifts', '礼品': 'Watches & Gifts'}
 REGIONS = {'中西部': 'Midwest', '东北': 'Northeast', '南部': 'South', '西部': 'West'}
 METRICS = {   # id: (zh, unit, keywords)
-    'merchandise_sales_usd': ('商品金额', 'USD', r'商品金额|销售额|销售金额|销量金额|卖了多少钱|金额'),
+    'merchandise_sales_usd': ('商品金额', 'USD', r'商品金额|销售总?额|销售金额|总销售额|销售总金额|成交额|成交金额|销量金额|卖了多少钱|金额'),
     'valid_orders': ('有效订单数', 'orders', r'订单数|订单量|单量|多少单|订单'),
-    'aov_usd': ('客单价', 'USD', r'客单价|平均每单|AOV'),
+    'aov_usd': ('客单价', 'USD', r'客单价|平均每[笔单]|每[笔单].{0,8}平均|平均订单金额|订单平均金额|笔均|单均|AOV'),
     'buyers': ('购买客户数（月内去重）', 'customers', r'购买客户|买家|客户数|多少客户|多少人买'),
     'shipping_usd': ('运费', 'USD', r'运费'),
     'cancelled_orders': ('取消订单数', 'orders', r'取消'),
@@ -60,15 +60,32 @@ def _shift(month: str, k: int) -> str:
     return f'{t // 12}-{t % 12 + 1:02d}'
 
 
+def _next_day(d: str) -> str:
+    from datetime import date, timedelta
+    return (date.fromisoformat(d) + timedelta(days=1)).isoformat()
+
+
 def parse_time(q: str) -> dict | None:
+    m = re.search(r'(20\d\d)\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*[日号]', q) or re.search(r'(20\d\d)-(\d{1,2})-(\d{1,2})', q)
+    if m:                                                        # a single day (external test G-002: was silently read as the month)
+        try:
+            d = f'{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}'
+            return {'start': d, 'end': _next_day(d), 'grain': 'day', 'label': d, 'closed': 'left', 'single_day': True}
+        except ValueError:
+            return {'start': None, 'end': None, 'grain': 'invalid', 'label': m.group(0)}
+    m = re.search(r'(20\d\d)\s*年\s*(\d{1,2})\s*月\s*(?:到|至|~|～|-|—|－)\s*(?:(20\d\d)\s*年\s*)?(\d{1,2})\s*月', q)
+    if m:                                                        # a month range (G-003: was truncated to the first month)
+        a, b = f'{m.group(1)}-{int(m.group(2)):02d}', f'{m.group(3) or m.group(1)}-{int(m.group(4)):02d}'
+        return {'start': a, 'end': b, 'grain': 'month', 'label': f'{a} 至 {b}'}
     m = re.search(r'(20\d\d)\s*年\s*(\d{1,2})\s*月', q) or re.search(r'(20\d\d)-(\d{1,2})(?!\d)', q)
     if m:
         mo = f'{m.group(1)}-{int(m.group(2)):02d}'
         return {'start': mo, 'end': mo, 'grain': 'month', 'label': mo}
-    m = re.search(r'(20\d\d)\s*年?\s*(?:第\s*([一二三四1-4])\s*季度|Q([1-4]))', q, re.I)
+    m = re.search(r'(20\d\d\s*年?|去年|今年)\s*(?:的\s*)?(?:第\s*([一二三四1-4])\s*季度|Q([1-4]))', q, re.I)
     if m:
+        y = {'去年': '2025', '今年': '2026'}.get(m.group(1), m.group(1)[:4])
         qn = int(m.group(3) or (CN_NUM.get(m.group(2)) or m.group(2)))
-        return {'start': f'{m.group(1)}-{3 * qn - 2:02d}', 'end': f'{m.group(1)}-{3 * qn:02d}', 'grain': 'quarter', 'label': f'{m.group(1)}-Q{qn}'}
+        return {'start': f'{y}-{3 * qn - 2:02d}', 'end': f'{y}-{3 * qn:02d}', 'grain': 'quarter', 'label': f'{y}-Q{qn}'}
     m = re.search(r'(?:最近|近|过去)\s*(\d{1,2}|[一二两三四五六七八九十]|十二)\s*个?月', q)
     if m:
         n = int(m.group(1)) if m.group(1).isdigit() else CN_NUM[m.group(1)]
@@ -132,7 +149,8 @@ def parse(question: str) -> dict:
     else:
         grain = None
     top = re.search(r'(?:前|top\s*)(\d{1,2}|[一二两三四五六七八九十])', q, re.I)
-    if re.search(r'哪个|哪一|最高|最多|最低|最少|排名|排行', q) or top:
+    top = top or re.search(r'(\d{1,2}|[一二两三四五六七八九十])\s*个\s*(?:品类|类目|类别|大区|地区|区域)', q)    # “最低的3个品类” (G-007)
+    if re.search(r'哪个|哪一|最高|最多|最低|最少|排名|排行|排在?第一|第一名|冠军|居首', q) or top:
         kind = 'ranking'
     if re.search(r'同比|环比|相比|对比|比去年|比上', q):
         kind = 'comparison'
@@ -146,7 +164,7 @@ def parse(question: str) -> dict:
     t = parse_time(q)
     state = next((v for k, v in {'沉睡': 'dormant', '活跃': 'active', '预警': 'at_risk', '新客': 'new'}.items() if k in q), None) if metric == 'lifecycle_customers' else None
     intent = {**base, 'metric': metric, 'dims': dims, 'filters': filters, 'time': t, 'kind': kind, 'grain': grain,
-              'top_n': (int(top.group(1)) if top.group(1).isdigit() else CN_NUM[top.group(1)]) if top else (1 if kind == 'ranking' and re.search(r'最|哪个|哪一', q) else None),
+              'top_n': (int(top.group(1)) if top.group(1).isdigit() else CN_NUM[top.group(1)]) if top else (1 if kind == 'ranking' and re.search(r'最|哪个|哪一|第一|冠军|居首', q) else None),
               'descending': not re.search(r'最低|最少', q), 'lifecycle_state': state}
     if kind == 'comparison':
         intent['compare'] = 'yoy' if re.search(r'同比|去年', q) else 'mom' if re.search(r'环比|上个?月|上周', q) else None
@@ -154,7 +172,40 @@ def parse(question: str) -> dict:
             return {**intent, 'status': 'clarify', 'clarification': '请说明对比对象：同比（去年同期）还是环比（上一期）。'}
     if kind in ('ranking', 'share') and not dims:
         return {**intent, 'status': 'clarify', 'clarification': '排名或占比需要一个维度：按品类还是按客户大区？'}
+    why = uncovered(q, intent)
+    if why:
+        return {**intent, 'status': 'clarify', 'clarification': why}
     return validate_intent(intent)
+
+
+def uncovered(q: str, intent: dict) -> str | None:
+    """Constraints the question states but the intent would not apply. Answering anyway would return a number for a
+    different question (external tests 2026-11-13: G-001..G-007, U-001, U-002), so the assistant asks instead."""
+    t, dims, f = intent.get('time') or {}, intent.get('dims') or [], intent.get('filters') or {}
+    if t.get('grain') == 'invalid':
+        return f"日期“{t['label']}”无效，请检查年月日。"
+    if re.search(r'品类|类目|类别', q) and 'product_category' not in dims and 'product_category' not in f:
+        return '没有识别出问题中的品类名称。可选品类：' + '、'.join(f'{k}（{v}）' for k, v in CAT_ALIAS.items()) + '。也可以问“各品类……”。'
+    if re.search(r'地区|大区|区域', q) and 'customer_region' not in dims and 'customer_region' not in f:
+        return '没有识别出问题中的大区。可选：中西部、东北、南部、西部；也可以问“各大区……”。'
+    if re.search(r'季度|(?<![A-Za-z])Q[1-4]', q, re.I) and t.get('grain') != 'quarter':
+        return '没有识别出季度所在的年份，请写成“2025年第3季度”或“去年第3季度”。'
+    if re.search(r'\d\s*[日号]', q) and not t.get('single_day'):
+        return '没有识别出具体日期，请写成“2026年10月5日”。'
+    if re.search(r'(?<!生命)周(?!期)', q) and t.get('grain') != 'day':
+        return '按周只支持“上周/本周/最近一周”（最近一个审批落定的完整周），其他周请写成具体日期或改问月份。'
+    years = set(re.findall(r'20\d\d', q))
+    if len(years) > 1 and not (t.get('start') and t.get('end') and {t['start'][:4], t['end'][:4]} == years):
+        return '一次只能问一个时间范围；比较两个年份请用“同比”，或写成“2025年11月到2026年2月”。'
+    if '平均' in q and intent.get('metric') != 'aov_usd':
+        return '“平均”可以指客单价（每笔有效订单的平均商品金额）或月均值；本系统只提供客单价，请确认。'
+    if intent.get('metric') == 'cancelled_orders' and re.search(r'金额|销售额|多少钱|美元|USD', q, re.I):
+        return '取消订单只提供订单数，不提供取消订单的金额。'
+    if intent.get('compare') and dims:
+        return '暂不支持按品类或大区分组的同比/环比。可以指定一个品类或大区，例如“2026年10月西部商品金额同比”。'
+    if intent.get('compare') == 'yoy' and t.get('grain') == 'day':
+        return '按周的同比请使用“经营周报”（按去年同期同星期对齐）；这里可以问按周环比或按月同比。'
+    return None
 
 
 def validate_intent(intent: dict) -> dict:
@@ -171,6 +222,8 @@ def validate_intent(intent: dict) -> dict:
     if intent.get('kind') not in ('value', 'trend', 'ranking', 'comparison', 'share'):
         return bad(f"未知问题类型：{intent.get('kind')}")
     sliced = bool(dims or f)
+    if intent.get('compare') and dims:
+        return {**intent, 'status': 'clarify', 'clarification': '暂不支持按品类或大区分组的同比/环比。可以指定一个品类或大区，例如“2026年10月西部商品金额同比”。'}
     if sliced and m in ('valid_orders', 'buyers', 'aov_usd', 'shipping_usd', 'cancelled_orders'):
         return bad(f'{METRICS[m][0]}没有按品类或地区的允许视图（品类×地区视图只有商品金额、明细行和含该品类订单数）')
     if sliced and m in ('repurchase_rate_30d', 'cohort_retention_rate', 'lifecycle_customers'):
@@ -179,10 +232,14 @@ def validate_intent(intent: dict) -> dict:
         return {**intent, 'status': 'ok', 'warnings': ([{'code': 'time_ignored', 'message': '该指标按其视图的快照时间返回，时间条件仅作展示'}] if t else [])}
     if t is None:
         return {**intent, 'status': 'clarify', 'clarification': '请指定时间范围，例如“2026年10月”“2025年”“最近3个月”或“上周”。'}
-    if t['start'] < DATA_START and t['grain'] != 'day':
+    if t['grain'] == 'invalid':
+        return bad(f"时间范围无效：{t['label']}")
+    if t['start'] < (DATA_START + '-01' if t['grain'] == 'day' else DATA_START):
         return {**intent, 'status': 'empty', 'error': {'code': 'out_of_range', 'message': f"数据从 2024-01 开始，所问时间 {t['label']} 没有数据"}}
-    if t['start'] > AS_OF_MONTH or (t['grain'] == 'day' and t['start'] >= '2026-11-08'):
+    if (t['grain'] != 'day' and t['end'] > AS_OF_MONTH) or t['start'] > AS_OF_MONTH or (t['grain'] == 'day' and t['start'] >= '2026-11-08'):
         return {**intent, 'status': 'empty', 'error': {'code': 'out_of_range', 'message': f"数据截止 2026-11-08（不含），所问时间 {t['label']} 没有数据"}}
+    if t['start'] > t['end']:
+        return bad(f"时间范围无效：{t['label']}（开始晚于结束）")
     if m == 'buyers' and t['grain'] != 'month' or (m == 'buyers' and t['start'] != t['end']):
         if intent.get('kind') != 'trend':
             return bad('购买客户按月去重，跨月不能相加：请问单个月份，或用“每月购买客户趋势”')
@@ -211,6 +268,10 @@ def plan(intent: dict) -> dict:
     if intent.get('compare') and months:
         k = 12 if intent['compare'] == 'yoy' else len(months)
         periods.append({'label': 'base', 'months': [_shift(x, -k) for x in months], 'days': None})
+    elif intent.get('compare') == 'mom' and t['grain'] == 'day':            # week (or day) on the previous span of equal length
+        from datetime import date
+        a, b = date.fromisoformat(t['start']), date.fromisoformat(t['end'])
+        periods.append({'label': 'base', 'months': None, 'days': [(a - (b - a)).isoformat(), t['start']]})
     if sliced:
         cols = ['month', 'product_category', 'customer_region', 'valid_lines', 'merchandise_sales_usd'] + (['orders_containing'] if m == 'valid_lines' else [])
         call = {'view': 'ads.sales_month_category_region', 'columns': cols, 'where': {}}
@@ -222,7 +283,7 @@ def plan(intent: dict) -> dict:
         call = {'view': 'ads.kpi_monthly', 'columns': ['month', 'valid_orders', 'merchandise_sales_usd', 'shipping_usd', 'buyers', 'cancelled_orders', 'partial_period'], 'where': {}}
         group = []
     return {'status': 'ok', 'calls': [call], 'post': {'periods': periods, 'filters': intent['filters'], 'group_by': group,
-            'by_month': intent['kind'] == 'trend' and intent.get('grain') == 'month', 'by_day': intent.get('grain') == 'day' or t['grain'] == 'day',
+            'by_month': intent['kind'] == 'trend' and intent.get('grain') == 'month', 'by_day': intent.get('grain') == 'day',
             'measure': m, 'aov_recomputed_from_sums': m == 'aov_usd', 'rank': {'top_n': intent.get('top_n'), 'descending': intent.get('descending', True)} if intent['kind'] == 'ranking' else None,
             'share': intent['kind'] == 'share', 'compare': intent.get('compare')}}
 

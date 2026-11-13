@@ -35,7 +35,11 @@ b = st.save('req-A', **base)
 check('same request again returns the same draft, no second row', b['created'] is False and b['data']['draft_id'] == d['draft_id'] and len(st.list()) == 1)
 c = st.save('req-A', **{**base, 'discount': 0.15})
 check('same request id with different content is refused, original kept', c['status'] == 'error' and c['error']['code'] == 'idempotency_conflict' and st.get(d['draft_id'])['discount'] == 0.1)
-r = st.revise(d['draft_id'], '您好，欢迎回来看看新上架的商品。', editor='运营审核员')
+# since the external test (G-034) a revision must pass the same copy rules as the agent: a coupon draft keeps its own percentage
+bad = st.revise(d['draft_id'], '尊敬的客户，已为您发放五折券，立减五十元！', editor='运营审核员')
+check('revise with copy that breaks the copy rules is refused, draft unchanged', bad['status'] == 'error' and bad['error']['code'] == 'invalid_argument'
+      and st.get(d['draft_id'])['copy'].startswith('您好，我们为您'), bad)
+r = st.revise(d['draft_id'], '您好，欢迎回来看看，10% 的专属优惠为您保留。', editor='运营审核员')
 check('revise while pending: new copy, previous copy kept in history, still pending', r['status'] == 'ok' and r['data']['copy'].startswith('您好，欢迎')
       and any(h.get('_previous_copy', '').startswith('您好，我们为您') for h in r['data']['history']) and r['data']['status'] == 'pending_review')
 r = st.review(d['draft_id'], 'approved', reviewer='运营审核员')

@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import os
 import time
 import urllib.error
@@ -69,6 +70,22 @@ class Config:
         return {'base_url': self.base_url, 'model': self.model, 'api_key': ('set, ' + str(len(self.api_key)) + ' chars') if self.api_key else 'missing',
                 'allow_paid': self.allow_paid, 'max_calls': self.max_calls, 'max_cost_usd': self.max_cost_usd,
                 'price_in_per_1k': self.price_in_per_1k, 'price_out_per_1k': self.price_out_per_1k, 'timeout_s': self.timeout_s, 'max_retries': self.max_retries}
+
+
+KEYLIKE = re.compile(r'sk[-_][A-Za-z0-9_-]{4,}|(?:Bearer|Token)\s+\S+|api[_-]?key["\']?\s*[:=]\s*["\']?[^"\'\s,}]+', re.I)
+
+
+def redact(obj):
+    """Mask key-like substrings in every string, dict keys included (external test G-013/G-020)."""
+    if isinstance(obj, dict):
+        return {redact(k) if isinstance(k, str) else k: redact(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [redact(v) for v in obj]
+    if isinstance(obj, str):
+        return KEYLIKE.sub('[REDACTED]', obj)
+    if obj is None or isinstance(obj, (int, float, bool)):
+        return obj
+    return KEYLIKE.sub('[REDACTED]', str(obj))
 
 
 class TransportError(RuntimeError):
@@ -140,9 +157,9 @@ class LLMClient:
                 last = e
                 if not e.retryable or attempt > self.cfg.max_retries or self.calls >= self.cfg.max_calls:
                     self._log({'at': datetime.now(timezone.utc).isoformat(), 'purpose': purpose, 'mode': self.mode, 'model': self.cfg.model,
-                               'status': 'error', 'error': str(e), 'attempts': attempt, 'seconds': round(time.perf_counter() - t0, 3)})
+                               'status': 'error', 'error': redact(str(e)), 'attempts': attempt, 'seconds': round(time.perf_counter() - t0, 3)})
                     code = 'timeout' if 'Timeout' in str(e) else ('rate_limited' if e.status == 429 else 'llm_unavailable')
-                    return self._deny(code, f'调用失败：{e}（{attempt} 次尝试）', retryable=e.retryable)
+                    return self._deny(code, f'调用失败：{redact(str(e))}（{attempt} 次尝试）', retryable=e.retryable)
                 self.sleep(min(2 ** attempt, 8))
         usage = resp.get('usage') or {}
         ti, to = int(usage.get('prompt_tokens', 0)), int(usage.get('completion_tokens', 0))

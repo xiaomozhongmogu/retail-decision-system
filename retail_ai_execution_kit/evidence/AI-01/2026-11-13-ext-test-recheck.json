@@ -1,0 +1,98 @@
+{
+  "task_id": "AI-01",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)，标准库 urllib",
+    "data_mode": "真实 LLM 调用（DeepSeek，OpenAI 兼容接口）+ 夹具",
+    "network": "联网：https://api.deepseek.com（密钥由用户安排 Gemini 写入本地 .env，未进入仓库与日志）"
+  },
+  "command": ".venv/bin/python evidence/AI-01/client_smoke.py; .venv/bin/python evidence/AI-01/live_probe.py",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：client_smoke 13/13；真实调用 1 次成功（结构化输出正常）。改动：调用日志与返回的错误信息先脱敏；redact() 移入 client 供三个模块共用，覆盖短 sk-、sk_live_、Token 与字典键（G-013/G-020）。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：统一 LLM 适配层在真实提供商上验收：DeepSeek（请求 deepseek-chat，接口返回模型名 deepseek-flash）真实小请求成功（0.6 秒），结构化 JSON 输出实测成功（{metric, value, unit} 必填键校验通过），用量与按配置单价估算的费用记录在调用日志；夹具 13/13 覆盖超时、有限重试、非重试错误、结构化输出校验、调用次数与费用预算、未授权付费/价格未知不调用、无密钥降级与日志脱敏。日志与报告扫描无密钥文本。",
+  "inputs": [
+    {
+      "path": "evidence/AI-01/client_smoke.py",
+      "sha256": "f1a11f9f4129c36922a24b24f036febe5db6e39bbba60b85fedc2210182cde2c"
+    },
+    {
+      "path": "evidence/AI-01/live_probe.py",
+      "sha256": "18d01b897bcac505eae5afbd59da08e2842ba771d1fe9fb29af9be0810dff9e7"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/client.py",
+      "sha256": "bd18a57633811d848457abff3e88e8735316160965af80aa364010ba946684ab"
+    },
+    {
+      "path": "reports/ai/client_smoke.json",
+      "sha256": "e5080dd334d2ce20b5c46b54e870e654b2b4439e57058facfa11bff123372cbc"
+    },
+    {
+      "path": "reports/ai/client_live_probe.json",
+      "sha256": "3132c29744f3bff6454f3ca5dae54485ae5d934c9daa3231d5b4ff38b5383193"
+    },
+    {
+      "path": "evidence/AI-01/smoke_run.log",
+      "sha256": "99e6e105655cfd2411b6a70ced236c88e55ef20ff9fea315cc0d6034b5c2d93b"
+    },
+    {
+      "path": "evidence/AI-01/smoke_run_live.log",
+      "sha256": "dbca3361d4880d3e2e0a883f9701ea4ac56491795f49dcca3477044eb6f67dbe"
+    },
+    {
+      "path": "evidence/AI-01/live_probe_run.log",
+      "sha256": "7e061e49528c6e7f8bae339e033efbbd130265399b0b2102e23d380ee1054e8f"
+    },
+    {
+      "path": "evidence/AI-01/client_smoke_ext_recheck.log",
+      "sha256": "95aeeab4413ce8eb081740572f5c00c33dcf9c18e5e0d5927429d1bd63e8057b"
+    },
+    {
+      "path": "evidence/AI-01/live_probe_ext_recheck.log",
+      "sha256": "4a7aeaefc8a94bea93c4ab736342fbd8c38dd80b285bcf9abebc6bcec2a1ea35"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "接入 DeepSeek（OpenAI 兼容 chat/completions），真实调用成功；请求模型 deepseek-chat，接口返回 deepseek-flash（如实记录为提供商返回的名称）；接口能力实测：普通对话与 JSON 对象输出（response_format=json_object）。密钥从 .env/环境读取。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "超时 30 秒、最多 2 次重试且只对可重试错误重试、结构化输出缺键或非 JSON 被拒、调用次数与费用上限在发请求前拒绝、未设 LLM_ALLOW_PAID=1 或价格未知时不调用：夹具 13/13；真实探测时预算设为 3 次 / 0.01 USD，实际 1 次 1.5e-05 USD。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "完成真实小请求并保留脱敏证据：smoke_run_live.log 与 client_live_probe.json 只含 redacted 配置（密钥长度）与响应内容，扫描无 sk- 文本；本地调用日志 logs/ai/llm_calls.jsonl 只记提示哈希与用量。早先无密钥时的夹具记录（smoke_run.log）未标为在线集成完成。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "费用为按 .env 中单价（输入 0.00014、输出 0.00028 USD/千 token，由 Gemini 填写）的估算，未与 DeepSeek 账单核对；.env 中同时设了 LLM_ALLOW_UNKNOWN_PRICE=1，因单价已配置而不起作用。",
+    "返回模型名 deepseek-flash 与请求的 deepseek-chat 不同，推测为提供商别名，未在提供商文档中核实。",
+    "Gemini 的连接测试记录不在仓库中；本记录只以本轮实测为准。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "436cb133b9f11d821002a19ce67e6fa8c92353b3e91d921b966c72589b986343",
+  "performed_at": "2026-11-13T21:02:03.615597+08:00"
+}

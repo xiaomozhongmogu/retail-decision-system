@@ -1,0 +1,21 @@
+PASS valid LLM text accepted; numbers substituted from facts; mode live 
+PASS digits outside placeholders rejected 
+PASS Chinese numerals with a unit rejected 
+PASS unknown placeholder rejected 
+PASS unmarked cause in explanation and hypothesis without 待验证 rejected 
+PASS placeholder misused as another quantity (unit after it, repeated) rejected — seen in live run 2 
+PASS placeholder used as a period count and unavailable field (渠道) rejected — seen in live run 4 
+PASS last day counted in the report week rejected (GPT blind review R22/R24) 
+PASS wrong currency and partial-month comparison caught in the final text (GPT blind review R01/R07) 
+PASS one repair then accepted 
+PASS repairs capped at 2: 3 calls, then trusted template 
+PASS non-JSON output falls back after the cap 
+PASS replay mode labelled as replay 
+PASS template mode passes the final number check 
+PASS final check catches a number not in the facts 
+PASS every key number cites its evidence id 
+PASS LLM unavailable -> template with note, not an error 
+live attempts: [{"attempt": 1, "result": "validation_failed", "errors": ["用中文数字写了数量：两条"], "usage": {"prompt_tokens": 1101, "completion_tokens": 338, "cost_usd": 0.000249}}, {"attempt": 2, "result": "ok", "errors": [], "usage": {"prompt_tokens": 1463, "completion_tokens": 336, "cost_usd": 0.000299}}]
+PASS live run: real LLM text accepted within the repair cap, final check clean 
+PASS the recorded live text replays identically (offline demo) 
+19/19 checks passed

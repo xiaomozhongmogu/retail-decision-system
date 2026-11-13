@@ -1,0 +1,98 @@
+{
+  "task_id": "AI-15",
+  "verification_status": "partial",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；在线模式为真实 DeepSeek，超时与限流为测试替身",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python evidence/AI-15/integration_eval.py",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：14/14。改动：脱敏规则统一到 client.redact()，返回值也脱敏，事件中的客户编号改为短哈希；Hub 的 use_llm 覆盖会话设置；只有模型输出确实被采用才记 live，新增 budget_exhausted 模式（G-020–G-022、G-028）；系统卡更新为 v2，写入外部测试结果与修正后的说法。依赖 AI-10 的人工抽查仍未完成，保持待验收。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：三模块统一入口 integration.Hub：共享一个 LLM 客户端（调用、token、估算费用跨模块累计）与同一套数据、指标、知识库、政策版本；每次运行写一条脱敏事件（模块、模式、结果、耗时、调用与 token、工具步骤及每步耗时、证据、错误、版本）。在线、无密钥、超时、限流、回放五种模式下三个模块均可运行且模式可区分。14/14 检查通过；docs/ai_system_card.md 列出实际通过的验证与未覆盖边界。依赖 AI-10 的人工抽查尚未完成，所以待验收。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "c7eedc3b3b10de13671e59ad264a5cb1c0b278f132d2d9da7cad6611d7ff393d"
+    },
+    {
+      "path": "src/retail_bi/ai/report_generator.py",
+      "sha256": "a7097628607f4dc881615ec706a88c912be596cb4c15f623e3e9f3b68577fbe2"
+    },
+    {
+      "path": "src/retail_bi/ai/retention_agent.py",
+      "sha256": "5642542577a2182258a4181558e8a2f63f06231bcbdf8bb7d9679eee2da93bce"
+    },
+    {
+      "path": "src/retail_bi/ai/client.py",
+      "sha256": "bd18a57633811d848457abff3e88e8735316160965af80aa364010ba946684ab"
+    },
+    {
+      "path": "evidence/AI-15/integration_eval.py",
+      "sha256": "b05410c5c07e5d38243bcc64651564744812dbe2a5063466fab68ed291d40a11"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/integration.py",
+      "sha256": "0beb098910c74aeef9839f92f33da3a11d04e5ac2d608b7d682b3dba8be77b9c"
+    },
+    {
+      "path": "docs/ai_system_card.md",
+      "sha256": "72a69fca7b741f22a6a6f06bd7ff5086c60f2b870bd94841cf3da170f9d698d7"
+    },
+    {
+      "path": "reports/ai/integration_evaluation.json",
+      "sha256": "1fb4bf62f92b0e692b91ee7ce084f379b27e18e5ca58b7938d5c0936aee1f186"
+    },
+    {
+      "path": "evidence/AI-15/integration_run.log",
+      "sha256": "c3d49c6036159c4c4d15ac9472e7219db7b4ac821c0f64adfe9f43de6537162d"
+    },
+    {
+      "path": "evidence/AI-15/integration_run_ext_recheck.log",
+      "sha256": "c3d49c6036159c4c4d15ac9472e7219db7b4ac821c0f64adfe9f43de6537162d"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "查询（2026-10 商品金额）、周报（当周事实）与 Agent（一名沉睡客户）分别在线运行到结果；三者使用同一发布版本，事件记录 dataset/metric/kb/policy 版本。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "事件含耗时、本次 LLM 调用次数、token 与估算费用、工具步骤（Agent 每步含耗时，包括两个 LLM 步骤）、证据与错误；redact() 逐个字符串值遮蔽密钥样式文本，日志扫描无密钥、Bearer 或提示原文。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "live / fallback_no_key / timeout / rate_limited / replay 在日志中可区分，回放与降级从不记为 live；系统卡列出 8 项实际通过的验证与 10 类未覆盖边界。"
+    }
+  ],
+  "limitations": [
+    "依赖 AI-10 未 done，不能标 done。",
+    "超时与限流用测试替身制造，没有在真实网络故障下测试。",
+    "第一次运行在脱敏检查处崩溃：redact() 对整段 JSON 文本做替换会破坏结构，改为逐个字符串值处理后 14/14（崩溃输出未单独保存）。",
+    "自审。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "7b869430625faac01457e01846f097e4efab2cb858a1bede5061b34481a894f9",
+  "performed_at": "2026-11-13T21:02:04.090200+08:00"
+}

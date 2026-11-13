@@ -292,7 +292,8 @@ def compute(daily, monthly, catreg, lifecycle, repurchase, as_of=AS_OF, dataset_
             mix[s]['change'] = mix[s]['customers'] - mix[s]['previous']
         F.add('lifecycle_mix', f'生命周期状态人数（快照 {cur}，对比 {prev}）', mix, 'customers', window(date.fromisoformat(cur), date.fromisoformat(cur) + timedelta(days=1)),
               QL, n=sum(v['customers'] for v in mix.values()), rule_version=rv)
-    rr = sorted((r for r in repurchase), key=lambda r: r['as_of_date'])
+    # only snapshots whose 30-day label window plus one settling day closed before as_of (G-023: a historical as_of saw later rates)
+    rr = sorted((r for r in repurchase if date.fromisoformat(r['as_of_date']) + timedelta(days=31) <= as_of), key=lambda r: r['as_of_date'])
     if rr:
         last = rr[-1]
         d = date.fromisoformat(last['as_of_date'])

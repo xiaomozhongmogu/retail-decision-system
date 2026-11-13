@@ -1,0 +1,122 @@
+{
+  "task_id": "UI-03",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, altair",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c",
+    "network": "仅本机 localhost:8599；关闭 Streamlit 使用统计"
+  },
+  "command": ".venv/bin/python evidence/UI-03/check.py; streamlit run app.py --server.port 8599 + built-in browser at 1400px",
+  "exit_code": 0,
+  "summary": "2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：20/20。改动：下钻表改为中文表头（U-006），检查在比较前映射列名；浏览器中确认 2024 年各季度下钻表为中文表头，数值与 GPT 测试记录一致。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：经营页面实现 OLAP 交互：时间上卷/下钻（年→季度→月→周→日）、品类×客户大区的切片、切块与旋转（行列可选、可交换）。只读三个允许视图；可加指标才相加，客单价由合计重算，月去重客户只在月粒度显示，含该品类订单数跨品类相加时拒绝。数字与 DW-08 的 q1/q4a/q5 记录及直接查询 DWD 一致；空结果、不支持的维度、不完整期间（2026、2026-Q4、2026-11、2026-11-07）有明确提示。AppTest 20/20，浏览器检查通过。",
+  "inputs": [
+    {
+      "path": "reports/warehouse/olap_checks.json",
+      "sha256": "e26a9cb80575e3ed7c6fe5e2d64bd142ec7d06da6c0d7ce5f583a4fe203139aa"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "reports/analysis/business_trends.md",
+      "sha256": "754010244de9a029b8c39a3ee4e92ac0dd6c6c2abcb95a3a2d562b56959ad7da"
+    },
+    {
+      "path": "evidence/UI-03/check.py",
+      "sha256": "0157d83550d052e7f3f29a1c9b3dd25007a0d0414b8de5482736ca746dcee66c"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ui/olap.py",
+      "sha256": "1d462274ea8b10936cac7ade4810103a47af026c62571602df88b2070dbc001b"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/business.py",
+      "sha256": "ac36f7410c99ac0d886787e10fde8b368cbba5e260cb685d09cf8955a885403c"
+    },
+    {
+      "path": "src/retail_bi/ui/common.py",
+      "sha256": "8d2cf41e61082691d8376ce5e041fbd29801aa13aca2271d2fb1129874057751"
+    },
+    {
+      "path": "reports/ui/business_page_review.md",
+      "sha256": "3aa3e30d487c78db6e5e6f0d8dea17859beb2342df427a6516f7c15d535eca52"
+    },
+    {
+      "path": "evidence/UI-03/check_run.log",
+      "sha256": "53646822b3ebb60f7df1794190919afd488955b876fb2b1e93c195a2ec7b7ac9"
+    },
+    {
+      "path": "evidence/UI-03/check_run_1_failed.log",
+      "sha256": "949b4b33672401d0e5916d33fea6d392bfdecc1a92d5c9fd4d730cfa4c7a28ce"
+    },
+    {
+      "path": "evidence/UI-03/ui02_check_after_banner.log",
+      "sha256": "0f4bf358800751d5a7f3b351b5c6f3ce5a28247c35d78f70480f9fc9ae9b5c69"
+    },
+    {
+      "path": "evidence/UI-03/business_trend_browser.jpg",
+      "sha256": "d5acc2bb2ef264258f756cc4a066ab73fa073849b3b369b711b68996d3394b5e"
+    },
+    {
+      "path": "evidence/UI-03/business_cube_browser.jpg",
+      "sha256": "d7e26dbef1bb4c011f5faab2679b6ecde9db752902efe47c7187286142492539"
+    },
+    {
+      "path": "evidence/UI-03/check_ext_recheck.log",
+      "sha256": "a2b562747089a5f47d94917d3be29d750af1ea973aa8002991926d59adec6ea0"
+    },
+    {
+      "path": "evidence/UI-03/check.py",
+      "sha256": "0157d83550d052e7f3f29a1c9b3dd25007a0d0414b8de5482736ca746dcee66c"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "可筛选月份范围、年份、客户大区、品类（数据中的真实维度；州、渠道不在允许视图）；切片（2025 按大区 = DW-08 q1）、切块（2025 × West/South × 三品类明细数 = DWD）、下钻（2025 → Q4 → 11 月 → 日 = DW-08 q4a）、旋转（月份×大区 = DW-08 q5，交换后为转置）均由 AppTest 驱动页面控件完成。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "全期间有效订单 9,113、金额 1,380,161.23、客单价 151.45 等于 DWD；年粒度 2025 与 DWD 一致；品类×大区全量合计等于有效金额（无连接放大）；客单价由合计重算；月去重客户 2026-10 = 326 与 DWD 一致；坐标轴与表头写明 USD/lines/orders。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "开始晚于结束显示空状态；选择渠道显示“数据不支持该维度”；含该品类订单数跨品类相加被拒绝；2026-11 与 2026-11-07 标为不完整并在图中灰色显示。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次 AppTest 运行在切片步骤报错退出（测试接口不能把下拉框设为 None），列维度“无”改为命名选项；第二次 19/20（切块表格形状期望写错，页面无误），修正后 20/20；第一次运行没有单独保存日志。",
+    "允许视图没有按大区/品类的订单数和去重客户数。",
+    "共用页头改为一行文字以免窄窗口截断，UI-01 随之复核。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。"
+  ],
+  "steps": [
+    "复现外部测试报告中的问题（同一基线，测试者自己的脚本）。",
+    "修改代码。",
+    "用测试者脚本复测，并重跑本任务全部检查（见 command）。",
+    "重新登记证据。"
+  ],
+  "task_spec_sha256": "15b789a4fcd5cdbf6aacd8d670e24c8d92b8a4f6274c40aba43df4bc1b2ff50a",
+  "performed_at": "2026-11-13T21:02:04.169505+08:00"
+}

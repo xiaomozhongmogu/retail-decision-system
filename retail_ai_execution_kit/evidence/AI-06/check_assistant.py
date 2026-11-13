@@ -45,8 +45,10 @@ c = keep(s.ask('换成订单数'))
 check('follow-up to a metric that has no region view is refused, not guessed', c['status'] == 'unsupported', c)
 d = keep(s.ask('去年呢'))
 w25 = float(q1(f"""SELECT sum(l.item_price_usd) FROM dwd.fact_order_line l JOIN dwd.fact_order o USING (order_id) JOIN dwd.dim_customer c ON c.customer_id=l.customer_id
-                   WHERE o.{V} AND year(o.purchase_ts)=2025 AND c.customer_region='West'""")[0])
-check('follow-up “去年呢” keeps the last valid intent (West, merchandise) and swaps the time', d['status'] == 'ok' and abs(d['result']['value'] - w25) < 0.005, d)
+                   WHERE o.{V} AND strftime(o.purchase_ts,'%Y-%m')='2025-10' AND c.customer_region='West'""")[0])
+# since the external test (G-026) “去年呢 / 上个月呢” shift the previous turn's period (2026-10 -> 2025-10), not as_of
+check('follow-up “去年呢” keeps the last valid intent (West, merchandise) and shifts its month back a year', d['status'] == 'ok'
+      and d['intent']['time']['start'] == '2025-10' and abs(d['result']['value'] - w25) < 0.005, d)
 s2 = QA.Session('B')
 e = keep(s2.ask('那西部呢'))
 check('session isolation: the same follow-up in a new session is not answered from session A', e['status'] in ('clarify', 'unsupported') and s2.last_intent is None, e)

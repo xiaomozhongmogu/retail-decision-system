@@ -53,8 +53,8 @@ class Session:
         if self.last_intent is None or self.last_intent.get('status') != 'ok':
             return None
         fresh = QI.parse(q)
-        if fresh['status'] == 'ok' and fresh.get('time') and fresh.get('metric'):
-            return None                                       # a complete new question
+        if fresh.get('time') and fresh.get('metric'):
+            return None                                       # a complete new question (answered or refused on its own terms)
         if not (FOLLOW.match(q.strip()) and len(q.strip()) <= 24):
             return None
         it = copy.deepcopy(self.last_intent)
@@ -63,7 +63,16 @@ class Session:
                   if re.search(QI.METRICS[k][2], q)), None)
         if m:
             it['metric'] = m
-        t = QI.parse_time(q)
+        prev = it.get('time') or {}
+        t = None
+        if re.search(r'比|环比|同比', q):                       # “和上个月比呢”: compare the previous period, keep its time (U-003)
+            it['kind'], it['compare'] = 'comparison', ('yoy' if re.search(r'同比|去年', q) else 'mom')
+        elif prev.get('grain') in ('month', 'quarter') and re.search(r'^(?:那|那么)?(?:上个?月|去年)(?:同期)?(?:呢|的呢)?[？?。]?$', q.strip()):
+            k = -12 if '去年' in q else -(len(QI._months(prev['start'], prev['end'])) if prev['grain'] == 'quarter' else 1)
+            a, b = QI._shift(prev['start'], k), QI._shift(prev['end'], k)   # relative to the previous turn, not to as_of (G-026)
+            t = {**prev, 'start': a, 'end': b, 'label': a if a == b else f'{a} 至 {b}', 'incomplete': b >= QI.AS_OF_MONTH}
+        else:
+            t = QI.parse_time(q)
         if t:
             it['time'] = t
         probe = QI.parse('2025年商品金额' + q)                  # reuse the rule parser for filters and dims in the fragment
@@ -71,9 +80,13 @@ class Session:
             it['filters'] = {**{k: v for k, v in it['filters'].items() if k not in probe['filters']}, **probe['filters']}
         if probe.get('dims'):
             it['dims'] = probe['dims']
-        if not (m or t or probe.get('filters') or probe.get('dims')):
+            if it.get('compare') and not re.search(r'比|环比|同比', q):   # “再按品类拆开” after a comparison: a breakdown, not a grouped comparison
+                it['kind'], it['compare'], it['top_n'] = 'value', None, None
+        if not (m or t or probe.get('filters') or probe.get('dims') or it.get('compare')):
             return None
-        return QI.validate_intent({k: v for k, v in it.items() if k not in ('status', 'warnings', 'error', 'clarification')})
+        it = {k: v for k, v in it.items() if k not in ('status', 'warnings', 'error', 'clarification')}
+        why = QI.uncovered(q, it)
+        return {**it, 'status': 'clarify', 'clarification': why} if why else QI.validate_intent(it)
 
     def ask(self, question: str) -> dict:
         env = {'session_id': self.id, 'question': question, 'as_of': AS_OF, 'mode': 'live'}

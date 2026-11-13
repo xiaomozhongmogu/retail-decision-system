@@ -25,7 +25,7 @@
     "completion_tokens": 20,
     "cost_usd": 1.5e-05
   },
-  "seconds": 0.6,
+  "seconds": 0.74,
   "budget": {
     "calls": 1,
     "max_calls": 3,
