@@ -6,7 +6,7 @@
    "step": 1,
    "tool": "get_profile",
    "ok": true,
-   "ms": 16.1,
+   "ms": 16.9,
    "result": {
     "lifecycle_state": "dormant",
     "recency_days": 194.60618055555557,
@@ -17,7 +17,7 @@
    "step": 2,
    "tool": "get_risk",
    "ok": true,
-   "ms": 12.7,
+   "ms": 13.1,
    "result": {
     "applicability": "out_of_population",
     "p_repurchase_30d": null,
@@ -29,7 +29,7 @@
    "step": 3,
    "tool": "retrieve_policy",
    "ok": true,
-   "ms": 10.8,
+   "ms": 11.0,
    "result": [
     "doc:retention_policy#5-模型的使用@retention-policy-v1",
     "doc:retention_policy#4-折扣上限@retention-policy-v1",
@@ -44,10 +44,11 @@
    "result": {
     "action": "reminder",
     "discount": 0,
-    "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；按规则仅可发提醒，且无价值层级依据支持优惠，故建议提醒。",
+    "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；无价值层级信息，按一般层级折扣上限5%，且无近90天订单时优惠成本按历史平均每单金额计算，缺乏该数据无法核算，故仅建议提醒。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
+     "doc:retention_policy#6-频率与预算@retention-policy-v1",
      "doc:retention_policy#3-资格规则@retention-policy-v1"
     ]
    }
@@ -56,7 +57,7 @@
    "step": 5,
    "tool": "check_budget",
    "ok": true,
-   "ms": 0.1,
+   "ms": 2.1,
    "result": {
     "decision": "allow",
     "code": null,
@@ -80,7 +81,7 @@
    "step": 7,
    "tool": "save_draft",
    "ok": true,
-   "ms": 0.9,
+   "ms": 1.6,
    "result": {
     "draft_id": "draft-17a182cb86c5",
     "created": true,
@@ -92,14 +93,15 @@
  "sent": false,
  "delivery": "not_sent",
  "state": "draft_saved",
- "seconds": 2.158,
+ "seconds": 2.646,
  "proposal": {
   "action": "reminder",
   "discount": 0.0,
-  "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；按规则仅可发提醒，且无价值层级依据支持优惠，故建议提醒。",
+  "rationale": "客户已沉睡194天且近90天无购买，但模型不参与判定；无价值层级信息，按一般层级折扣上限5%，且无近90天订单时优惠成本按历史平均每单金额计算，缺乏该数据无法核算，故仅建议提醒。",
   "evidence": [
    "doc:retention_policy#5-模型的使用@retention-policy-v1",
    "doc:retention_policy#4-折扣上限@retention-policy-v1",
+   "doc:retention_policy#6-频率与预算@retention-policy-v1",
    "doc:retention_policy#3-资格规则@retention-policy-v1"
   ],
   "mode": "live_llm"
