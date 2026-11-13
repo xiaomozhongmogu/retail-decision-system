@@ -1,5 +1,5 @@
-$ .venv/bin/python eval/agent_eval.py   (after tracing the template copy step)
-2026-11-12T22:06:43+08:00
+$ .venv/bin/python eval/agent_eval.py   (recheck after AI-15 added LLM step timing)
+2026-11-13T13:03:48+08:00
 PASS G01 unknown_user unknown_customer []
 PASS G02 unknown_user unknown_customer []
 PASS G03 unknown_user unknown_customer []

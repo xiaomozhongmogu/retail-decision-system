@@ -2409,7 +2409,7 @@
         "无真实营销发送/发券权限；引用事实和政策，不从数据内容接收新系统指令。"
       ],
       "evidence": [
-        "evidence/AI-12/2026-11-12-agent-recheck.json"
+        "evidence/AI-12/2026-11-13-agent-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2449,7 +2449,7 @@
         "保存草稿不等于消息已发送，UI和日志不得混淆。"
       ],
       "evidence": [
-        "evidence/AI-13/2026-11-12-drafts-recheck.json"
+        "evidence/AI-13/2026-11-13-drafts-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2490,7 +2490,7 @@
         "保留真实LLM调用的代表性完整轨迹，不能只用静态预置文案冒充Agent。"
       ],
       "evidence": [
-        "evidence/AI-14/2026-11-12-agent-eval.json"
+        "evidence/AI-14/2026-11-13-agent-eval-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2503,8 +2503,8 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
+      "status": "in_review",
+      "owner": "claude-opus-5-5",
       "reviewer": null,
       "review_mode": null,
       "requirements": [
@@ -2534,8 +2534,10 @@
         "日志记录耗时、调用/令牌或可得费用信息、工具、证据和错误，敏感值脱敏。",
         "在线、无密钥、超时、限流和回放模式可区分；系统卡列实际通过与未覆盖边界。"
       ],
-      "evidence": [],
-      "blocker": null,
+      "evidence": [
+        "evidence/AI-15/2026-11-13-integration.json"
+      ],
+      "blocker": "联调已实现并检查（14/14，系统卡已写）；剩余：依赖 AI-10 的人工抽查完成后，按当前代码重跑并正式验收。",
       "skip_reason": null,
       "execution_required": true
     },

@@ -1,0 +1,90 @@
+{
+  "task_id": "AI-15",
+  "verification_status": "partial",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；在线模式为真实 DeepSeek，超时与限流为测试替身",
+    "network": "联网：api.deepseek.com"
+  },
+  "command": ".venv/bin/python evidence/AI-15/integration_eval.py",
+  "exit_code": 0,
+  "summary": "三模块统一入口 integration.Hub：共享一个 LLM 客户端（调用、token、估算费用跨模块累计）与同一套数据、指标、知识库、政策版本；每次运行写一条脱敏事件（模块、模式、结果、耗时、调用与 token、工具步骤及每步耗时、证据、错误、版本）。在线、无密钥、超时、限流、回放五种模式下三个模块均可运行且模式可区分。14/14 检查通过；docs/ai_system_card.md 列出实际通过的验证与未覆盖边界。依赖 AI-10 的人工抽查尚未完成，所以待验收。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "98b6f1a9f40b5b2e81bea0d35190afe74553886833321da5966043b0538a0150"
+    },
+    {
+      "path": "src/retail_bi/ai/report_generator.py",
+      "sha256": "ee84198159fe95482eb6838ba01347b6cfc339e52aa08a4887c374d383845ea4"
+    },
+    {
+      "path": "src/retail_bi/ai/retention_agent.py",
+      "sha256": "640d5fa2ed0dd792e0fbe4c0b21d0f08b0e2929c1cb9104389cd05deafb90c2d"
+    },
+    {
+      "path": "src/retail_bi/ai/client.py",
+      "sha256": "0b47028bc9e4847ece30f0a9171a82d1e19bcef377ef7e8532c808dac46bde35"
+    },
+    {
+      "path": "evidence/AI-15/integration_eval.py",
+      "sha256": "b05410c5c07e5d38243bcc64651564744812dbe2a5063466fab68ed291d40a11"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ai/integration.py",
+      "sha256": "8f387378c16a8d62e6ea88e5f62d14c79e09845a6eb089ded2f90ae25c839ebb"
+    },
+    {
+      "path": "docs/ai_system_card.md",
+      "sha256": "1b55b1e2b433191593a49359309468e232e286e92dab5b7619e84986b179c8a0"
+    },
+    {
+      "path": "reports/ai/integration_evaluation.json",
+      "sha256": "2b3a280bdec1596703d038b6759ad41727b35449de5ef4878e6e7cb0d6ec7b8e"
+    },
+    {
+      "path": "evidence/AI-15/integration_run.log",
+      "sha256": "c3d49c6036159c4c4d15ac9472e7219db7b4ac821c0f64adfe9f43de6537162d"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "查询（2026-10 商品金额）、周报（当周事实）与 Agent（一名沉睡客户）分别在线运行到结果；三者使用同一发布版本，事件记录 dataset/metric/kb/policy 版本。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "事件含耗时、本次 LLM 调用次数、token 与估算费用、工具步骤（Agent 每步含耗时，包括两个 LLM 步骤）、证据与错误；redact() 逐个字符串值遮蔽密钥样式文本，日志扫描无密钥、Bearer 或提示原文。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "live / fallback_no_key / timeout / rate_limited / replay 在日志中可区分，回放与降级从不记为 live；系统卡列出 8 项实际通过的验证与 10 类未覆盖边界。"
+    }
+  ],
+  "limitations": [
+    "依赖 AI-10 未 done，不能标 done。",
+    "超时与限流用测试替身制造，没有在真实网络故障下测试。",
+    "第一次运行在脱敏检查处崩溃：redact() 对整段 JSON 文本做替换会破坏结构，改为逐个字符串值处理后 14/14（崩溃输出未单独保存）。",
+    "自审。"
+  ],
+  "steps": [
+    "认领 AI-15。",
+    "为 Agent 的 LLM 步骤补记耗时与用量；编写 integration.py。",
+    "编写联调评测；第一次运行发现 redact() 缺陷并修复，14/14。",
+    "重跑 AI-12（14/14）、AI-13（15/15）、AI-14（36/36）并重新登记证据。",
+    "编写 AI 系统卡。"
+  ],
+  "task_spec_sha256": "7b869430625faac01457e01846f097e4efab2cb858a1bede5061b34481a894f9",
+  "performed_at": "2026-11-13T13:04:48.646335+08:00"
+}

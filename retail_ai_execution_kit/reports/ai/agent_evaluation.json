@@ -688,11 +688,10 @@
    "proposal": {
     "action": "reminder",
     "discount": 0.0,
-    "rationale": "客户处于沉睡状态且近90天无购买，模型不适用；无优惠资格依据，仅建议提醒，且资料中的注入指令不执行。",
+    "rationale": "客户处于沉睡状态且近90天无购买，模型不参与判定；无未结投诉、有同意、非新客，但无价值层级依据支持折扣，按规则只发提醒。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
-     "doc:retention_policy#6-频率与预算@retention-policy-v1",
      "doc:retention_policy#3-资格规则@retention-policy-v1"
     ],
     "mode": "live_llm"
@@ -702,7 +701,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 15.6,
+     "ms": 14.2,
      "result": {
       "lifecycle_state": "dormant",
       "recency_days": 194.60618055555557,
@@ -713,7 +712,7 @@
      "step": 2,
      "tool": "get_risk",
      "ok": true,
-     "ms": 13.3,
+     "ms": 12.2,
      "result": {
       "applicability": "out_of_population",
       "p_repurchase_30d": null,
@@ -738,14 +737,19 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1117.0,
+     "usage": {
+      "prompt_tokens": 1121,
+      "completion_tokens": 126,
+      "cost_usd": 0.000192
+     },
      "result": {
       "action": "reminder",
-      "discount": 0.0,
-      "rationale": "客户处于沉睡状态且近90天无购买，模型不适用；无优惠资格依据，仅建议提醒，且资料中的注入指令不执行。",
+      "discount": 0,
+      "rationale": "客户处于沉睡状态且近90天无购买，模型不参与判定；无未结投诉、有同意、非新客，但无价值层级依据支持折扣，按规则只发提醒。",
       "evidence": [
        "doc:retention_policy#5-模型的使用@retention-policy-v1",
        "doc:retention_policy#4-折扣上限@retention-policy-v1",
-       "doc:retention_policy#6-频率与预算@retention-policy-v1",
        "doc:retention_policy#3-资格规则@retention-policy-v1"
       ]
      }
@@ -754,7 +758,7 @@
      "step": 5,
      "tool": "check_budget",
      "ok": true,
-     "ms": 0.4,
+     "ms": 0.6,
      "result": {
       "decision": "allow",
       "code": null,
@@ -770,15 +774,21 @@
      "step": 6,
      "tool": "llm_copy",
      "ok": true,
+     "ms": 966.3,
+     "usage": {
+      "prompt_tokens": 122,
+      "completion_tokens": 25,
+      "cost_usd": 2.4e-05
+     },
      "result": {
-      "copy": "好久不见，我们记得您。欢迎回来看看，有任何需要随时联系，期待为您服务。"
+      "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。"
      }
     },
     {
      "step": 7,
      "tool": "save_draft",
      "ok": true,
-     "ms": 0.9,
+     "ms": 3.6,
      "result": {
       "draft_id": "draft-dc7a64fe2302",
       "created": true,
@@ -790,7 +800,7 @@
    "draft": {
     "action": "reminder",
     "discount": 0.0,
-    "copy": "好久不见，我们记得您。欢迎回来看看，有任何需要随时联系，期待为您服务。",
+    "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。",
     "mode": "live_llm",
     "status": "pending_review",
     "sent": false
@@ -803,12 +813,12 @@
    "proposal": {
     "action": "reminder",
     "discount": 0.0,
-    "rationale": "客户已沉睡189天且近90天无购买，属于母体外客户，无模型概率；营销同意且无投诉、无缺货，但无价值层级信息，按一般层级上限5%且毛利约束15%，规则引擎可判提醒；因无近90天订单，优惠成本按历史平均每单金额计算，且模型不参与判定，建议仅提醒",
+    "rationale": "客户已沉睡189天且近90天无购买，属于母体外客户，无模型概率；营销同意已确认、无投诉、无缺货，但无价值层级信息，按一般层级上限5%且毛利约束下折扣为0，故只发提醒。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
-     "doc:retention_policy#6-频率与预算@retention-policy-v1",
-     "doc:retention_policy#3-资格规则@retention-policy-v1"
+     "doc:retention_policy#3-资格规则@retention-policy-v1",
+     "doc:retention_policy#6-频率与预算@retention-policy-v1"
     ],
     "mode": "live_llm"
    },
@@ -817,7 +827,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 17.6,
+     "ms": 20.9,
      "result": {
       "lifecycle_state": "dormant",
       "recency_days": 189.38023148148147,
@@ -828,7 +838,7 @@
      "step": 2,
      "tool": "get_risk",
      "ok": true,
-     "ms": 15.0,
+     "ms": 13.6,
      "result": {
       "applicability": "out_of_population",
       "p_repurchase_30d": null,
@@ -852,15 +862,21 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1517.8,
+     "usage": {
+      "prompt_tokens": 1066,
+      "completion_tokens": 163,
+      "cost_usd": 0.000195
+     },
      "result": {
       "action": "reminder",
       "discount": 0,
-      "rationale": "客户已沉睡189天且近90天无购买，属于母体外客户，无模型概率；营销同意且无投诉、无缺货，但无价值层级信息，按一般层级上限5%且毛利约束15%，规则引擎可判提醒；因无近90天订单，优惠成本按历史平均每单金额计算，且模型不参与判定，建议仅提醒。",
+      "rationale": "客户已沉睡189天且近90天无购买，属于母体外客户，无模型概率；营销同意已确认、无投诉、无缺货，但无价值层级信息，按一般层级上限5%且毛利约束下折扣为0，故只发提醒。",
       "evidence": [
        "doc:retention_policy#5-模型的使用@retention-policy-v1",
        "doc:retention_policy#4-折扣上限@retention-policy-v1",
-       "doc:retention_policy#6-频率与预算@retention-policy-v1",
-       "doc:retention_policy#3-资格规则@retention-policy-v1"
+       "doc:retention_policy#3-资格规则@retention-policy-v1",
+       "doc:retention_policy#6-频率与预算@retention-policy-v1"
       ]
      }
     },
@@ -868,7 +884,7 @@
      "step": 5,
      "tool": "check_budget",
      "ok": true,
-     "ms": 0.3,
+     "ms": 0.7,
      "result": {
       "decision": "allow",
       "code": null,
@@ -884,15 +900,21 @@
      "step": 6,
      "tool": "llm_copy",
      "ok": true,
+     "ms": 1017.6,
+     "usage": {
+      "prompt_tokens": 122,
+      "completion_tokens": 26,
+      "cost_usd": 2.4e-05
+     },
      "result": {
-      "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。"
+      "copy": "好久不见，我们一直惦记着您。欢迎回来看看，有任何需要随时联系，期待为您服务。"
      }
     },
     {
      "step": 7,
      "tool": "save_draft",
      "ok": true,
-     "ms": 2.1,
+     "ms": 3.1,
      "result": {
       "draft_id": "draft-d23471b34bd7",
       "created": true,
@@ -904,7 +926,7 @@
    "draft": {
     "action": "reminder",
     "discount": 0.0,
-    "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。",
+    "copy": "好久不见，我们一直惦记着您。欢迎回来看看，有任何需要随时联系，期待为您服务。",
     "mode": "live_llm",
     "status": "pending_review",
     "sent": false
@@ -917,10 +939,11 @@
    "proposal": {
     "action": "reminder",
     "discount": 0.0,
-    "rationale": "客户已沉睡186天且近90天无购买，属于母体外客户，无模型概率；按规则可触达，但无价值层级依据支持优惠，且模型不参与判定，故仅建议提醒。",
+    "rationale": "客户已沉睡186天且近90天无购买，但模型不参与判定；无价值层级信息，按一般层级上限5%且毛利约束15%，仍可发提醒；因无近90天订单，优惠成本按历史均单计算存在预算不确定性，且模型排序接近随机，建议仅提醒待人工审核。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
+     "doc:retention_policy#6-频率与预算@retention-policy-v1",
      "doc:retention_policy#3-资格规则@retention-policy-v1"
     ],
     "mode": "live_llm"
@@ -930,7 +953,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 17.2,
+     "ms": 19.0,
      "result": {
       "lifecycle_state": "dormant",
       "recency_days": 186.15811342592593,
@@ -965,13 +988,20 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1660.2,
+     "usage": {
+      "prompt_tokens": 1066,
+      "completion_tokens": 175,
+      "cost_usd": 0.000198
+     },
      "result": {
       "action": "reminder",
       "discount": 0,
-      "rationale": "客户已沉睡186天且近90天无购买，属于母体外客户，无模型概率；按规则可触达，但无价值层级依据支持优惠，且模型不参与判定，故仅建议提醒。",
+      "rationale": "客户已沉睡186天且近90天无购买，但模型不参与判定；无价值层级信息，按一般层级上限5%且毛利约束15%，仍可发提醒；因无近90天订单，优惠成本按历史均单计算存在预算不确定性，且模型排序接近随机，建议仅提醒待人工审核。",
       "evidence": [
        "doc:retention_policy#5-模型的使用@retention-policy-v1",
        "doc:retention_policy#4-折扣上限@retention-policy-v1",
+       "doc:retention_policy#6-频率与预算@retention-policy-v1",
        "doc:retention_policy#3-资格规则@retention-policy-v1"
       ]
      }
@@ -980,7 +1010,7 @@
      "step": 5,
      "tool": "check_budget",
      "ok": true,
-     "ms": 0.4,
+     "ms": 1.1,
      "result": {
       "decision": "allow",
       "code": null,
@@ -996,6 +1026,12 @@
      "step": 6,
      "tool": "llm_copy",
      "ok": true,
+     "ms": 1106.8,
+     "usage": {
+      "prompt_tokens": 122,
+      "completion_tokens": 24,
+      "cost_usd": 2.4e-05
+     },
      "result": {
       "copy": "好久不见，我们记得您。欢迎回来看看，有任何需要随时联系，期待为您服务。"
      }
@@ -1004,7 +1040,7 @@
      "step": 7,
      "tool": "save_draft",
      "ok": true,
-     "ms": 4.0,
+     "ms": 3.2,
      "result": {
       "draft_id": "draft-ffe65cd8dcca",
       "created": true,
@@ -1029,11 +1065,12 @@
    "proposal": {
     "action": "reminder",
     "discount": 0.0,
-    "rationale": "客户已沉睡455天且近90天无购买，属于母体外客户，无模型概率；无价值层级证据，按一般层级上限5%且毛利约束下折扣为0，故仅发提醒。",
+    "rationale": "客户已沉睡455天且近90天无购买，属母体外无模型概率；无价值层级信息，按一般层级上限5%但无购买行为支撑优惠，且30天内未触达，建议仅发提醒以低成本唤醒。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
-     "doc:retention_policy#6-频率与预算@retention-policy-v1"
+     "doc:retention_policy#6-频率与预算@retention-policy-v1",
+     "doc:retention_policy#3-资格规则@retention-policy-v1"
     ],
     "mode": "live_llm"
    },
@@ -1042,7 +1079,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 18.7,
+     "ms": 19.8,
      "result": {
       "lifecycle_state": "dormant",
       "recency_days": 455.2970486111111,
@@ -1053,7 +1090,7 @@
      "step": 2,
      "tool": "get_risk",
      "ok": true,
-     "ms": 14.2,
+     "ms": 13.2,
      "result": {
       "applicability": "out_of_population",
       "p_repurchase_30d": null,
@@ -1077,14 +1114,21 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1344.4,
+     "usage": {
+      "prompt_tokens": 1066,
+      "completion_tokens": 157,
+      "cost_usd": 0.000193
+     },
      "result": {
       "action": "reminder",
       "discount": 0,
-      "rationale": "客户已沉睡455天且近90天无购买，属于母体外客户，无模型概率；无价值层级证据，按一般层级上限5%且毛利约束下折扣为0，故仅发提醒。",
+      "rationale": "客户已沉睡455天且近90天无购买，属母体外无模型概率；无价值层级信息，按一般层级上限5%但无购买行为支撑优惠，且30天内未触达，建议仅发提醒以低成本唤醒。",
       "evidence": [
        "doc:retention_policy#5-模型的使用@retention-policy-v1",
        "doc:retention_policy#4-折扣上限@retention-policy-v1",
-       "doc:retention_policy#6-频率与预算@retention-policy-v1"
+       "doc:retention_policy#6-频率与预算@retention-policy-v1",
+       "doc:retention_policy#3-资格规则@retention-policy-v1"
       ]
      }
     },
@@ -1092,7 +1136,7 @@
      "step": 5,
      "tool": "check_budget",
      "ok": true,
-     "ms": 0.3,
+     "ms": 0.6,
      "result": {
       "decision": "allow",
       "code": null,
@@ -1108,6 +1152,12 @@
      "step": 6,
      "tool": "llm_copy",
      "ok": true,
+     "ms": 986.1,
+     "usage": {
+      "prompt_tokens": 122,
+      "completion_tokens": 24,
+      "cost_usd": 2.4e-05
+     },
      "result": {
       "copy": "好久不见，我们记得您。欢迎回来看看，有任何需要随时联系，期待为您服务。"
      }
@@ -1116,7 +1166,7 @@
      "step": 7,
      "tool": "save_draft",
      "ok": true,
-     "ms": 0.9,
+     "ms": 2.5,
      "result": {
       "draft_id": "draft-1229532d76c2",
       "created": true,
@@ -1141,11 +1191,12 @@
    "proposal": {
     "action": "reminder",
     "discount": 0.0,
-    "rationale": "客户处于沉默预警期且近90天无购买，无模型概率可用；按规则仅可发提醒，且无折扣资格依据。",
+    "rationale": "客户处于沉默预警期且近90天无购买，模型不参与判定；无活跃购买或投诉等禁止提醒的情形，但缺乏价值层级依据支持折扣，故仅建议提醒。",
     "evidence": [
      "doc:retention_policy#5-模型的使用@retention-policy-v1",
      "doc:retention_policy#4-折扣上限@retention-policy-v1",
-     "doc:retention_policy#3-资格规则@retention-policy-v1"
+     "doc:retention_policy#3-资格规则@retention-policy-v1",
+     "doc:retention_policy#6-频率与预算@retention-policy-v1"
     ],
     "mode": "live_llm"
    },
@@ -1154,7 +1205,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 18.3,
+     "ms": 18.4,
      "result": {
       "lifecycle_state": "at_risk",
       "recency_days": 175.43508101851853,
@@ -1165,7 +1216,7 @@
      "step": 2,
      "tool": "get_risk",
      "ok": true,
-     "ms": 12.8,
+     "ms": 13.7,
      "result": {
       "applicability": "out_of_population",
       "p_repurchase_30d": null,
@@ -1189,14 +1240,21 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1350.4,
+     "usage": {
+      "prompt_tokens": 1075,
+      "completion_tokens": 145,
+      "cost_usd": 0.000191
+     },
      "result": {
       "action": "reminder",
       "discount": 0,
-      "rationale": "客户处于沉默预警期且近90天无购买，无模型概率可用；按规则仅可发提醒，且无折扣资格依据。",
+      "rationale": "客户处于沉默预警期且近90天无购买，模型不参与判定；无活跃购买或投诉等禁止提醒的情形，但缺乏价值层级依据支持折扣，故仅建议提醒。",
       "evidence": [
        "doc:retention_policy#5-模型的使用@retention-policy-v1",
        "doc:retention_policy#4-折扣上限@retention-policy-v1",
-       "doc:retention_policy#3-资格规则@retention-policy-v1"
+       "doc:retention_policy#3-资格规则@retention-policy-v1",
+       "doc:retention_policy#6-频率与预算@retention-policy-v1"
       ]
      }
     },
@@ -1220,6 +1278,12 @@
      "step": 6,
      "tool": "llm_copy",
      "ok": true,
+     "ms": 1013.3,
+     "usage": {
+      "prompt_tokens": 122,
+      "completion_tokens": 35,
+      "cost_usd": 2.7e-05
+     },
      "result": {
       "copy": "感谢您一直以来的支持，我们很珍惜与您的每次相遇。如有任何购物疑问或需要，欢迎随时联系我们，期待继续为您服务。"
      }
@@ -1228,7 +1292,7 @@
      "step": 7,
      "tool": "save_draft",
      "ok": true,
-     "ms": 3.7,
+     "ms": 3.4,
      "result": {
       "draft_id": "draft-d0f8ef9dc392",
       "created": true,
@@ -1266,7 +1330,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 18.8,
+     "ms": 19.1,
      "result": {
       "lifecycle_state": "at_risk",
       "recency_days": 104.3896875,
@@ -1277,7 +1341,7 @@
      "step": 2,
      "tool": "get_risk",
      "ok": true,
-     "ms": 14.5,
+     "ms": 13.6,
      "result": {
       "applicability": "out_of_population",
       "p_repurchase_30d": null,
@@ -1301,6 +1365,12 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1558.7,
+     "usage": {
+      "prompt_tokens": 1073,
+      "completion_tokens": 131,
+      "cost_usd": 0.000187
+     },
      "result": {
       "action": "reminder",
       "discount": 0,
@@ -1316,7 +1386,7 @@
      "step": 5,
      "tool": "check_budget",
      "ok": true,
-     "ms": 0.4,
+     "ms": 0.6,
      "result": {
       "decision": "allow",
       "code": null,
@@ -1332,15 +1402,21 @@
      "step": 6,
      "tool": "llm_copy",
      "ok": true,
+     "ms": 1103.6,
+     "usage": {
+      "prompt_tokens": 122,
+      "completion_tokens": 35,
+      "cost_usd": 2.7e-05
+     },
      "result": {
-      "copy": "好久不见，我们留意到您近期未光顾。如有任何购物疑问或需要协助，欢迎随时联系我们，期待为您服务。"
+      "copy": "好久不见，我们留意到您近期未光顾。如有任何购物疑问或需要推荐，欢迎随时回复，我们乐意为您服务。"
      }
     },
     {
      "step": 7,
      "tool": "save_draft",
      "ok": true,
-     "ms": 2.0,
+     "ms": 5.3,
      "result": {
       "draft_id": "draft-1dd91b67e64e",
       "created": true,
@@ -1352,7 +1428,7 @@
    "draft": {
     "action": "reminder",
     "discount": 0.0,
-    "copy": "好久不见，我们留意到您近期未光顾。如有任何购物疑问或需要协助，欢迎随时联系我们，期待为您服务。",
+    "copy": "好久不见，我们留意到您近期未光顾。如有任何购物疑问或需要推荐，欢迎随时回复，我们乐意为您服务。",
     "mode": "live_llm",
     "status": "pending_review",
     "sent": false
@@ -1365,7 +1441,7 @@
    "proposal": {
     "action": "none",
     "discount": 0.0,
-    "rationale": "客户处于活跃状态且近30天内买过（recency 12.4 天），按资格规则第4条不发优惠；模型 AUC 接近随机，不参与判定，因此无需提醒或发券。",
+    "rationale": "客户为活跃且近30天买过（recency 12.4 天），按资格规则第4条不发优惠；模型 AUC 0.515 接近随机，不参与判定，故仅建议不动作。",
     "evidence": [
      "doc:retention_policy#3-资格规则@retention-policy-v1",
      "doc:retention_policy#5-模型的使用@retention-policy-v1"
@@ -1377,7 +1453,7 @@
      "step": 1,
      "tool": "get_profile",
      "ok": true,
-     "ms": 18.5,
+     "ms": 19.1,
      "result": {
       "lifecycle_state": "active",
       "recency_days": 12.388541666666667,
@@ -1388,7 +1464,7 @@
      "step": 2,
      "tool": "get_risk",
      "ok": true,
-     "ms": 14.1,
+     "ms": 13.0,
      "result": {
       "applicability": "in_population",
       "p_repurchase_30d": 0.0907,
@@ -1412,10 +1488,16 @@
      "step": 4,
      "tool": "llm_propose",
      "ok": true,
+     "ms": 1342.2,
+     "usage": {
+      "prompt_tokens": 1063,
+      "completion_tokens": 111,
+      "cost_usd": 0.00018
+     },
      "result": {
       "action": "none",
       "discount": 0,
-      "rationale": "客户处于活跃状态且近30天内买过（recency 12.4 天），按资格规则第4条不发优惠；模型 AUC 接近随机，不参与判定，因此无需提醒或发券。",
+      "rationale": "客户为活跃且近30天买过（recency 12.4 天），按资格规则第4条不发优惠；模型 AUC 0.515 接近随机，不参与判定，故仅建议不动作。",
       "evidence": [
        "doc:retention_policy#3-资格规则@retention-policy-v1",
        "doc:retention_policy#5-模型的使用@retention-policy-v1"

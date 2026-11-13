@@ -6,7 +6,7 @@
    "step": 1,
    "tool": "get_profile",
    "ok": true,
-   "ms": 16.9,
+   "ms": 15.8,
    "result": {
     "lifecycle_state": "dormant",
     "recency_days": 194.60618055555557,
@@ -17,7 +17,7 @@
    "step": 2,
    "tool": "get_risk",
    "ok": true,
-   "ms": 13.1,
+   "ms": 12.2,
    "result": {
     "applicability": "out_of_population",
     "p_repurchase_30d": null,
@@ -29,7 +29,7 @@
    "step": 3,
    "tool": "retrieve_policy",
    "ok": true,
-   "ms": 11.0,
+   "ms": 9.5,
    "result": [
     "doc:retention_policy#5-模型的使用@retention-policy-v1",
     "doc:retention_policy#4-折扣上限@retention-policy-v1",
@@ -41,6 +41,12 @@
    "step": 4,
    "tool": "llm_propose",
    "ok": true,
+   "ms": 1456.9,
+   "usage": {
+    "prompt_tokens": 1067,
+    "completion_tokens": 163,
+    "cost_usd": 0.000195
+   },
    "result": {
     "action": "reminder",
     "discount": 0,
@@ -57,7 +63,7 @@
    "step": 5,
    "tool": "check_budget",
    "ok": true,
-   "ms": 2.1,
+   "ms": 0.6,
    "result": {
     "decision": "allow",
     "code": null,
@@ -73,15 +79,21 @@
    "step": 6,
    "tool": "llm_copy",
    "ok": true,
+   "ms": 667.9,
+   "usage": {
+    "prompt_tokens": 122,
+    "completion_tokens": 26,
+    "cost_usd": 2.4e-05
+   },
    "result": {
-    "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。"
+    "copy": "好久不见，我们惦记着您。回来看看新动态，有需要随时联系，期待为您服务。"
    }
   },
   {
    "step": 7,
    "tool": "save_draft",
    "ok": true,
-   "ms": 1.6,
+   "ms": 2.0,
    "result": {
     "draft_id": "draft-17a182cb86c5",
     "created": true,
@@ -93,7 +105,7 @@
  "sent": false,
  "delivery": "not_sent",
  "state": "draft_saved",
- "seconds": 2.646,
+ "seconds": 2.166,
  "proposal": {
   "action": "reminder",
   "discount": 0.0,
@@ -192,7 +204,7 @@
   "delivery": "not_sent",
   "action": "reminder",
   "discount": 0.0,
-  "copy": "好久不见，我们留意到您有一段时间没来了。欢迎回来看看，有任何需要随时联系我们。",
+  "copy": "好久不见，我们惦记着您。回来看看新动态，有需要随时联系，期待为您服务。",
   "mode": "live_llm",
   "policy_version": "retention-policy-v1",
   "budget": {

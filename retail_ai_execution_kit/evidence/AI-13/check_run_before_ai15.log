@@ -1,0 +1,19 @@
+$ .venv/bin/python evidence/AI-13/check_drafts.py   (recheck after AI-14 fix)
+2026-11-12T22:07:06+08:00
+PASS saved fields: suggestion, reasons, evidence, rule version, budget result, copy, pending status 
+PASS saved draft is explicitly not sent 
+PASS same request again returns the same draft, no second row 
+PASS same request id with different content is refused, original kept 
+PASS revise while pending: new copy, previous copy kept in history, still pending 
+PASS approve changes review status only; sent stays false 
+PASS cannot revise after approval 
+PASS cannot withdraw after approval 
+PASS withdraw while pending -> withdrawn, record kept (not deleted) 
+PASS cannot approve a withdrawn draft 
+PASS unknown draft -> not_found 
+PASS there is no "sent" decision 
+PASS storage has sent/delivery columns and no send-time or channel columns 
+PASS status vocabulary is review-only (pending_review / approved / rejected / withdrawn) 
+PASS agent rerun of the same request: second run finds the existing draft, no duplicate 
+15/15 checks passed
+exit=0

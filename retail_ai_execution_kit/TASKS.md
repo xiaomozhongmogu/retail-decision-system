@@ -77,7 +77,7 @@
 | AI-12 | 实现有限步骤运营Agent | final | done | AI-11, AI-01, AI-02 |
 | AI-13 | 实现草稿存储和审阅状态 | final | done | AI-12 |
 | AI-14 | 完成Agent边界场景验收 | final | done | AI-13 |
-| AI-15 | 完成三模块联调与可观测性 | final | todo | AI-03, AI-07, AI-10, AI-14 |
+| AI-15 | 完成三模块联调与可观测性 | final | in_review | AI-03, AI-07, AI-10, AI-14 |
 | UI-01 | 建立Streamlit多页骨架 | midterm | done | GOV-07, GOV-06 |
 | UI-02 | 接入数据质量与口径页面 | midterm | done | UI-01, DATA-12 |
 | UI-03 | 接入经营指标与OLAP交互 | midterm | done | UI-01, DW-10, EDA-02 |
@@ -1147,7 +1147,7 @@
 2. 只开放读取画像/风险、检索政策、预算检查、保存草稿等工具。
 3. 无真实营销发送/发券权限；引用事实和政策，不从数据内容接收新系统指令。
 
-证据：evidence/AI-12/2026-11-12-agent-recheck.json
+证据：evidence/AI-12/2026-11-13-agent-recheck.json
 
 ### AI-13 实现草稿存储和审阅状态
 
@@ -1164,7 +1164,7 @@
 2. 同一请求可追踪不重复创建不可控副作用，修改/撤回草稿行为明确。
 3. 保存草稿不等于消息已发送，UI和日志不得混淆。
 
-证据：evidence/AI-13/2026-11-12-drafts-recheck.json
+证据：evidence/AI-13/2026-11-13-drafts-recheck.json
 
 ### AI-14 完成Agent边界场景验收
 
@@ -1181,11 +1181,11 @@
 2. 检查工作流完成、工具参数、约束和证据，已声明的关键违规场景均被阻止。
 3. 保留真实LLM调用的代表性完整轨迹，不能只用静态预置文案冒充Agent。
 
-证据：evidence/AI-14/2026-11-12-agent-eval.json
+证据：evidence/AI-14/2026-11-13-agent-eval-recheck.json
 
 ### AI-15 完成三模块联调与可观测性
 
-- [ ] 状态：`todo`；阶段：`final`；范围：已选核心。
+- [ ] 状态：`in_review`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q02, Q05, Q06。
 - 前置：AI-03, AI-07, AI-10, AI-14。
 - 允许修改：`reports/ai`, `docs`, `src/retail_bi/ai`；另可写本任务证据/交接。
@@ -1198,7 +1198,9 @@
 2. 日志记录耗时、调用/令牌或可得费用信息、工具、证据和错误，敏感值脱敏。
 3. 在线、无密钥、超时、限流和回放模式可区分；系统卡列实际通过与未覆盖边界。
 
-证据：尚无已登记验收证据。
+**当前阻塞：** 联调已实现并检查（14/14，系统卡已写）；剩余：依赖 AI-10 的人工抽查完成后，按当前代码重跑并正式验收。
+
+证据：evidence/AI-15/2026-11-13-integration.json
 
 
 ## UI — Streamlit
