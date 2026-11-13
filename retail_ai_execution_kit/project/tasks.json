@@ -2573,7 +2573,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-11-ui05-recheck.json"
+        "evidence/UI-01/2026-11-13-ui06-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2745,8 +2745,8 @@
       "category": "UI",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
+      "status": "in_review",
+      "owner": "claude-opus-5-5",
       "reviewer": null,
       "review_mode": null,
       "requirements": [
@@ -2771,8 +2771,10 @@
         "加载、取消、失败、重试和导出体验完整，模型请求不重复无界触发。",
         "各会话状态隔离，回放输出有醒目标识且不能替代真实调用验收。"
       ],
-      "evidence": [],
-      "blocker": null,
+      "evidence": [
+        "evidence/UI-06/2026-11-13-ai-page-draft.json"
+      ],
+      "blocker": "页面已实现并检查（AppTest 18/18、浏览器真实调用）；剩余：依赖 AI-15 完成后重新运行检查并正式验收。",
       "skip_reason": null,
       "execution_required": true
     },

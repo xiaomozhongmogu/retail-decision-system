@@ -1,0 +1,7 @@
+2026-11-13T12:40:55+08:00
+GET /_stcore/health -> 200
+GET / -> 200
+GET /business -> 200
+GET /customers -> 200
+GET /prediction -> 200
+GET /ai -> 200

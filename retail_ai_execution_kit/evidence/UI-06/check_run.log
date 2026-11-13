@@ -1,0 +1,22 @@
+$ .venv/bin/python evidence/UI-06/check_ai_page.py
+2026-11-13T12:40:37+08:00
+PASS page renders, three tabs, LLM status shown 
+PASS question waits for an explicit execute (pending shown, no call yet) 
+PASS answer shown with status, value and the query/evidence expander 
+PASS reruns do not ask again (results cached in session state) 
+PASS follow-up in the same browser session uses its context 
+PASS cancel records a cancelled turn without running a query 
+PASS export button for the conversation exists 
+PASS failure shown as an error state with a retry button 
+PASS retry re-runs the question and now answers 
+PASS a second browser session does not see the first session context 
+PASS weekly report (template) shows mode, final check passed, citations and a download 
+PASS report is not regenerated on rerun 
+PASS replay output carries a prominent label that it is not a live call 
+PASS agent run shows end state, trace table, decision and "未发送" 
+PASS same customer and settings again: shown from cache, no second agent call 
+PASS the run produced exactly one pending draft, not sent 
+PASS approving in the page changes review status only; still not sent 
+PASS no exceptions across the whole session 
+18/18 checks passed; calls {'ask': 6, 'report': 2, 'agent': 1}
+exit=0

@@ -1,0 +1,92 @@
+{
+  "task_id": "UI-06",
+  "verification_status": "partial",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；AppTest 中关闭 LLM，浏览器实测使用真实 DeepSeek",
+    "network": "浏览器实测联网 api.deepseek.com"
+  },
+  "command": ".venv/bin/python evidence/UI-06/check_ai_page.py; streamlit run app.py --server.port 8599 + built-in browser",
+  "exit_code": 0,
+  "summary": "AI 工作台接入查询助手、经营周报与挽回 Agent：执行/取消/重试/导出，SQL 与证据、周报引用与校验、Agent 轨迹、规则判定与草稿审核；结果缓存在会话中，重跑不重复调用模型，会话隔离，回放醒目标识。AppTest 18/18，浏览器真实调用两项通过。依赖 AI-15 尚未完成，所以只能待验收。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "98b6f1a9f40b5b2e81bea0d35190afe74553886833321da5966043b0538a0150"
+    },
+    {
+      "path": "src/retail_bi/ai/report_generator.py",
+      "sha256": "ee84198159fe95482eb6838ba01347b6cfc339e52aa08a4887c374d383845ea4"
+    },
+    {
+      "path": "src/retail_bi/ai/retention_agent.py",
+      "sha256": "9819ffcc51df156bb1f9c75caee8327c7b62749a68de0e7b2042d135cd3dc2f6"
+    },
+    {
+      "path": "src/retail_bi/ai/drafts.py",
+      "sha256": "56a1778197501dd52ed3e38fd69179db5431e948debc3e3dc1a8799950206adc"
+    },
+    {
+      "path": "evidence/UI-06/check_ai_page.py",
+      "sha256": "a579d3a71e4618fb83ed2b27f8d95943a815d1b657c4dc527d1e2bf6badd3e1b"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ui/pages/ai.py",
+      "sha256": "ac57bc71bd0f4d1213468972177496b3d18b7d9464849c5e7f19321230ed88f1"
+    },
+    {
+      "path": "reports/ui/ai_page_review.md",
+      "sha256": "7370a4e7ebda495b5b6d1eaabbbed08c6806d9e16e02c9823c72cf312701fcfe"
+    },
+    {
+      "path": "evidence/UI-06/check_run.log",
+      "sha256": "3222f5b5289846527336b8ced5443ef9f7b69c768c11e09b4c6bcd888a164531"
+    },
+    {
+      "path": "evidence/UI-06/query_assistant_live.jpg",
+      "sha256": "f1300292f874690df26473152a00d4e4c9ecb42c83985dcf23759d8d026eda5f"
+    },
+    {
+      "path": "evidence/UI-06/agent_live.jpg",
+      "sha256": "e3e92e9aeb16721c7fdb08d705c51bb9eceb322e5bf3963d0d183e5024b94782"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "三个标签页分别可用，展示 SQL/证据、周报引用与复核、策略判定与预算、草稿状态（AppTest 与浏览器）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "加载提示、执行前可取消、失败后重试、对话/周报/轨迹导出；重跑不重复调用（计数不变），Agent 相同请求不重复运行。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "两个会话互不影响；回放模式有醒目错误框说明不能代替真实调用验收。"
+    }
+  ],
+  "limitations": [
+    "依赖 AI-15 未完成，台账不能标 done。",
+    "LLM 步骤在轨迹中缺少耗时。",
+    "自审。"
+  ],
+  "steps": [
+    "认领 UI-06。",
+    "重写 AI 工作台页面。",
+    "AppTest 18/18 一次通过（调用计数、临时草稿库）。",
+    "浏览器真实调用查询助手与 Agent 并截图。"
+  ],
+  "task_spec_sha256": "a7786be88516d5253842d3d87e94c74de3a3e2dd4f220f02c5a96791b78ee0f4",
+  "performed_at": "2026-11-13T12:40:40.162064+08:00"
+}
