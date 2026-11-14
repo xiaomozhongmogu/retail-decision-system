@@ -4,7 +4,6 @@ Lifecycle mix and cohorts come from allowed views; segments from the ML-05 repor
 from ads.risk_summary_latest; one-customer lookup and aggregates through ui/customer_data.py (read-only,
 fixed SQL). Only observable history is shown: no age, channel, city, zip or real identity.
 """
-import json
 import sys
 from pathlib import Path
 
@@ -13,8 +12,15 @@ import pandas as pd
 import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common import ROOT, banner, release_info, show, view  # noqa: E402
+from common import banner, release_dir, show, view  # noqa: E402
 from customer_data import STATE_ZH, aggregates, lookup  # noqa: E402
+from model_data import frozen_reports  # noqa: E402
+
+
+@st.cache_data(show_spinner=False, max_entries=4)
+def cached_aggregates(version: str, releases: str) -> dict:
+    """Lifecycle aggregates, cached per release version."""
+    return aggregates(Path(releases))
 
 st.title('客户生命周期与分群')
 info = banner()
@@ -28,7 +34,7 @@ with t1:
         mix['customers'] = mix.customers.astype(int)
         latest = mix.as_of_date.max()
         cur = mix[mix.as_of_date == latest]
-        agg = aggregates() if info else None
+        agg = cached_aggregates(info['version'], str(release_dir())) if info else None
         cols = st.columns(4)
         for c, s in zip(cols, ['new', 'active', 'at_risk', 'dormant']):
             n = int(cur.loc[cur.lifecycle_state == s, 'customers'].sum())
@@ -47,8 +53,9 @@ with t1:
 with t2:
     if info is None:
         st.info('暂无价值群：没有已发布的数据版本（分群对应发布数据的近 90 天母体）')
+    elif not (seg := frozen_reports(['cluster_metrics'])[0].get('cluster_metrics')):
+        st.error('分群记录 reports/model/cluster_metrics.json 缺失或无法读取。请按 docs/COMMANDS.md 重新运行 ML-05；本页不在网页中重新分群。')
     else:
-        seg = json.loads((ROOT / 'reports/model/cluster_metrics.json').read_text(encoding='utf-8'))
         d = seg['definition']
         st.markdown(f"母体：{d['population']}；R：{d['R']}；F：{d['F']}；M：{d['M']}。")
         st.markdown('**规则分群**（切分点：最近购买 < 30 天为近期；近 90 天 ≥ 2 单或金额 ≥ 203.19 USD 为高价值；切分点在 2025-08-25 拟合）')
@@ -81,7 +88,11 @@ with t4:
         sub = co[(co.months_since_first >= 1) & (co.months_since_first <= kmax)]
         base = alt.Chart(sub).encode(x=alt.X('months_since_first:O', title='首单后第几个月'), y=alt.Y('cohort_month:O', title='首次可观测购买月份'))
         heat = base.mark_rect().encode(color=alt.Color('retention_rate:Q', title='留存率', scale=alt.Scale(scheme='blues')), tooltip=['cohort_month', 'months_since_first', 'cohort_customers', 'active_customers', '显示'])
-        st.altair_chart(heat + base.mark_text(fontSize=9).encode(text='显示:N'), width='stretch')
+        # white text on the darker cells, dark text on the lighter ones (contrast on a projector, UI-07)
+        lo, hi = sub.retention_rate.min(), sub.retention_rate.max()
+        dark = f'datum.retention_rate > {lo + 0.55 * (hi - lo) if hi > lo else hi}'
+        label = base.mark_text(fontSize=11).encode(text='显示:N', color=alt.condition(dark, alt.value('white'), alt.value('#1f2937')))
+        st.altair_chart(heat + label, width='stretch')
         n_imm = int(sub.immature.sum())
         st.caption(f'留存率 = 该月再次有有效购买的客户 ÷ cohort 人数。未成熟格子（月份未结束，{n_imm} 格）显示“未成熟”，不是 0%。'
                    'cohort 按首次可观测购买划分；所有客户都在 2024 年上半年建档，后期 cohort 很小。')
@@ -89,7 +100,7 @@ with t4:
 with t5:
     cid = st.text_input('客户编号（如 customer_001045）', key='cid')
     if cid:
-        r = lookup(cid)
+        r = lookup(cid, release_dir())
         if r['status'] == 'error':
             st.error(r['error']['message'])
         elif r['status'] == 'empty':

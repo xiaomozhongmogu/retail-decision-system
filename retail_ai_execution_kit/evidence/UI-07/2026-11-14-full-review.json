@@ -1,0 +1,110 @@
+{
+  "task_id": "UI-07",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, altair",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "仅本机 localhost:8599；关闭 Streamlit 使用统计"
+  },
+  "command": ".venv/bin/python evidence/UI-07/check.py; 重跑 evidence/UI-01/smoke.py、UI-02/03/04/05 check.py、UI-06/check_ai_page.py; streamlit run app.py --server.port 8599 + built-in browser at 1280x720",
+  "exit_code": 0,
+  "summary": "UI-07 全站审查（报告 reports/ui/full_ui_review.md）：代码检查 15/15，覆盖缓存键（版本+筛选）、页面级缓存（多次重跑与两个会话各只查询 1 次）、每次查询独立的只读连接（8 线程并发无错误）、页面不加载 ETL/训练模块、无发布版本/冻结记录缺失/模型版本不一致/LLM 不可达时可恢复且页面不出现密钥。浏览器 1280×720 逐页检查，修复 cohort 热力图深色格子对比不足、预测页指标表头为代码字段名与 None。UI-01 至 UI-06 原有检查全部重跑通过（10/10、12/12、20/20、15/15、14/14、18/18）。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/warehouse/runtime.py",
+      "sha256": "8b9d8a572d59948f0b89984329ff668abe3762b833e9988e19e4dd309cbf7b09"
+    },
+    {
+      "path": "src/retail_bi/ui/customer_data.py",
+      "sha256": "c7a05f25b24fb3ce7661b69318bf7b4eed5f1d4784412684f758523ae26028a4"
+    },
+    {
+      "path": "src/retail_bi/ui/common.py",
+      "sha256": "8d2cf41e61082691d8376ce5e041fbd29801aa13aca2271d2fb1129874057751"
+    },
+    {
+      "path": "app.py",
+      "sha256": "dacb75b53b3191ee396ab4d73ecd3dc168dcf5d5bbafb92b94b1c055061463e4"
+    },
+    {
+      "path": "reports/external_test/triage_addendum_2026-11-14.md",
+      "sha256": "c72561ec8f0fb5ec74654f4497e51f5ceb44a314a22990ed06f489907d72c2fe"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/ui/full_ui_review.md",
+      "sha256": "2e117e1b4287df2dba4b07ca17e2413def10ed509a962754e0e67466ceea321a"
+    },
+    {
+      "path": "evidence/UI-07/check.py",
+      "sha256": "99ce928369c85cccacf8bb4fe279352d5e17d76bad0450f935ceb457e78d1bdb"
+    },
+    {
+      "path": "evidence/UI-07/check_run.log",
+      "sha256": "cdede6d3ceb513c643b095991be9c9362fdba6488feabf30d5b386784cc4ead8"
+    },
+    {
+      "path": "evidence/UI-07/cohort_before.png",
+      "sha256": "6dc696646432a02f98be494f4f34654f0bba68b09bf550235bc2074066d24a73"
+    },
+    {
+      "path": "evidence/UI-07/cohort_after.png",
+      "sha256": "4e47e4013558b98530196167d4a9ded7a9aa11e595c5313a9b55d6d09d43fa20"
+    },
+    {
+      "path": "src/retail_bi/ui/model_data.py",
+      "sha256": "bd5ee31f2a26c320071b408aaca4f8fbb10be09a5201c1622994b52cc97c0aa6"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/customers.py",
+      "sha256": "b3a972204d59335d5f7e33af51404353eab22f5e735382ecb742850ad9f8eb83"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/prediction.py",
+      "sha256": "af8269cd0cf18545296cded94732be1afc66a6de9fa1a4a42d7e94772e65b03a"
+    },
+    {
+      "path": "evidence/UI-05/check.py",
+      "sha256": "4592c30515b82cc235b21e66f6f578aa6eef6e9b4a9e2f94ff4465b54a70b63e"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "1280×720 下五个页面无裁切；所有图表坐标轴有标题和单位；cohort 热力图深色格子原为深色 9 号字，改为白字、11 号（前后截图）；预测页指标表改用规范名称并加说明；不完整期间另色标出，模型页首屏写明区分能力接近随机。400×900 的标题换行见 UI-01（U-009）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "视图查询缓存键为发布版本+目录+含列与筛选的 SQL+参数（同查询命中，换筛选为新条目）；评分名单与生命周期汇总新增 st.cache_data，键为发布版本，多次重跑与两个会话合计各 1 次查询；每次查询独立打开并关闭只读连接，8 线程并发无错误；渲染全部页面后进程中没有导入/清洗/建仓/切分/训练模块及 sklearn、lightgbm。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "无发布版本：五页空状态；冻结记录缺失：预测页说明并停止、客户页只在价值群标签提示；评分表模型版本不一致：不显示名单并说明；LLM 不可达（假密钥）：查询照常回答 47,590.59 USD，周报回退为通过复核的模板，Agent 生成待审草稿未发送，页面任何位置不出现密钥；无异常。"
+    }
+  ],
+  "limitations": [
+    "AI 自审，不是人工复核；对比度为目测，没有用工具测量。",
+    "只在浏览器视口模拟中检查，未在真实投影仪或手机上检查。",
+    "直接打开 /data 会提示 Page not found 后显示首页（Streamlit 默认页忽略网址路径），从侧栏进入不受影响。",
+    "周报人工抽查（AI-10）仍待组员完成。"
+  ],
+  "steps": [
+    "审查缓存、连接、ETL/训练导入与异常路径代码。",
+    "新增页面级缓存、记录缺失与模型版本检查。",
+    "编写 evidence/UI-07/check.py，15/15。",
+    "浏览器 1280×720 逐页检查，修复热力图对比与指标表头。",
+    "重跑 UI-01 至 UI-06 检查，写审查报告。"
+  ],
+  "task_spec_sha256": "775124dde6ace316d3eefa21a6cbf1671a3e0e98665ff83a775fb25c9646c80d",
+  "performed_at": "2026-11-14T11:18:12.176052+08:00"
+}

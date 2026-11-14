@@ -49,7 +49,8 @@ check('sample ranges equal split_manifest (train/validation/test rows and positi
       for k, z in (('train', '训练'), ('validation', '验证'), ('test', '测试'))))
 check('sample rows labelled customer x week, not raw orders', '样本行是客户×周' in t and '不是原始订单数' in t)
 tt = next(d.value for d in at.dataframe if '方法' in d.value.columns).set_index('方法')
-check('frozen test metrics with CI, rule baselines and base rate shown', abs(tt.loc['冻结模型', 'roc_auc'] - tm['scores']['p_model']['roc_auc']) < 1e-9 and tt.loc['冻结模型', 'roc_auc_95ci'] == str(tm['scores']['p_model']['roc_auc_95ci'])
+ci = tm['scores']['p_model']['roc_auc_95ci']      # headers are readable names since UI-07; CI shown as "a–b"
+check('frozen test metrics with CI, rule baselines and base rate shown', abs(tt.loc['冻结模型', 'ROC-AUC'] - tm['scores']['p_model']['roc_auc']) <= 5e-5 and tt.loc['冻结模型', 'ROC-AUC 95% 区间'] == f'{ci[0]:.3f}–{ci[1]:.3f}'
       and '规则：近 90 天订单数' in tt.index and '基率' in tt.index)
 check('calibration (reliability) chart and ECE shown', len([c for c in at.get('vega_lite_chart')]) >= 1 and f"ECE {tm['scores']['p_model']['ece']}" in t)
 check('error analysis: weekly top-10% confusion matrix shown', 'TP 107、FP 1695、FN 1171、TN 15029' in t)

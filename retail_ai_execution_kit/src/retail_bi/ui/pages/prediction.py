@@ -3,7 +3,6 @@
 Frozen records (split, baselines, selection, test, error analysis) are read from reports/model/*.json and
 only displayed; the K / threshold controls are a what-if over the latest scoring list and never write.
 """
-import json
 import sys
 from pathlib import Path
 
@@ -12,19 +11,38 @@ import pandas as pd
 import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common import ROOT, banner, show, view  # noqa: E402
-from model_data import score_list, trial  # noqa: E402
+from common import banner, release_dir  # noqa: E402
+from model_data import EXPECTED_MODEL, frozen_reports, score_list, trial  # noqa: E402
 
 
-def rep(name):
-    return json.loads((ROOT / f'reports/model/{name}.json').read_text(encoding='utf-8'))
+# readable metric names for the tables (UI-07); the JSON records keep their field names
+MET = {'roc_auc': 'ROC-AUC', 'roc_auc_95ci': 'ROC-AUC 95% 区间', 'pr_auc': 'PR-AUC', 'pr_auc_95ci': 'PR-AUC 95% 区间',
+       'lift@10%': 'Lift@10%', 'weekly_lift@10%': '周内 Lift@10%', 'mean_weekly_roc_auc': '周均 ROC-AUC', 'brier': 'Brier', 'ece': 'ECE'}
+
+
+def cell(v):
+    if v is None:
+        return '—'
+    if isinstance(v, list):
+        return f'{v[0]:.3f}–{v[1]:.3f}'
+    return round(v, 4) if isinstance(v, float) else v
+
+
+@st.cache_data(show_spinner='读取评分名单…', max_entries=4)
+def scores(version: str, releases: str) -> dict:
+    """Scoring list, cached per release version (a new release is a new key); returns a copy to each session."""
+    return score_list(Path(releases))
 
 
 st.title('复购预测')
 info = banner()
 st.warning('模型 repurchase-logreg-v1 在测试期的个体区分能力接近随机（ROC-AUC 0.515，95% 区间 0.483–0.546）。概率只作平均水平参考；'
            '名单排序用冻结的规则（近 90 天订单数），因素是模型解释，不是因果效果。')
-sp, bl, ms, tm, ea = rep('split_manifest'), rep('baselines'), rep('model_selection'), rep('test_metrics'), rep('error_analysis')
+R, missing = frozen_reports(('split_manifest', 'baselines', 'model_selection', 'test_metrics', 'error_analysis'))
+if missing:
+    st.error(f"模型评估记录缺失或无法读取：{', '.join(missing)}（reports/model/）。请按 docs/COMMANDS.md 重新运行模型步骤；本页只显示冻结记录，不在网页中训练模型。")
+    st.stop()
+sp, bl, ms, tm, ea = (R[k] for k in ('split_manifest', 'baselines', 'model_selection', 'test_metrics', 'error_analysis'))
 t1, t2, t3, t4, t5 = st.tabs(['样本与切分', '基线与选模', '测试结果（冻结）', '误差分析', '名单试算'])
 
 with t1:
@@ -38,7 +56,7 @@ with t1:
 with t2:
     cand = ms['candidates_validation']
     keys = ['roc_auc', 'pr_auc', 'lift@10%', 'brier']
-    st.dataframe(pd.DataFrame([{'候选（验证集）': k, **{m: v.get(m) for m in keys}} for k, v in cand.items()]), hide_index=True)
+    st.dataframe(pd.DataFrame([{'候选（验证集）': k, **{MET[m]: cell(v.get(m)) for m in keys}} for k, v in cand.items()]), hide_index=True)
     pm = ms['probability_model']
     st.markdown(f"**概率模型**：{pm['choice']} — {pm['why']}")
     st.markdown(f"**校准**：{ms['calibration']['choice']} — {ms['calibration']['why']}")
@@ -50,7 +68,9 @@ with t3:
     sc = tm['scores']
     lab = {'p_model': '冻结模型', 'rule_frequency_90d': '规则：近 90 天订单数', 'rule_recency': '规则：最近购买', 'base_rate': '基率'}
     keys = ['roc_auc', 'roc_auc_95ci', 'pr_auc', 'pr_auc_95ci', 'lift@10%', 'weekly_lift@10%', 'mean_weekly_roc_auc', 'brier', 'ece']
-    st.dataframe(pd.DataFrame([{'方法': lab.get(k, k), **{m: (str(v.get(m)) if isinstance(v.get(m), list) else v.get(m)) for m in keys}} for k, v in sc.items()]), hide_index=True)
+    st.dataframe(pd.DataFrame([{'方法': lab.get(k, k), **{MET[m]: cell(v.get(m)) for m in keys}} for k, v in sc.items()]), hide_index=True)
+    st.caption('ROC-AUC / PR-AUC：排序区分能力（0.5 与正例比例分别是随机水平）；Lift@10%：前 10% 的复购率是平均的几倍；周内指标按每周分别计算再平均；'
+               'Brier、ECE：概率误差，越小越好。区间为按客户分块重抽样的 95% 区间。“—”表示该方法没有这项指标（基率是常数，不排序）。')
     ts = tm['test_set']
     st.caption(f"测试集 {ts['as_of_range'][0][:10]} 至 {ts['as_of_range'][1][:10]}，{ts['rows']:,} 行、{ts['customers']:,} 名客户、正例 {ts['positives']:,}（{ts['positive_rate']:.1%}）；"
                f"只使用一次（{tm['evaluated_at'][:10]}），页面只读显示，不会被试算覆盖。")
@@ -74,23 +94,27 @@ with t5:
     if info is None:
         st.info('暂无评分名单：没有已发布的数据版本')
     else:
-        sl = score_list()
-        lst = sl['list']
-        st.markdown(f"评分快照 as_of {sl['as_of_date']}，模型 `{sl['model_version']}`；母体内 {len(lst):,} 人，**母体外 {sl['out_of_population']:,} 人不适用模型**（近 90 天没有购买，由生命周期规则管理，没有概率）。")
-        c1, c2 = st.columns(2)
-        k = c1.slider('名单规模 K（母体占比，试算）', 0.01, 0.5, 0.10, 0.01, key='k')
-        pmin = c2.slider('附加概率下限（试算）', 0.0, 0.2, 0.0, 0.005, key='pmin')
-        r = trial(lst, k, pmin)
-        m1, m2, m3 = st.columns(3)
-        m1.metric('入选人数', f"{r['selected']:,} / {r['population']:,}")
-        m2.metric('入选者平均预测概率', f"{r['mean_p_selected']:.1%}" if r['mean_p_selected'] is not None else '—')
-        m3.metric('母体平均预测概率', f"{r['mean_p_population']:.1%}")
-        frozen = ms['threshold_and_capacity']['capacity_share_per_week']
-        st.caption(f"冻结的名单规则：K = {frozen:.0%}、不设概率阈值（ML-08）。上面的滑块只是试算，不修改冻结记录或测试结果；"
-                   f"测试期规则排序的周内 Lift@10% 为 {sc['rule_frequency_90d']['weekly_lift@10%']}，模型为 {sc['p_model']['weekly_lift@10%']}，"
-                   '所以预测概率之差不代表真实复购差异，也不能当作触达带来的增量。')
-        st.dataframe(r['rows'][['rank', 'customer_id', 'frequency_90d', 'monetary_90d_usd', 'recency_days', 'lifecycle_state', 'p_repurchase_30d', 'top_factors']].rename(
-            columns={'rank': '排名', 'customer_id': '客户编号', 'frequency_90d': '近 90 天订单', 'monetary_90d_usd': '近 90 天金额 USD', 'recency_days': '距上次购买（天）',
-                     'lifecycle_state': '生命周期', 'p_repurchase_30d': '预测复购概率', 'top_factors': '模型因素（非因果）'}), hide_index=True,
-            column_config={'预测复购概率': st.column_config.NumberColumn(format='%.3f'), '距上次购买（天）': st.column_config.NumberColumn(format='%.1f'),
-                           '近 90 天金额 USD': st.column_config.NumberColumn(format='%.2f')})
+        sl = scores(info['version'], str(release_dir()))
+        if sl['model_version'] != EXPECTED_MODEL:
+            st.error(f"评分表中的模型版本 `{sl['model_version']}` 与冻结版本 `{EXPECTED_MODEL}` 不一致，名单不显示。"
+                     '请重新运行评分并发布数据版本（docs/COMMANDS.md）。')
+        else:
+            lst = sl['list']
+            st.markdown(f"评分快照 as_of {sl['as_of_date']}，模型 `{sl['model_version']}`；母体内 {len(lst):,} 人，**母体外 {sl['out_of_population']:,} 人不适用模型**（近 90 天没有购买，由生命周期规则管理，没有概率）。")
+            c1, c2 = st.columns(2)
+            k = c1.slider('名单规模 K（母体占比，试算）', 0.01, 0.5, 0.10, 0.01, key='k')
+            pmin = c2.slider('附加概率下限（试算）', 0.0, 0.2, 0.0, 0.005, key='pmin')
+            r = trial(lst, k, pmin)
+            m1, m2, m3 = st.columns(3)
+            m1.metric('入选人数', f"{r['selected']:,} / {r['population']:,}")
+            m2.metric('入选者平均预测概率', f"{r['mean_p_selected']:.1%}" if r['mean_p_selected'] is not None else '—')
+            m3.metric('母体平均预测概率', f"{r['mean_p_population']:.1%}")
+            frozen = ms['threshold_and_capacity']['capacity_share_per_week']
+            st.caption(f"冻结的名单规则：K = {frozen:.0%}、不设概率阈值（ML-08）。上面的滑块只是试算，不修改冻结记录或测试结果；"
+                       f"测试期规则排序的周内 Lift@10% 为 {sc['rule_frequency_90d']['weekly_lift@10%']}，模型为 {sc['p_model']['weekly_lift@10%']}，"
+                       '所以预测概率之差不代表真实复购差异，也不能当作触达带来的增量。')
+            st.dataframe(r['rows'][['rank', 'customer_id', 'frequency_90d', 'monetary_90d_usd', 'recency_days', 'lifecycle_state', 'p_repurchase_30d', 'top_factors']].rename(
+                columns={'rank': '排名', 'customer_id': '客户编号', 'frequency_90d': '近 90 天订单', 'monetary_90d_usd': '近 90 天金额 USD', 'recency_days': '距上次购买（天）',
+                         'lifecycle_state': '生命周期', 'p_repurchase_30d': '预测复购概率', 'top_factors': '模型因素（非因果）'}), hide_index=True,
+                column_config={'预测复购概率': st.column_config.NumberColumn(format='%.3f'), '距上次购买（天）': st.column_config.NumberColumn(format='%.1f'),
+                               '近 90 天金额 USD': st.column_config.NumberColumn(format='%.2f')})

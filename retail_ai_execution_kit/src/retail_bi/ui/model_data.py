@@ -6,6 +6,7 @@ are counted separately and have no probability. Fixed SQL only; only observable 
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -14,6 +15,20 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'src/retail_bi/warehouse'))
 from runtime import open_current  # noqa: E402
+
+REPORTS = ROOT / 'reports/model'
+EXPECTED_MODEL = 'repurchase-logreg-v1'   # frozen in ML-08; the page refuses a scoring table from another version
+
+
+def frozen_reports(names) -> tuple[dict, list]:
+    """Frozen model records shown by the pages (read only). Returns (records, missing or unreadable names)."""
+    out, missing = {}, []
+    for n in names:
+        try:
+            out[n] = json.loads((REPORTS / f'{n}.json').read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            missing.append(n)
+    return out, missing
 
 
 def score_list(releases=None) -> dict:
