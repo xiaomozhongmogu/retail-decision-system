@@ -5,7 +5,7 @@ estimated cost add up across modules, and append one event per run to logs/ai/ev
   module, request, mode, outcome, seconds, llm calls/tokens/cost for this run, tool steps, evidence ids, errors,
   dataset / metric / kb / policy versions.
 The event never contains the API key, prompt text or raw customer rows (redact() removes key-like strings).
-mode is derived from what actually happened: live (a model reply was used) | fallback_no_key | timeout | rate_limited |
+mode is derived from what actually happened: live (a model reply was used) | fallback_no_key | network_error | timeout | rate_limited |
 llm_error | rules_only (LLM switched off) | replay. A replay or fallback is never reported as live.
 """
 from __future__ import annotations
@@ -73,7 +73,8 @@ class Hub:
         if used_llm_text:
             return 'live'
         codes = [e.get('code') for e in errors if isinstance(e, dict)]
-        for c, m in (('llm_unavailable', 'fallback_no_key'), ('timeout', 'timeout'), ('rate_limited', 'rate_limited'), ('budget_denied', 'budget_exhausted')):
+        for c, m in (('llm_unavailable', 'fallback_no_key'), ('network_error', 'network_error'), ('call_failed', 'llm_error'), ('timeout', 'timeout'),
+                     ('rate_limited', 'rate_limited'), ('budget_denied', 'budget_exhausted')):
             if c in codes:
                 return m
         return 'llm_error' if codes else 'fallback_no_key'
@@ -98,7 +99,11 @@ class Hub:
         def chat(*a, **k):
             r = orig(*a, **k)
             if r.get('status') != 'ok' and r.get('error'):
-                self._errs.append({'code': r['error'].get('code')})
+                code = r['error'].get('code')
+                # the client uses llm_unavailable both for "not configured" and for a failed call; tell them apart (REL-04)
+                if code == 'llm_unavailable' and str(r['error'].get('message', '')).startswith('调用失败'):
+                    code = 'network_error' if 'network' in r['error']['message'] else 'call_failed'
+                self._errs.append({'code': code})
             elif r.get('status') == 'ok':
                 self._oks += 1
             return r

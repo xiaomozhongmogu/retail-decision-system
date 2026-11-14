@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "2026-11-14 claude-opus-5-5：已验收 71 项。本日验收 AI-15、UI-06、UI-07、REL-01（关键路径回归 32/32）、DOC-08、DOC-05。REL-01 发现 .gitignore 使数仓代码/测试/报告从未提交，已修复（02a8b52）。AI-10 周报人工抽查仍待组员完成（D015）。待处理：evidence/DOC-01/proposal_extracted_text.txt 含 1 个作者邮箱，是否脱敏由负责人决定。可开始：REL-02（干净环境复现）、REL-04（资源与降级）。",
+  "state_note": "2026-11-14 claude-opus-5-5：已验收 73 项，技术任务已全部验收（AI-10 的周报人工抽查除外，待组员完成，D015）。本日：AI-15、UI-06、UI-07、REL-01（回归 32/32）、DOC-05、DOC-08、REL-02（GitHub 全新克隆按 runbook 复现，仅 macOS arm64）、REL-04（基线与冻结目标、降级实测）。剩余均为非技术或依赖课程文档：DOC-02/03/06/07、REL-03/05/06/07、GOV-03/04、DOC-01 回执（D014：由组员承担，待分配）。待负责人决定：evidence/DOC-01/proposal_extracted_text.txt 中 1 个作者邮箱是否脱敏；导入层 manifest 绝对路径差异是否值得重新登记 DATA-05 至 DATA-12。",
   "tasks": [
     {
       "id": "GOV-01",
@@ -2535,7 +2535,7 @@
         "在线、无密钥、超时、限流和回放模式可区分；系统卡列实际通过与未覆盖边界。"
       ],
       "evidence": [
-        "evidence/AI-15/2026-11-14-d015-accept.json"
+        "evidence/AI-15/2026-11-14-rel04-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -3022,7 +3022,7 @@
         "图表与报告使用相同数据和模型版本，证据不包含密钥或不必要个人信息。"
       ],
       "evidence": [
-        "evidence/DOC-05/2026-11-14-rel02-recheck.json"
+        "evidence/DOC-05/2026-11-14-rel02b-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -3139,7 +3139,7 @@
         "说明后续数据、部署、评估与运营实验需求，不把课程演示称已商用。"
       ],
       "evidence": [
-        "evidence/DOC-08/2026-11-14-reflection.json"
+        "evidence/DOC-08/2026-11-14-rel04-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -3196,10 +3196,10 @@
       "category": "REL",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C20",
         "C29",
@@ -3222,7 +3222,9 @@
         "无需开发者未记录的手工步骤即可运行ETL、模型加载/训练和Web核心路径。",
         "不能只因Linux容器通过就声称M1已验证；跨平台差异记录并处理目标展示机器。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/REL-02/2026-11-14-clean-clone.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true
@@ -3273,10 +3275,10 @@
       "category": "REL",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "done",
+      "owner": "claude-opus-5-5",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C29",
         "Q06"
@@ -3296,7 +3298,9 @@
         "性能目标先基线测量再冻结；若不达约定目标，优化或显式记录变更，不隐藏修改。",
         "断网、缺key、超时/限流和预算耗尽有明确降级；回放不能冒充在线调用。"
       ],
-      "evidence": [],
+      "evidence": [
+        "evidence/REL-04/2026-11-14-performance.json"
+      ],
       "blocker": null,
       "skip_reason": null,
       "execution_required": true

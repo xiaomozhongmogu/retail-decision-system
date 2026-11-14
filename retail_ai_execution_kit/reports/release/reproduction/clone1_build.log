@@ -1,0 +1,1 @@
+{"status": "ok", "version": "wh-d3aaa559048c", "failed_stage": null, "stages": [["ingest", "ok", 1.181], ["clean", "ok", 0.591], ["ods", "ok", 0.381], ["dwd", "ok", 0.256], ["dws", "ok", 0.08], ["snapshot", "ok", 1.019], ["ads", "ok", 0.027], ["scores", "ok", 0.078], ["checks", "ok", 0.038], ["publish", "ok", 0.0]]}

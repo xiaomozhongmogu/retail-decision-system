@@ -1,0 +1,9 @@
+1 {'num_leaves': 15, 'min_child_samples': 50, 'lambda_l2': 0.0} 2 0.527477 0.085591 0.35
+2 {'num_leaves': 15, 'min_child_samples': 50, 'lambda_l2': 5.0} 6 0.536766 0.087082 0.33
+3 {'num_leaves': 15, 'min_child_samples': 200, 'lambda_l2': 0.0} 47 0.53002 0.084179 0.45
+4 {'num_leaves': 15, 'min_child_samples': 200, 'lambda_l2': 5.0} 5 0.534099 0.088212 0.35
+5 {'num_leaves': 31, 'min_child_samples': 50, 'lambda_l2': 0.0} 2 0.49587 0.082183 0.46
+6 {'num_leaves': 31, 'min_child_samples': 50, 'lambda_l2': 5.0} 5 0.524903 0.082539 0.54
+7 {'num_leaves': 31, 'min_child_samples': 200, 'lambda_l2': 0.0} 72 0.517241 0.082123 0.88
+8 {'num_leaves': 31, 'min_child_samples': 200, 'lambda_l2': 5.0} 5 0.529028 0.08389 0.54
+{"best_trial": 4, "delta_pr_auc_vs_logreg": -0.001497, "delta_roc_auc_vs_logreg": -0.021889, "train_validation_gap_roc_auc": 0.100139}

@@ -1,0 +1,129 @@
+{
+  "task_id": "REL-02",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64 (Apple M1 Pro, 8 cores, 16 GB)",
+    "python": "3.12.14 (.venv from requirements.lock)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "GitHub clone; DeepSeek live calls only in the original environment"
+  },
+  "command": "git clone (GitHub) → uv venv + uv pip sync requirements.lock → scripts/env_smoke.py → pipeline.py build → release.py publish → data_readme §2 chain → build_samples.py, customer_features.py → tests/release/run_regression.py --skip-live --allow-dirty（第二次克隆：reports/release/reproduction/clone2_follow_runbook.sh）",
+  "exit_code": 0,
+  "summary": "同机全新克隆两次复现。第一次（1fc056b）：建仓得到相同版本 wh-d3aaa559048c，38 个表/视图中 37 个内容相同（仅加载批次元数据不同）；重新训练的冻结模型系数差为 0；但文档缺数据层分步重建与样本特征两步，回归 19 通过 5 失败，已补文档与工具（328f001）。第二次只按更新后的 runbook 执行，无未记录的手工步骤：23 通过、1 失败（数据发布包 27/28：导入层 manifest 记绝对路径的已知差异）、8 项真实 LLM 检查未运行；服务与五个页面 200；从克隆到回归结束约 1.5 分钟。只验证 macOS arm64，未验证 Windows/Intel/Linux。",
+  "inputs": [
+    {
+      "path": "docs/runbook.md",
+      "sha256": "2c3b61bf2217862ff6dfcd0419218a243ab336e7db463e6d2f1fe1e842637abb"
+    },
+    {
+      "path": "docs/data_readme.md",
+      "sha256": "992e92d0c63c92a00e52f2c64be8f5689d275d974f80ae091fa8c0726fce8cd8"
+    },
+    {
+      "path": "requirements.lock",
+      "sha256": "6adc2d1ec6d94e895c79c904a78d1654302fc9eaf5ef1f4a3d05f39d6e376eec"
+    },
+    {
+      "path": "tests/release/run_regression.py",
+      "sha256": "0de4cfa138169492520683ae1866a74aec2ec67fa9d009ef09b0ffc3faacd1b8"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/release/reproduction.md",
+      "sha256": "2ca0f627fc30110564ea8d6ff16c19c778e4db69abd9b36d21b5fc89785719af"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_build.log",
+      "sha256": "a67257c13fd75b6b015c9fef5b806cfc5018290c7b2e73d08e97d459504025ca"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_db_compare.log",
+      "sha256": "b27fb4b4ff67dd9f243bd9cfefdcd516e72c5096aea4d0c0d080b6bfd93db09b"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_env_smoke.log",
+      "sha256": "b91b53c135b5e0afdd2b090ddf6269ded32e2b9df1df7eaddaffd5ae0ede2bf1"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_etl_run_clean.json",
+      "sha256": "74e95742f5ea86fef18dd09e756d6a321f501e050027a289c3a68d8fc4800ad1"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_publish.log",
+      "sha256": "1803c318ae244e9ac48009fd47dbfc5a21335db1b26c806cf5847899030a37f7"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_regression_clean.log",
+      "sha256": "ebc695d6b864a1b2080ba79a3e195516848636ea834cc8ec1c1c6e586add1e99"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_train_baselines.log",
+      "sha256": "2e7eac8bbaca35c7940459c99e0116a5466e15fbb1b2873caae2c5be5d95ba74"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_train_boosting.log",
+      "sha256": "ddf4306eaeee78eea688f576a2d8f263336119866dcdbb1e0ffceeda4d4033cf"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_train_model_select.log",
+      "sha256": "cad15a1c484fd2066b76f29590ef4811c16a460288c2a3889de8cfed94fee051"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_train_split.log",
+      "sha256": "c15393b486287a50d3042d770419d345b25842a258bf1b8b52618c6633f33688"
+    },
+    {
+      "path": "reports/release/reproduction/clone2_follow_runbook.log",
+      "sha256": "731068cf05c89aa982ab5b5f97d8d2fb4c605481c3afba8320a4c639a780d651"
+    },
+    {
+      "path": "reports/release/reproduction/clone2_follow_runbook.sh",
+      "sha256": "779d7de6d200894aed7f489ed415fe088e7877082fb293ad94d84a3a30bfdefa"
+    },
+    {
+      "path": "reports/release/reproduction/clone2_test_summary.json",
+      "sha256": "cfb80bf4c8e24f806b2fa250a00b5996fee58cea30e70c7fda19cc54b3b770c2"
+    },
+    {
+      "path": "reports/release/reproduction/compare_releases.py",
+      "sha256": "2d51f3f7c70b378dd4145afa0856356fef1669182c8330abb882a4551c157ec0"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "在全新克隆与新建虚拟环境中，从仓库内的原始 ZIP 重建数据层、数仓与发布版本；记录系统 macOS 27.2、arm64、M1 Pro 8 核 16 GB、Python 3.12、包列表与原环境相同。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "第二次克隆只执行 runbook 中的命令：ETL（pipeline build、publish、数据层分步）、模型加载与检查（评分 13/13、新进程复现误差 2.8e-17、测试复核 6/6）、训练复现（第一次克隆中系数差 0）与 Web 核心路径（服务与五页面 200、7 个页面检查全部通过）。唯一失败项是已知的导入层 manifest 绝对路径差异，已在报告与 runbook 中说明。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "报告明确只验证了 macOS arm64（同一台 M1 Pro 的全新克隆，不是第二台机器），没有 Linux 容器结果，也不据此声称其他平台可用；列出 libomp、按 aarch64 生成的锁文件、Windows 路径与命令等差异；展示机器未定，若非本机需在其上重做。"
+    }
+  ],
+  "limitations": [
+    "AI 自审。",
+    "不是第二台物理机器；uv 有本地缓存，首次联网安装耗时未测。",
+    "真实 LLM 检查在克隆中未运行（无 .env）。",
+    "导入层 manifest 的绝对路径差异未消除（需重新登记 DATA-05 至 DATA-12）。"
+  ],
+  "steps": [
+    "第一次克隆按旧 runbook 执行，记录失败与原因。",
+    "逐项补跑并比对：数据库内容、特征逐列、重新训练的模型。",
+    "修正 runbook、回归运行器与 DATA-02 证据并推送。",
+    "第二次克隆只按新 runbook 执行；修正漏掉的快照文件并复测。"
+  ],
+  "task_spec_sha256": "a85d3e11ffc2e27ea7a7087ec7835411f96337939757e661cf6746bcfa7d79e1",
+  "performed_at": "2026-11-14T12:18:17.467677+08:00"
+}

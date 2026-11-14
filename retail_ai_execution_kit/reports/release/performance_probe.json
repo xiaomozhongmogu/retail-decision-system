@@ -1,0 +1,338 @@
+{
+ "task_id": "REL-04",
+ "run_at": "2026-11-14T04:16:15.474670+00:00",
+ "hardware": {
+  "cpu": "Apple M1 Pro",
+  "cores": 8,
+  "memory_gb": 16.0,
+  "os": "macOS 27.2",
+  "arch": "arm64",
+  "python": "3.12.14"
+ },
+ "scale": {
+  "release": "wh-d3aaa559048c",
+  "release_bytes": 97267712,
+  "orders": 9311,
+  "order_lines": 15639,
+  "customers": 3647,
+  "customer_snapshots": 331649,
+  "model_scores": 3332
+ },
+ "queries": {
+  "view": "ads.sales_month_category_region",
+  "rows": 553,
+  "cold_first_query_ms": [
+   95.1,
+   76.5,
+   77.4
+  ],
+  "cold_import_ms": [
+   58.7,
+   57.1,
+   63.7
+  ],
+  "uncached_median_ms": 19.75,
+  "uncached_max_ms": 20.59,
+  "hot_median_ms": 0.06,
+  "hot_max_ms": 0.232,
+  "note": "cold = new process: open release, verify SHA-256 of the file, query; uncached = connection reopened per query; hot = result cache hit"
+ },
+ "pages": {
+  "data": {
+   "first_s": 0.86,
+   "rerun_s": 0.02,
+   "exceptions": 0
+  },
+  "business": {
+   "first_s": 0.78,
+   "rerun_s": 0.09,
+   "exceptions": 0
+  },
+  "customers": {
+   "first_s": 0.73,
+   "rerun_s": 0.04,
+   "exceptions": 0
+  },
+  "prediction": {
+   "first_s": 0.65,
+   "rerun_s": 0.03,
+   "exceptions": 0
+  },
+  "ai": {
+   "first_s": 0.55,
+   "rerun_s": 0.03,
+   "exceptions": 0
+  }
+ },
+ "etl": [
+  {
+   "stage": "ingest",
+   "status": "ok",
+   "layer": "d50ee64a0478d8ae-20261108T000000Z-engineering-import-v1",
+   "seconds": 0.019
+  },
+  {
+   "stage": "clean",
+   "status": "ok",
+   "clean": "9f5ba7d8e03a46b4-synthetic-transaction-v1-clean-v2",
+   "reused": true,
+   "quarantined_rows": 0,
+   "seconds": 0.014
+  },
+  {
+   "stage": "ods",
+   "status": "ok",
+   "batch_id": "9f5ba7d8e03a46b4-engineering-import-v1",
+   "seconds": 0.613
+  },
+  {
+   "stage": "dwd",
+   "status": "ok",
+   "rows": {
+    "dim_date": 1042,
+    "dim_geo": 105,
+    "dim_customer": 3647,
+    "dim_product": 8000,
+    "dim_seller": 800,
+    "fact_order": 9311,
+    "fact_order_line": 15639,
+    "fact_payment": 10010,
+    "fact_fulfillment": 9311
+   },
+   "seconds": 0.658
+  },
+  {
+   "stage": "dws",
+   "status": "ok",
+   "rows_and_merch": {
+    "orders_daily_region": [
+     3605,
+     "1380161.23"
+    ],
+    "sales_daily_category_region": [
+     12532,
+     "1380161.23"
+    ],
+    "customer_daily": [
+     9102,
+     "1380161.23"
+    ],
+    "product_daily": [
+     14523,
+     "1380161.23"
+    ]
+   },
+   "seconds": 0.515
+  },
+  {
+   "stage": "snapshot",
+   "status": "ok",
+   "coverage": {
+    "as_of_points": 136,
+    "first_as_of": "2024-04-01 00:00:00+00",
+    "last_as_of": "2026-11-02 00:00:00+00",
+    "rows": 331649,
+    "customers": 3332,
+    "rows_in_90d_population": 94999
+   },
+   "labels": {
+    "as_of_points": 132,
+    "first_as_of": "2024-04-01 00:00:00+00",
+    "last_as_of": "2026-10-05 00:00:00+00",
+    "rows": 318344,
+    "positives": 22270,
+    "rows_in_90d_population": 92241,
+    "positives_in_90d_population": 6618
+   },
+   "seconds": 1.56
+  },
+  {
+   "stage": "ads",
+   "status": "ok",
+   "ads_views": 8,
+   "seconds": 0.042
+  },
+  {
+   "stage": "scores",
+   "status": "ok",
+   "as_of": "2026-11-02 00:00:00+00",
+   "rows": 3332,
+   "in_population": 704,
+   "out_of_population": 2628,
+   "summary": [
+    3332,
+    0.07993453074372793,
+    2628
+   ],
+   "seconds": 0.134
+  },
+  {
+   "stage": "checks",
+   "status": "ok",
+   "values": {
+    "orders": 9311,
+    "merch_usd": "1408601.73",
+    "valid_orders": 9113,
+    "valid_merch_usd": "1380161.23"
+   },
+   "checks": {
+    "dwd_orders_equal_clean": true,
+    "dwd_merch_equals_clean_lines": true,
+    "dws_orders_daily_region_merch_equals_dwd_valid": true,
+    "dws_sales_daily_category_region_merch_equals_dwd_valid": true,
+    "dws_customer_daily_merch_equals_dwd_valid": true,
+    "dws_product_daily_merch_equals_dwd_valid": true,
+    "ads_monthly_orders_equal_dwd_valid": true,
+    "allowed_views_registered": true,
+    "scores_complementary": true,
+    "no_immature_labels": true,
+    "single_loaded_batch": true
+   },
+   "rows": {
+    "dwd.dim_customer": 3647,
+    "dwd.dim_date": 1042,
+    "dwd.dim_geo": 105,
+    "dwd.dim_product": 8000,
+    "dwd.dim_seller": 800,
+    "dwd.fact_fulfillment": 9311,
+    "dwd.fact_order": 9311,
+    "dwd.fact_order_line": 15639,
+    "dwd.fact_payment": 10010,
+    "dws.customer_daily": 9102,
+    "dws.customer_snapshot": 331649,
+    "dws.label_repurchase": 318344,
+    "dws.orders_daily_region": 3605,
+    "dws.product_daily": 14523,
+    "dws.sales_daily_category_region": 12532,
+    "ods.calendar": 1042,
+    "ods.customers": 3647,
+    "ods.order_items": 15639,
+    "ods.orders": 9311,
+    "ods.payments": 10010,
+    "ods.products": 8000,
+    "ods.reviews": 6190,
+    "ods.seller_products": 13966,
+    "ods.sellers": 800,
+    "ods.shipping": 9311
+   },
+   "seconds": 0.044
+  },
+  {
+   "stage": "publish",
+   "status": "ok",
+   "published": "wh-d3aaa559048c.duckdb",
+   "seconds": 0.0
+  }
+ ],
+ "llm": {
+  "log_rows": 733,
+  "live_ok_calls": 677,
+  "total_cost_usd_logged": 0.0671,
+  "first_call": "2026-11-11T07:37:56.543430+00:00",
+  "last_call": "2026-11-14T04:15:40.254120+00:00",
+  "by_purpose": {
+   "agent_copy": {
+    "calls": 70,
+    "median_s": 0.98,
+    "p90_s": 1.21,
+    "median_tokens_in": 122,
+    "median_tokens_out": 25,
+    "median_cost_usd": 2.4e-05
+   },
+   "agent_propose": {
+    "calls": 79,
+    "median_s": 1.38,
+    "p90_s": 1.74,
+    "median_tokens_in": 1121,
+    "median_tokens_out": 129,
+    "median_cost_usd": 0.000193
+   },
+   "ai01_live_probe": {
+    "calls": 2,
+    "median_s": 0.67,
+    "p90_s": 0.74,
+    "median_tokens_in": 67,
+    "median_tokens_out": 20,
+    "median_cost_usd": 1.5e-05
+   },
+   "query_intent": {
+    "calls": 37,
+    "median_s": 0.96,
+    "p90_s": 1.31,
+    "median_tokens_in": 486,
+    "median_tokens_out": 71,
+    "median_cost_usd": 8.8e-05
+   },
+   "query_note": {
+    "calls": 286,
+    "median_s": 0.97,
+    "p90_s": 1.24,
+    "median_tokens_in": 120,
+    "median_tokens_out": 27,
+    "median_cost_usd": 2.4e-05
+   },
+   "rag_eval": {
+    "calls": 150,
+    "median_s": 0.99,
+    "p90_s": 1.27,
+    "median_tokens_in": 1035,
+    "median_tokens_out": 67,
+    "median_cost_usd": 0.000164
+   },
+   "weekly_report": {
+    "calls": 53,
+    "median_s": 2.64,
+    "p90_s": 3.25,
+    "median_tokens_in": 1101,
+    "median_tokens_out": 345,
+    "median_cost_usd": 0.00025
+   }
+  },
+  "non_ok_by_kind": {
+   "network": 56
+  }
+ },
+ "degraded": {
+  "no_key": {
+   "mode": "fallback_no_key",
+   "answer_ok": true,
+   "llm_calls": 0
+  },
+  "network_down": {
+   "modes": [
+    "network_error",
+    "network_error",
+    "network_error"
+   ],
+   "answer_ok": true,
+   "report_generator_mode": "template",
+   "agent_outcome": "draft_saved",
+   "draft_sent": false,
+   "seconds_all_three": 0.17,
+   "key_in_events": false
+  },
+  "budget_exhausted": {
+   "first_mode": "live",
+   "second_mode": "budget_exhausted",
+   "second_answer_ok": true,
+   "calls_used": 1,
+   "max_calls": 1
+  },
+  "replay": {
+   "mode": "replay",
+   "generator_mode": "replay",
+   "llm_calls": 0
+  }
+ },
+ "memory_and_concurrency": {
+  "all_pages_peak_rss_mb": 256.4,
+  "concurrent_threads": 8,
+  "queries": 80,
+  "errors": 0,
+  "median_ms": 21.7,
+  "p90_ms": 28.6,
+  "max_ms": 38.6,
+  "wall_s": 0.23
+ },
+ "probe_seconds": 9.9
+}

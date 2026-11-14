@@ -35,8 +35,10 @@ uv pip sync --python .venv/bin/python requirements.lock
 
 ```bash
 mkdir -p data/raw/data02-input-snapshot
-cp -R ../ecommerce-sample-database-100k/01_source ../ecommerce-sample-database-100k/02_historical_utf8 data/raw/data02-input-snapshot/
+cp -R ../ecommerce-sample-database-100k/. data/raw/data02-input-snapshot/
 ```
+
+- 本机重建（第 3、4a 节）会改写 `etl_run.json`、`feature_build.json` 和 `sample_audit.json`，之后台账校验会报告绑定这些文件的证据（DW-07/08、ML-02 至 ML-09）失效。这是预期结果：证据描述的是原始构建，本机的新记录不会改动它们。
 
 ## 3. ETL：从原始 ZIP 到发布版本
 

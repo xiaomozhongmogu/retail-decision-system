@@ -1,0 +1,18 @@
+{
+  "version": "wh-d3aaa559048c",
+  "file": "wh-d3aaa559048c.duckdb",
+  "sha256": "9a2a5a7b47c45e324693fd18ac6a787ab5673ed51b5fa024fb6371c8c32d6781",
+  "bytes": 96743424,
+  "published_at": "2026-11-14T04:04:02.237950+00:00",
+  "source_build": "wh-d3aaa559048c.duckdb",
+  "previous": null,
+  "allowed_views": [
+    "ads.cohort_retention",
+    "ads.kpi_daily",
+    "ads.kpi_monthly",
+    "ads.lifecycle_mix_weekly",
+    "ads.repurchase_rate_weekly",
+    "ads.risk_summary_latest",
+    "ads.sales_month_category_region"
+  ]
+}

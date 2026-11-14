@@ -1,0 +1,446 @@
+{
+ "task_id": "REL-01",
+ "run_at": "2026-11-14T04:13:16.565587+00:00",
+ "git_commit": "328f00114ab6d943915995f8e6b0aad1f3952ce9",
+ "environment": {
+  "os": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.12.14",
+  "packages": {
+   "duckdb": "2.0.0",
+   "pandas": "3.1.1",
+   "scikit-learn": "1.9.1",
+   "streamlit": "1.67.0",
+   "altair": "6.3.0"
+  },
+  "llm_configured": false
+ },
+ "dirty_at_start": [
+  "reports/model/feature_build.json",
+  "reports/model/sample_audit.json",
+  "reports/warehouse/etl_run.json"
+ ],
+ "totals": {
+  "passed": 23,
+  "failed": 1,
+  "not_run": 8
+ },
+ "not_reproduced_files": [
+  "reports/ai/sql_boundary_checks.json"
+ ],
+ "checks": [
+  {
+   "id": "pytest",
+   "critical_path": "数据规则 / 指标对账 / 时间切分与预处理范围",
+   "command": ".venv/bin/python -m pytest tests -q -p no:cacheprovider",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 8.4,
+   "summary": "46 passed in 7.77s",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "data_quality_gate",
+   "critical_path": "数据规则：清洗后质量门槛",
+   "command": ".venv/bin/python tests/data/quality_gate.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 2.7,
+   "summary": "gate passed 10/10",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "dw_reconciliation",
+   "critical_path": "指标对账：ODS→DWD→DWS→ADS 金额与计数",
+   "command": ".venv/bin/python tests/warehouse/recon.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 0.3,
+   "summary": "usd': '1380161.23'}\n{'step': '9 DWS orders_daily_region', 'orders': 9113, 'merch_usd': '1380161.23'}\n{'step': '10 ADS kpi_monthly', 'orders': 9113, 'merch_usd': '1380161.23'}\nchecks 32 / 32 chain True",
+   "rewritten_files": [
+    "reports/warehouse/reconciliation.json"
+   ],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "data_release",
+   "critical_path": "数据发布包身份与内容",
+   "command": ".venv/bin/python evidence/DATA-12/verify_release.py",
+   "uses_live_llm": false,
+   "exit_code": 1,
+   "status": "failed",
+   "seconds": 0.0,
+   "summary": "27/28 passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "olap",
+   "critical_path": "OLAP 标准查询集与 DWD 重算一致",
+   "command": ".venv/bin/python evidence/DW-08/run_and_check_olap.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 0.2,
+   "summary": "11/11 passed",
+   "rewritten_files": [
+    "reports/warehouse/olap_checks.json"
+   ],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "runtime",
+   "critical_path": "只读查询快照：发布、回滚、中断发布、只读",
+   "command": ".venv/bin/python evidence/DW-10/verify_runtime.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 4.2,
+   "summary": "12/12 passed",
+   "rewritten_files": [
+    "evidence/DW-10/etl_while_reading.json"
+   ],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "trends",
+   "critical_path": "经营趋势与不完整期间标识",
+   "command": ".venv/bin/python evidence/EDA-02/verify_trends.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 1.2,
+   "summary": "11/11 passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "model_eval",
+   "critical_path": "冻结测试结果可复核",
+   "command": ".venv/bin/python evidence/ML-09/verify_evaluation.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 3.1,
+   "summary": "6/6 passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "scoring",
+   "critical_path": "模型加载、版本校验、评分与适用性",
+   "command": ".venv/bin/python evidence/ML-11/verify_scoring.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 2.9,
+   "summary": "13/13 passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "model_reproduce",
+   "critical_path": "模型文件在新进程中加载并复现分数",
+   "command": ".venv/bin/python evidence/ML-12/publish_model.py reproduce",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 1.2,
+   "summary": "{\"rows\": 20, \"max_abs_diff\": 2.7755575615628914e-17, \"tolerance\": 1e-09, \"release\": \"wh-d3aaa559048c\", \"passed\": true}",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "intent",
+   "critical_path": "AI 查询意图与 Schema 约束",
+   "command": ".venv/bin/python evidence/AI-04/check_intent.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "sql_boundary",
+   "critical_path": "SQL 约束：只读、白名单视图、超时",
+   "command": ".venv/bin/python evidence/AI-05/boundary_checks.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 6.6,
+   "summary": "50/50 checks passed",
+   "rewritten_files": [
+    "reports/ai/sql_boundary_checks.json"
+   ],
+   "not_reproduced": [
+    "reports/ai/sql_boundary_checks.json"
+   ],
+   "new_untracked_files": []
+  },
+  {
+   "id": "assistant",
+   "critical_path": "AI 查询回答与结果证据",
+   "command": ".venv/bin/python evidence/AI-06/check_assistant.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "nl2sql",
+   "critical_path": "NL2SQL 标准集按结果语义评测",
+   "command": ".venv/bin/python eval/nl2sql_eval.py --tag final",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "report_facts",
+   "critical_path": "周报事实与 DWD 重算一致",
+   "command": ".venv/bin/python evidence/AI-08/verify_facts.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 0.3,
+   "summary": "27/27 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "report_verify",
+   "critical_path": "周报数字校验与修复上限（含真实调用）",
+   "command": ".venv/bin/python evidence/AI-09/verify_report.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "report_blind",
+   "critical_path": "周报盲测包：已知问题拦截与误判",
+   "command": ".venv/bin/python evidence/AI-09/recheck_blind_packet.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 0.3,
+   "summary": "前最后一天算进报告周：- 待验证:截止前最后一天审批落定后,该日订单会使本周有效订']\nPASS R23 S03 []  []\nPASS R24 S05 [] R22/24 ['把截止前最后一天算进报告周：- 待验证:截止前最后一天审批未落定的订单在审批落定后,会改']\nflagged 10/10 known problem reports; clean reports flagged: 0/14",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "rag",
+   "critical_path": "知识检索与依据引用",
+   "command": ".venv/bin/python eval/rag_eval.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "policy",
+   "critical_path": "运营政策与预算规则",
+   "command": ".venv/bin/python evidence/AI-11/policy_checks.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 1.1,
+   "summary": "27/27 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "agent",
+   "critical_path": "有限步骤 Agent（含真实调用）",
+   "command": ".venv/bin/python evidence/AI-12/check_agent.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "drafts",
+   "critical_path": "草稿存储与审阅状态",
+   "command": ".venv/bin/python evidence/AI-13/check_drafts.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 0.2,
+   "summary": "16/16 checks passed",
+   "rewritten_files": [
+    "reports/ai/draft_examples.json"
+   ],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "agent_eval",
+   "critical_path": "Agent 边界场景",
+   "command": ".venv/bin/python eval/agent_eval.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "integration",
+   "critical_path": "三模块联调、模式区分与脱敏日志",
+   "command": ".venv/bin/python evidence/AI-15/integration_eval.py",
+   "uses_live_llm": true,
+   "exit_code": null,
+   "status": "not_run",
+   "summary": "skipped (--skip-live)",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "ui_smoke",
+   "critical_path": "主要页面路径：五页冒烟与无发布版本空状态",
+   "command": ".venv/bin/python evidence/UI-01/smoke.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 3.7,
+   "summary": "10/10 pages ok",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "ui_data",
+   "critical_path": "数据口径页",
+   "command": ".venv/bin/python evidence/UI-02/check.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 2.1,
+   "summary": "12/12 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "ui_business",
+   "critical_path": "经营页与 OLAP 下钻",
+   "command": ".venv/bin/python evidence/UI-03/check.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 5.3,
+   "summary": "20/20 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "ui_customers",
+   "critical_path": "客户生命周期页",
+   "command": ".venv/bin/python evidence/UI-04/check.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 3.3,
+   "summary": "15/15 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "ui_prediction",
+   "critical_path": "预测页与名单试算",
+   "command": ".venv/bin/python evidence/UI-05/check.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 2.6,
+   "summary": "14/14 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "ui_ai",
+   "critical_path": "AI 工作台页",
+   "command": ".venv/bin/python evidence/UI-06/check_ai_page.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 3.2,
+   "summary": "18/18 checks passed; calls {'ask': 6, 'report': 2, 'agent': 1}",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "ui_review",
+   "critical_path": "缓存、连接边界、异常恢复与密钥不外露",
+   "command": ".venv/bin/python evidence/UI-07/check.py",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 5.8,
+   "summary": "16/16 checks passed",
+   "rewritten_files": [],
+   "not_reproduced": [],
+   "new_untracked_files": []
+  },
+  {
+   "id": "server_paths",
+   "critical_path": "应用启动：健康检查与五个页面路径",
+   "command": "streamlit run app.py --server.port 8611; GET /_stcore/health and 5 page paths",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "seconds": 2.1,
+   "summary": "{\"health\": 200, \"data\": 200, \"business\": 200, \"customers\": 200, \"prediction\": 200, \"ai\": 200}",
+   "rewritten_files": [],
+   "not_reproduced": []
+  },
+  {
+   "id": "ledger_after_run",
+   "critical_path": "回归没有让任何证据失效（运行前后台账校验对比）",
+   "command": "python3 scripts/project.py validate (before and after)",
+   "uses_live_llm": false,
+   "exit_code": 0,
+   "status": "passed",
+   "summary": "before: invalid (18 errors); after: invalid; new errors: 0",
+   "rewritten_files": [],
+   "not_reproduced": []
+  }
+ ],
+ "notes": [
+  "重写的已提交文件在比较后已恢复为提交版本；比较时忽略时间、耗时、令牌、费用与真实模型生成文本等字段。",
+  "真实 LLM 调用的检查依赖网络与服务状态；失败如实记录，不重试到通过。",
+  "未运行的检查记为 not_run，不记为 passed。"
+ ]
+}

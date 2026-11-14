@@ -1,0 +1,86 @@
+
+### clone
+2026-11-14T04:11:49Z
+328f001 REL-02 first clean-clone findings: runbook steps, regression --allow-dirty, DATA-02 inputs
+
+### 1 install
+2026-11-14T04:11:53Z
+exit=0
+env_smoke exit=0
+
+### 2 snapshot for ledger validation
+2026-11-14T04:12:00Z
+exit=0
+
+### 3 ETL
+2026-11-14T04:12:00Z
+{"status": "ok", "version": "wh-d3aaa559048c", "failed_stage": null, "stages": [["ingest", "ok", 1.225], ["clean", "ok", 0.56], ["ods", "ok", 0.347], ["dwd", "ok", 0.253], ["dws", "ok", 0.076], ["snapshot", "ok", 0.999], ["ads", "ok", 0.028], ["scores", "ok", 0.079], ["checks", "ok", 0.038], ["publish", "ok", 0.0]]}
+build exit=0
+publish exit=0
+  "version": "wh-d3aaa559048c",
+
+### 3 data-layer chain (docs/data_readme.md section 2)
+2026-11-14T04:12:05Z
+gate passed 10/10
+chain exit=0
+
+### 4a samples and features
+2026-11-14T04:12:10Z
+samples exit=0
+features exit=0
+
+### git status after rebuild
+2026-11-14T04:12:13Z
+ M reports/model/feature_build.json
+ M reports/model/sample_audit.json
+ M reports/warehouse/etl_run.json
+
+### 7 regression
+2026-11-14T04:12:13Z
+passed  pytest             exit=0    8.4s  46 passed in 7.77s
+passed  data_quality_gate  exit=0    2.7s  gate passed 10/10
+passed  dw_reconciliation  exit=0    0.3s  usd': '1380161.23'}
+{'step': '9 DWS orders_daily_region', 'orders': 9113, 'merch_usd': '13
+failed  data_release       exit=1    0.0s  27/28 passed
+passed  olap               exit=0    0.2s  11/11 passed
+passed  runtime            exit=0    4.2s  12/12 passed
+passed  trends             exit=0    1.2s  11/11 passed
+passed  model_eval         exit=0    3.1s  6/6 passed
+passed  scoring            exit=0    2.9s  13/13 passed
+passed  model_reproduce    exit=0    1.2s  {"rows": 20, "max_abs_diff": 2.7755575615628914e-17, "tolerance": 1e-09, "release": "wh-d3
+passed  sql_boundary       exit=0    6.6s  50/50 checks passed  NOT REPRODUCED: ['reports/ai/sql_boundary_checks.json']
+passed  report_facts       exit=0    0.3s  27/27 checks passed
+passed  report_blind       exit=0    0.3s  前最后一天算进报告周：- 待验证:截止前最后一天审批落定后,该日订单会使本周有效订']
+PASS R23 S03 []  []
+PASS R24 S05 [] R22/24 ['把
+passed  policy             exit=0    1.1s  27/27 checks passed
+passed  drafts             exit=0    0.2s  16/16 checks passed
+passed  ui_smoke           exit=0    3.7s  10/10 pages ok
+passed  ui_data            exit=0    2.1s  12/12 checks passed
+passed  ui_business        exit=0    5.3s  20/20 checks passed
+passed  ui_customers       exit=0    3.3s  15/15 checks passed
+passed  ui_prediction      exit=0    2.6s  14/14 checks passed
+passed  ui_ai              exit=0    3.2s  18/18 checks passed; calls {'ask': 6, 'report': 2, 'agent': 1}
+passed  ui_review          exit=0    5.8s  16/16 checks passed
+passed  server_paths       {"health": 200, "data": 200, "business": 200, "customers": 200, "prediction": 200, "ai": 200}
+passed  ledger_after_run   before: invalid (18 errors); after: invalid; new errors: 0
+{"passed": 23, "failed": 1, "not_run": 8} not reproduced: ['reports/ai/sql_boundary_checks.json']
+regression exit=1
+
+### ledger
+2026-11-14T04:13:16Z
+{
+  "result": "invalid",
+  "errors": [
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DATA-02: inputs记录无效 evidence/DATA-02/2026-11-14-rel02-recheck.json: 文件不存在",
+    "DW-07: 证据失效，文件已变更 reports/warehouse/etl_run.json；应审查并标stale",
+    "DW-07: 任务产物未被当前证据哈希绑定 reports/warehouse/etl_run.json",
+
+### done
+2026-11-14T04:13:16Z

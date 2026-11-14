@@ -1,0 +1,92 @@
+{
+  "task_id": "REL-04",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64 (Apple M1 Pro, 8 cores, 16 GB)",
+    "python": "3.12.14 (.venv from requirements.lock)",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "localhost；预算探测含 1 次 DeepSeek 真实调用"
+  },
+  "command": ".venv/bin/python src/retail_bi/perf_probe.py; .venv/bin/python evidence/AI-15/integration_eval.py",
+  "exit_code": 0,
+  "summary": "基线（M1 Pro、发布 97 MB、订单 9,311、快照 331,649 行）：ETL 约 5 s；视图查询冷 76–95 ms、未命中缓存 19.8 ms、命中 0.06 ms、8 线程并发 P90 28.6 ms；页面首次渲染 0.55–0.86 s、重跑 ≤0.09 s；五页峰值内存约 256 MB；LLM 单次 P90 周报 3.25 s、其余 ≤1.74 s；670 次成功调用估算 0.066 USD（单价来自 .env，未对账）。据基线冻结目标并全部达标。降级实测：缺 key→fallback_no_key、断网→network_error（本次修复了原先误记为 fallback_no_key）、预算耗尽→budget_exhausted、回放→replay 且 0 次调用；超时/限流由 AI-15 覆盖。",
+  "inputs": [
+    {
+      "path": "PROJECT_SPEC.md",
+      "sha256": "91c430791389f9dd46c793f35d231152f80e01a01a9649268eaf47c16e26039f"
+    },
+    {
+      "path": "ACCEPTANCE.md",
+      "sha256": "a6be933ca56dba27686b878bd3b17becd28af93b2f82c6397d501b4b6a449eaa"
+    },
+    {
+      "path": "reports/release/reproduction/clone1_build.log",
+      "sha256": "a67257c13fd75b6b015c9fef5b806cfc5018290c7b2e73d08e97d459504025ca"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/perf_probe.py",
+      "sha256": "0da470a93e5f23560a1610308e5ef4e3a18439b8c5e46b3986ea890afb16356e"
+    },
+    {
+      "path": "reports/release/performance_probe.json",
+      "sha256": "838924900182adf97d84defa7640258a1513872585ab5167c15265e6a6a37f56"
+    },
+    {
+      "path": "reports/release/performance_probe.log",
+      "sha256": "5764c2c1ec3035c59060ac608f6a05928c7f105b3b3fafb640a4d14b7ea64cbc"
+    },
+    {
+      "path": "reports/release/performance_and_budget.md",
+      "sha256": "17bbe75fe2ffdf6899eec3a5ef4b1c01a3c63ddefed8a95746f82d2e408ffebc"
+    },
+    {
+      "path": "src/retail_bi/ai/integration.py",
+      "sha256": "7964d4a421d6cc9438001c99f2570c8b8a3581cc1fbecbed9ece8677c91f8e9b"
+    },
+    {
+      "path": "docs/ai_system_card.md",
+      "sha256": "2ca5e8236a465572b51105e08f91cf7f402d9a8f8110cf2b4dc404013bb62408"
+    },
+    {
+      "path": "evidence/AI-15/integration_run_rel04.log",
+      "sha256": "c95703b20eed09c1a233b585172fdef6ed4e54f6fd6f42bf1d733a72373879f1"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "记录硬件（M1 Pro 8 核 16 GB）、数据规模、冷/未命中/命中查询与 8 线程并发、五个页面首次与重跑、内存、ETL 分阶段耗时、各类 LLM 调用中位数与 P90；费用估算方法为令牌数 × .env 单价，未与账单核对。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "此前没有约定性能数字（PROJECT_SPEC 要求先测基线后冻结）；本次先测基线，再在 performance_and_budget.md 第 4 节冻结 7 项目标，当前全部达标，并写明不达标时只能优化或显式记录变更。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "实测：缺 key、断网（不可达端点）、预算耗尽（上限 1 次）、回放的模式与回退正确，断网时 Agent 草稿未发送、事件不含密钥；超时与限流由 AI-15 联调 14/14 覆盖；回放 0 次模型调用、页面有醒目标识。发现并修复断网被记为 fallback_no_key 的问题。"
+    }
+  ],
+  "limitations": [
+    "AI 自审。",
+    "页面耗时为服务端 AppTest，不含浏览器渲染与网络；未做多用户负载与长时间运行。",
+    "断网用不可达端口模拟。",
+    "只测了这一台设备。"
+  ],
+  "steps": [
+    "编写 perf_probe.py 测量资源、查询、页面、内存、并发与 LLM 日志统计，并实测降级。",
+    "发现断网被误记为 fallback_no_key，修改 integration.py 并重跑 AI-15 联调 14/14。",
+    "依据基线冻结目标并写报告。"
+  ],
+  "task_spec_sha256": "23832ddacc4782ce332e62d06986f3d21e2753b565ea8fd60386198179339b61",
+  "performed_at": "2026-11-14T12:18:17.509484+08:00"
+}

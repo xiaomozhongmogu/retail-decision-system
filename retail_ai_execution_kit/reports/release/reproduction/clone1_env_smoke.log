@@ -1,0 +1,37 @@
+{
+  "python": "3.12.14",
+  "executable": "<clone1>/.venv/bin/python",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "import:pandas": "3.1.1",
+  "import:pyarrow": "26.0.1",
+  "import:duckdb": "2.0.0",
+  "import:openpyxl": "3.1.5",
+  "import:sklearn": "1.9.1",
+  "import:lightgbm": "4.7.0",
+  "import:plotly": "7.1.0",
+  "import:streamlit": "1.67.0",
+  "import:openai": "3.46.0",
+  "import:pytest": "9.2.0",
+  "lightgbm_fit": {
+    "n_train": 200,
+    "proba_range": [
+      0.066,
+      0.934
+    ]
+  },
+  "sklearn_logistic_fit": {
+    "coef_shape": [
+      1,
+      2
+    ]
+  },
+  "duckdb_read_only": {
+    "rows": 5,
+    "write_blocked_on_read_only": true
+  },
+  "plotly_figure": {
+    "traces": 1
+  },
+  "failures": []
+}

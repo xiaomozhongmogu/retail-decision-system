@@ -1,0 +1,3 @@
+DIFF meta load_batch (1, 8036577056715939196) (1, 8140732742971674592)
+(ods: load-audit columns _* excluded)
+objects compared 29 tables + 9 views: identical 37, different 1
