@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "2026-11-14 claude-opus-5-5：已验收 68 项。D015（用户批准）：AI-15 改依赖 AI-09，AI-10 周报人工抽查仍待组员完成（eval/human_spot_check.md）。本日验收 AI-15、UI-06、UI-07；外部 AI 测试 44 条中 42 条已修复或更正。可开始：DOC-08、DOC-05、REL-01、REL-04（见 project.py next）。",
+  "state_note": "2026-11-14 claude-opus-5-5：已验收 68 项。D015（用户批准）：AI-15 改依赖 AI-09，AI-10 周报人工抽查仍待组员完成（eval/human_spot_check.md）。本日验收 AI-15、UI-06、UI-07；外部 AI 测试 44 条中 42 条已修复或更正。可开始：DOC-05、DOC-08、REL-01（见 project.py next）。",
   "tasks": [
     {
       "id": "GOV-01",

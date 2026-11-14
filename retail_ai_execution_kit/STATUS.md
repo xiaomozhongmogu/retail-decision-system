@@ -2,7 +2,7 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：2026-11-14 claude-opus-5-5：已验收 68 项。D015（用户批准）：AI-15 改依赖 AI-09，AI-10 周报人工抽查仍待组员完成（eval/human_spot_check.md）。本日验收 AI-15、UI-06、UI-07；外部 AI 测试 44 条中 42 条已修复或更正。可开始：DOC-08、DOC-05、REL-01、REL-04（见 project.py next）。
+- 项目状态说明：2026-11-14 claude-opus-5-5：已验收 68 项。D015（用户批准）：AI-15 改依赖 AI-09，AI-10 周报人工抽查仍待组员完成（eval/human_spot_check.md）。本日验收 AI-15、UI-06、UI-07；外部 AI 测试 44 条中 42 条已修复或更正。可开始：DOC-05、DOC-08、REL-01（见 project.py next）。
 - 正式主数据：合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认。
 - 协调者：未指定（claude-opus-5-5 于 2026-11-11 15:45 释放：上下文额度接近上限；下一步见 worklogs/AI-09-claude-opus-5-5-2026-11-11.md）。
 - 已选 85 项；done 68 项；blocked 1 项；其他未验收 16 项。
