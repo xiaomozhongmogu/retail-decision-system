@@ -1,0 +1,197 @@
+{
+  "task_id": "REL-01",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, duckdb, scikit-learn, lightgbm",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "localhost；真实 LLM 调用 DeepSeek（密钥不入日志）"
+  },
+  "command": ".venv/bin/python tests/release/run_regression.py",
+  "exit_code": 0,
+  "summary": "关键路径回归在提交 02a8b52、干净工作区上运行：32/32 通过（含真实 LLM 调用、服务启动与五个页面路径 200、结束后台账校验 ledger_valid）。覆盖数据规则、指标对账、时间边界、发布与只读运行时、模型加载与复现、SQL 约束、AI 证据、Agent 与政策、联调、主要页面。重跑后有 4 个报告与提交版本不同：知识检索 23/25（提交版本 24/25，真实 LLM 答案波动）、Agent 理由措辞、周报正文、无排序查询的行序，已逐个说明后恢复。回归发现并修复：.gitignore 使数仓代码/测试/报告从未提交；预测页表格 Arrow 静默兜底。",
+  "inputs": [
+    {
+      "path": "reports/external_test/triage_addendum_2026-11-14.md",
+      "sha256": "c72561ec8f0fb5ec74654f4497e51f5ceb44a314a22990ed06f489907d72c2fe"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "400dc7f6db61758886915162ee188f26e1cd77ea7ee372d86b34dd54c128d157"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "tests/release/run_regression.py",
+      "sha256": "492cce9cb45eaa557264d804d0ccbc4f57c18eeffbd1dee50663dec0f10341c4"
+    },
+    {
+      "path": "reports/release/test_summary.json",
+      "sha256": "c3068c1a109491cc8a0e9ec637394f77dc9ca846ffb1d2a04177ca605f659ab8"
+    },
+    {
+      "path": "reports/release/critical_paths.md",
+      "sha256": "34f117f280c6a261546a2ace3982c721d6895a913974d6b500e0536c21d12844"
+    },
+    {
+      "path": "reports/release/regression_run.log",
+      "sha256": "47510ca6f4901e7fd5f4db0d3296e9d8e961d94a5299d03bbde9eb6ea01dff8a"
+    },
+    {
+      "path": "reports/release/regression_logs/agent.log",
+      "sha256": "8511b779860b0cb4b30179cda00b0e5cbacb8a5ae1edde1d79d37058395e7cc7"
+    },
+    {
+      "path": "reports/release/regression_logs/agent_eval.log",
+      "sha256": "0f79e8d950b269a746a45a9600030d50ee21564419e76072897f1be097f6104c"
+    },
+    {
+      "path": "reports/release/regression_logs/assistant.log",
+      "sha256": "f329a92c2e76b2860aa32174fc25a09c246c6704bf3914c53d3c561b703f4c45"
+    },
+    {
+      "path": "reports/release/regression_logs/data_quality_gate.log",
+      "sha256": "a7f7938f11fbb0e7a22ddc2cd5e693ca019dcc5c68c85648ad98bf79fa8d159c"
+    },
+    {
+      "path": "reports/release/regression_logs/data_release.log",
+      "sha256": "d6ecd2c089b89ac2ef3eed03fd8b7574056126dbcae1aac9803c24854501724e"
+    },
+    {
+      "path": "reports/release/regression_logs/drafts.log",
+      "sha256": "a1ba2ead02bfa60c9e9150317e7fc892bf18ad2ea4bc40dbe33af599ba72374c"
+    },
+    {
+      "path": "reports/release/regression_logs/dw_reconciliation.log",
+      "sha256": "d31ecf0e6438b413757cb2763bbb4a1f04a415dac22e753ddaefa1f0d22a274e"
+    },
+    {
+      "path": "reports/release/regression_logs/integration.log",
+      "sha256": "4f2859b9d658af3f403fa8c9ca1b6d385c5a282e0273e5416c2c3e8e30cf5b8c"
+    },
+    {
+      "path": "reports/release/regression_logs/intent.log",
+      "sha256": "7f80ff1cf04b32ea48c523011c829a45f95d510d4c452a56847fc65fb75dccb2"
+    },
+    {
+      "path": "reports/release/regression_logs/model_eval.log",
+      "sha256": "283e1905258ff0f1d66b6bdcc4cf2709b7214a7815f0bcb50e314c6b15eb876d"
+    },
+    {
+      "path": "reports/release/regression_logs/model_reproduce.log",
+      "sha256": "fa3312b30116951ae922aef54ca708c317fd01ec984f0f923ccef6b945c9d3af"
+    },
+    {
+      "path": "reports/release/regression_logs/nl2sql.log",
+      "sha256": "d398b764cd688029c875a90f9d22a0406a6cbd1bf3b0165895eafa4d3d0377a8"
+    },
+    {
+      "path": "reports/release/regression_logs/olap.log",
+      "sha256": "a77230d4ba9a24f6a2048f735b352148a1d432c537f939215391d0ebd3ce0aec"
+    },
+    {
+      "path": "reports/release/regression_logs/policy.log",
+      "sha256": "acfb54063685c92be290f50f752535b11f07e37a2a0d020895185a95c22d81e8"
+    },
+    {
+      "path": "reports/release/regression_logs/pytest.log",
+      "sha256": "9be67efb0dc9a40a0f06d5ff83b1bf9d8aaee89cf23d41dcf6b2654ccde246cc"
+    },
+    {
+      "path": "reports/release/regression_logs/rag.log",
+      "sha256": "fa99a69610d9b1f79eac990f08dac331beaf5f1c9a13f3ede9f2dea4434fbd50"
+    },
+    {
+      "path": "reports/release/regression_logs/report_blind.log",
+      "sha256": "e1ddf0a99bc0812d0aaa8cc5ac7a43503da48cfba6b16868f34d77f807624b35"
+    },
+    {
+      "path": "reports/release/regression_logs/report_facts.log",
+      "sha256": "bc6eb9aa9044670b9fec42bd659563cdf2cd3b4214a404b4735f81e249a2f16e"
+    },
+    {
+      "path": "reports/release/regression_logs/report_verify.log",
+      "sha256": "705511a7387e1328f1aafdce57729087fdbfa2ad0fc1a79f2eb5d812200412a1"
+    },
+    {
+      "path": "reports/release/regression_logs/runtime.log",
+      "sha256": "2949c2694f3a3895919e536a8f99442376fb7f76158713ca0e39d9accd732ec6"
+    },
+    {
+      "path": "reports/release/regression_logs/scoring.log",
+      "sha256": "44f1ff9d94c552ff7de0c01d74f9be0190923557cf1ce52d3ef7d84477fbd142"
+    },
+    {
+      "path": "reports/release/regression_logs/sql_boundary.log",
+      "sha256": "7e406855241797e11b26e001dcfe18d598fd75e65a1399bd6a849c4583d2ddb4"
+    },
+    {
+      "path": "reports/release/regression_logs/trends.log",
+      "sha256": "fb849fe8f7b826c131c192d9d6e303f9dcdf42d6f70ae579649867a1f2e7c898"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_ai.log",
+      "sha256": "07c02f0db78c5360bc839f8c99ed8a5d1272e592c5b5094f56b11f56597b4117"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_business.log",
+      "sha256": "631dcce51155b9be8f21805a3171ec210fcff2609c27d46d6da57e1a541325f6"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_customers.log",
+      "sha256": "c5adf5c2454c9dd6136b8246a40bf15c4ffbf708c53339055adfa34fb3f04123"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_data.log",
+      "sha256": "acb7c0378833f0fbd2b2dca79b3a25db6efdb1656d9b951664b529d355e01326"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_prediction.log",
+      "sha256": "3889f61a4bc0abaa5ec216dbcace55cf0a7a5a34d7890f13b4dff0be731193d1"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_review.log",
+      "sha256": "c2ecdaddf82f6b53d19ab0498089142e441b30d4be029e359ba36faf3ca982a2"
+    },
+    {
+      "path": "reports/release/regression_logs/ui_smoke.log",
+      "sha256": "d3054918034791adddae587331ae8b8d8e74c27eb7d3f221f6ccc9668a020d1b"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "32 项覆盖：数据规则（pytest 46、质量门槛 10/10）、指标对账（32/32 + 10 步链、OLAP 11/11）、时间边界（tests/model）、模型加载（评分 13/13、新进程复现误差 2.8e-17）、SQL 约束（50/50、NL2SQL 越权等 16/16）、AI 证据（意图 43/43、回答 17/17、周报 19/19、盲测 10/10 与 0/14、检索 23/25）、主要页面（7 个 UI 检查 + 服务五路径 200）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "检查针对真实风险：对账与 OLAP 用 DWD 独立 SQL 重算；NL2SQL 按结果语义与 DWD 比对；夹具注入坏数据后对应检查必须失败；UI 检查新增 Arrow 兜底检测并证明修复前失败（15/16）。运行器本身用人为破坏的报告验证了“未复现”判定与恢复。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "test_summary.json 记录每项命令、实际退出码、耗时、摘要、被改写文件与是否复现；完整输出在 regression_logs/。第一次运行暴露的问题（未提交的数仓文件、DW-09 证据失效、Arrow 兜底）及修复都记录在 critical_paths.md 第 3 节；没有未运行项。"
+    }
+  ],
+  "limitations": [
+    "AI 自审，不是人工复核。",
+    "真实 LLM 检查只运行一次，未统计分布。",
+    "干净环境复现（REL-02）与资源/降级测量（REL-04）不在本任务内。",
+    "本任务顺带修改了范围外文件（.gitignore、预测页），已在 GOV-07/DATA-05/UI-01/04/05/07 证据中分别重新登记。"
+  ],
+  "steps": [
+    "编写运行器：逐项运行、记录、比较被改写的已提交文件并恢复。",
+    "第一次运行发现 Arrow 兜底与 DW-09 证据失效，追查到 .gitignore。",
+    "修复并提交（02a8b52），在干净工作区重跑 32/32。",
+    "逐个说明未复现的报告，写关键路径报告。"
+  ],
+  "task_spec_sha256": "c8bfe307c009c4db988b54aad7f9c7c4361f89868c0faad88a08da7ce74f9354",
+  "performed_at": "2026-11-14T11:49:48.623638+08:00"
+}

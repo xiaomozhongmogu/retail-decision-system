@@ -1,0 +1,15 @@
+$ .venv/bin/python evidence/UI-01/smoke.py
+exit=0 seconds=2.9
+
+[{"page": "data", "title_found": true, "banner": true, "exception": [], "dataframes": 9}, {"page": "business", "title_found": true, "banner": true, "exception": [], "dataframes": 5}, {"page": "customers", "title_found": true, "banner": true, "exception": [], "dataframes": 2}, {"page": "prediction", "title_found": true, "banner": true, "exception": [], "dataframes": 8}, {"page": "ai", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "data", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "business", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "customers", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "prediction", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "ai", "no_release": true, "empty_state_shown": true, "exception": []}]
+10/10 pages ok
+2026-11-14 11:46:43.551 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:44.444 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:44.832 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.167 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.297 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.416 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.488 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.573 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.656 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:46:45.768 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.

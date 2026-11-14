@@ -65,15 +65,16 @@ uv pip sync --python .venv/bin/python requirements.lock
 - 清洗后质量门槛，成功时输出 `gate passed 10/10`。
 - 只重建数据层（不建仓）的分步命令见 `docs/data_readme.md` 第 2 节。
 
-## 计划中：业务命令
+## 已实现：训练、应用与回归（2026-11-14 更新）
 
-以下入口要等对应实现任务实际建立后才能登记为可用（环境已由 GOV-07 建立）：
+本节原本是“计划中”的命令表，现在各项都已实现。完整步骤、环境变量与异常恢复见 `docs/runbook.md`。
 
-| 目的 | 拟定形式 | 当前状态 |
+| 目的 | 命令 | 状态 |
 | --- | --- | --- |
-| 数据导入与建仓 | `.venv/bin/python src/retail_bi/pipeline.py build` | **已实现（DW-07）**，见上节 |
-| 构建样本/训练 | 待 ML-02 起实现 | 未实现 |
-| 数据/模型/AI验证 | 数据部分见上节；模型与 AI 待实现 | 部分实现 |
-| Web | `streamlit run app.py` | 未实现 |
+| 数据导入与建仓 | `.venv/bin/python src/retail_bi/pipeline.py build` | 已实现（DW-07），见上节 |
+| 发布只读版本 / 回滚 | `.venv/bin/python src/retail_bi/warehouse/release.py publish`（或 `rollback`、`status`） | 已实现（DW-10） |
+| 样本、特征、训练与评估 | 见 `docs/runbook.md` 第 4 节（ML-02 至 ML-12 的顺序） | 已实现；冻结模型 `models/repurchase-logreg-v1.json` |
+| Web | `.venv/bin/streamlit run app.py --server.port 8599` | 已实现（UI-01 至 UI-07） |
+| 关键路径回归 | `.venv/bin/python tests/release/run_regression.py`（`--skip-live` 跳过真实 LLM 调用） | 已实现（REL-01），2026-11-14 运行 32/32 通过 |
 
-实现后填写精确命令、工作目录、输入配置、输出路径、成功条件、预期耗时和真实运行证据。不能因为本文列出命令就写“已运行”。
+“已实现”以 `reports/submission/evidence_index.md` 中的运行证据为准，不能因为本文列出命令就写“已运行”。

@@ -1,0 +1,4 @@
+$ .venv/bin/python evidence/ML-12/publish_model.py reproduce
+exit=0 seconds=0.5
+
+{"rows": 20, "max_abs_diff": 2.7755575615628914e-17, "tolerance": 1e-09, "release": "wh-d3aaa559048c", "passed": true}

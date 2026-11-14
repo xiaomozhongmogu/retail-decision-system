@@ -1,0 +1,14 @@
+$ .venv/bin/python tests/warehouse/recon.py
+exit=0 seconds=0.2
+
+{'step': '1 raw ZIP orders', 'orders': 10000, 'merch_usd': '1502504.01'}
+{'step': '2 minus orders placed at/after the 2026-11-08 cutoff', 'orders': 689, 'merch_usd': '93902.28', 'kind': 'excluded'}
+{'step': '3 historical scope (DATA-05)', 'orders': 9311, 'merch_usd': '1408601.73'}
+{'step': '4 minus quarantined in cleaning (DATA-07)', 'orders': 0, 'merch_usd': '0', 'kind': 'quarantined'}
+{'step': '5 DWD fact_order', 'orders': 9311, 'merch_usd': '1408601.73'}
+{'step': '6 minus cancelled (no approval)', 'orders': 194, 'merch_usd': '27778.26', 'kind': 'excluded from valid'}
+{'step': '7 minus approved only after the cutoff', 'orders': 4, 'merch_usd': '662.24', 'kind': 'excluded from valid at cutoff'}
+{'step': '8 valid purchases at cutoff (DWD)', 'orders': 9113, 'merch_usd': '1380161.23'}
+{'step': '9 DWS orders_daily_region', 'orders': 9113, 'merch_usd': '1380161.23'}
+{'step': '10 ADS kpi_monthly', 'orders': 9113, 'merch_usd': '1380161.23'}
+checks 32 / 32 chain True

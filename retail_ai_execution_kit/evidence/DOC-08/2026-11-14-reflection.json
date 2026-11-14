@@ -1,0 +1,86 @@
+{
+  "task_id": "DOC-08",
+  "verification_status": "passed",
+  "method": "inspection",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, duckdb, scikit-learn, lightgbm",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "localhost；真实 LLM 调用 DeepSeek（密钥不入日志）"
+  },
+  "command": "inspection: 每条问题核对决策记录、证据、日志或外部测试报告中的出处；路径存在性脚本检查",
+  "exit_code": 0,
+  "summary": "问题分析、反思与应用前景：数据与口径、建模、AI、页面、仓库与交付共 20 余条实际问题，均给出发现方式、方案比较、效果与未解决限制及出处；商业价值只用效率、名单质量（接近随机，如实写出）与数字正确率衡量，不报告留存提升或 ROI；列出数据、部署、评估与运营实验需求，说明课程演示不等于商用。",
+  "inputs": [
+    {
+      "path": "reports/analysis/decision_brief.md",
+      "sha256": "44d48b8fde91371ec4adb9b398b334e010dec76ff821b06446ef54c81a407894"
+    },
+    {
+      "path": "docs/ai_system_card.md",
+      "sha256": "72a69fca7b741f22a6a6f06bd7ff5086c60f2b870bd94841cf3da170f9d698d7"
+    },
+    {
+      "path": "docs/model_card.md",
+      "sha256": "74bf33f4430c64dd1349f2d3cbdfb13ef205fa684df2387e783fe8292dc491e5"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    },
+    {
+      "path": "reports/external_test/triage_addendum_2026-11-14.md",
+      "sha256": "c72561ec8f0fb5ec74654f4497e51f5ceb44a314a22990ed06f489907d72c2fe"
+    },
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "reports/release/critical_paths.md",
+      "sha256": "34f117f280c6a261546a2ace3982c721d6895a913974d6b500e0536c21d12844"
+    },
+    {
+      "path": "ops/DECISIONS_LATER.md",
+      "sha256": "1110c8a41870c2787e95acc46058bc43a56dcb65872be889c643b89830c0e516"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/analysis/reflection_and_roadmap.md",
+      "sha256": "5e3eeafad6aa54d01f9d2432cfa055f28f9c110b97a1c5314d7a11dc9feb648c"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "每条问题注明出处（D010–D015、DATA/ML/AI/UI/REL 证据、Gemini/GPT 外部测试编号、回归日志）；未解决限制逐条列出（教师认可、时区、问答首测 80%/85.7%、语义改写、Agent 保守、U-005、Prep 不查时间等）。没有出处的经历未写入。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "商业价值三项均有测量：可复现重建（DW-07/10、UI-07）、时间外名单质量（周内 Lift@10% 规则 1.02/模型 0.84，ROC-AUC 0.515）、数字正确率（NL2SQL、盲测、检索 23–24/25）；明确无干预数据，不报告留存或 ROI，给出随机对照试验设计。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "第 3 节列出数据（同意、触达、成本毛利等）、部署（权限、持久化、定时推送、密钥管理）、评估（人工抽查、真人测试、向量检索）与运营实验（召回、折扣力度、预登记）需求；第 4 节写明课程演示不等于商用。"
+    }
+  ],
+  "limitations": [
+    "AI 自审。",
+    "反思基于仓库中的记录，未访谈组员。"
+  ],
+  "steps": [
+    "收集决策记录、证据限制、失败日志、外部测试与回归结果。",
+    "逐条写问题、定位、方案与效果，并注明出处。",
+    "核对文中引用的路径都存在。"
+  ],
+  "task_spec_sha256": "c57cc8333af88ac4509dc9bb36023cf89373e1d58ca733d6efaa1f7e6a45d209",
+  "performed_at": "2026-11-14T11:50:24.001074+08:00"
+}

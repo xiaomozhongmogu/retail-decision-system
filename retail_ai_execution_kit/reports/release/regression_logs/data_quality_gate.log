@@ -1,0 +1,14 @@
+$ .venv/bin/python tests/data/quality_gate.py
+exit=0 seconds=1.6
+
+PASSED scale: order_items >= 10,000 records (course rule) | 15639
+PASSED fields: >= 8 effective business fields (course rule) | 17
+PASSED time: explicit purchase timestamp with coverage | 2024-01-01 09:06:48+00 .. 2026-11-07 22:15:48+00, 35 months
+PASSED no silent row loss: every input row is output or quarantined | quarantined 0
+PASSED reconciliation: all transaction-rule checks true | 11/11
+PASSED amounts: no negative / refund rows | 0
+PASSED label: positives >= 1,000 (project) | 6618
+PASSED label: negatives >= 1,000 (project) | 85623
+PASSED label: every complete quarter (>= 12 weekly snapshots) has >= 100 positives (project; time-based test sets stay usable) | min 527 over 10 complete quarters
+PASSED rule tests pass (tests/data) | 19 passed
+gate passed 10/10

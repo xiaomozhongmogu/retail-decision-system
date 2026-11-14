@@ -1,0 +1,21 @@
+$ .venv/bin/python evidence/AI-06/check_assistant.py
+exit=0 seconds=10.4
+
+PASS answer value comes from the executed query and equals DWD 
+PASS envelope shows view, columns, SQL text, metric definition, as_of, dataset version, evidence ids 
+PASS follow-up “那西部呢” reuses time and metric, adds the region filter, value = DWD 
+PASS follow-up to a metric that has no region view is refused, not guessed 
+PASS follow-up “去年呢” keeps the last valid intent (West, merchandise) and shifts its month back a year 
+PASS session isolation: the same follow-up in a new session is not answered from session A 
+PASS time not covered -> empty with explanation, no numbers made up 
+PASS unsupported field -> unsupported state 
+PASS ambiguous -> clarify 
+PASS cancelled before execution -> cancelled, no query run 
+PASS cancel applies only once; next question runs 
+PASS execution error -> error state with no answer numbers 
+PASS comparison answer states base period and change from executed values 
+PASS lifecycle answer from the latest snapshot (named state -> its count, since AI-07) 
+PASS share answer lists four regions with percentages 
+PASS LLM notes (when present) contain no digits 
+PASS every ok answer carries evidence ids and a dataset version 
+17/17 checks passed; 6 LLM notes kept

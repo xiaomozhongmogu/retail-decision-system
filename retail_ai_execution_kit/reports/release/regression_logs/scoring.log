@@ -1,0 +1,17 @@
+$ .venv/bin/python evidence/ML-11/verify_scoring.py
+exit=0 seconds=1.5
+
+PASS ADS score table: one row per snapshot customer at the latest as_of, with model version 3332
+PASS probabilities in [0,1] and complementary 
+PASS out-of-population rows have no probability 2628
+PASS service result for an in-population customer equals the ADS table and carries version/explanation 
+PASS out-of-population customer -> unsupported / out_of_population, no probability 
+PASS scoring service equals the evaluated frozen scorer (ML-09) on 500 test rows 
+PASS feature order mismatch fails 
+PASS missing feature fails 
+PASS wrong type (text feature) fails 
+PASS unexpected model version fails 
+PASS model trained on another feature version fails 
+PASS customer-level scores are not open to the AI query layer; summary view is 
+PASS summary view answers through the read-only runtime [['2026-11-02', 'repurchase-logreg-v1', '3332', '0.07993453074372793', '0.9200654692562715', '2628', 'model ranking within a week is near random on test (ML-09); use for average level only']]
+13/13 passed

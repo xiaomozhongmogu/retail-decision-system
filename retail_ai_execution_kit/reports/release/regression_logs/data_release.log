@@ -1,0 +1,32 @@
+$ .venv/bin/python evidence/DATA-12/verify_release.py
+exit=0 seconds=0.1
+
+PASS source ZIP hash and size 
+PASS derived dirs ignored by git 
+PASS layer files match register: engineering import (DATA-05) 12 files
+PASS layer files match register: clean typed (DATA-07) 10 files
+PASS layer files match register: integrated (DATA-09) 2 files
+PASS layer files match register: transformed (DATA-10) 1 files
+PASS document hash contracts/data_contract.json 
+PASS document hash docs/data_dictionary.md 
+PASS document hash contracts/metrics.json 
+PASS document hash docs/transaction_rules.md 
+PASS document hash docs/preprocessing_methods.md 
+PASS document hash reports/data/dataset_selection.md 
+PASS document hash reports/data/profile_before.md 
+PASS document hash reports/data/profile_after.json 
+PASS document hash reports/data/quality_checks.json 
+PASS document hash reports/data/transaction_reconciliation.json 
+PASS document hash reports/data/integration_audit.json 
+PASS document hash reports/data/transform_audit.json 
+PASS readme names every layer directory 
+PASS readme one-click chain present and ends with the gate 
+PASS records threshold 
+PASS fields threshold 
+PASS time field and coverage 
+PASS freshness stated as user-authorized, not teacher 
+PASS gate passed with warning disclosed 
+PASS full scope, not sample 
+PASS no public release 
+PASS unknowns listed in both 
+28/28 passed

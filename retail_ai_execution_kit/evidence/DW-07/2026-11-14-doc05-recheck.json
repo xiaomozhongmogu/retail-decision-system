@@ -1,0 +1,122 @@
+{
+  "task_id": "DW-07",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), duckdb 2.0.0",
+    "data_mode": "fully_synthetic full scope",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python src/retail_bi/pipeline.py build --force; .venv/bin/python evidence/DW-07/verify_pipeline.py",
+  "exit_code": 0,
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "`.venv/bin/python src/retail_bi/pipeline.py build` 从 ZIP 重建到 ADS（登记于 COMMANDS.md）；每个阶段在报告中有状态与耗时，失败时记录阶段名、错误与简短 traceback，并以退出码 1 结束（注入 dws 故障实测）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "同样输入重跑命中已有版本，只做 verify_existing，文件哈希与指针不变；构建写入以点开头的临时文件，全部检查通过后才 os.replace 为正式文件并原子替换 latest.json；失败时删除临时文件，已发布版本与 latest.json 字节不变；应用只经 latest.json 读取，看不到半成品。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "etl_run.json 记录各阶段耗时、ODS/DWD/DWS 每表行数、DWS 各表行数与商品金额、核对值（订单 9,311、有效 9,113、有效商品金额 1,380,161.23）、版本、批次、源哈希、截止与 8 个输入文件哈希，以及失败时的异常。"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "发布为本地文件改名与指针；只读快照、允许视图与缓存失效的验证在 DW-10。",
+    "数据库文件约 96 MB（含快照 33 万行），被 Git 忽略。",
+    "本证据替代此前版本（流水线加入评分阶段后失效，旧证据保留为历史）。"
+  ],
+  "steps": [
+    "认领 DW-07（台账 0b254897…）。",
+    "编写 pipeline.py 并完整运行。",
+    "verify_pipeline.py 第 1 次 7/8：复用版本的重跑也重写了 latest.json 的发布时间；改为只在新发布或指针不一致时更新，强制完整构建写出基准报告后 8/8。",
+    "在 COMMANDS.md 登记命令；GOV-07 证据随之失效，重跑环境冒烟后重出证据。",
+    "2026-11-10 21:19 ML-11 把评分并入流水线（新增 scores 阶段，sql/scores.sql 与冻结模型哈希进入构建版本，发布检查改为至少 6 个允许视图），重建并发布 wh-d3aaa559048c；仓库数据本身不变。已审阅本任务结论不受影响，并重跑本任务核对，全部通过。"
+  ],
+  "summary": "2026-11-14 DOC-05 更新 docs/COMMANDS.md：原“计划中：业务命令”一节（训练、Web 标为未实现）已过时，改为已实现命令表并指向 docs/runbook.md；命令本身不变。上一版摘要：pipeline.py 一条命令从原始 ZIP 重建到 ADS：ingest、clean、ods、dwd、dws、snapshot、ads、scores（ML-11 加入）、checks、publish，全程约 2 秒，版本 wh-d3aaa559048c（由批次与 8 个 SQL/契约文件哈希决定）。在临时文件中构建，检查通过后 os.replace 发布并原子更新 latest.json。核对 8/8：重跑为空操作；在 dws 注入故障时退出 1、报告指明失败阶段、不留半成品、不改动已发布版本和指针；强制重建结果相同。COMMANDS.md 登记命令。",
+  "inputs": [
+    {
+      "path": "sql/ddl.sql",
+      "sha256": "7e40cbe0a10f757bf6ad3ebbaaeb9180e60d3afa76d3bc1cb7a569cc005b2d58"
+    },
+    {
+      "path": "sql/ods.sql",
+      "sha256": "99928ef3741c9488361a056f43ebea0f26364387c639cc86586dd93041a288ec"
+    },
+    {
+      "path": "sql/dwd.sql",
+      "sha256": "aa3d90f95897472c2ff46eea241fdde54038a404369586227d2fe9e93b507dd8"
+    },
+    {
+      "path": "sql/dws.sql",
+      "sha256": "abbcf09295693c12ee8760c127138a5a0c10be941bd751d01bde4d0ff6e9bdb2"
+    },
+    {
+      "path": "sql/customer_snapshot.sql",
+      "sha256": "b8708facf3773fec24eee828e8223fdee910943aee344f6200a82621cae86b29"
+    },
+    {
+      "path": "sql/ads.sql",
+      "sha256": "22497e615e2eaa9b4ff0ccbc297f0bc972619ad7a55bf651f0f8636c6c04dbba"
+    },
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "contracts/metrics.json",
+      "sha256": "e84d17c3add08d9a34392b8519b663cb38f2b4cfd915087a0a31934903f4e3d9"
+    },
+    {
+      "path": "evidence/DW-07/verify_pipeline.py",
+      "sha256": "01d7b4355a1ddb5a4f7a0aeacaab39f481ba0fcd679cd4e8959535d2de92ad43"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/pipeline.py",
+      "sha256": "68568e4ae6b81534943d89de2614da21484b66a28fff0ebe56947c67ce4a1e44"
+    },
+    {
+      "path": "reports/warehouse/etl_run.json",
+      "sha256": "89862ccbdf9b52a9e029cc504a185c344381a9eb8df19e98013aef9d447db04f"
+    },
+    {
+      "path": "docs/COMMANDS.md",
+      "sha256": "c5418495a2bb844ce9113e9a94e52f87c18acbaf81f62a13b980f19aa460bf9d"
+    },
+    {
+      "path": "evidence/DW-07/etl_run.log",
+      "sha256": "36738431c49f5a24672bdd8f492c3c37c66d74cb8d7b57e84eedeb0372c806b6"
+    },
+    {
+      "path": "evidence/DW-07/verification_run.log",
+      "sha256": "3751274c8fe5952731e78a07a94dd49271123e8f0495cb91fc0f4df85590e947"
+    },
+    {
+      "path": "evidence/DW-07/rerun_report.json",
+      "sha256": "265c5402abbf4376695eace0ac5d24bd799047b40d416a60db4da3670ed2826b"
+    },
+    {
+      "path": "evidence/DW-07/injected_failure_report.json",
+      "sha256": "de2b18840d39e692f53eea5025921ce888b922518d5d1738cee57bcdd1abeb70"
+    },
+    {
+      "path": "evidence/DW-07/forced_rebuild_report.json",
+      "sha256": "7b906ca96b92631894415a12e331f765e42781129d3cd1f8c2d08c7eae245579"
+    }
+  ],
+  "task_spec_sha256": "4d90b2495e0be89bb1d220e87fb60e9e69d8d2b64f39627b36cb8bbb4c5607eb",
+  "performed_at": "2026-11-14T11:49:41.571283+08:00"
+}

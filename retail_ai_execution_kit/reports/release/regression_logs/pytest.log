@@ -1,0 +1,5 @@
+$ .venv/bin/python -m pytest tests -q -p no:cacheprovider
+exit=0 seconds=6.0
+
+..............................................                           [100%]
+46 passed in 5.46s

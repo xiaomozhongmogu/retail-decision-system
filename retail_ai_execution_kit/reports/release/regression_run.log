@@ -1,0 +1,37 @@
+passed  pytest             exit=0    6.0s  46 passed in 5.46s
+passed  data_quality_gate  exit=0    1.6s  gate passed 10/10
+passed  dw_reconciliation  exit=0    0.2s  usd': '1380161.23'}
+{'step': '9 DWS orders_daily_region', 'orders': 9113, 'merch_usd': '13
+passed  data_release       exit=0    0.1s  28/28 passed
+passed  olap               exit=0    0.2s  11/11 passed
+passed  runtime            exit=0    4.4s  12/12 passed
+passed  trends             exit=0    0.7s  11/11 passed
+passed  model_eval         exit=0    1.7s  6/6 passed
+passed  scoring            exit=0    1.5s  13/13 passed
+passed  model_reproduce    exit=0    0.5s  {"rows": 20, "max_abs_diff": 2.7755575615628914e-17, "tolerance": 1e-09, "release": "wh-d3
+passed  intent             exit=0    2.0s  43/43 checks passed
+passed  sql_boundary       exit=0    5.6s  50/50 checks passed  NOT REPRODUCED: ['reports/ai/sql_boundary_checks.json']
+passed  assistant          exit=0   10.4s  17/17 checks passed; 6 LLM notes kept
+passed  nl2sql             exit=0   29.5s  {"by_type": {"answerable": {"passed": 28, "total": 28}, "ambiguous": {"passed": 6, "total"
+passed  report_facts       exit=0    0.5s  27/27 checks passed
+passed  report_verify      exit=0    3.0s  19/19 checks passed  NOT REPRODUCED: ['reports/ai/weekly_report_example.md']
+passed  report_blind       exit=0    0.3s  前最后一天算进报告周：- 待验证:截止前最后一天审批落定后,该日订单会使本周有效订']
+PASS R23 S03 []  []
+PASS R24 S05 [] R22/24 ['把
+passed  rag                exit=0   27.6s  :business_scope#2-四个生命周期阶段@v2', 'doc:model_card#5-限制@repurchase-logreg-v1'] | cited ['doc:  NOT REPRODUCED: ['reports/ai/rag_evaluation.json']
+passed  policy             exit=0    1.0s  27/27 checks passed
+passed  agent              exit=0    5.3s  14/14 checks passed
+passed  drafts             exit=0    0.2s  16/16 checks passed
+passed  agent_eval         exit=0   17.5s  ssing_fields": 2, "model_not_applicable": 3, "no_consent": 2, "no_offer": 4, "normal_live"  NOT REPRODUCED: ['reports/ai/agent_evaluation.json']
+passed  integration        exit=0    6.9s  14/14 checks passed
+passed  ui_smoke           exit=0    2.9s  10/10 pages ok
+passed  ui_data            exit=0    1.0s  12/12 checks passed
+passed  ui_business        exit=0    3.5s  20/20 checks passed
+passed  ui_customers       exit=0    2.1s  15/15 checks passed
+passed  ui_prediction      exit=0    1.2s  14/14 checks passed
+passed  ui_ai              exit=0    2.1s  18/18 checks passed; calls {'ask': 6, 'report': 2, 'agent': 1}
+passed  ui_review          exit=0    3.8s  16/16 checks passed
+passed  server_paths       {"health": 200, "data": 200, "business": 200, "customers": 200, "prediction": 200, "ai": 200}
+passed  ledger_after_run   ledger_valid
+{"passed": 32, "failed": 0, "not_run": 0} not reproduced: ['reports/ai/agent_evaluation.json', 'reports/ai/rag_evaluation.json', 'reports/ai/sql_boundary_checks.json', 'reports/ai/weekly_report_example.md']
+exit=0
