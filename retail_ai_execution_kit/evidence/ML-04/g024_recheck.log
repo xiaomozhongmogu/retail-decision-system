@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.2.0, pluggy-1.7.0 -- /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/bin/python
+rootdir: /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collecting ... collected 8 items
+
+tests/model/test_split.py::test_sets_are_time_ordered_and_disjoint PASSED [ 12%]
+tests/model/test_split.py::test_labels_of_each_set_mature_before_next_set_predicts PASSED [ 25%]
+tests/model/test_split.py::test_partial_quarter_is_inside_test_not_alone PASSED [ 37%]
+tests/model/test_split.py::test_embargo_rows_excluded_from_all_sets PASSED [ 50%]
+tests/model/test_split.py::test_fitting_preprocessing_on_validation_rows_is_refused PASSED [ 62%]
+tests/model/test_split.py::test_manifest_counts_match_data PASSED        [ 75%]
+tests/model/test_prep_scope.py::test_baselines_fit_prep_on_training_rows_only PASSED [ 87%]
+tests/model/test_prep_scope.py::test_frozen_model_preprocessing_matches_train_plus_validation_not_test PASSED [100%]
+
+============================== 8 passed in 4.20s ===============================
+exit=0
+cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae  reports/model/split_manifest.json

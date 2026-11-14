@@ -6,6 +6,9 @@ Pages live in src/retail_bi/ui/pages/ and read only the published read-only rele
 import streamlit as st
 
 st.set_page_config(page_title='电商零售智能决策与 AI 运营助手', layout='wide')
+# narrow screens: smaller page titles, balanced line breaks (external UI test U-009)
+st.markdown('<style>h1{text-wrap:balance}@media (max-width:640px){h1{font-size:1.75rem!important}}</style>',
+            unsafe_allow_html=True)
 P = 'src/retail_bi/ui/pages/'
 PAGES = {
     '数据口径': [st.Page(P + 'data.py', title='数据口径与质量', url_path='data', default=True)],

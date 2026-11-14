@@ -2,7 +2,7 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：2026-11-11 claude-opus-5-5：已验收 58 项。AI-01 真实 DeepSeek 调用、AI-09 周报生成、AI-03 知识检索评测（24/25）已完成。D014：技术模块由用户本人负责，非技术工作待分配，选题报告用户确认已提交、回执待补（ops/TEAM.md）。可直接开始：AI-04、AI-10、AI-12。
+- 项目状态说明：2026-11-14 claude-opus-5-5：已验收 65 项。外部 AI 测试 44 条中 42 条已修复或更正（补充见 reports/external_test/triage_addendum_2026-11-14.md）。暂无可直接开始的任务：AI-15 → UI-06 → UI-07 → DOC-05/REL 技术链路依赖 AI-10 的人工抽查（组员，eval/human_spot_check.md）；是否让联调不再等待人工抽查（AI-15 改依赖 AI-09，AI-10 单独待审）须用户确认，AI 不自行改动这一人工把关。
 - 正式主数据：合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认。
 - 协调者：未指定（claude-opus-5-5 于 2026-11-11 15:45 释放：上下文额度接近上限；下一步见 worklogs/AI-09-claude-opus-5-5-2026-11-11.md）。
 - 已选 85 项；done 65 项；blocked 1 项；其他未验收 19 项。

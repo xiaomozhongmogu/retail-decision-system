@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "2026-11-11 claude-opus-5-5：已验收 58 项。AI-01 真实 DeepSeek 调用、AI-09 周报生成、AI-03 知识检索评测（24/25）已完成。D014：技术模块由用户本人负责，非技术工作待分配，选题报告用户确认已提交、回执待补（ops/TEAM.md）。可直接开始：AI-04、AI-10、AI-12。",
+  "state_note": "2026-11-14 claude-opus-5-5：已验收 65 项。外部 AI 测试 44 条中 42 条已修复或更正（补充见 reports/external_test/triage_addendum_2026-11-14.md）。暂无可直接开始的任务：AI-15 → UI-06 → UI-07 → DOC-05/REL 技术链路依赖 AI-10 的人工抽查（组员，eval/human_spot_check.md）；是否让联调不再等待人工抽查（AI-15 改依赖 AI-09，AI-10 单独待审）须用户确认，AI 不自行改动这一人工把关。",
   "tasks": [
     {
       "id": "GOV-01",
@@ -1610,7 +1610,7 @@
         "归一化、编码、截尾、特征选择只拟合允许数据；同客多快照场景及非独立性披露。"
       ],
       "evidence": [
-        "evidence/ML-04/2026-11-10-split.json"
+        "evidence/ML-04/2026-11-14-g024-audit-fix.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2575,7 +2575,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-13-ext-test-recheck.json"
+        "evidence/UI-01/2026-11-14-u009-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,

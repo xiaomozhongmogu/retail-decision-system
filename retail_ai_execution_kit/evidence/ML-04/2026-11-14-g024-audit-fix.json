@@ -1,0 +1,116 @@
+{
+  "task_id": "ML-04",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), pandas 3.1.1, pytest 9.2.0",
+    "data_mode": "fully_synthetic; features-v1 on release wh-db316daf8021",
+    "network": "未联网"
+  },
+  "command": ".venv/bin/python -m pytest tests/model/test_split.py tests/model/test_prep_scope.py -v -p no:cacheprovider（未重跑 split.py；切分清单哈希不变 cf203b54…）",
+  "exit_code": 0,
+  "summary": "2026-11-14 按外部测试 G-024 更正泄漏审计：模型预处理 baselines.Prep 本身不检查时间，靠调用方先切分；ML-06 只在训练集拟合，ML-08 冻结模型在训练+验证上重拟合（测试集不读入）；TrainOnlyFit 只用于 DATA-10 金额变换，未接入 Prep。新增 tests/model/test_prep_scope.py 核实这两点。切分本身未变（split_manifest.json 哈希不变），测试 8/8。",
+  "inputs": [
+    {
+      "path": "docs/model_target.md",
+      "sha256": "fd9e05db0069e983f53c1c9db8df14a77c3449bec4cfbcc7b531821a3eec1704"
+    },
+    {
+      "path": "docs/feature_dictionary.md",
+      "sha256": "67c22084cfbc076ba48e72cd158dea4518da519be29ddf579c5e4fbf7e9433a2"
+    },
+    {
+      "path": "reports/model/feature_build.json",
+      "sha256": "7109464eced64a9cf13a0035407c134061f7a418a338757e02c7b65c9cb04077"
+    },
+    {
+      "path": "reports/data/quality_checks.json",
+      "sha256": "5e348ba24dd1b759f31459049d9b410950db6d3e52fdeafb646d5b7c02ef8f65"
+    },
+    {
+      "path": "src/retail_bi/data/transform.py",
+      "sha256": "cccd4d792e6ed347510f83a9f3fba4d582d46cc004ec91a7513668190829329c"
+    },
+    {
+      "path": "src/retail_bi/model/baselines.py",
+      "sha256": "a323faffbc501206b38b01991c67183226464b8f448af2ff42b3c12d665e9c16"
+    },
+    {
+      "path": "src/retail_bi/model/model_select.py",
+      "sha256": "d812b02b3c7581bfc7bc89aa29fcbbeba4ee6a15db54374612c33d2e74360d35"
+    },
+    {
+      "path": "models/repurchase-logreg-v1.json",
+      "sha256": "01b2b335e07bd51bd7f3da1bac0219089e04438aa8beb655e54f1dab3b0855d2"
+    },
+    {
+      "path": "reports/external_test/gemini/findings.jsonl",
+      "sha256": "7bb4deb09f115664ee73a57f4a5adad2e3dd48119d8f69946fb6133ceba54f4a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/model/leakage_audit.md",
+      "sha256": "3ec9c8382a0c679d924e551aa6321f14e1d34982ed9df7149685cbaaa478fb80"
+    },
+    {
+      "path": "src/retail_bi/model/split.py",
+      "sha256": "9103e1546ae719fe842070e1aa58baf5e0f3e0377cfa3ac596aa0dd7bdcfa00f"
+    },
+    {
+      "path": "tests/model/test_split.py",
+      "sha256": "4acc72ed06665027a698eedb34830fd4d1d3f7ea5dca60df71737f74c7c6b0a7"
+    },
+    {
+      "path": "tests/model/test_prep_scope.py",
+      "sha256": "d2476dc2168271cf75340852b4770c2e2f11836690cfa21a0b6fd9b1cdd4a803"
+    },
+    {
+      "path": "evidence/ML-04/split_run.log",
+      "sha256": "76d7dce47758640e0631b60befc971c4916a2acb4550b3b8fb0dc57b25883a6b"
+    },
+    {
+      "path": "evidence/ML-04/g024_recheck.log",
+      "sha256": "6b3a447ade16f295df838c9801558c66bb76f4422459b427d935bda1d11d9855"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "训练、验证、测试按 as_of 先后排列且不重叠；训练最后标签 2025-09-25 成熟早于验证首个 as_of 2025-09-29，验证最后标签 2026-03-26 成熟早于测试首个 as_of 2026-03-30（测试断言）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "本数据为合成交易包（D013），UCI 月份示例不适用；实际覆盖先核验：成熟 as_of 为 2024-04-01 至 2026-10-05（132 周），据此采用每周快照与上述区间，2026-Q4 不完整季度并入测试（DATA-11 警告）。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "拟合型预处理不使用测试集，且比较模型时不使用验证集：ML-06 的 Prep 拟合行全部属于训练集（测试 spy）；冻结模型的中位数等于训练+验证重算值、均值与含测试集的结果不同（测试）；TrainOnlyFit 守卫拒绝训练+验证拟合（测试）。原审计称 TrainOnlyFit 覆盖全部预处理，言过其实，已更正（G-024）。同一客户多快照与跨集合重叠（测试客户 74.4% 见于训练）已披露。"
+    }
+  ],
+  "limitations": [
+    "自审（AI），不是人工复核。",
+    "Prep 本身仍不做时间检查；新的调用方需自行先切分，测试只覆盖现有两处调用。",
+    "切分固定后不得因测试结果调整；变化需新版本与新的评估方案。"
+  ],
+  "steps": [
+    "复现 G-024：Prep().fit(验证集行) 可执行，确认审计措辞言过其实。",
+    "核对 baselines.run 与 model_select 的实际拟合范围。",
+    "新增 test_prep_scope.py，更正 leakage_audit.md 第 2 节对应行。",
+    "重跑切分测试与新测试 8/8；确认 split_manifest.json 哈希未变。"
+  ],
+  "task_spec_sha256": "28bb00d29ff2c44cbf52c5d390accb62a649d5ff24f525195fde6eda72f7c6f0",
+  "performed_at": "2026-11-14T11:03:58.721862+08:00"
+}

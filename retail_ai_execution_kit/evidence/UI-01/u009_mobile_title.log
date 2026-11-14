@@ -1,0 +1,9 @@
+U-009 recheck 2026-11-14 (built-in browser, streamlit app.py on localhost:8599)
+viewport 400x900, h1 per page (fontSize / rendered height; 70px = one line at 28px):
+  data        数据口径与质量      28px  70
+  business    经营总览            28px  70
+  customers   客户生命周期与分群  28px  70   (before fix: last character "群" wrapped to a second line, GPT UI test)
+  prediction  复购预测            28px  70
+  ai          AI 工作台           28px  70
+viewport 1024 (desktop): customers h1 44px, height 89 (unchanged default size)
+result: all five titles on one line at 400px; desktop unchanged

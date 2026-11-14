@@ -1,0 +1,13 @@
+2026-11-14 11:05:45.813 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:46.793 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.211 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.449 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.584 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.707 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.788 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.872 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:47.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:05:48.065 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[{"page": "data", "title_found": true, "banner": true, "exception": [], "dataframes": 9}, {"page": "business", "title_found": true, "banner": true, "exception": [], "dataframes": 5}, {"page": "customers", "title_found": true, "banner": true, "exception": [], "dataframes": 2}, {"page": "prediction", "title_found": true, "banner": true, "exception": [], "dataframes": 8}, {"page": "ai", "title_found": true, "banner": true, "exception": [], "dataframes": 1}, {"page": "data", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "business", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "customers", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "prediction", "no_release": true, "empty_state_shown": true, "exception": []}, {"page": "ai", "no_release": true, "empty_state_shown": true, "exception": []}]
+10/10 pages ok
+exit=0
