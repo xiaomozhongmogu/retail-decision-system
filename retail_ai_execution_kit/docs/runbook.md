@@ -30,7 +30,13 @@ uv pip sync --python .venv/bin/python requirements.lock
 ## 2. 放置数据
 
 - 原始数据：`../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip`，也就是与 `retail_ai_execution_kit/` 同级的目录。SHA-256 为 `d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16`，流水线会先核对这个哈希。
-- 派生数据（`data/processed/`、`warehouse/`）不提交，由第 3 节的命令重建。各层的位置见 `docs/data_readme.md`。
+- 派生数据（`data/processed/`、`warehouse/`）不提交，由第 3、4 节的命令重建。各层的位置见 `docs/data_readme.md`。
+- 只有运行台账校验（`scripts/project.py validate`）时才需要下面这一步：DATA-02 的证据把输入登记在本地快照目录里，新机器上要先从仓库内的源文件恢复它（2026-11-14 REL-02 核对，哈希一致）：
+
+```bash
+mkdir -p data/raw/data02-input-snapshot
+cp -R ../ecommerce-sample-database-100k/01_source ../ecommerce-sample-database-100k/02_historical_utf8 data/raw/data02-input-snapshot/
+```
 
 ## 3. ETL：从原始 ZIP 到发布版本
 
@@ -43,6 +49,7 @@ uv pip sync --python .venv/bin/python requirements.lock
 - `build` 依次运行：导入 → 清洗 → ODS → DWD → DWS → 快照与标签 → ADS →（如果有冻结模型）评分 → 交叉检查。
   - 版本号由输入内容决定，同样的输入重跑只复核已有版本；`--force` 强制重建。
   - 任一阶段失败时退出码为 1，报告 `reports/warehouse/etl_run.json` 写明失败阶段，不留半成品（DW-07 实测）。
+- 阶段一数据包（集成层、转换层，以及数据发布包检查所需的各层登记）由 `docs/data_readme.md` 第 2 节的分步命令生成。`pipeline.py build` 不生成这两层，新机器上需要再运行一次那条命令。
 - `publish` 把构建结果复制为只读文件，核对哈希后原子切换 `warehouse/releases/current.json`。
   - 页面和 AI 只读取这个指针指向的版本。
   - 当前版本 `wh-d3aaa559048c`。
@@ -54,13 +61,29 @@ uv pip sync --python .venv/bin/python requirements.lock
 .venv/bin/python tests/warehouse/recon.py
 ```
 
-## 4. 训练与评估（只在需要重新训练时运行）
+## 4. 样本、特征与训练
 
-已冻结的模型 `models/repurchase-logreg-v1.json` 已经提交，演示时**不需要**重新训练。需要重做时按下面的顺序运行：
+### 4a. 生成样本与特征（新机器必做）
+
+模型测试（`tests/model`）、测试结果复核和评分检查都要读取特征文件。特征文件是派生数据，不在仓库里，所以新机器上要先生成：
 
 ```bash
 .venv/bin/python src/retail_bi/features/build_samples.py      # ML-02 时点样本与标签
 .venv/bin/python src/retail_bi/features/customer_features.py  # ML-03 历史特征
+```
+
+- 这两步会改写 `reports/model/feature_build.json` 与 `sample_audit.json`：把其中的发布名改为本机构建的版本。
+  - 已提交的记录写的是训练时所用的 `wh-db316daf8021`，新机器构建出的是 `wh-d3aaa559048c`。
+  - REL-02 实测：两边的特征文件 92,241 行 × 33 列逐列相同。
+- 运行检查时保留这两个改动，不要还原。
+
+### 4b. 重新训练（只在需要时）
+
+冻结的模型 `models/repurchase-logreg-v1.json` 已经提交，演示时**不需要**重新训练。REL-02 在干净环境中重新训练过一次，系数、截距和中位数与冻结模型完全相同（差为 0）。
+
+需要重做时，在 4a 之后按下面的顺序运行：
+
+```bash
 .venv/bin/python src/retail_bi/model/split.py                 # ML-04 时间切分（split-v1）
 .venv/bin/python src/retail_bi/model/segments.py              # ML-05 RFM 规则与 K-Means
 .venv/bin/python src/retail_bi/model/baselines.py             # ML-06 规则与逻辑回归基线
@@ -105,8 +128,16 @@ uv pip sync --python .venv/bin/python requirements.lock
 .venv/bin/python tests/release/run_regression.py --skip-live
 ```
 
-- 第一条运行全部 30 项关键路径检查，再加上启动服务、请求五个页面路径，结果写入 `reports/release/test_summary.json`。第二条跳过真实 LLM 调用的检查。
-- 运行器会拒绝在有未提交改动时运行：检查过程中被改写的已提交报告会先与提交版本比较，再恢复原样。
+- 第一条运行全部 30 项关键路径检查，再加上启动服务、请求五个页面路径，结果写入 `reports/release/test_summary.json`。第二条跳过真实 LLM 调用的检查（没有配置密钥时用它）。
+- 运行器默认拒绝在有未提交改动时运行：检查过程中被改写的已提交报告会先与提交版本比较，再恢复原样。
+- 新机器上，第 3 节和第 4a 节会改写几份已提交的记录（`etl_run.json`、`feature_build.json`、`sample_audit.json`）。这时加 `--allow-dirty`：
+
+```bash
+.venv/bin/python tests/release/run_regression.py --skip-live --allow-dirty
+```
+
+  这些文件保持原样，不参与比较；台账检查只要求运行**没有新增**失效证据。
+- 再次运行回归会改写 `reports/release/` 下的日志，REL-01 的证据描述的是 2026-11-14 那一次运行，不会随之更新。
 
 ## 8. 异常与恢复
 
@@ -120,4 +151,7 @@ uv pip sync --python .venv/bin/python requirements.lock
 | 预测页显示“模型版本不一致” | 发布版本里的评分来自另一个模型 | 重跑 `build` 和 `publish` |
 | AI 页回答较简单，周报为“template” | 没有密钥、未设 `LLM_ALLOW_PAID=1`、超时、限流或预算用完 | 属于设计内的降级；事件日志 `logs/ai/events.jsonl` 记录了具体模式 |
 | `import lightgbm` 报错 | 缺 OpenMP | `brew install libomp` |
+| 模型测试或评分检查报 `features-…parquet` 不存在 | 新机器还没有生成特征 | 运行第 4a 节 |
+| 数据发布包检查只有“工程导入层文件与登记一致”一项失败 | 导入层的 `manifest.json` 记录了归档文件的绝对路径，换目录重建后这个文件的哈希不同；数据文件本身相同 | 已知差异（REL-02），不影响数据。要消除它，需要改为相对路径并重新登记 DATA-05 至 DATA-12 |
+| 用 `fetchall()` 读取带时区的时间列报 `pytz` 缺失 | 锁文件里没有 `pytz` | 页面和 AI 能访问的视图里没有这类列；自行写查询时先转成文本，例如 `ts::VARCHAR` |
 | 端口被占用 | 已有服务在运行 | 换一个 `--server.port` |

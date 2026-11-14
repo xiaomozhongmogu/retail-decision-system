@@ -1,0 +1,86 @@
+{
+  "task_id": "DOC-05",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, duckdb, scikit-learn, lightgbm",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "localhost；真实 LLM 调用 DeepSeek（密钥不入日志）"
+  },
+  "command": "tests/release/run_regression.py（32/32，命令可运行）；路径存在性脚本检查；git ls-files 扫描真实密钥（0 处）与邮箱/手机号；grep 发布与模型版本",
+  "exit_code": 0,
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "证据索引按数据、数仓、分析、建模、AI、页面、回归七部分，把每个主要结论对应到代码、结果文件、证据记录与截图（13 张页面截图）；引用的文件均已检查存在。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "runbook 覆盖环境安装、原始 ZIP 放置与哈希、pipeline build/release publish/rollback、ML-02 至 ML-12 训练顺序（测试集只用一次的约束）、streamlit 启动、LLM 变量、回归命令与 10 类异常恢复；其中 ETL、发布、应用与回归命令在 REL-01 中实际运行通过。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "报告与页面使用发布 wh-d3aaa559048c 与模型 repurchase-logreg-v1；模型训练所用的 wh-db316daf8021 与之交易数据相同，已在索引中写明。已提交文件中无真实密钥；1 个邮箱（DOC-01 提取文本）已标为待处理，未擅自改动被绑定的证据。"
+    }
+  ],
+  "limitations": [
+    "AI 自审。",
+    "只在本机 macOS arm64 验证；第二台机器或 Windows 未验证（REL-02）。",
+    "训练命令本次未重跑（会改写冻结记录）；其正确性依据 ML-02 至 ML-12 的原始证据。",
+    "选题报告提取文本中的作者邮箱尚未脱敏，需负责人决定。"
+  ],
+  "steps": [
+    "整理命令与恢复方法，写 runbook。",
+    "逐项整理证据索引。",
+    "更新 COMMANDS.md 过时部分。",
+    "扫描密钥、个人信息与版本一致性；检查引用路径。",
+    "2026-11-14 REL-02 后复核并重新登记。"
+  ],
+  "summary": "2026-11-14 REL-02 干净克隆复现后补充 runbook：DATA-02 输入快照恢复命令；数据层分步重建（pipeline build 不生成集成/转换层）；把“生成样本与特征”列为新机器必做步骤（4a），重新训练改为 4b 并记录复现结果（系数差 0）；回归在新机器上用 --skip-live --allow-dirty；新增 3 条已知差异与恢复方法（特征缺失、导入层 manifest 绝对路径、pytz）。 上一版摘要：复现手册 docs/runbook.md（安装、数据放置、ETL 与发布、训练顺序、应用启动、LLM 配置、回归、异常恢复 10 类）与证据索引 reports/submission/evidence_index.md（数据、数仓、分析、建模、AI、页面截图、回归逐项对应代码/结果/证据）；docs/COMMANDS.md 过时的“计划中”一节改为已实现命令表。扫描已提交文件：无真实密钥；选题报告提取文本中有 1 个作者邮箱，已在索引中标为待处理；模型训练用发布 wh-db316daf8021、页面用 wh-d3aaa559048c（交易数据相同），索引如实写明。",
+  "inputs": [
+    {
+      "path": "docs/data_readme.md",
+      "sha256": "992e92d0c63c92a00e52f2c64be8f5689d275d974f80ae091fa8c0726fce8cd8"
+    },
+    {
+      "path": "reports/release/test_summary.json",
+      "sha256": "c3068c1a109491cc8a0e9ec637394f77dc9ca846ffb1d2a04177ca605f659ab8"
+    },
+    {
+      "path": "reports/ui/full_ui_review.md",
+      "sha256": "2e117e1b4287df2dba4b07ca17e2413def10ed509a962754e0e67466ceea321a"
+    },
+    {
+      "path": "src/retail_bi/pipeline.py",
+      "sha256": "68568e4ae6b81534943d89de2614da21484b66a28fff0ebe56947c67ce4a1e44"
+    },
+    {
+      "path": "src/retail_bi/warehouse/release.py",
+      "sha256": "078b6fb34921edc79e197f53b3bb90bc30e1aa2bb51b5cc4c6b3504f77bfae7d"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/runbook.md",
+      "sha256": "79c091af6afe6995d30034ded65927511411d5e0e0633d57640f1cc09134a5c2"
+    },
+    {
+      "path": "reports/submission/evidence_index.md",
+      "sha256": "ade63e828078f911596059a54bcf5ad3566fa0b140c7c3f01248926a75403d77"
+    },
+    {
+      "path": "docs/COMMANDS.md",
+      "sha256": "c5418495a2bb844ce9113e9a94e52f87c18acbaf81f62a13b980f19aa460bf9d"
+    }
+  ],
+  "task_spec_sha256": "157c738ade39cf05cd71c490a64089008a815ce132341226960f627d1e818763",
+  "performed_at": "2026-11-14T12:11:26.572176+08:00"
+}

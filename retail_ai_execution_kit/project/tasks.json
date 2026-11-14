@@ -413,7 +413,7 @@
         "核验客户、商品、交易或事件标识，金额与数量是否真实存在；不凑字段。"
       ],
       "evidence": [
-        "evidence/DATA-02/2026-11-09-probe.json"
+        "evidence/DATA-02/2026-11-14-rel02-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -3022,7 +3022,7 @@
         "图表与报告使用相同数据和模型版本，证据不包含密钥或不必要个人信息。"
       ],
       "evidence": [
-        "evidence/DOC-05/2026-11-14-runbook-index.json"
+        "evidence/DOC-05/2026-11-14-rel02-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -3183,7 +3183,7 @@
         "保留命令、环境、实际退出码、失败与修复结果，未运行项不能标passed。"
       ],
       "evidence": [
-        "evidence/REL-01/2026-11-14-regression.json"
+        "evidence/REL-01/2026-11-14-rel02-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,

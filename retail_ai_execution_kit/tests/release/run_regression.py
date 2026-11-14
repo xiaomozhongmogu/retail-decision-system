@@ -8,7 +8,11 @@ runner compares every rewritten committed JSON file with the committed version, 
 (timestamps, durations, token use, cost, live model text), records whether the content was reproduced, and then
 restores the committed file so evidence bound to it stays valid. Non-JSON rewrites are compared line by line.
 
-usage: .venv/bin/python tests/release/run_regression.py [--only ID,ID] [--skip-live]
+usage: .venv/bin/python tests/release/run_regression.py [--only ID,ID] [--skip-live] [--allow-dirty]
+
+--allow-dirty: on a freshly rebuilt machine the build and the feature step rewrite some committed records (for example
+reports/model/feature_build.json names the locally built release). Those files are left as they are and are not
+compared; the ledger check then passes when the run adds no new ledger error.
 """
 from __future__ import annotations
 
@@ -78,7 +82,9 @@ def changed_tracked():
     out = []
     for l in git('status', '--porcelain', '--untracked-files=no', '--', '.').splitlines():   # porcelain paths are repo-root relative
         if l.strip():
-            out.append(str((TOP / l[3:].strip().strip('"')).relative_to(ROOT)))
+            rel = str((TOP / l[3:].strip().strip('"')).relative_to(ROOT))
+            if not rel.startswith('reports/release/'):      # the runner's own outputs are not check side effects
+                out.append(rel)
     return out
 
 
@@ -143,8 +149,11 @@ def server_paths():
 def main():
     only = set(sys.argv[sys.argv.index('--only') + 1].split(',')) if '--only' in sys.argv else None
     skip_live = '--skip-live' in sys.argv
-    if changed_tracked():
-        sys.exit('refusing to run: the working tree has uncommitted changes to tracked files (they would be restored)')
+    preexisting = set(changed_tracked())
+    if preexisting and '--allow-dirty' not in sys.argv:
+        sys.exit('refusing to run: the working tree has uncommitted changes to tracked files (they would be restored); '
+                 'use --allow-dirty after a local rebuild')
+    ledger_before = _validate()
     LOGS.mkdir(parents=True, exist_ok=True)
     results = []
     for cid, path, cmd, live in CHECKS:
@@ -166,7 +175,7 @@ def main():
         (LOGS / f'{cid}.log').write_text(f'$ {rel_cmd}\nexit={code} seconds={secs}\n\n{out}', encoding='utf-8')
         lines = [l.strip() for l in out.splitlines() if re.search(r'\d+/\d+ (checks passed|pages ok|passed)|^\d+ passed|gate passed', l.strip())] \
             or [l.strip() for l in out.splitlines() if SUMMARY.search(l) and 'Error' not in l]
-        rewritten = changed_tracked()
+        rewritten = [f for f in changed_tracked() if f not in preexisting]
         not_repro = [f for f in rewritten if not compare(f)]
         restore(rewritten)
         new_untracked = sorted(untracked() - before_untracked - {str(p.relative_to(ROOT)) for p in LOGS.glob('*.log')})
@@ -179,11 +188,13 @@ def main():
         results.append(server_paths())
         print(f"{results[-1]['status']:7} server_paths       {results[-1]['summary']}", flush=True)
     # the run must not leave any evidence stale (a check rewriting a bound file that is not tracked would show up here)
-    v = subprocess.run(['python3', 'scripts/project.py', 'validate'], cwd=ROOT, capture_output=True, text=True)
-    ledger = json.loads(v.stdout) if v.stdout.strip().startswith('{') else {'result': 'unreadable', 'errors': [v.stderr[-300:]]}
-    results.append({'id': 'ledger_after_run', 'critical_path': '回归后所有证据仍与文件一致（台账校验）', 'command': 'python3 scripts/project.py validate',
-                    'uses_live_llm': False, 'exit_code': v.returncode, 'status': 'passed' if ledger.get('result') == 'ledger_valid' else 'failed',
-                    'summary': ledger.get('result', '') + ('' if ledger.get('result') == 'ledger_valid' else ' ' + '; '.join(ledger.get('errors', [])[:5])),
+    ledger = _validate()
+    # errors caused by this runner's own outputs (logs and summary of an earlier recorded run) are expected, not side effects
+    new_errors = [e for e in ledger.get('errors', []) if e not in ledger_before.get('errors', []) and 'reports/release/' not in e]
+    results.append({'id': 'ledger_after_run', 'critical_path': '回归没有让任何证据失效（运行前后台账校验对比）', 'command': 'python3 scripts/project.py validate (before and after)',
+                    'uses_live_llm': False, 'exit_code': 0 if not new_errors else 1, 'status': 'passed' if not new_errors else 'failed',
+                    'summary': f"before: {ledger_before.get('result')} ({len(ledger_before.get('errors', []))} errors); after: {ledger.get('result')}; new errors: {len(new_errors)}"
+                               + ('' if not new_errors else ' ' + '; '.join(new_errors[:5])),
                     'rewritten_files': [], 'not_reproduced': []})
     print(f"{results[-1]['status']:7} ledger_after_run   {results[-1]['summary'][:200]}", flush=True)
     import importlib.metadata as md
@@ -192,6 +203,7 @@ def main():
         'environment': {'os': platform.platform(), 'python': platform.python_version(),
                         'packages': {p: md.version(p) for p in ('duckdb', 'pandas', 'scikit-learn', 'streamlit', 'altair') if _has(md, p)},
                         'llm_configured': bool(os.environ.get('LLM_API_KEY') or (ROOT / '.env').exists())},
+        'dirty_at_start': sorted(preexisting),
         'totals': {s: sum(r['status'] == s for r in results) for s in ('passed', 'failed', 'not_run')},
         'not_reproduced_files': sorted({f for r in results for f in r['not_reproduced']}),
         'checks': results,
@@ -201,6 +213,11 @@ def main():
     OUT.write_text(json.dumps(summary, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     print(json.dumps(summary['totals'], ensure_ascii=False), 'not reproduced:', summary['not_reproduced_files'])
     sys.exit(0 if summary['totals']['failed'] == 0 else 1)
+
+
+def _validate():
+    v = subprocess.run(['python3', 'scripts/project.py', 'validate'], cwd=ROOT, capture_output=True, text=True)
+    return json.loads(v.stdout) if v.stdout.strip().startswith('{') else {'result': 'unreadable', 'errors': [v.stderr[-300:]]}
 
 
 def _has(md, p):

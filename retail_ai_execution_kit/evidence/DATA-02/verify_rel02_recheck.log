@@ -1,0 +1,5 @@
+PASS independent counts, cutoff, fact-table equality, postal-loss detection, exact Decimal reconciliation, quantity absence
+PASS independent post-cutoff date controls
+PASS identifier preservation and invalid datetime detection (fixture only)
+PASS strict detects real data issues; missing input fails; source-directory writes rejected
+exit=0
