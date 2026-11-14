@@ -1,0 +1,107 @@
+{
+  "task_id": "UI-06",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c；AppTest 中关闭 LLM，浏览器实测使用真实 DeepSeek",
+    "network": "浏览器实测联网 api.deepseek.com"
+  },
+  "command": ".venv/bin/python evidence/UI-06/check_ai_page.py; streamlit run app.py --server.port 8599 + built-in browser",
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "三个标签页分别可用，展示 SQL/证据、周报引用与复核、策略判定与预算、草稿状态（AppTest 与浏览器）。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "加载提示、执行前可取消、失败后重试、对话/周报/轨迹导出；重跑不重复调用（计数不变），Agent 相同请求不重复运行。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "两个会话互不影响；回放模式有醒目错误框说明不能代替真实调用验收。"
+    }
+  ],
+  "verification_status": "passed",
+  "exit_code": 0,
+  "summary": "2026-11-14 AI-15 按 D015 验收后，按当前代码重跑页面检查 18/18（AppTest；调用计数 ask 6、report 2、agent 1，重跑不重复调用）。Agent 轨迹中两个 LLM 步骤已有耗时（retention_agent 的 llm_propose/llm_copy 记录 ms，页面“耗时 ms”列显示），上一版限制已不成立。上一版摘要：2026-11-13 外部 AI 测试（Gemini 对抗代码测试、GPT 模拟用户测试）后修复并复验：18/18。改动：“使用 LLM”开关保存在网址中（?llm=0），浏览器刷新后确认仍为关闭；页面说明刷新会清空结果；预算输入去掉上限，超预算由规则引擎拒绝；价值层级以中文显示并说明其作用（U-004、U-005、U-008）。仍待验收。 逐条处理见 reports/external_test/triage_2026-11-13.md。原验收摘要：AI 工作台接入查询助手、经营周报与挽回 Agent：执行/取消/重试/导出，SQL 与证据、周报引用与校验、Agent 轨迹、规则判定与草稿审核；结果缓存在会话中，重跑不重复调用模型，会话隔离，回放醒目标识。AppTest 18/18，浏览器真实调用两项通过。依赖 AI-15 尚未完成，所以只能待验收。",
+  "inputs": [
+    {
+      "path": "src/retail_bi/ai/query_assistant.py",
+      "sha256": "c7eedc3b3b10de13671e59ad264a5cb1c0b278f132d2d9da7cad6611d7ff393d"
+    },
+    {
+      "path": "src/retail_bi/ai/report_generator.py",
+      "sha256": "a7097628607f4dc881615ec706a88c912be596cb4c15f623e3e9f3b68577fbe2"
+    },
+    {
+      "path": "src/retail_bi/ai/retention_agent.py",
+      "sha256": "5642542577a2182258a4181558e8a2f63f06231bcbdf8bb7d9679eee2da93bce"
+    },
+    {
+      "path": "src/retail_bi/ai/drafts.py",
+      "sha256": "0e4398696c76b632e96484fde325390d521282fb1741a31b21c9b54a74664d46"
+    },
+    {
+      "path": "evidence/UI-06/check_ai_page.py",
+      "sha256": "a579d3a71e4618fb83ed2b27f8d95943a815d1b657c4dc527d1e2bf6badd3e1b"
+    },
+    {
+      "path": "reports/external_test/triage_2026-11-13.md",
+      "sha256": "19012c122103c4beeccaa6cb2c3acd782bc18b1108909ea97773da66e4096dc5"
+    },
+    {
+      "path": "evidence/AI-15/2026-11-14-d015-accept.json",
+      "sha256": "8ca30000a2de5913425c909facfba7f112d8493e368472809564d7cff611d426"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ui/pages/ai.py",
+      "sha256": "9511fd4bf34287d1eeda544a831e0a93fc09a9d36ea66c309a3f34512471d737"
+    },
+    {
+      "path": "reports/ui/ai_page_review.md",
+      "sha256": "7370a4e7ebda495b5b6d1eaabbbed08c6806d9e16e02c9823c72cf312701fcfe"
+    },
+    {
+      "path": "evidence/UI-06/check_run.log",
+      "sha256": "3222f5b5289846527336b8ced5443ef9f7b69c768c11e09b4c6bcd888a164531"
+    },
+    {
+      "path": "evidence/UI-06/query_assistant_live.jpg",
+      "sha256": "f1300292f874690df26473152a00d4e4c9ecb42c83985dcf23759d8d026eda5f"
+    },
+    {
+      "path": "evidence/UI-06/agent_live.jpg",
+      "sha256": "e3e92e9aeb16721c7fdb08d705c51bb9eceb322e5bf3963d0d183e5024b94782"
+    },
+    {
+      "path": "evidence/UI-06/check_ai_page_ext_recheck.log",
+      "sha256": "d47a3b0d4af9aa6e7710805b993cfe2fc082a782b3011a51852edb3d1077f253"
+    },
+    {
+      "path": "evidence/UI-06/check_ai_page_d015.log",
+      "sha256": "f7315db14316898cb4d7cb22317c0764e797274cc07af2cc31acfc370fe9f57a"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "外部测试者是 AI（Gemini、GPT），不是人工；复验为自审。",
+    "周报的人工抽查（AI-10）仍待组员完成。"
+  ],
+  "steps": [
+    "AI-15 验收后重跑 evidence/UI-06/check_ai_page.py，18/18。",
+    "核对 LLM 步骤耗时已记录。",
+    "登记证据并验收。"
+  ],
+  "task_spec_sha256": "a7786be88516d5253842d3d87e94c74de3a3e2dd4f220f02c5a96791b78ee0f4",
+  "performed_at": "2026-11-14T11:10:17.994668+08:00"
+}

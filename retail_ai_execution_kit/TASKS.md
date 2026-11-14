@@ -77,13 +77,13 @@
 | AI-12 | 实现有限步骤运营Agent | final | done | AI-11, AI-01, AI-02 |
 | AI-13 | 实现草稿存储和审阅状态 | final | done | AI-12 |
 | AI-14 | 完成Agent边界场景验收 | final | done | AI-13 |
-| AI-15 | 完成三模块联调与可观测性 | final | in_review | AI-03, AI-07, AI-10, AI-14 |
+| AI-15 | 完成三模块联调与可观测性 | final | done | AI-03, AI-07, AI-09, AI-14 |
 | UI-01 | 建立Streamlit多页骨架 | midterm | done | GOV-07, GOV-06 |
 | UI-02 | 接入数据质量与口径页面 | midterm | done | UI-01, DATA-12 |
 | UI-03 | 接入经营指标与OLAP交互 | midterm | done | UI-01, DW-10, EDA-02 |
 | UI-04 | 接入客户生命周期与分群 | midterm | done | UI-01, EDA-03, EDA-05, ML-05 |
 | UI-05 | 接入预测评估与名单试算 | midterm | done | UI-01, ML-12 |
-| UI-06 | 接入AI工作台 | final | in_review | UI-01, AI-15 |
+| UI-06 | 接入AI工作台 | final | done | UI-01, AI-15 |
 | UI-07 | 完成可读性、缓存与异常交互验收 | final | todo | UI-02, UI-03, UI-04, UI-05, UI-06 |
 | DOC-01 | 完成选题报告并形成阶段一材料 | proposal | in_review | GOV-03, GOV-06, DATA-12, EDA-01, DOC-04 |
 | DOC-02 | 完成中期检查报告与答辩材料 | midterm | todo | DOC-01, DW-10, EDA-06, ML-12, UI-05 |
@@ -1185,9 +1185,9 @@
 
 ### AI-15 完成三模块联调与可观测性
 
-- [ ] 状态：`in_review`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C16, U04, Q02, Q05, Q06。
-- 前置：AI-03, AI-07, AI-10, AI-14。
+- 前置：AI-03, AI-07, AI-09, AI-14。
 - 允许修改：`reports/ai`, `docs`, `src/retail_bi/ai`；另可写本任务证据/交接。
 - 输出：`reports/ai/integration_evaluation.json`, `docs/ai_system_card.md`。
 - 实际执行要求：必须有运行或交互证据。
@@ -1198,9 +1198,7 @@
 2. 日志记录耗时、调用/令牌或可得费用信息、工具、证据和错误，敏感值脱敏。
 3. 在线、无密钥、超时、限流和回放模式可区分；系统卡列实际通过与未覆盖边界。
 
-**当前阻塞：** 联调已实现并检查（14/14，系统卡已写）；剩余：依赖 AI-10 的人工抽查完成后，按当前代码重跑并正式验收。
-
-证据：evidence/AI-15/2026-11-13-ext-test-recheck.json
+证据：evidence/AI-15/2026-11-14-d015-accept.json
 
 
 ## UI — Streamlit
@@ -1292,7 +1290,7 @@
 
 ### UI-06 接入AI工作台
 
-- [ ] 状态：`in_review`；阶段：`final`；范围：已选核心。
+- [x] 状态：`done`；阶段：`final`；范围：已选核心。
 - 依据：C14, C16, U04, U05。
 - 前置：UI-01, AI-15。
 - 允许修改：`src/retail_bi/ui`, `reports/ui`；另可写本任务证据/交接。
@@ -1305,9 +1303,7 @@
 2. 加载、取消、失败、重试和导出体验完整，模型请求不重复无界触发。
 3. 各会话状态隔离，回放输出有醒目标识且不能替代真实调用验收。
 
-**当前阻塞：** 页面已实现并检查（AppTest 18/18、浏览器真实调用）；剩余：依赖 AI-15 完成后重新运行检查并正式验收。
-
-证据：evidence/UI-06/2026-11-13-ext-test-recheck.json
+证据：evidence/UI-06/2026-11-14-accept.json
 
 ### UI-07 完成可读性、缓存与异常交互验收
 

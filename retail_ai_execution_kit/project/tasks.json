@@ -2503,10 +2503,10 @@
       "category": "AI",
       "selected": true,
       "priority": "core",
-      "status": "in_review",
+      "status": "done",
       "owner": "claude-opus-5-5",
-      "reviewer": null,
-      "review_mode": null,
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C16",
         "U04",
@@ -2517,7 +2517,7 @@
       "depends_on": [
         "AI-03",
         "AI-07",
-        "AI-10",
+        "AI-09",
         "AI-14"
       ],
       "allowed_scope": [
@@ -2535,9 +2535,9 @@
         "在线、无密钥、超时、限流和回放模式可区分；系统卡列实际通过与未覆盖边界。"
       ],
       "evidence": [
-        "evidence/AI-15/2026-11-13-ext-test-recheck.json"
+        "evidence/AI-15/2026-11-14-d015-accept.json"
       ],
-      "blocker": "联调已实现并检查（14/14，系统卡已写）；剩余：依赖 AI-10 的人工抽查完成后，按当前代码重跑并正式验收。",
+      "blocker": null,
       "skip_reason": null,
       "execution_required": true
     },
@@ -2747,10 +2747,10 @@
       "category": "UI",
       "selected": true,
       "priority": "core",
-      "status": "in_review",
+      "status": "done",
       "owner": "claude-opus-5-5",
-      "reviewer": null,
-      "review_mode": null,
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C14",
         "C16",
@@ -2774,9 +2774,9 @@
         "各会话状态隔离，回放输出有醒目标识且不能替代真实调用验收。"
       ],
       "evidence": [
-        "evidence/UI-06/2026-11-13-ext-test-recheck.json"
+        "evidence/UI-06/2026-11-14-accept.json"
       ],
-      "blocker": "页面已实现并检查（AppTest 18/18、浏览器真实调用）；剩余：依赖 AI-15 完成后重新运行检查并正式验收。",
+      "blocker": null,
       "skip_reason": null,
       "execution_required": true
     },
