@@ -1,0 +1,115 @@
+{
+  "task_id": "DW-02",
+  "db": "warehouse/build/dev.duckdb",
+  "batch_id": "9f5ba7d8e03a46b4-engineering-import-v1",
+  "skipped_already_loaded": true,
+  "files": [
+    {
+      "table": "calendar",
+      "source_file": "history_source/calendar.csv",
+      "source_sha256": "cf2bdf52a6fe3e33a795e4db8cd0503b360e64b624188c63538e0ec251e7f8f8",
+      "manifest_rows": 1042,
+      "loaded_rows": 1042,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "customers",
+      "source_file": "history_source/customers.csv",
+      "source_sha256": "2aa9a6136a85cd34c43045deddcb8ae5c14467570c6b635c446f8c119c60b1b2",
+      "manifest_rows": 3647,
+      "loaded_rows": 3647,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "order_items",
+      "source_file": "history_source/order_items.csv",
+      "source_sha256": "f102c7eed9794c269d1612e98dce75ce998cbd8d441bc3df21fa384044037e58",
+      "manifest_rows": 15639,
+      "loaded_rows": 15639,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "orders",
+      "source_file": "history_source/orders.csv",
+      "source_sha256": "e645d2f7bf76ab62891ca563dde12496d6bc4579767e7024295b63182c88a38b",
+      "manifest_rows": 9311,
+      "loaded_rows": 9311,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "payments",
+      "source_file": "history_source/payments.csv",
+      "source_sha256": "1493dc289e95ed19c744eebfbdab4411201aae6134c20957eb6629a114bf6c6f",
+      "manifest_rows": 10010,
+      "loaded_rows": 10010,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "products",
+      "source_file": "history_source/products.csv",
+      "source_sha256": "6f669e9fe16a9d03fcb584d14196ed815c93b2abc2039ab9928774bf2cbd2ab4",
+      "manifest_rows": 8000,
+      "loaded_rows": 8000,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "reviews",
+      "source_file": "history_source/reviews.csv",
+      "source_sha256": "b90274a58fa8a60903436a2ef5f81cdb2e376a0ae2bc9758acbda44dd8d72651",
+      "manifest_rows": 6190,
+      "loaded_rows": 6190,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "seller_products",
+      "source_file": "history_source/seller_products.csv",
+      "source_sha256": "68a25acfae66d920a8e33ef96edfbdac6c5e0a043385b31cdec265b64880beef",
+      "manifest_rows": 13966,
+      "loaded_rows": 13966,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "sellers",
+      "source_file": "history_source/sellers.csv",
+      "source_sha256": "b431be39b18b233915e972c6fd91c14457a8c182f2019795e63e33169b085be3",
+      "manifest_rows": 800,
+      "loaded_rows": 800,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    },
+    {
+      "table": "shipping",
+      "source_file": "history_source/shipping.csv",
+      "source_sha256": "d8dd8dc9becd8ef447c0d996366c105ef43f47e2c6e6e259ab4302d4807bd762",
+      "manifest_rows": 9311,
+      "loaded_rows": 9311,
+      "status": "loaded",
+      "started_at": "2026-11-10 07:09:13.667362+00",
+      "finished_at": "2026-11-10 07:09:13.667362+00"
+    }
+  ],
+  "batches_in_db": [
+    [
+      "9f5ba7d8e03a46b4-engineering-import-v1",
+      "loaded"
+    ]
+  ],
+  "all_counts_match": true
+}

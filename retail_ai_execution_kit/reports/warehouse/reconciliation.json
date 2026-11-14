@@ -1,0 +1,221 @@
+{
+  "task_id": "DW-09",
+  "build": {
+    "version": "wh-d3aaa559048c",
+    "file": "wh-d3aaa559048c.duckdb",
+    "published_at": "2026-11-14T03:36:30.846282+00:00",
+    "cutoff": "2026-11-08T00:00:00Z"
+  },
+  "checks": {
+    "unique_key:dim_date": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:dim_geo": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:dim_customer": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:dim_product": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:dim_seller": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:fact_order": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:fact_order_line": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:fact_payment": {
+      "passed": true,
+      "value": 0
+    },
+    "unique_key:fact_fulfillment": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_order.customer_id->dim_customer": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_order.purchase_date_key->dim_date": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_order_line.order_id->fact_order": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_order_line.product_id->dim_product": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_order_line.seller_id->dim_seller": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_order_line.purchase_date_key->dim_date": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_payment.order_id->fact_order": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:fact_fulfillment.order_id->fact_order": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:dim_customer.geo_key->dim_geo": {
+      "passed": true,
+      "value": 0
+    },
+    "no_orphans:dim_seller.geo_key->dim_geo": {
+      "passed": true,
+      "value": 0
+    },
+    "not_null:fact_order.purchase_date_key": {
+      "passed": true,
+      "value": 0
+    },
+    "not_null:fact_order.customer_id": {
+      "passed": true,
+      "value": 0
+    },
+    "not_null:fact_order.purchase_ts": {
+      "passed": true,
+      "value": 0
+    },
+    "not_null:fact_order_line.purchase_date_key": {
+      "passed": true,
+      "value": 0
+    },
+    "not_null:fact_order_line.item_price_usd": {
+      "passed": true,
+      "value": 0
+    },
+    "not_null:dim_date.calendar_date": {
+      "passed": true,
+      "value": 0
+    },
+    "star_join_no_inflation": {
+      "passed": true,
+      "value": {
+        "lines": [
+          15639,
+          15639
+        ],
+        "amount": [
+          "1408601.73",
+          "1408601.73"
+        ]
+      }
+    },
+    "grain:order_header_matches_lines": {
+      "passed": true,
+      "value": {
+        "orders": 9311,
+        "orders_in_lines": 9311,
+        "item_lines_mismatch": 0,
+        "merch_mismatch": 0
+      }
+    },
+    "grain:dws.orders_daily_region": {
+      "passed": true,
+      "value": 0
+    },
+    "grain:dws.sales_daily_category_region": {
+      "passed": true,
+      "value": 0
+    },
+    "grain:dws.customer_daily": {
+      "passed": true,
+      "value": 0
+    },
+    "grain:dws.product_daily": {
+      "passed": true,
+      "value": 0
+    },
+    "dws_equals_dwd_valid": {
+      "passed": true,
+      "value": {
+        "dwd": [
+          9113,
+          "1380161.23"
+        ],
+        "dws": [
+          9113,
+          "1380161.23"
+        ]
+      }
+    }
+  },
+  "chain": [
+    {
+      "step": "1 raw ZIP orders",
+      "orders": 10000,
+      "merch_usd": "1502504.01"
+    },
+    {
+      "step": "2 minus orders placed at/after the 2026-11-08 cutoff",
+      "orders": 689,
+      "merch_usd": "93902.28",
+      "kind": "excluded"
+    },
+    {
+      "step": "3 historical scope (DATA-05)",
+      "orders": 9311,
+      "merch_usd": "1408601.73"
+    },
+    {
+      "step": "4 minus quarantined in cleaning (DATA-07)",
+      "orders": 0,
+      "merch_usd": "0",
+      "kind": "quarantined"
+    },
+    {
+      "step": "5 DWD fact_order",
+      "orders": 9311,
+      "merch_usd": "1408601.73"
+    },
+    {
+      "step": "6 minus cancelled (no approval)",
+      "orders": 194,
+      "merch_usd": "27778.26",
+      "kind": "excluded from valid"
+    },
+    {
+      "step": "7 minus approved only after the cutoff",
+      "orders": 4,
+      "merch_usd": "662.24",
+      "kind": "excluded from valid at cutoff"
+    },
+    {
+      "step": "8 valid purchases at cutoff (DWD)",
+      "orders": 9113,
+      "merch_usd": "1380161.23"
+    },
+    {
+      "step": "9 DWS orders_daily_region",
+      "orders": 9113,
+      "merch_usd": "1380161.23"
+    },
+    {
+      "step": "10 ADS kpi_monthly",
+      "orders": 9113,
+      "merch_usd": "1380161.23"
+    }
+  ],
+  "chain_reconciles": true,
+  "orphan_policy": "外键孤儿在清洗阶段进入隔离区（DATA-07），DWD 中出现任何孤儿都视为失败",
+  "all_passed": true
+}

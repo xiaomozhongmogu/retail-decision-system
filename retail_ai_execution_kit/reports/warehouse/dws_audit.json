@@ -1,0 +1,141 @@
+{
+  "task_id": "DW-04",
+  "as_of": "2026-11-08 00:00:00+00",
+  "tables": {
+    "orders_daily_region": {
+      "rows": 3605,
+      "sum_count": 9113,
+      "merch_usd": "1380161.23"
+    },
+    "sales_daily_category_region": {
+      "rows": 12532,
+      "sum_count": 15311,
+      "merch_usd": "1380161.23"
+    },
+    "customer_daily": {
+      "rows": 9102,
+      "sum_count": 9113,
+      "merch_usd": "1380161.23"
+    },
+    "product_daily": {
+      "rows": 14523,
+      "sum_count": 15311,
+      "merch_usd": "1380161.23"
+    }
+  },
+  "dwd_totals": {
+    "valid_orders": 9113,
+    "merch": "1380161.23",
+    "valid_lines": 15311
+  },
+  "grains": {
+    "orders_daily_region": "日期×客户大区",
+    "sales_daily_category_region": "日期×品类×客户大区",
+    "customer_daily": "客户×日期",
+    "product_daily": "商品×日期"
+  },
+  "additive": [
+    "valid_orders",
+    "valid_lines",
+    "merch_usd",
+    "shipping_usd"
+  ],
+  "non_additive": {
+    "buyers": "按天去重客户数，跨天相加会重复计算同一客户；月度去重须从 DWD 重算",
+    "orders_containing": "包含该品类/商品的订单数，一单可含多个品类，跨品类相加会重复"
+  },
+  "additivity_demo_months_overcounted": 35,
+  "checks": [
+    {
+      "check": "dws.orders_daily_region one row per (date_key, customer_region)",
+      "status": "passed",
+      "detail": "3605 rows"
+    },
+    {
+      "check": "dws.orders_daily_region merch total equals DWD valid merch",
+      "status": "passed",
+      "detail": "1380161.23"
+    },
+    {
+      "check": "dws.sales_daily_category_region one row per (date_key, product_category, customer_region)",
+      "status": "passed",
+      "detail": "12532 rows"
+    },
+    {
+      "check": "dws.sales_daily_category_region merch total equals DWD valid merch",
+      "status": "passed",
+      "detail": "1380161.23"
+    },
+    {
+      "check": "dws.customer_daily one row per (customer_id, date_key)",
+      "status": "passed",
+      "detail": "9102 rows"
+    },
+    {
+      "check": "dws.customer_daily merch total equals DWD valid merch",
+      "status": "passed",
+      "detail": "1380161.23"
+    },
+    {
+      "check": "dws.product_daily one row per (product_id, date_key)",
+      "status": "passed",
+      "detail": "14523 rows"
+    },
+    {
+      "check": "dws.product_daily merch total equals DWD valid merch",
+      "status": "passed",
+      "detail": "1380161.23"
+    },
+    {
+      "check": "orders_daily_region and customer_daily order counts = DWD valid orders",
+      "status": "passed",
+      "detail": "9113"
+    },
+    {
+      "check": "line-level tables line counts = DWD valid lines",
+      "status": "passed",
+      "detail": "15311"
+    },
+    {
+      "check": "slice 2025-03 / Books & Media / South: lines and merch equal DWD recount",
+      "status": "passed",
+      "detail": "12 lines, 193.82 USD"
+    },
+    {
+      "check": "slice 2024-12 / Fashion / West: lines and merch equal DWD recount",
+      "status": "passed",
+      "detail": "13 lines, 911.74 USD"
+    },
+    {
+      "check": "slice 2026-06 / Pet Supplies / Northeast: lines and merch equal DWD recount",
+      "status": "passed",
+      "detail": "6 lines, 305.45 USD"
+    },
+    {
+      "check": "slice 2025-11 / all categories / Midwest: lines and merch equal DWD recount",
+      "status": "passed",
+      "detail": "104 lines, 9622.84 USD"
+    },
+    {
+      "check": "slice 2025-11 / all categories: summing orders_containing over categories over-counts distinct orders",
+      "status": "passed",
+      "detail": "summed 97 vs distinct 72"
+    },
+    {
+      "check": "slice 2026-01 / Automotive / all regions: lines and merch equal DWD recount",
+      "status": "passed",
+      "detail": "24 lines, 2593.31 USD"
+    },
+    {
+      "check": "monthly distinct buyers differ from the sum of daily distinct buyers in some months (non-additive)",
+      "status": "passed",
+      "detail": "35 of 35 months, e.g. (202401, 216, 229)"
+    },
+    {
+      "check": "orders_daily_region: daily orders are additive to the DWD total",
+      "status": "passed",
+      "detail": ""
+    }
+  ],
+  "all_checks_passed": true
+}

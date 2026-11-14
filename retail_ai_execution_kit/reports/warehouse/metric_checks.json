@@ -1,0 +1,116 @@
+{
+  "task_id": "DW-06",
+  "as_of": "2026-11-08T00:00:00Z",
+  "allowed_views": [
+    {
+      "view": "ads.cohort_retention",
+      "purpose": "首次可观测购买月 cohort 留存；未成熟格子为空"
+    },
+    {
+      "view": "ads.kpi_daily",
+      "purpose": "经营总览：日有效订单、商品金额、运费、购买客户、客单价"
+    },
+    {
+      "view": "ads.kpi_monthly",
+      "purpose": "经营总览：月度指标（去重客户按月重算）与取消；2026-11 为不完整月"
+    },
+    {
+      "view": "ads.lifecycle_mix_weekly",
+      "purpose": "按周的规则生命周期分布（默认阈值）"
+    },
+    {
+      "view": "ads.repurchase_rate_weekly",
+      "purpose": "按周的 30 天经验复购率（90 天母体，已成熟标签）"
+    },
+    {
+      "view": "ads.sales_month_category_region",
+      "purpose": "月×品类×客户大区：明细数、商品金额（可加）；含该品类订单数（不可跨品类相加）"
+    }
+  ],
+  "view_duties": {
+    "经营总览": [
+      "ads.kpi_daily",
+      "ads.kpi_monthly",
+      "ads.sales_month_category_region"
+    ],
+    "cohort": [
+      "ads.cohort_retention"
+    ],
+    "分群/生命周期": [
+      "ads.lifecycle_mix_weekly",
+      "ads.customer_profile_latest（客户级，不对 AI 开放）"
+    ],
+    "风险": [
+      "ads.repurchase_rate_weekly（经验比例）；模型风险分由 ML-11 加入"
+    ]
+  },
+  "checks": [
+    {
+      "check": "kpi_monthly 2025-07 orders / buyers / merch vs pandas",
+      "status": "passed",
+      "expected": "(272, 261, Decimal('41459.91'))",
+      "got": "(272, 261, '41459.91')"
+    },
+    {
+      "check": "kpi_monthly 2025-07 AOV = merch / orders (hand)",
+      "status": "passed",
+      "expected": "152.4261",
+      "got": "152.4261"
+    },
+    {
+      "check": "2026-Q3 orders and merchandise (net of cancellations; no refunds exist) vs DATA-08 rule SQL on clean parquet",
+      "status": "passed",
+      "expected": "(734, '112870.30')",
+      "got": "(734, '112870.30')"
+    },
+    {
+      "check": "cancelled orders / merchandise (all months) vs DATA-08 reconciliation",
+      "status": "passed",
+      "expected": "(194, '27778.26')",
+      "got": "(194, '27778.26')"
+    },
+    {
+      "check": "kpi_daily orders add up to kpi_monthly (2026-03)",
+      "status": "passed",
+      "expected": "260",
+      "got": "260"
+    },
+    {
+      "check": "repurchase_rate_weekly 2025-03-03 vs pandas from orders",
+      "status": "passed",
+      "expected": "(765, 52)",
+      "got": "(765, 52)"
+    },
+    {
+      "check": "cohort 2025-02, month +3 retention vs pandas",
+      "status": "passed",
+      "expected": "(90, 5)",
+      "got": "(90, 5)"
+    },
+    {
+      "check": "immature cohort cells are NULL, not 0",
+      "status": "passed",
+      "expected": "all immature cells NULL",
+      "got": "(0, 35)"
+    },
+    {
+      "check": "partial month 2026-11 flagged",
+      "status": "passed",
+      "expected": "True",
+      "got": "True"
+    },
+    {
+      "check": "allowed views registered and exclude customer-level profile",
+      "status": "passed",
+      "expected": "6",
+      "got": "['ads.cohort_retention', 'ads.kpi_daily', 'ads.kpi_monthly', 'ads.lifecycle_mix_weekly', 'ads.repurchase_rate_weekly', 'ads.sales_month_category_region']"
+    },
+    {
+      "check": "every metric has unit, numerator/denominator, window, inclusions/exclusions, null policy, grain and SQL/ADS mapping",
+      "status": "passed",
+      "expected": "[]",
+      "got": "[]"
+    }
+  ],
+  "all_checks_passed": true
+}

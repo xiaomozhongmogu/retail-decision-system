@@ -1,0 +1,36 @@
+{
+  "task_id": "DW-10",
+  "current": {
+    "version": "wh-d3aaa559048c",
+    "file": "wh-d3aaa559048c.duckdb",
+    "sha256": "e89274924730795bd90a1e28a1a032a9f4a08d465327c4f931950d7749472aa6",
+    "bytes": 97267712,
+    "published_at": "2026-11-10T13:19:05.616295+00:00",
+    "source_build": "wh-d3aaa559048c.duckdb",
+    "previous": "wh-db316daf8021",
+    "allowed_views": [
+      "ads.cohort_retention",
+      "ads.kpi_daily",
+      "ads.kpi_monthly",
+      "ads.lifecycle_mix_weekly",
+      "ads.repurchase_rate_weekly",
+      "ads.risk_summary_latest",
+      "ads.sales_month_category_region"
+    ]
+  },
+  "file_identity": {
+    "path": "warehouse/releases/wh-d3aaa559048c.duckdb",
+    "sha256_recomputed": "e89274924730795bd90a1e28a1a032a9f4a08d465327c4f931950d7749472aa6",
+    "bytes": 97267712,
+    "mode": "0o444",
+    "matches_pointer": true
+  },
+  "readers": "runtime.open_current / runtime.query_view, read_only=True, allowed views only",
+  "writer": "pipeline.py (builds/) and release.py (releases/) from the command line only",
+  "recovery": [
+    "release.py rollback",
+    "pipeline.py build --force && release.py publish"
+  ],
+  "docs": "docs/query_runtime.md",
+  "history": "2026-11-10 21:19 发布 wh-d3aaa559048c（流水线加入评分阶段，新增 ads.model_scores 与 ads.risk_summary_latest）；上一版本 wh-db316daf8021 保留可回滚"
+}

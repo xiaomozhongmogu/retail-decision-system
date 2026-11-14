@@ -1,0 +1,64 @@
+{
+  "task_id": "DW-03",
+  "db": "warehouse/build/dev.duckdb",
+  "batch_id": "9f5ba7d8e03a46b4-engineering-import-v1",
+  "row_counts": {
+    "dim_date": 1042,
+    "dim_geo": 105,
+    "dim_customer": 3647,
+    "dim_product": 8000,
+    "dim_seller": 800,
+    "fact_order": 9311,
+    "fact_order_line": 15639,
+    "fact_payment": 10010,
+    "fact_fulfillment": 9311
+  },
+  "ods_counts": {
+    "customers": 3647,
+    "sellers": 800,
+    "products": 8000,
+    "orders": 9311,
+    "order_items": 15639,
+    "payments": 10010,
+    "shipping": 9311,
+    "calendar": 1042
+  },
+  "cast_checks": {
+    "est_date_with_time": 0,
+    "calendar_with_time": 0,
+    "non_integer_days": 0,
+    "money_over_2dp": 0,
+    "state_in_two_regions": 0,
+    "line_mismatch": 0
+  },
+  "semantics_at_cutoff": {
+    "no_approval": 194,
+    "status_cancelled": 194,
+    "approved_after_cutoff": 4,
+    "valid_at_cutoff": 9113,
+    "anonymous_orders": 0,
+    "merch_all": "1408601.73",
+    "merch_valid_at_cutoff": "1380161.23",
+    "merch_lines": "1408601.73",
+    "payment_mismatch": 0,
+    "late_by_date": 5545,
+    "late_by_days": 1277
+  },
+  "checks": {
+    "grain_orders_equal_ods": true,
+    "grain_lines_equal_ods": true,
+    "grain_payments_equal_ods": true,
+    "grain_fulfillment_equal_ods": true,
+    "dims_equal_ods": true,
+    "cast_checks_zero": true,
+    "order_merch_equals_line_merch": true,
+    "payments_reconcile": true,
+    "no_approval_equals_cancelled": true,
+    "no_anonymous_orders": true
+  },
+  "all_checks_passed": true,
+  "notes": [
+    "取消订单与截止后才审批的订单保留在事实表中，由 approved_ts 在 DWS/ADS 过滤（transaction-rules-v1）",
+    "没有匿名客户、退款或隔离记录（DATA-07、DATA-08）；如出现，ODS 加载前的清洗规则会将其隔离"
+  ]
+}

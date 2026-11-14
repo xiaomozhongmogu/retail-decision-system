@@ -1,0 +1,63 @@
+{
+  "task_id": "DW-05",
+  "params": {
+    "first_as_of": "2024-04-01 00:00:00",
+    "cutoff": "2026-11-08 00:00:00",
+    "step_days": 7,
+    "horizon": 30,
+    "maturity_days": 1,
+    "snapshot_version": "snapshot-v1",
+    "label_version": "label-repurchase-v1"
+  },
+  "keys": {
+    "snapshot": [
+      "customer_id",
+      "as_of",
+      "snapshot_version (filter)"
+    ],
+    "labels": [
+      "customer_id",
+      "as_of",
+      "horizon_days",
+      "label_version"
+    ]
+  },
+  "snapshot_table": "dws.customer_snapshot",
+  "label_table": "dws.label_repurchase",
+  "feature_rule": "只用 purchase_ts < as_of 且 approved_ts < as_of 的有效订单；不读最终状态、物流结果、生成器标签",
+  "columns": {
+    "feature_window_start": "as_of - 90 天（近 90 天特征的起点，左闭右开）",
+    "recency_days": "as_of 距最近一次有效购买的天数",
+    "frequency_90d": "[as_of-90d, as_of) 有效订单数；>=1 即为默认模型母体（ML-01 冻结）",
+    "monetary_90d_usd": "同窗有效订单商品金额（USD，不含运费）",
+    "orders_all_time / merch_all_time_usd": "as_of 前全部有效订单数与商品金额",
+    "first_purchase_ts / tenure_days": "首次可观测有效购买时间与距今天数",
+    "lifecycle_state": "new / active / at_risk / dormant，默认阈值 30/90/180 天（lifecycle-default-v0，EDA-05 校准）"
+  },
+  "label_rule": "y = [as_of, as_of+30d) 内有下单且在 as_of+31d 前已审批的订单；成熟时间 label_matured_at = as_of + 31 天，只为成熟时间不晚于截止的 as_of 生成",
+  "coverage": {
+    "as_of_points": 136,
+    "first_as_of": "2024-04-01 00:00:00+00",
+    "last_as_of": "2026-11-02 00:00:00+00",
+    "rows": 331649,
+    "customers": 3332,
+    "rows_in_90d_population": 94999
+  },
+  "labels": {
+    "as_of_points": 132,
+    "first_as_of": "2024-04-01 00:00:00+00",
+    "last_as_of": "2026-10-05 00:00:00+00",
+    "rows": 318344,
+    "positives": 22270,
+    "rows_in_90d_population": 92241,
+    "positives_in_90d_population": 6618
+  },
+  "lifecycle_mix": {
+    "active": 83180,
+    "at_risk": 73170,
+    "dormant": 163480,
+    "new": 11819
+  },
+  "data_cutoff_exclusive": "2026-11-08 00:00:00Z",
+  "timezone": "UTC engineering assumption"
+}

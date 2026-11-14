@@ -1,0 +1,558 @@
+{
+  "task_id": "DW-08",
+  "build": {
+    "version": "wh-d3aaa559048c",
+    "file": "wh-d3aaa559048c.duckdb",
+    "published_at": "2026-11-10T13:19:08.536941+00:00",
+    "cutoff": "2026-11-08T00:00:00Z"
+  },
+  "operations": {
+    "slice": [
+      "q1"
+    ],
+    "dice": [
+      "q2"
+    ],
+    "roll_up": [
+      "q3",
+      "q6"
+    ],
+    "drill_down": [
+      "q4a",
+      "q4b",
+      "q4c",
+      "q6"
+    ],
+    "pivot": [
+      "q5"
+    ],
+    "ranking_share": [
+      "q7"
+    ],
+    "other_grain": [
+      "q8"
+    ]
+  },
+  "route_note": "交易路线有订单号，下钻到订单与明细；不涉及行为事件层",
+  "queries": {
+    "q1_slice_year_by_region": {
+      "question": "Question: In 2025, how much merchandise did each customer region buy, and how many orders?  (slice: year = 2025)",
+      "columns": [
+        "customer_region",
+        "valid_orders",
+        "merchandise_usd",
+        "aov_usd"
+      ],
+      "rows": 4,
+      "sample": [
+        [
+          "South",
+          "1211",
+          "182136.11",
+          "150.40141205615194"
+        ],
+        [
+          "West",
+          "778",
+          "116521.38",
+          "149.77041131105398"
+        ],
+        [
+          "Midwest",
+          "699",
+          "105460.97",
+          "150.87406294706724"
+        ],
+        [
+          "Northeast",
+          "618",
+          "90574.02",
+          "146.55990291262137"
+        ]
+      ]
+    },
+    "q2_dice_q4_2025_two_regions_three_categories": {
+      "question": "Question: In 2025 Q4, for the West and South regions, how did Electronics, Mobile and Fashion sell?  (dice: 3 dimensions restricted)",
+      "columns": [
+        "customer_region",
+        "product_category",
+        "valid_lines",
+        "merchandise_usd",
+        "orders_containing"
+      ],
+      "rows": 6,
+      "sample": [
+        [
+          "South",
+          "Electronics & Accessories",
+          "53",
+          "7739.97",
+          "48"
+        ],
+        [
+          "South",
+          "Fashion",
+          "37",
+          "3393.79",
+          "35"
+        ],
+        [
+          "South",
+          "Mobile & Telecom",
+          "36",
+          "6338.25",
+          "34"
+        ],
+        [
+          "West",
+          "Electronics & Accessories",
+          "22",
+          "3640.59",
+          "20"
+        ],
+        [
+          "West",
+          "Fashion",
+          "29",
+          "2281.56",
+          "27"
+        ]
+      ]
+    },
+    "q3_rollup_year_quarter_month": {
+      "question": "Question: Merchandise by month, with quarter and year subtotals and a grand total.  (roll-up along the date hierarchy)",
+      "columns": [
+        "year",
+        "quarter",
+        "month",
+        "merchandise_usd",
+        "valid_orders",
+        "level"
+      ],
+      "rows": 51,
+      "sample": [
+        [
+          "2024",
+          "1",
+          "1",
+          "33874.18",
+          "229",
+          "0"
+        ],
+        [
+          "2024",
+          "1",
+          "2",
+          "38346.81",
+          "258",
+          "0"
+        ],
+        [
+          "2024",
+          "1",
+          "3",
+          "37035.53",
+          "247",
+          "0"
+        ],
+        [
+          "2024",
+          "1",
+          "None",
+          "109256.52",
+          "734",
+          "1"
+        ],
+        [
+          "2024",
+          "2",
+          "4",
+          "39378.27",
+          "236",
+          "0"
+        ]
+      ]
+    },
+    "q4a_drill_month_to_day": {
+      "question": "Question: November 2025 by day (drill down from month to day).",
+      "columns": [
+        "calendar_date",
+        "valid_orders",
+        "merchandise_usd"
+      ],
+      "rows": 30,
+      "sample": [
+        [
+          "2025-11-01",
+          "11",
+          "1882.30"
+        ],
+        [
+          "2025-11-02",
+          "15",
+          "2262.83"
+        ],
+        [
+          "2025-11-03",
+          "10",
+          "2078.69"
+        ],
+        [
+          "2025-11-04",
+          "16",
+          "1989.59"
+        ],
+        [
+          "2025-11-05",
+          "9",
+          "798.48"
+        ]
+      ]
+    },
+    "q4b_drill_day_to_order": {
+      "question": "Question: The orders of 2025-11-28 (drill down from day to order).",
+      "columns": [
+        "order_id",
+        "customer_id",
+        "item_lines",
+        "merch_usd"
+      ],
+      "rows": 16,
+      "sample": [
+        [
+          "order_0000176",
+          "customer_002330",
+          "1",
+          "70.89"
+        ],
+        [
+          "order_0000214",
+          "customer_003504",
+          "4",
+          "596.21"
+        ],
+        [
+          "order_0000813",
+          "customer_000764",
+          "5",
+          "205.24"
+        ],
+        [
+          "order_0001725",
+          "customer_002734",
+          "1",
+          "134.16"
+        ],
+        [
+          "order_0001804",
+          "customer_002732",
+          "1",
+          "181.12"
+        ]
+      ]
+    },
+    "q4c_drill_order_to_line": {
+      "question": "Question: The lines of every order on 2025-11-28 (drill down from order to line).",
+      "columns": [
+        "order_id",
+        "order_item_seq",
+        "product_id",
+        "product_category",
+        "item_price_usd"
+      ],
+      "rows": 30,
+      "sample": [
+        [
+          "order_0000176",
+          "1",
+          "product_002973",
+          "Toys & Games",
+          "70.89"
+        ],
+        [
+          "order_0000214",
+          "1",
+          "product_006774",
+          "Furniture & Decor",
+          "107.56"
+        ],
+        [
+          "order_0000214",
+          "2",
+          "product_000130",
+          "Automotive",
+          "90.74"
+        ],
+        [
+          "order_0000214",
+          "3",
+          "product_001171",
+          "Home & Bedding",
+          "32.81"
+        ],
+        [
+          "order_0000214",
+          "4",
+          "product_006564",
+          "Mobile & Telecom",
+          "365.10"
+        ]
+      ]
+    },
+    "q5_pivot_month_by_region_2026h1": {
+      "question": "Question: 2026 first half, merchandise per month as rows and regions as columns.  (pivot / rotate)",
+      "columns": [
+        "month",
+        "Midwest",
+        "Northeast",
+        "South",
+        "West"
+      ],
+      "rows": 6,
+      "sample": [
+        [
+          "1",
+          "8518.22",
+          "9638.63",
+          "13871.17",
+          "11162.89"
+        ],
+        [
+          "2",
+          "7768.23",
+          "5720.58",
+          "9115.51",
+          "6207.29"
+        ],
+        [
+          "3",
+          "8467.45",
+          "8708.97",
+          "13549.72",
+          "8889.58"
+        ],
+        [
+          "4",
+          "4992.55",
+          "6971.58",
+          "14093.54",
+          "11478.62"
+        ],
+        [
+          "5",
+          "6651.50",
+          "7409.82",
+          "12873.65",
+          "9409.14"
+        ]
+      ]
+    },
+    "q6_geo_drill_region_state_city": {
+      "question": "Question: In the West region in 2026, which states and cities buy most?  (drill along region > state > city)",
+      "columns": [
+        "customer_state",
+        "customer_city",
+        "valid_orders",
+        "merchandise_usd",
+        "level"
+      ],
+      "rows": 41,
+      "sample": [
+        [
+          "AK",
+          "None",
+          "22",
+          "3698.64",
+          "1"
+        ],
+        [
+          "AK",
+          "Anchorage",
+          "11",
+          "2606.40",
+          "0"
+        ],
+        [
+          "AK",
+          "Fairbanks",
+          "11",
+          "1092.24",
+          "0"
+        ],
+        [
+          "AZ",
+          "None",
+          "15",
+          "3084.88",
+          "1"
+        ],
+        [
+          "AZ",
+          "Phoenix",
+          "13",
+          "2954.94",
+          "0"
+        ]
+      ]
+    },
+    "q7_category_share_within_region": {
+      "question": "Question: Within each region, what share of 2025 merchandise does each category take, and its rank?",
+      "columns": [
+        "customer_region",
+        "product_category",
+        "merchandise_usd",
+        "share_in_region",
+        "rank_in_region"
+      ],
+      "rows": 64,
+      "sample": [
+        [
+          "Midwest",
+          "Furniture & Decor",
+          "18590.41",
+          "0.17627763143085068",
+          "1"
+        ],
+        [
+          "Midwest",
+          "Mobile & Telecom",
+          "12885.34",
+          "0.12218112539643813",
+          "2"
+        ],
+        [
+          "Midwest",
+          "Electronics & Accessories",
+          "12302.73",
+          "0.11665671195703965",
+          "3"
+        ],
+        [
+          "Midwest",
+          "Watches & Gifts",
+          "8828.41",
+          "0.08371258106197961",
+          "4"
+        ],
+        [
+          "Midwest",
+          "Garden & Outdoor",
+          "6348.03",
+          "0.0601931690937415",
+          "5"
+        ]
+      ]
+    },
+    "q8_payment_type_mix": {
+      "question": "Question: How many 2025 orders used each payment type, and how much was paid with it?  (payment grain kept apart from lines)",
+      "columns": [
+        "payment_type",
+        "orders_using_type",
+        "payment_rows",
+        "paid_usd"
+      ],
+      "rows": 5,
+      "sample": [
+        [
+          "credit_card",
+          "1697",
+          "1697",
+          "261407.19"
+        ],
+        [
+          "digital_wallet",
+          "952",
+          "952",
+          "153213.87"
+        ],
+        [
+          "debit_card",
+          "430",
+          "430",
+          "60858.07"
+        ],
+        [
+          "bank_transfer",
+          "326",
+          "326",
+          "46688.61"
+        ],
+        [
+          "gift_card",
+          "130",
+          "130",
+          "19487.65"
+        ]
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "q1 slice: regions add up to the 2025 total (orders, merchandise)",
+      "status": "passed",
+      "expected": "(3306, Decimal('494692.48'))",
+      "got": "(3306, Decimal('494692.48'))"
+    },
+    {
+      "check": "q2 dice: 2 regions x 3 categories = 6 cells",
+      "status": "passed",
+      "expected": "6",
+      "got": "6"
+    },
+    {
+      "check": "q3 roll-up: months, quarter subtotals, year subtotals and grand total all equal the same total",
+      "status": "passed",
+      "expected": "1380161.23",
+      "got": "(Decimal('1380161.23'), Decimal('1380161.23'), Decimal('1380161.23'), Decimal('1380161.23'))"
+    },
+    {
+      "check": "q4a drill month->day: days add up to the month",
+      "status": "passed",
+      "expected": "(360, Decimal('54130.65'))",
+      "got": "(360, Decimal('54130.65'))"
+    },
+    {
+      "check": "q4b drill day->order: orders add up to the day",
+      "status": "passed",
+      "expected": "(16, Decimal('3670.57'))",
+      "got": "(16, Decimal('3670.57'))"
+    },
+    {
+      "check": "q4c drill order->line: lines add up to the orders, line count = sum of item_lines",
+      "status": "passed",
+      "expected": "(Decimal('3670.57'), 30)",
+      "got": "(Decimal('3670.57'), 30)"
+    },
+    {
+      "check": "q5 pivot: 6 months x 4 region columns, cells add up to the unpivoted total",
+      "status": "passed",
+      "expected": "224100.74",
+      "got": "224100.74"
+    },
+    {
+      "check": "q6 geo drill: cities = state subtotals = region total",
+      "status": "passed",
+      "expected": "93814.90",
+      "got": "(Decimal('93814.90'), Decimal('93814.90'))"
+    },
+    {
+      "check": "q7 shares sum to 1 within each region",
+      "status": "passed",
+      "expected": "1.0",
+      "got": "{'Midwest': 1.0, 'Northeast': 1.0, 'South': 1.0, 'West': 1.0}"
+    },
+    {
+      "check": "q8 payment mix: paid amount adds up to order-level payments; orders_using_type is not additive (two-payment orders)",
+      "status": "passed",
+      "expected": "(Decimal('541655.39'), '>= 3306')",
+      "got": "(Decimal('541655.39'), 3535)"
+    },
+    {
+      "check": "joining lines to payments would double count (why the set never does it)",
+      "status": "passed",
+      "expected": "> 1380161.23",
+      "got": "1493833.12"
+    }
+  ],
+  "all_checks_passed": true
+}

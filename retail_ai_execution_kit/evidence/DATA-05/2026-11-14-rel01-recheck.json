@@ -1,0 +1,99 @@
+{
+  "task_id": "DATA-05",
+  "verification_status": "passed",
+  "method": "command",
+  "actor": "claude-opus-5-5（复核与重跑）；实现者 codex",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "independent",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv)",
+    "data_mode": "fully_synthetic local ZIP",
+    "network": "未联网"
+  },
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "冻结研究范围是截止前全部历史（DATA-03/D013）。源 ZIP 完整存档并校验 SHA-256（源文件、存档副本、清单三者一致）；12 个 CSV 成员逐个记录字节与哈希，并与当前 ZIP 重算一致；10 张业务表行数和列与已批准契约一致。来源版本为生成器运行 ID＋源哈希，生成日期 2026-07-21，本地副本核验日期 2026-11-09（DATA-01）。只处理选定包，没有声称审计其他候选。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "源 ZIP 读取前后哈希不变；导入写入版本化工作目录，原始层是同哈希只读存档；重跑命中已有目录并校验输出哈希，清单字节不变；verify_import 覆盖错误校验码、无时区截止、写回源目录、空范围、锁冲突、损坏输出均拒绝且不覆盖。代码不读取环境变量或网络，项目内没有 .env，data/raw 与 data/processed 被 Git 忽略。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "没有外部采集，也没有受限情况需要记录；只按截止筛选已有合成包记录（verify_import 逐行比对 10 张表与独立重算一致），没有生成或补充任何记录来凑规模。规模按契约以订单明细 15,639 行计。数据本身是发布者生成的合成数据，这一性质在契约和报告中写明（D013）。"
+    }
+  ],
+  "command": ".venv/bin/python src/retail_bi/data/ingest.py --source ../ecommerce-sample-database-100k/01_source/baseline_10000_seed42.zip --raw-root data/raw/archives --work-root data/processed/engineering --cutoff 2026-11-08T00:00:00Z --expected-sha256 d50ee64a0478d8ae8df1b8b66521671a4911e19f911ae86196452a668f917a16; .venv/bin/python evidence/DATA-05/verify_import.py; .venv/bin/python evidence/DATA-05/verify_against_contract.py",
+  "exit_code": 0,
+  "summary": "2026-11-14 REL-01 发现 .gitignore 中未锚定的 \"warehouse/\" 同时忽略了 src/retail_bi/warehouse、tests/warehouse 与 reports/warehouse，数仓代码、测试与报告此前从未提交；已改为 \"/warehouse/\"（只忽略根目录的构建与发布库），并把这些文件加入仓库。 该规则不涉及 data/ 下的忽略项，数据层的忽略范围不变。 上一版摘要：复核 Codex 实现的原包重建导入。DATA-03/04 完成后，部分通过证据中唯一待定的条件 1（正式研究范围与契约）已满足。实际重跑导入幂等（清单字节不变），verify_import.py 5 组 PASS，对照契约检查 21/21 PASS。ingest.py 未改动。",
+  "inputs": [
+    {
+      "path": "contracts/data_contract.json",
+      "sha256": "e1b24656b0425f22e54e907756f2f450feee638426763162428834a0fd71d1ac"
+    },
+    {
+      "path": "reports/data/dataset_selection.md",
+      "sha256": "4b5c0a634cea079c89e2959bd009cbe8c9c5de7925731383f904484944b97d5a"
+    },
+    {
+      "path": "evidence/DATA-05/verify_import.py",
+      "sha256": "92b1a1abb9a585d07372f4e2598aa1caebc41f62dc6cbcfcf5828adf0d0e6621"
+    },
+    {
+      "path": "evidence/DATA-05/verify_against_contract.py",
+      "sha256": "622bbc42b7c3b1b26778d48549df44405d0308876ccabc923f58ffa68bb0b2f9"
+    },
+    {
+      "path": "evidence/DATA-05/import_run.json",
+      "sha256": "4a2daa61641b3241ba9412fea606f4859edc74da4c3792a177361510c8fd6055"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "400dc7f6db61758886915162ee188f26e1cd77ea7ee372d86b34dd54c128d157"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/data/ingest.py",
+      "sha256": "d0f30d29ae8d88741a54ed6c33f581fe93e42c758b7d92c2460f628503b171e9"
+    },
+    {
+      "path": "reports/data/source_manifest.json",
+      "sha256": "a1a1b3d332fdc4563cfa2f840fed179644d1efef708c0fd2b03e32a778ea5a10"
+    },
+    {
+      "path": "reports/data/engineering_import_review.md",
+      "sha256": "667fbb6da1d4715cbc8fa070ec491cf0b7ae1123c6cfa2ecfb331f37016fde9c"
+    },
+    {
+      "path": "evidence/DATA-05/review_run_2026-11-10_claude.log",
+      "sha256": "fc7c94c5901510fd3fcef6255a76dadf96990b860e9df111ac1546817a93476d"
+    },
+    {
+      "path": "evidence/DATA-05/replay_2026-11-10_claude.json",
+      "sha256": "4a2daa61641b3241ba9412fea606f4859edc74da4c3792a177361510c8fd6055"
+    }
+  ],
+  "limitations": [
+    "复核者没有改动实现；实现者为 codex。",
+    "工作层清单中的 status/formal_gate 文字是生成时快照，未重建；当前批准状态以契约为准。",
+    "只在本机 macOS arm64 运行；他机复现由 REL-02 负责。",
+    "清单与回放输出包含本机绝对路径。"
+  ],
+  "steps": [
+    "在台账登记 DATA-05 从已释放的 codex 移交给本对话复核（台账 7fe64acc…）。",
+    "阅读 ingest.py 与 verify_import.py，确认哈希校验、独占锁、临时目录原子发布、已有输出校验逻辑。",
+    "实际重跑导入命令，记录前后清单哈希相同；运行 verify_import.py（5 PASS）。",
+    "编写并运行 verify_against_contract.py（21/21 PASS）。",
+    "在 engineering_import_review.md 末尾追加带日期的复核说明。Codex 的部分通过证据 2026-11-10-engineering-import.json 保留为历史。",
+    "2026-11-14 REL-01 后复核并重新登记。"
+  ],
+  "task_spec_sha256": "d2ca98ae9ff9baa9767d13dc8dec1110d03d8c29516bf9e60e3b41c8e8ef734d",
+  "performed_at": "2026-11-14T11:44:11.428351+08:00"
+}

@@ -1,0 +1,128 @@
+{
+  "task_id": "UI-05",
+  "verification_status": "passed",
+  "method": "hybrid",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "python": "3.12.14 (.venv), streamlit 1.67.0, altair",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; frozen model repurchase-logreg-v1",
+    "network": "仅本机 localhost:8599；关闭 Streamlit 使用统计"
+  },
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "基线（验证集五个候选）、测试指标（冻结模型 ROC-AUC 0.5153 [0.483, 0.5455] 与规则、基率）、样本范围（训练/验证/测试行数与正例等于 split_manifest）、校准（可靠性图与 ECE 0.0082）、误差（每周前 10% 混淆矩阵与分组表）以及评分名单都在页面显示。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "K 与概率下限滑块标为试算：K=10% → 前 70 名、20% → 前 141 名、下限 0.08 只保留 p≥0.08 者，均与独立 SQL 一致；交互前后 reports/model/*.json、模型文件、发布指针 SHA-256 相同，冻结的选模记录和测试结果只读显示。"
+    },
+    {
+      "criterion": 3,
+      "status": "passed",
+      "finding": "母体外 2,628 人显示“不适用模型”，不进名单、无概率；名单的模型因素和系数表注明非因果，试算说明概率之差不代表真实复购差异或触达增量。"
+    }
+  ],
+  "command": ".venv/bin/python evidence/UI-05/check.py; streamlit run app.py --server.port 8599 + built-in browser at 1400px",
+  "exit_code": 0,
+  "summary": "2026-11-14 REL-01 回归发现预测页指标表一列混有数字与“—”导致 ArrowInvalid 兜底；所有单元格改为文本（数值保留 4 位小数）。检查改为按数值比较，14/14，日志中无 ArrowInvalid。 上一版摘要：2026-11-14 UI-07 修改预测页：评分名单按发布版本缓存；冻结记录缺失时说明并停止；评分表模型版本不一致时不显示名单；指标表改用规范名称、区间写成“a–b”、空值“—”。检查同步改为按新表头比较，重跑 14/14。 详见 reports/ui/full_ui_review.md。上一版摘要：预测页面展示样本与切分、基线与选模、冻结的测试结果（含置信区间、规则基线、基率与校准图）、误差分析和名单试算。K 与概率下限只在页面内试算，冻结的报告、模型文件和发布指针前后哈希不变；默认 K=10% 的 70 人名单与独立 SQL 按冻结规则排序一致；母体外 2,628 人显示不适用；特征与系数标注非因果。AppTest 14/14，浏览器检查通过。",
+  "inputs": [
+    {
+      "path": "reports/model/split_manifest.json",
+      "sha256": "cf203b5405d2289e5ffa5015492ca5caedd728521bc145df2a271f5129cb76ae"
+    },
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "reports/model/error_analysis.json",
+      "sha256": "d33e55f2310682d63de7dbcdf83a22588b744884c5d4ce29a92ef4b0b6595b22"
+    },
+    {
+      "path": "reports/model/baselines.json",
+      "sha256": "fb9430a5be7f0390acb5958dfbb448606a6d2842db41e91bbf617ee2ae343eaa"
+    },
+    {
+      "path": "docs/model_card.md",
+      "sha256": "74bf33f4430c64dd1349f2d3cbdfb13ef205fa684df2387e783fe8292dc491e5"
+    },
+    {
+      "path": "sql/scores.sql",
+      "sha256": "5c5b051322e95cb3c329c605419fdc29a0e2bea4248d1f3129181f31169a3f58"
+    },
+    {
+      "path": "evidence/UI-05/check.py",
+      "sha256": "c11bb36ff4e93054712a17d7fa79885172ba189028d7b18bc5f9ee292076bf85"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/retail_bi/ui/pages/prediction.py",
+      "sha256": "225efad14260029eb8a0863d9cc2777added5453c0b98bd0e30dfc9b726666ec"
+    },
+    {
+      "path": "src/retail_bi/ui/model_data.py",
+      "sha256": "bd5ee31f2a26c320071b408aaca4f8fbb10be09a5201c1622994b52cc97c0aa6"
+    },
+    {
+      "path": "reports/ui/model_page_review.md",
+      "sha256": "f3ede57e81792288ddaee385891ca6a1cbbe4367427ddf9f2a30204e95f1926b"
+    },
+    {
+      "path": "evidence/UI-05/check_run.log",
+      "sha256": "4ac4122fe5879d5ec29aa8185c19db6455987a892638b15c86f6b9410654b211"
+    },
+    {
+      "path": "evidence/UI-05/check_run_1_failed.log",
+      "sha256": "917341d3f116c84bbeb2474c08f3781ad44873a86912e06e47ea2dcf8cc90a86"
+    },
+    {
+      "path": "evidence/UI-05/test_results_browser.jpg",
+      "sha256": "60fdd97a8b35d1fe28d96ab3106c32f7174edf34bc5e763416d4b82f2d570fb7"
+    },
+    {
+      "path": "evidence/UI-05/list_trial_browser.jpg",
+      "sha256": "091b85ecdb33213cd92c9f2b533e35ea6ab438ba63c83da019202c7ebdd7d165"
+    },
+    {
+      "path": "src/retail_bi/ui/pages/customers.py",
+      "sha256": "b3a972204d59335d5f7e33af51404353eab22f5e735382ecb742850ad9f8eb83"
+    },
+    {
+      "path": "evidence/UI-05/check_run_ui07_recheck.log",
+      "sha256": "8bbbca3ef9402c4e85aa107705ecb930ced5255198219db2536f1f8f6daaa9c9"
+    },
+    {
+      "path": "evidence/UI-05/check.py",
+      "sha256": "c11bb36ff4e93054712a17d7fa79885172ba189028d7b18bc5f9ee292076bf85"
+    },
+    {
+      "path": "evidence/UI-05/check_run_rel01_recheck.log",
+      "sha256": "f1300b8053bb52bad398b9aaece24f29b5403ba309fc16bd9ee499fb6815c2ff"
+    }
+  ],
+  "limitations": [
+    "自审。",
+    "第一次 AppTest 13/14：图表元素名写错，页面无误；修正后 14/14。",
+    "测试集预测未逐行保存，试算在最新评分名单上进行，不重算测试集其他 K 的指标。",
+    "隐藏标签页中的表格首次绘制只显示一列，重新点开后正常（渲染时机）。"
+  ],
+  "steps": [
+    "UI-07 修改页面后重跑本任务检查。",
+    "重新登记证据。",
+    "2026-11-14 REL-01 后复核并重新登记。"
+  ],
+  "task_spec_sha256": "3f2992582ffc497740eedd74cad51f8214bf81fabbadbbad08d285fe533ec9ca",
+  "performed_at": "2026-11-14T11:44:11.562596+08:00"
+}

@@ -1,278 +1,26 @@
-2026-11-14 11:17:03.466 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:03.718 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:04.039 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:04.234 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:04.322 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:04.325 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:04.367 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:04.521 No runtime found, using MemoryCacheStorageManager
-2026-11-14 11:17:04.521 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:04.624 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:04.626 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:04.667 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:04.753 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:04.754 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:04.786 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:04.788 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:04.819 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:04.821 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:04.840 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.031 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.285 No runtime found, using MemoryCacheStorageManager
-2026-11-14 11:17:05.285 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.363 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.448 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.543 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.628 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:05.629 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:05.647 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.781 No runtime found, using MemoryCacheStorageManager
-2026-11-14 11:17:05.781 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:05.882 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:06.069 No runtime found, using MemoryCacheStorageManager
-2026-11-14 11:17:06.070 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
-2026-11-14 11:17:06.151 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column Brier with type object')
-2026-11-14 11:17:06.153 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
-Traceback (most recent call last):
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/streamlit/dataframe_util.py", line 967, in convert_pandas_df_to_arrow_table
-    return pa.Table.from_pandas(df, preserve_index=preserve_index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/table.pxi", line 4777, in pyarrow.lib.Table.from_pandas
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 658, in dataframe_to_arrays
-    arrays = [convert_column(c, f)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 643, in convert_column
-    raise e
-  File "/Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/lib/python3.12/site-packages/pyarrow/pandas_compat.py", line 637, in convert_column
-    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pyarrow/array.pxi", line 414, in pyarrow.lib.array
-  File "pyarrow/array.pxi", line 97, in pyarrow.lib._ndarray_to_array
-  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
-pyarrow.lib.ArrowInvalid: ("Could not convert '—' with type str: tried to convert to double", 'Conversion failed for column PR-AUC with type object')
-2026-11-14 11:17:06.193 No runtime found, using MemoryCacheStorageManager
-2026-11-14 11:17:06.199 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:48.212 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:48.498 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:48.897 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:49.099 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:49.242 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:49.413 No runtime found, using MemoryCacheStorageManager
+2026-11-14 11:43:49.413 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:49.561 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:49.736 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:49.949 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:50.293 No runtime found, using MemoryCacheStorageManager
+2026-11-14 11:43:50.293 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:50.377 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:50.469 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:50.559 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:50.703 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:51.266 No runtime found, using MemoryCacheStorageManager
+2026-11-14 11:43:51.266 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:51.537 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:51.886 No runtime found, using MemoryCacheStorageManager
+2026-11-14 11:43:51.886 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-14 11:43:52.069 No runtime found, using MemoryCacheStorageManager
+2026-11-14 11:43:52.083 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
 PASS all five pages render without exceptions 
 PASS rendering every page loads no ETL, warehouse-build or training module (nor sklearn/lightgbm) 
 PASS view-query cache key = (release version, releases dir, SQL with columns and filters, bound filter values) 
@@ -288,5 +36,6 @@ PASS API unreachable: query still answers from the executed query (47,590.59 USD
 PASS API unreachable: live weekly report request falls back to the template, final number check passed 
 PASS API unreachable: agent still ends with a pending draft, not sent 
 PASS no exception, and the key never appears on the page (text, tables, code, errors) 
-15/15 checks passed
+PASS no table fell back because of a serialisation error (Arrow) on any page 
+16/16 checks passed
 exit=0

@@ -292,7 +292,7 @@
         "区分当前已实现命令与计划命令；干净环境最小导入或帮助命令实际成功。"
       ],
       "evidence": [
-        "evidence/GOV-07/2026-11-10-dw07-recheck.json"
+        "evidence/GOV-07/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -534,7 +534,7 @@
         "采集受限时如实记录，不能用生成数据替代正式数据规模。"
       ],
       "evidence": [
-        "evidence/DATA-05/2026-11-10-acceptance-review.json"
+        "evidence/DATA-05/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -1177,7 +1177,7 @@
         "故意注入重复维键、空日期和错误粒度夹具应使检查失败。"
       ],
       "evidence": [
-        "evidence/DW-09/2026-11-10-reconciliation.json"
+        "evidence/DW-09/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2575,7 +2575,7 @@
         "应用实际启动，空数据状态可理解，不能只交静态截图。"
       ],
       "evidence": [
-        "evidence/UI-01/2026-11-14-ui07-recheck.json"
+        "evidence/UI-01/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2695,7 +2695,7 @@
         "展示的是可观测历史，不编造年龄、渠道或真实身份。"
       ],
       "evidence": [
-        "evidence/UI-04/2026-11-14-ui07-recheck.json"
+        "evidence/UI-04/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2734,7 +2734,7 @@
         "超出模型母体明确不适用；特征变化不表述为因果效果。"
       ],
       "evidence": [
-        "evidence/UI-05/2026-11-14-ui07-recheck.json"
+        "evidence/UI-05/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,
@@ -2817,7 +2817,7 @@
         "数据缺失、API失败、模型版本不匹配可恢复，错误提示不泄露内部秘钥。"
       ],
       "evidence": [
-        "evidence/UI-07/2026-11-14-full-review.json"
+        "evidence/UI-07/2026-11-14-rel01-recheck.json"
       ],
       "blocker": null,
       "skip_reason": null,

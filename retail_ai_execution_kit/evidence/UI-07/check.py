@@ -58,6 +58,20 @@ def tabs_text(at):
     return text(at)
 
 
+# Streamlit falls back silently when a table cannot be serialised (e.g. a column mixing numbers and text). Its loggers
+# do not propagate, so attach directly to the module logger that reports the fallback; a fallback counts as a failure.
+import logging  # noqa: E402
+import streamlit.dataframe_util as _du  # noqa: E402
+arrow_errors = []
+
+
+class _Arrow(logging.Handler):
+    def emit(self, record):
+        arrow_errors.append(record.getMessage()[:120] + ' | ' + (str(record.exc_info[1])[:160] if record.exc_info else ''))
+
+
+_du._LOGGER.addHandler(_Arrow())
+
 # ---- 1. pages never run ETL or training ----------------------------------------------------------------------------
 sessions = {p: open_page(p) for p in PAGES}
 check('all five pages render without exceptions', all(not at.exception for at in sessions.values()),
@@ -172,5 +186,6 @@ finally:
         else:
             os.environ[k] = v
 
+check('no table fell back because of a serialisation error (Arrow) on any page', not arrow_errors, arrow_errors[:3])
 print(f'{sum(ok)}/{len(ok)} checks passed')
 sys.exit(0 if all(ok) else 1)

@@ -21,11 +21,12 @@ MET = {'roc_auc': 'ROC-AUC', 'roc_auc_95ci': 'ROC-AUC 95% 区间', 'pr_auc': 'PR
 
 
 def cell(v):
+    """Text for every cell, so a column never mixes numbers and '—' (Arrow cannot serialise that)."""
     if v is None:
         return '—'
     if isinstance(v, list):
         return f'{v[0]:.3f}–{v[1]:.3f}'
-    return round(v, 4) if isinstance(v, float) else v
+    return f'{v:.4f}' if isinstance(v, (int, float)) else str(v)
 
 
 @st.cache_data(show_spinner='读取评分名单…', max_entries=4)

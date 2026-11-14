@@ -11,7 +11,7 @@ models/
 *.duckdb
 *.duckdb.wal
 # GOV-07 补充（2026-11-09）
-warehouse/
+/warehouse/
 logs/
 *.parquet
 .pytest_cache/

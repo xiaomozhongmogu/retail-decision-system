@@ -1,0 +1,27 @@
+{'step': '1 raw ZIP orders', 'orders': 10000, 'merch_usd': '1502504.01'}
+{'step': '2 minus orders placed at/after the 2026-11-08 cutoff', 'orders': 689, 'merch_usd': '93902.28', 'kind': 'excluded'}
+{'step': '3 historical scope (DATA-05)', 'orders': 9311, 'merch_usd': '1408601.73'}
+{'step': '4 minus quarantined in cleaning (DATA-07)', 'orders': 0, 'merch_usd': '0', 'kind': 'quarantined'}
+{'step': '5 DWD fact_order', 'orders': 9311, 'merch_usd': '1408601.73'}
+{'step': '6 minus cancelled (no approval)', 'orders': 194, 'merch_usd': '27778.26', 'kind': 'excluded from valid'}
+{'step': '7 minus approved only after the cutoff', 'orders': 4, 'merch_usd': '662.24', 'kind': 'excluded from valid at cutoff'}
+{'step': '8 valid purchases at cutoff (DWD)', 'orders': 9113, 'merch_usd': '1380161.23'}
+{'step': '9 DWS orders_daily_region', 'orders': 9113, 'merch_usd': '1380161.23'}
+{'step': '10 ADS kpi_monthly', 'orders': 9113, 'merch_usd': '1380161.23'}
+checks 32 / 32 chain True
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.2.0, pluggy-1.7.0 -- /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit/.venv/bin/python
+rootdir: /Users/liqinyang/Documents/Study/智能决策综合实践/Retail Decision System/retail_ai_execution_kit
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collecting ... collected 6 items
+
+tests/warehouse/test_reconciliation.py::test_published_build_passes_all_checks_and_reconciles PASSED [ 16%]
+tests/warehouse/test_reconciliation.py::test_fixture_is_clean PASSED     [ 33%]
+tests/warehouse/test_reconciliation.py::test_duplicate_dimension_key_fails PASSED [ 50%]
+tests/warehouse/test_reconciliation.py::test_null_date_key_fails PASSED  [ 66%]
+tests/warehouse/test_reconciliation.py::test_wrong_grain_fails PASSED    [ 83%]
+tests/warehouse/test_reconciliation.py::test_orphan_fact_row_fails PASSED [100%]
+
+============================== 6 passed in 1.86s ===============================
+exit=0
