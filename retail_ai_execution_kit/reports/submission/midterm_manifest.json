@@ -1,0 +1,52 @@
+{
+  "task_id": "DOC-02",
+  "stage": "midterm",
+  "deadline": "2026-11-30",
+  "registered_at": "2026-11-18T11:30:00+08:00",
+  "registered_by": "claude-opus-5-5",
+  "files": [
+    {
+      "path": "deliverables/midterm_report.docx",
+      "sha256": "abc8065fb31b1a29b6a4605faa4d733ba36240a82a2f58b4a770686914be44e3",
+      "role": "中期检查报告（15 页，A4；Word 16.115 渲染核验）",
+      "bytes": 791038
+    },
+    {
+      "path": "deliverables/midterm_slides.pptx",
+      "sha256": "ac92a2e91ff1410bd4849498a4aa2b767c5ca382c49270ee226b27ef01e84e90",
+      "role": "中期答辩 PPT（15 页，16:9，每页含演讲备注；PowerPoint 16.115 渲染核验）",
+      "bytes": 157547
+    },
+    {
+      "path": "reports/submission/midterm_defense_prep.md",
+      "sha256": "6f3efb04b8079317ef6e86390f3b2c0a2665c8a3f48ed339d0ddb80b65ca7cda",
+      "role": "演示脚本与问答准备（20 题）",
+      "bytes": 9489
+    }
+  ],
+  "data_versions": {
+    "release": "wh-d3aaa559048c",
+    "model": "repurchase-logreg-v1",
+    "ledger_commit": "ea55ef1f9e3d81b505ecaad2829ba851cd5b8fbc",
+    "data": "完全合成"
+  },
+  "build": {
+    "charts": "evidence/DOC-02/charts.py（matplotlib 3.11.2）",
+    "report": "evidence/DOC-02/report.js（docx 9.15.4，node 20.18.0）",
+    "slides": "evidence/DOC-02/deck.js（pptxgenjs 3.12.0）",
+    "note": "数字在生成时从结果文件读取（eda_initial、cluster_metrics、test_metrics、model_selection、etl_run、tasks、AI 评测、test_summary、发布 ADS 视图），不手填。"
+  },
+  "readiness": "draft_ready_team_review_pending",
+  "open_gaps": [
+    "G1 第十一节团队分工为【待团队填写】：技术负责人姓名、文档/PPT/讲演/答辩分工、孙卓班级（GOV-03）",
+    "G2 合成数据与数据时效尚无教师书面认可（GOV-04）；报告与 PPT 已注明“完全合成”",
+    "G3 周报人工抽查（AI-10）未完成，报告与 PPT 已如实标注",
+    "G4 未经组员审阅与演练；讲演人、答题人待定",
+    "G5 未提交、未答辩；实际发生后在 midterm_defense_prep.md 第 4 节和本清单 submitted 中登记凭证",
+    "G6 Word 打开时会提示更新目录域，选“是”即可（渲染时已核对目录页码）"
+  ],
+  "submitted": null,
+  "submission_receipt": null,
+  "defense": null,
+  "note": "submitted/defense=null 表示尚未发生或本 AI 不知道，不表示已完成。"
+}

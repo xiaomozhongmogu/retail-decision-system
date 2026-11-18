@@ -1,0 +1,8 @@
+{
+  "fig_monthly": "reports/analysis/eda_initial.json#monthly",
+  "fig_lifecycle": "warehouse release ads.lifecycle_mix_weekly (latest as_of)",
+  "fig_rfm": "reports/model/cluster_metrics.json#rule_segments.apply_as_of_profile",
+  "fig_test": "reports/model/test_metrics.json#scores",
+  "fig_calibration": "reports/model/test_metrics.json#scores.p_model.reliability",
+  "fig_architecture": "docs/architecture.md + src/retail_bi 实际模块"
+}

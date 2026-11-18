@@ -86,7 +86,7 @@
 | UI-06 | 接入AI工作台 | final | done | UI-01, AI-15 |
 | UI-07 | 完成可读性、缓存与异常交互验收 | final | done | UI-02, UI-03, UI-04, UI-05, UI-06 |
 | DOC-01 | 完成选题报告并形成阶段一材料 | proposal | in_review | GOV-03, GOV-06, DATA-12, EDA-01, DOC-04 |
-| DOC-02 | 完成中期检查报告与答辩材料 | midterm | todo | DOC-01, DW-10, EDA-06, ML-12, UI-05 |
+| DOC-02 | 完成中期检查报告与答辩材料 | midterm | in_review | DOC-01, DW-10, EDA-06, ML-12, UI-05 |
 | DOC-03 | 完成正式报告六章及设计方案覆盖 | final | todo | DOC-02, AI-15, UI-07, DOC-05, DOC-08 |
 | DOC-04 | 核验学术文献与综述引用 | proposal | done | GOV-05 |
 | DOC-05 | 整理实现证据、图表和复现说明 | final | done | DW-10, ML-12, AI-15, UI-07 |
@@ -1346,7 +1346,7 @@
 
 ### DOC-02 完成中期检查报告与答辩材料
 
-- [ ] 状态：`todo`；阶段：`midterm`；范围：已选核心。
+- [ ] 状态：`in_review`；阶段：`midterm`；范围：已选核心。
 - 依据：C25, C28。
 - 前置：DOC-01, DW-10, EDA-06, ML-12, UI-05。
 - 允许修改：`deliverables`, `reports/submission`；另可写本任务证据/交接。
@@ -1358,6 +1358,8 @@
 1. 展示已完成的数仓、EDA、聚类、基线与预测及真实评估，区分AI已完成和计划。
 2. 列当前问题、未完成工作、风险和终期排期，不能用计划截图冒充系统。
 3. 报告与PPT可读，准备现场问答和实际演示；当期实际提交/答辩立即留凭证，不等待REL-07终期汇总。
+
+**当前阻塞：** 剩余：组员审阅并填写报告第十一节分工（GOV-03）；组内演练；11-30 前实际提交与现场答辩并保存凭证（reports/submission/midterm_manifest.json 的 submitted/defense、midterm_defense_prep.md 第 4 节）。草稿证据 evidence/DOC-02/2026-11-18-midterm-draft.json（条件 1、2 通过，条件 3 待完成）。依赖 DOC-01 回执仍待补。
 
 证据：尚无已登记验收证据。
 

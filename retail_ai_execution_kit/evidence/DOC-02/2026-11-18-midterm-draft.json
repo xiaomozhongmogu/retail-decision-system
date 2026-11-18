@@ -1,0 +1,162 @@
+{
+  "task_id": "DOC-02",
+  "task_spec_sha256": "b722216ed446fef4f1565387954ddb6d05a137463b137f1547c416ec579e0d2b",
+  "verification_status": "partial",
+  "method": "hybrid",
+  "performed_at": "2026-11-18T11:30:00+08:00",
+  "actor": "claude-opus-5-5",
+  "reviewer": "claude-opus-5-5",
+  "review_mode": "self_review",
+  "environment": {
+    "os": "macOS 27.2 arm64",
+    "render": "Microsoft Word 16.115、PowerPoint 16.115（AppleScript 导出 PDF）",
+    "build": "node 20.18.0 + docx 9.15.4 / pptxgenjs 3.12.0；matplotlib 3.11.2（临时环境，不改项目 .venv）",
+    "data_mode": "fully_synthetic; release wh-d3aaa559048c; model repurchase-logreg-v1"
+  },
+  "command": "python charts.py . <fig>；node report.js . <fig> deliverables/midterm_report.docx；node deck.js . <fig> deliverables/midterm_slides.pptx；pptx validate.py（All validations PASSED）；Word/PowerPoint 导出 PDF；pdftoppm 逐页目视检查；pandoc/slide_text 扫描 undefined/NaN（0 处）",
+  "exit_code": 0,
+  "summary": "生成中期检查报告（15 页：进展总表、架构图、数据、数仓、分析、分群、预测设计与时间外测试、AI 进展、问题风险、终期排期、分工、附录）与答辩 PPT（15 页，每页演讲备注），以及演示脚本与 20 题问答准备。图表与数字在生成时从已验收的结果文件和发布视图读取。Word 与 PowerPoint 实际打开并导出 PDF，逐页检查：修正了架构图箭头穿过方框、命令行折行、幻灯片标题对齐、数据标签取整与若干换行。",
+  "inputs": [
+    {
+      "path": "reports/analysis/eda_initial.json",
+      "sha256": "3c0bd5f4369a546aae007ce0471becd3bbc092503e399991e9455be001dd2f65"
+    },
+    {
+      "path": "reports/model/cluster_metrics.json",
+      "sha256": "8d577f1a1e955f5e72283cc1edd5ec5e3e0c6a85c4346714eef3ee219d38cb40"
+    },
+    {
+      "path": "reports/model/test_metrics.json",
+      "sha256": "cf0ef16ed159af93a09a13dc50d89f62bed157df08228deb50923f37a8ed0f4f"
+    },
+    {
+      "path": "reports/model/model_selection.json",
+      "sha256": "395e5058b475c96d39f1cca72c587c487fc5dbe6e38dcec7a3d5502f6690a3af"
+    },
+    {
+      "path": "reports/warehouse/etl_run.json",
+      "sha256": "89862ccbdf9b52a9e029cc504a185c344381a9eb8df19e98013aef9d447db04f"
+    },
+    {
+      "path": "reports/ai/nl2sql_evaluation.json",
+      "sha256": "6d6ededed38480b8dc2764c75d2bc5012e4b82ee4e000bdcfa3fc07275c74936"
+    },
+    {
+      "path": "reports/ai/rag_evaluation.json",
+      "sha256": "b0d1493b2c27effaadf9b275b800379eb97efe86bccbf1a21c6141ca7335ea14"
+    },
+    {
+      "path": "reports/ai/agent_evaluation.json",
+      "sha256": "deee2022eba2a448b9925d93a913efce163248f9991257aa97f88839dc4f16cc"
+    },
+    {
+      "path": "reports/ai/integration_evaluation.json",
+      "sha256": "6bf92739ddd9aed050fa8a3721620b97ead8826f19df88ef67eea9b6173dbb09"
+    },
+    {
+      "path": "reports/release/test_summary.json",
+      "sha256": "c3068c1a109491cc8a0e9ec637394f77dc9ca846ffb1d2a04177ca605f659ab8"
+    },
+    {
+      "path": "reports/analysis/decision_brief.md",
+      "sha256": "44d48b8fde91371ec4adb9b398b334e010dec76ff821b06446ef54c81a407894"
+    },
+    {
+      "path": "reports/analysis/reflection_and_roadmap.md",
+      "sha256": "5e3eeafad6aa54d01f9d2432cfa055f28f9c110b97a1c5314d7a11dc9feb648c"
+    },
+    {
+      "path": "evidence/UI-05/test_results_browser.jpg",
+      "sha256": "60fdd97a8b35d1fe28d96ab3106c32f7174edf34bc5e763416d4b82f2d570fb7"
+    },
+    {
+      "path": "evidence/UI-06/query_assistant_live.jpg",
+      "sha256": "f1300292f874690df26473152a00d4e4c9ecb42c83985dcf23759d8d026eda5f"
+    },
+    {
+      "path": "evidence/UI-06/agent_live.jpg",
+      "sha256": "e3e92e9aeb16721c7fdb08d705c51bb9eceb322e5bf3963d0d183e5024b94782"
+    },
+    {
+      "path": "warehouse/releases/current.json",
+      "sha256": "093ee29207074fb787d22c63d0aa5597423b538ba2c10296aed337c9aedc3f19"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "deliverables/midterm_report.docx",
+      "sha256": "abc8065fb31b1a29b6a4605faa4d733ba36240a82a2f58b4a770686914be44e3"
+    },
+    {
+      "path": "deliverables/midterm_slides.pptx",
+      "sha256": "ac92a2e91ff1410bd4849498a4aa2b767c5ca382c49270ee226b27ef01e84e90"
+    },
+    {
+      "path": "reports/submission/midterm_manifest.json",
+      "sha256": "1c20bf09ea6677b9d86293b6febe7fb6d83296934cc82722b82d032d3814a0b2"
+    },
+    {
+      "path": "reports/submission/midterm_defense_prep.md",
+      "sha256": "6f3efb04b8079317ef6e86390f3b2c0a2665c8a3f48ed339d0ddb80b65ca7cda"
+    },
+    {
+      "path": "evidence/DOC-02/render_midterm_report_word.pdf",
+      "sha256": "8c908558cb67e3c1936a6b4a61189b6d4a3a7bb26959320e8ed8fe90fa132af7"
+    },
+    {
+      "path": "evidence/DOC-02/render_midterm_slides_powerpoint.pdf",
+      "sha256": "86c36908da801aa8de855554b0b694b6c12e525944e95ad2a22b240e4a9331bd"
+    },
+    {
+      "path": "evidence/DOC-02/charts.py",
+      "sha256": "c918f05bbcc2657e2b3e76773cc584cffbb3d85cd5ef361a216b68629b9eb916"
+    },
+    {
+      "path": "evidence/DOC-02/report.js",
+      "sha256": "0b1351db7ba8a45d92ba81de222d7002dd56a7ba6d4bae8548e27f7a419125a7"
+    },
+    {
+      "path": "evidence/DOC-02/deck.js",
+      "sha256": "627702a36c5fb653cbd7efb07745a099780cd5b930eefe5c50927b22772b5bca"
+    },
+    {
+      "path": "evidence/DOC-02/chart_sources.json",
+      "sha256": "433ec23118d680b5235786c1bb181b358254a4179325671405c77cca0abfee9d"
+    },
+    {
+      "path": "evidence/DOC-02/lifecycle_latest.json",
+      "sha256": "7f16c471b87d587ada88b7bdcea0cae7de7bcc1dc235673cd219d2495ef4651d"
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion": 1,
+      "status": "passed",
+      "finding": "报告第三至八节、PPT 第 4–12 页展示数据预处理、数仓（含行数与对账）、EDA（趋势、量价分解、cohort、生命周期）、RFM 与 K-Means、基线/LightGBM/逻辑回归与时间外测试（ROC-AUC 0.515 [0.483, 0.5455]、周内 Lift@10% 0.84、ECE 0.0082），数字取自结果文件；进展总表与 AI 节逐项区分已完成、已实现待人工抽查和未开始。"
+    },
+    {
+      "criterion": 2,
+      "status": "passed",
+      "finding": "报告第九、十节与 PPT 第 13–14 页列出 7 项问题风险、未完成工作和 11-19 至 12-22 排期；截图全部来自 evidence/UI-05、UI-06 的真实浏览器运行截图，没有用计划图冒充系统。"
+    },
+    {
+      "criterion": 3,
+      "status": "not_passed",
+      "finding": "报告与 PPT 已在 Word/PowerPoint 中打开并逐页检查可读；演示脚本与问答已备。但尚未经组员审阅和演练，分工节待团队填写，尚未提交和答辩，没有凭证。"
+    }
+  ],
+  "limitations": [
+    "AI 自审，未经人工审阅。",
+    "渲染只在 macOS Word/PowerPoint 16.115；Windows 上的中文字体（宋体/黑体/微软雅黑）替换效果未检查。",
+    "讲演时长按约 10 分钟估计，课程实际时限未知。",
+    "分工、提交和答辩未发生，不能标 done。"
+  ],
+  "steps": [
+    "读取任务规格、课程阶段要求与已验收结果。",
+    "用结果文件生成 6 张图（含架构图）并目视检查，修正箭头穿框。",
+    "生成报告 docx，Word 导出 PDF 逐页检查，修正命令折行。",
+    "生成 PPT，validate 通过，PowerPoint 导出 PDF 逐页检查，修正标题对齐、数据标签取整与换行，复查改过的页。",
+    "核对降级与回放模式描述与 docs/ai_system_card.md 一致并修正措辞。",
+    "写演示脚本与问答，核对每条依据的出处。"
+  ]
+}

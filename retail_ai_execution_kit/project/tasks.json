@@ -12,7 +12,7 @@
     "internal_freeze": "2026-12-13",
     "final": "2026-12-22"
   },
-  "state_note": "2026-11-14 claude-opus-5-5：已验收 73 项，技术任务已全部验收（AI-10 的周报人工抽查除外，待组员完成，D015）。本日：AI-15、UI-06、UI-07、REL-01（回归 32/32）、DOC-05、DOC-08、REL-02（GitHub 全新克隆按 runbook 复现，仅 macOS arm64）、REL-04（基线与冻结目标、降级实测）。剩余均为非技术或依赖课程文档：DOC-02/03/06/07、REL-03/05/06/07、GOV-03/04、DOC-01 回执（D014：由组员承担，待分配）。待负责人决定：evidence/DOC-01/proposal_extracted_text.txt 中 1 个作者邮箱是否脱敏；导入层 manifest 绝对路径差异是否值得重新登记 DATA-05 至 DATA-12。",
+  "state_note": "2026-11-18 claude-opus-5-5：DOC-02 中期报告与答辩 PPT 草稿已生成并渲染核验（in_review：待组员审阅、填写分工、演练、11-30 前提交与答辩）。2026-11-14 claude-opus-5-5：已验收 73 项，技术任务已全部验收（AI-10 的周报人工抽查除外，待组员完成，D015）。本日：AI-15、UI-06、UI-07、REL-01（回归 32/32）、DOC-05、DOC-08、REL-02（GitHub 全新克隆按 runbook 复现，仅 macOS arm64）、REL-04（基线与冻结目标、降级实测）。剩余均为非技术或依赖课程文档：DOC-02/03/06/07、REL-03/05/06/07、GOV-03/04、DOC-01 回执（D014：由组员承担，待分配）。待负责人决定：evidence/DOC-01/proposal_extracted_text.txt 中 1 个作者邮箱是否脱敏；导入层 manifest 绝对路径差异是否值得重新登记 DATA-05 至 DATA-12。",
   "tasks": [
     {
       "id": "GOV-01",
@@ -2871,10 +2871,10 @@
       "category": "DOC",
       "selected": true,
       "priority": "core",
-      "status": "todo",
-      "owner": null,
-      "reviewer": null,
-      "review_mode": null,
+      "status": "in_review",
+      "owner": "claude-opus-5-5（起草）；组员审阅、演练与提交待分配",
+      "reviewer": "claude-opus-5-5",
+      "review_mode": "self_review",
       "requirements": [
         "C25",
         "C28"
@@ -2901,7 +2901,7 @@
         "报告与PPT可读，准备现场问答和实际演示；当期实际提交/答辩立即留凭证，不等待REL-07终期汇总。"
       ],
       "evidence": [],
-      "blocker": null,
+      "blocker": "剩余：组员审阅并填写报告第十一节分工（GOV-03）；组内演练；11-30 前实际提交与现场答辩并保存凭证（reports/submission/midterm_manifest.json 的 submitted/defense、midterm_defense_prep.md 第 4 节）。草稿证据 evidence/DOC-02/2026-11-18-midterm-draft.json（条件 1、2 通过，条件 3 待完成）。依赖 DOC-01 回执仍待补。",
       "skip_reason": null,
       "execution_required": false
     },

@@ -2,7 +2,7 @@
 
 > 自动生成；唯一动态任务台账是 project/tasks.json。
 
-- 项目状态说明：2026-11-14 claude-opus-5-5：已验收 73 项，技术任务已全部验收（AI-10 的周报人工抽查除外，待组员完成，D015）。本日：AI-15、UI-06、UI-07、REL-01（回归 32/32）、DOC-05、DOC-08、REL-02（GitHub 全新克隆按 runbook 复现，仅 macOS arm64）、REL-04（基线与冻结目标、降级实测）。剩余均为非技术或依赖课程文档：DOC-02/03/06/07、REL-03/05/06/07、GOV-03/04、DOC-01 回执（D014：由组员承担，待分配）。待负责人决定：evidence/DOC-01/proposal_extracted_text.txt 中 1 个作者邮箱是否脱敏；导入层 manifest 绝对路径差异是否值得重新登记 DATA-05 至 DATA-12。
+- 项目状态说明：2026-11-18 claude-opus-5-5：DOC-02 中期报告与答辩 PPT 草稿已生成并渲染核验（in_review：待组员审阅、填写分工、演练、11-30 前提交与答辩）。2026-11-14 claude-opus-5-5：已验收 73 项，技术任务已全部验收（AI-10 的周报人工抽查除外，待组员完成，D015）。本日：AI-15、UI-06、UI-07、REL-01（回归 32/32）、DOC-05、DOC-08、REL-02（GitHub 全新克隆按 runbook 复现，仅 macOS arm64）、REL-04（基线与冻结目标、降级实测）。剩余均为非技术或依赖课程文档：DOC-02/03/06/07、REL-03/05/06/07、GOV-03/04、DOC-01 回执（D014：由组员承担，待分配）。待负责人决定：evidence/DOC-01/proposal_extracted_text.txt 中 1 个作者邮箱是否脱敏；导入层 manifest 绝对路径差异是否值得重新登记 DATA-05 至 DATA-12。
 - 正式主数据：合成交易包 baseline_10000_seed42（SHA-256 d50ee64a…7a16），交易路线，经 DATA-05 engineering-import-v1 重建，截止 2026-11-08T00:00:00Z；依据 D012 用户授权的工作假设冻结（D013），非教师确认。
 - 协调者：未指定（claude-opus-5-5 于 2026-11-11 15:45 释放：上下文额度接近上限；下一步见 worklogs/AI-09-claude-opus-5-5-2026-11-11.md）。
 - 已选 85 项；done 73 项；blocked 1 项；其他未验收 11 项。
